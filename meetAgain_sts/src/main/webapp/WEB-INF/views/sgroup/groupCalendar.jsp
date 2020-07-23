@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/header.jsp" />
+<c:import url="../common/header.jsp" />
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
@@ -61,7 +61,7 @@ body {
 }
 </style>
 <div class="container" style="overflow: hidden; height: auto;">
-	<c:import url="/views/common/groupHeader.jsp" />
+	<c:import url="../common/groupHeader.jsp" />
 
 	<div id="infoArea" class="col-lg-4" style="float: left;">
 		<table style="text-align: center; width: 100%;">
@@ -179,4 +179,4 @@ $(function(){
 );
 </script>
 
-<c:import url="/views/common/footer.jsp" />
+<c:import url="../common/footer.jsp" />

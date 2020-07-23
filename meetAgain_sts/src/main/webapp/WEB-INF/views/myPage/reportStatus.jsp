@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/header.jsp" />
+<c:import url="../common/header.jsp" />
 
 <div class="container" style="taxt-align: center;">
 	<div class="intro">
@@ -43,4 +43,4 @@
 </table>
 </div></div></div></div>
 <br /><br /><br /><br />
-<c:import url="/views/common/footer.jsp" />
+<c:import url="../common/footer.jsp" />

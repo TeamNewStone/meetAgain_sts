@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/header.jsp" />
+<c:import url="../common/header.jsp" />
 <div class="container">
 	<br>
 	<div class="rows">
@@ -149,7 +149,7 @@
 					<div class="card">
 						<div class="card-header">
 							<img class="img-fluid"
-								src="../../resources/img/mountainGangster4.jpg"
+								src="resources/img/mountainGangster4.jpg"
 								style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
 						</div>
 						<div class="card-body" style="height: 100%;">
@@ -362,4 +362,4 @@
 <!--   lazy javascript -->
 <script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script>
 </div>
-<c:import url="/views/common/footer.jsp" />
+<c:import url="../common/footer.jsp" />

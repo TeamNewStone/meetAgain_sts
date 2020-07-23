@@ -10,7 +10,7 @@
  }
 </style>
 
-<c:import url="/views/common/header.jsp" />
+<c:import url="../common/header.jsp" />
 
 <!-- <!DOCTYPE html>
 <html lang="ko">
@@ -272,7 +272,7 @@
   </body>
 </html> -->
 
- <c:import url="/views/common/footer.jsp" />
+ <c:import url="../common/footer.jsp" />
 
     <!-- 마인펭이지 메인 스크립트작성 -->
     <!--   jQuery first, then Popper.js, then Bootstrap JS -->
