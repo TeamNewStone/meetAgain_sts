@@ -15,26 +15,27 @@
     <link href="${ pageContext.request.contextPath }/resources/img/favicon.ico" rel="icon" type="image/png">
 	
     <script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery-3.5.1.min.js"></script>
+    
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
 	<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css' rel='stylesheet' type='text/css'>
+	
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/vendor/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/lazy.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/demo.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/board.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/mInsert.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/index.css">
+	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/membership.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/serviceCenter.css">
+	
 	<link href='${ pageContext.request.contextPath }/resources/css/main.css' rel='stylesheet' />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src='${pageContext.request.contextPath}/resources/js/main.js'></script>
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     
-  	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    
+  	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
     <link href="${ pageContext.request.contextPath }/resources/vendor/summernote/summernote-lite.min.css" rel="stylesheet">
-    <script src="${ pageContext.request.contextPath }/resources/vendor/summernote/summernote-lite.min.js"></script>
+    
 	
     
     <style>
@@ -101,6 +102,7 @@
                 <a class="dropdown-item" href="#" target="_blank">로그아웃</a>
                 <a class="dropdown-item" href="profile.html" target="_blank">마이페이지</a>
                 <a class="dropdown-item" href="#" target="_blank">개인정보수정</a>
+                <a class="dropdown-item" href="${ pageContext.request.contextPath }/views/member/membership.jsp">등급관리</a>
               </div>
             </li>
           </ul>
