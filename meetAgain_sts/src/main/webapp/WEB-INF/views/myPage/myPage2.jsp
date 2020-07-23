@@ -86,7 +86,7 @@
           <div class="col-12 col-md-4">
           <button type="button" class="btn btn-outline-primary btn-pill" onclick="mainMyPage();" id="Btn">마이페이지</button></div>
           <div class="col-12 col-md-4">
-          <button type="button" class="btn btn-outline-primary btn-pill" onclick="myPageOther();" id="Btn">부가정보</button></div>
+          <button type="button" class="btn btn-outline-primary btn-pill" onclick="memberOther();" id="Btn">부가정보</button></div>
           <div class="col-12 col-md-4">
           <button type="button" class="btn btn-outline-primary btn-pill" id="Btn">수정완료</button></div>              
         </div>            
@@ -113,8 +113,8 @@
       function mainMyPage() {
         location.href="myPage1.jsp";
       }
-      function myPageOther() {        
-        location.href="myPageOther.jsp";
+      function memberOther() {        
+        location.href="${ pageContext.request.contextPath }/views/member/mTMIInsertForm.jsp";
       }    
      /*  function addressSearchBtn2() {
         var url = "mapMarker.jsp";
