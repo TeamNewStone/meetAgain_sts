@@ -23,6 +23,7 @@
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/board.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/mInsert.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/index.css">
+	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/serviceCenter.css">
 	<link href='${ pageContext.request.contextPath }/resources/css/main.css' rel='stylesheet' />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
