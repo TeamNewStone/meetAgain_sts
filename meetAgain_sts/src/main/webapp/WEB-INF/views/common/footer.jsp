@@ -11,7 +11,7 @@
 		<p>&nbsp;&nbsp;Site Map </p>
 		<ul class="footer-menu list-unstyled d-flex flex-row text-center text-md-left">
 			<li><a href="/meetAgain/views/board/notice.jsp">공지사항</a></li>
-			<li><a href="/meetAgain/views/serviceCenter/faq.jsp">고객센터</a></li>
+			<li><a href="/meetAgain/views/board/faq.jsp">자주묻는 질문</a></li>
 		</ul>
 		<br />
 		<ul class="footer-menu list-unstyled d-flex flex-row text-center text-md-left">
@@ -57,6 +57,16 @@
     <!--   lazy javascript -->
     <script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script>
     <script src="${ pageContext.request.contextPath }/resources/js/demo.js"></script>
-    <script src="${ pageContext.request.contextPath }/resources/js/graph.js"></script>  
+    <script src='${pageContext.request.contextPath}/resources/js/main.js'></script>
+    
+    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="${ pageContext.request.contextPath }/resources/js/graph.js"></script>
+        
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+    
+    
+    <script src="${ pageContext.request.contextPath }/resources/vendor/summernote/summernote-lite.min.js"></script>  
  </body>
 </html>
