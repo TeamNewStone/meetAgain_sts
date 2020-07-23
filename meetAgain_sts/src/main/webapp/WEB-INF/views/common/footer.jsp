@@ -11,7 +11,7 @@
 		<p>&nbsp;&nbsp;Site Map </p>
 		<ul class="footer-menu list-unstyled d-flex flex-row text-center text-md-left">
 			<li><a href="/meetAgain/views/board/notice.jsp">공지사항</a></li>
-			<li><a href="/meetAgain/views/board/faq.jsp">자주묻는 질문</a></li>
+			<li><a href="/meetAgain/views/serviceCenter/faq.jsp">고객센터</a></li>
 		</ul>
 		<br />
 		<ul class="footer-menu list-unstyled d-flex flex-row text-center text-md-left">
