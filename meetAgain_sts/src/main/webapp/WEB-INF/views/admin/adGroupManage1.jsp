@@ -21,7 +21,7 @@
 							<div class="card">
 								<div class="card-header">
 									<img class="img-fluid"
-										src="../../resources/img/mountainGangster1.jpg"
+										src="${pageContext.request.contextPath}/resources/images/mountainGangster1.jpg"
 										style="width: 100%; display: block;margin: 0px auto; width: 271px; height: 117px;">
 								</div>
 								<div class="card-body" style="height: 100%;">
@@ -37,7 +37,7 @@
 							<div class="card">
 								<div class="card-header">
 									<img class="img-fluid"
-										src="../../resources/img/mountainGangster2.jpg"
+										src="${pageContext.request.contextPath}/resources/images/mountainGangster2.jpg"
 										style="width: 100%; display: block;margin: 0px auto; width: 271px; height: 117px;">
 								</div>
 								<div class="card-body" style="height: 100%;">
@@ -53,7 +53,7 @@
 							<div class="card">
 								<div class="card-header">
 									<img class="img-fluid"
-										src="../../resources/img/mountainGangster3.jpg"
+										src="${pageContext.request.contextPath}/resources/images/mountainGangster3.jpg"
 										style="width: 100%;display: block;margin: 0px auto; width: 271px; height: 117px;">
 								</div>
 								<div class="card-body" style="height: 100%;">
@@ -69,7 +69,7 @@
 							<div class="card">
 								<div class="card-header">
 									<img class="img-fluid"
-										src="../../resources/img/mountainGangster4.jpg"
+										src="${pageContext.request.contextPath}/resources/images/mountainGangster4.jpg"
 										style="width: 100%; display: block;margin: 0px auto; width: 271px; height: 117px;">
 								</div>
 								<div class="card-body" style="height: 100%;">
