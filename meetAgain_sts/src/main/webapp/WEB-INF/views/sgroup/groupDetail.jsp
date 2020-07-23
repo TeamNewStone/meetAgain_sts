@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/views/common/header.jsp" />
 <div class="container">
-<c:import url="/views/common/groupHeader.jsp" />
+	<c:import url="/views/common/groupHeader.jsp" />
 	<!--===================== 소모임 페이지의 바디 부분 =====================-->
 	<div name="groupBody">
 		<div class="row">
@@ -31,7 +31,10 @@
 		</svg>
 						</div>
 					</div>
+					<br />
+					<br />
 				</div>
+				<button class="btn btn-dark">소모임 탈퇴</button>
 			</div>
 
 			<!-- ---------이부분까지 사진과 설명---------- -->
@@ -43,7 +46,7 @@
 						<col width="53%" />
 					</colgroup>
 					<tr>
-						<td><h5>설립일 </h5></td>
+						<td><h5>설립일</h5></td>
 						<td><h5>yyyy.mm.dd</h5></td>
 						<td style="text-align: right;"><span> <span
 								class="badge badge-pill badge-primary">정기</span> <span
@@ -82,27 +85,36 @@
 					</tr>
 					<tr>
 						<td><h5>모임인원</h5></td>
-						<td colspan="2" style="display: flex; align-items: center;">
-							<div class="progress progress-lg" style="width:50%; float:left;" >
+						<td colspan="2" >
+						<div style="display: flex; align-items: center;">
+							<div class="progress progress-lg"
+								style="width: 50%; float: left;">
 								<div class="progress-bar bg-info" role="progressbar"
 									style="width: 25%;" aria-valuenow="50" aria-valuemin="0"
 									aria-valuemax="100"></div>
 							</div>
-							<div style="float:left;"><h5> &nbsp;5/10 </h5></div> 
+							<div style="float: left;">
+								<h5>&nbsp;&nbsp;5/10</h5>
+							</div>
+							<div>
+							&nbsp;&nbsp;<button type="button" class="btn btn-danger"
+								onclick="clickMemList();">멤버 리스트</button>
+							</div>
+							</div>
 						</td>
+
 
 					</tr>
 					<tr>
-						<td><h5>평균나이</h5></td>
-						<td colspan="2"><label>21.4</label>세</td>
+						<td><h5>평균연령</h5></td>
+						<td colspan="2"><label>20</label>대(그래프로 대체)</td>
 					</tr>
 					<tr>
 						<td><h5>성비</h5></td>
 						<td>
-							<div id="piechart" style="width: 300px; "></div>
+							<div id="piechart" style="width: 300px;"></div>
 						</td>
-						<td style="text-align: right;"><button type="button"
-								class="btn btn-danger" onclick="clickMemList();">멤버 리스트</button></td>
+					<td style="text-align: right;">	</td>
 					</tr>
 				</table>
 
@@ -118,38 +130,43 @@
 
 
 <script type="text/javascript">
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
+	google.charts.load('current', {
+		'packages' : [ 'corechart' ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
 
-function drawChart() {
+	function drawChart() {
 
-  var data = google.visualization.arrayToDataTable([
-    ['Task', 'Hours per Day'],
-    ['Male',     5],
-    ['Female',      5],
-   
-  ]);
+		var data = google.visualization.arrayToDataTable([
+				[ 'Task', 'Hours per Day' ], [ 'Male', 5 ], [ 'Female', 5 ],
 
-   var options = {
-    //title: '7월 첫째주 모임이 제일 많이 생성된 지역',
-    slices: {
-      0: { color: '#ffb5b6' },
-      1: { color: '#132742' },
-    
-    },
-    legend : {position: 'none'}
-  };
-  
+		]);
 
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+		var options = {
+			//title: '7월 첫째주 모임이 제일 많이 생성된 지역',
+			slices : {
+				0 : {
+					color : '#ffb5b6'
+				},
+				1 : {
+					color : '#132742'
+				},
 
+			},
+			legend : {
+				position : 'none'
+			}
+		};
 
-  chart.draw(data, options);
+		var chart = new google.visualization.PieChart(document
+				.getElementById('piechart'));
 
-}
+		chart.draw(data, options);
 
-function clickMemList(){
-	location.href='/meetAgain/views/sgroup/memberList.jsp';
-}
+	}
+
+	function clickMemList() {
+		location.href = '/meetAgain/views/sgroup/memberList.jsp';
+	}
 </script>
 <c:import url="/views/common/footer.jsp" />
