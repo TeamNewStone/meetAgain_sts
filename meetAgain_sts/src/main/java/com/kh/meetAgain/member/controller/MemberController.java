@@ -24,5 +24,12 @@ public class MemberController {
 	public String membership() {
 		return "member/membership";
 	}
-
+	@RequestMapping("member/login.do")
+	public String login() {
+		return "member/login";
+	}
+	@RequestMapping("member/callBack.do")
+	public String callback() {
+		return "member/callBack";
+	}
 }
