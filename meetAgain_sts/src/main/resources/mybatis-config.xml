@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC
+"-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 마이바티스 설정과 관련된 태그 -->
+	<settings>
+		<!-- 만약에 Null 값이 들어온다면 DB에서도
+		    Null 이라고 받아라! -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+
+	<!-- 마이바티스에서 사용하기 위한 
+	    VO 클래스의 별칭을 정의하는 태그 -->
+	<typeAliases>
+		<!-- 
+			<typeAlias type="실제 VO객체" alias="mybatis에서 사용할 클래스 별칭">
+		 -->		 
+		 <typeAlias type="com.kh.spring.member.model.vo.Member" alias="Member"/>
+		 <typeAlias type="com.kh.spring.dev.model.vo.Dev" alias="Dev"/>
+		 <typeAlias type="com.kh.spring.common.Str2ArrayHandler" alias="Str2ArrayHandler"/>
+		 <typeAlias type="com.kh.spring.board.model.vo.Board" alias="Board"/>
+		 <typeAlias type="com.kh.spring.board.model.vo.Attachment" alias="Attachment"/>
+		 
+	</typeAliases>	
+	
+	<!-- 문자열과 배열을 치환해주는 객체 -->
+	
+	<typeHandlers>
+		<!-- 특정 타입을 변경해주는 typeHandler 등록 태그 -->
+		<package name="com.kh.spring,common"/>
+	</typeHandlers>
+	
+</configuration>
+
+
+
+
+
+
+
+
+
+
