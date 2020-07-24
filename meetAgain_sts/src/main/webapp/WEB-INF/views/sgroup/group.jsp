@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" />
 <div class="container">
 	<br>
 	<div class="rows">
@@ -362,4 +362,4 @@
 <!--   lazy javascript -->
 <script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script>
 </div>
-<c:import url="/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/common/footer.jsp" />

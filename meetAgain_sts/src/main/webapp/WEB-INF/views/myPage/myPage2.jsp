@@ -112,7 +112,7 @@
         location.href="myPage1.jsp";
       }
       function memberOther() {        
-        location.href="${ pageContext.request.contextPath }/views/member/mTMIInsertForm.jsp";
+        location.href="${ pageContext.request.contextPath }/member/mTMIInsertForm.do";
       }    
      /*  function addressSearchBtn2() {
         var url = "mapMarker.jsp";

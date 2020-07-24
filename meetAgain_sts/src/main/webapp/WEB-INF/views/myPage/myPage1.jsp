@@ -289,10 +289,10 @@
 
 <script>
 	function accountEdit() {
-		location.href = "myPage2.jsp";
+		location.href = "myPage2.do";
 	}
 	function rateEdit() {
-		location.href = "";
+		location.href = "${ pageContext.request.contextPath }/myPage/myPage1.do";
 	}
 </script>
 
