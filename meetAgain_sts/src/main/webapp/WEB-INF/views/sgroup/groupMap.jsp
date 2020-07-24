@@ -23,6 +23,9 @@
 				<input type="checkbox" id="chkTraffic" onclick="setOverlayMapTypeId()" /> 교통정보 보기       
 				<input type="checkbox" id="chkBicycle" onclick="setOverlayMapTypeId()" /> 자전거도로 정보 보기
 			</p>
+			<!-- <p>
+				<input type="text" id="searchLoc"><button onclick="searchLocation();">검색</button>
+			</p> -->
 			<!-- 카카오맵 API  -->
 			<!-- <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdb0daf359d098be072ce9f3ea29cdf8"></script> -->
 				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdb0daf359d098be072ce9f3ea29cdf8&libraries=services,clusterer,drawing"></script>
@@ -92,7 +95,7 @@
 				            var content = '<div class="bAddr" style="width: 350px; height: 130px;">' +
 				                            '<span class="title">선택하신 위치</span><br>' + 
 				                            detailAddr + 
-				                            '<button type="button" class="btn btn-info" onclick="findRoad();">출발지</button>' + 
+				                            '<button type="button" class="btn btn-info">출발지</button>' + 
 				                        '</div>';
 
 				            // 마커를 클릭한 위치에 표시합니다 
@@ -127,13 +130,55 @@
 						    resultDiv3.innerHTML = message3; */
 				        }   
 				    });
+					
 				});
 				
 				function searchDetailAddrFromCoords(coords, callback) {
 				    // 좌표로 법정동 상세 주소 정보를 요청합니다
 				    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 				}
-
+				
+				
+				// 장소검색
+				var places = new kakao.maps.services.Places();
+				
+				function searchLocation(){				
+					// 장소 검색 객체를 생성합니다
+					var loc = $("#searchLoc").val();
+					places.keywordSearch(loc, callback1); 
+				}
+				
+				var callback1 = function(result, status) {
+				    var div5 = document.getElementById('_mapMakerCheck2');
+				    
+				    if (status === kakao.maps.services.Status.OK) {
+				        
+				        for(var i = 0; i < result.length; i++){
+				        	div5.innerHTML += '<br>' + result[i].address_name;
+				        	
+				        	console.log(result[i]);
+				        } 
+				    	
+				    }
+				    
+				  /*   if(div5.style.display=='none')
+				    	div5.style.display = 'block'; */
+					
+				    
+				};
+				
+				/* ${'#_mapMakerCheck2'}.on('change', function({
+					
+					var div6 = $('#_mapMakerCheck2').val();
+					
+				    if(div6.style.display=='none'){
+				    	div6.style.display = 'block';
+					} else {
+						div6.style.display = 'none';
+					}
+				});				
+				     */
+				
 				
 			</script>
 	
@@ -252,7 +297,19 @@
 			</div> -->
 			<div style="float: left;">
 				<p><i class="fa fa-map-marker fa-3x" aria-hidden="true"></i><h3>[모임장소위치]</h3><p>
+				
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" id="searchLoc">
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" type="button" onclick="searchLocation();">검색</button>						
+					</div>
+				</div>
 				<h6><span id="_mapMakerCheck">기본-호산빌딩</span></h6>
+				
+				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
+				<%-- <c:forEach var ="name" begin="0" end="14">
+				<c:out value="${name}" />				
+				</c:forEach> --%>
 				<!-- <h3> ← 지도 마우스 클릭 테스트 </h3> -->
 			</div>
 		</div>
@@ -265,7 +322,7 @@
 			<h3><span id="_mapPhone">전화번호가 들어갈 공간입니다.</span></h3>
 			<br />
 			<div>
-				<button type="button" class="btn btn-info"	onclick="findRoad();">
+				<button type="button" class="btn btn-info"	id="findRoad" onclick="findRoad();">
 					&nbsp;&nbsp;&nbsp;길찾기&nbsp;&nbsp;&nbsp;</button>
 				<!-- <button type="button" class="btn btn-light">&nbsp;&nbsp;장소변경&nbsp;&nbsp;</button> -->
 				<button type="button" class="btn btn-light" id="reloadmap">&nbsp;&nbsp;장소변경&nbsp;&nbsp;</button>
@@ -277,10 +334,10 @@
 </div>
 
 <script>
-	function findRoad(){
+	/* function findRoad(){
 		var url = 'https://map.kakao.com/link/to/카카오판교오피스,37.402056,127.108212';
 		window.open(url, '_blank');
-	}
+	} */
 	
 	/* ${'#_mapMakerCheck'}on.('click', function() {
 		var mappy = ${'#_mapMakerCheck'}.val();
@@ -290,7 +347,11 @@
 		}
 	}); */
 	$('#reloadmap').click(function() {
-		location.reload();		
+		location.reload();
+		/* var con = document.getElementById("_mapMakerCheck2");
+		if(con.style.display=='block'){			
+			$('#_mapMakerCheck2').remove();
+		} */
 	});	
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
