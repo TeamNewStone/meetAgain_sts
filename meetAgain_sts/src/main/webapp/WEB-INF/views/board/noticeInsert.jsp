@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" />
 <br />
 <br />
 <br />
@@ -25,7 +25,7 @@
 	</div>
 	<br />
 	<div id="noticeBtn">
-			<!-- 수정하기 버튼은 admin만 보이게! -->
+
 			<button type="button" class="btn btn-outline-secondary">작성완료</button>
 			<button type="button" class="btn btn-secondary" onclick="goNotice();">돌아가기</button>
 	</div>
@@ -35,4 +35,4 @@
 	<br />
 	<br />
 	<br />
-<c:import url="/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/common/footer.jsp" />

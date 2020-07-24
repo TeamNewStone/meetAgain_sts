@@ -77,7 +77,7 @@
 		$("#noticeTable td").click(function() {
 			//var noticeNo = $(this).parent().children().eq(0).text();
 			//location.href="${ pageContext.request.contextPath }/views/board/noticeDetail.do?noticeNo=" + noticeNo;
-			location.href = "/meetAgain/views/board/noticeDetail.jsp";
+			location.href = "${pageContext.request.contextPath}/board/noticeDetail.do";
 
 		}).mouseenter(function() {
 			$(this).parent().css({
@@ -88,7 +88,7 @@
 	});
 	
 	function noticeInsert(){
-		location.href="${pageContext.request.contextPath}/views/board/noticeInsert.jsp";
+		location.href="${pageContext.request.contextPath}/board/noticeInsert.do";
 	}
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

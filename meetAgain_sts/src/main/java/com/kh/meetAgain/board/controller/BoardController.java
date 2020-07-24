@@ -22,6 +22,13 @@ public class BoardController {
 		
 		return "board/noticeDetail";
 	}
+	
+	@RequestMapping("board/noticeInsert.do")
+	public String noticeInsert() {
+		
+		return "board/noticeInsert";
+	}
+	
 	@RequestMapping("board/review.do")
 	public String review() {
 		
