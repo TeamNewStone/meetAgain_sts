@@ -16,11 +16,7 @@
 		<!-- 
 			<typeAlias type="실제 VO객체" alias="mybatis에서 사용할 클래스 별칭">
 		 -->		 
-		 <typeAlias type="com.kh.spring.member.model.vo.Member" alias="Member"/>
-		 <typeAlias type="com.kh.spring.dev.model.vo.Dev" alias="Dev"/>
-		 <typeAlias type="com.kh.spring.common.Str2ArrayHandler" alias="Str2ArrayHandler"/>
-		 <typeAlias type="com.kh.spring.board.model.vo.Board" alias="Board"/>
-		 <typeAlias type="com.kh.spring.board.model.vo.Attachment" alias="Attachment"/>
+		
 		 
 	</typeAliases>	
 	
