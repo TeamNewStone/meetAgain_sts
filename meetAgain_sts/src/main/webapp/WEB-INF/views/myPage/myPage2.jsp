@@ -17,7 +17,7 @@
 <!-- 우편번호 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     
-<c:import url="/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" />
 
 <!-- 기본정보수정 시작 -->
 <div class="col-12"><br></div>
@@ -100,8 +100,6 @@
 
 <!-- 기본정보수정 끝 -->
 
-<c:import url="/views/common/footer.jsp" />
-
     <!-- 기본정보 스크립트 작성 -->
     <!--   jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="${ pageContext.request.contextPath }/resources/vendor/popper/popper.min.js"></script>
@@ -114,7 +112,7 @@
         location.href="myPage1.jsp";
       }
       function memberOther() {        
-        location.href="${ pageContext.request.contextPath }/views/member/mTMIInsertForm.jsp";
+        location.href="${ pageContext.request.contextPath }/member/mTMIInsertForm.do";
       }    
      /*  function addressSearchBtn2() {
         var url = "mapMarker.jsp";
@@ -255,5 +253,4 @@
           };
   </script>
 
-  
-
+<c:import url="/WEB-INF/views/common/footer.jsp" />
