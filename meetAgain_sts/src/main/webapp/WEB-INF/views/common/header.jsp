@@ -15,6 +15,8 @@
     <link href="${ pageContext.request.contextPath }/resources/img/favicon.ico" rel="icon" type="image/png">
 	
     <script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
     
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
 	<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css' rel='stylesheet' type='text/css'>
@@ -35,10 +37,8 @@
     
   	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
     <link href="${ pageContext.request.contextPath }/resources/vendor/summernote/summernote-lite.min.css" rel="stylesheet">
-    
-	
-    
-    <style>
+
+<style>
 @media(min-width :992px) {
 	#login {
 		position: absolute;
@@ -71,14 +71,14 @@
 }
 
 * { font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif'; }
-    </style>
+</style>
   </head>
   <body class="index">
 
       <!--header 시작-->
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container">
-        <a class="navbar-brand" href="/meetAgain/index.jsp"><img src="/meetAgain/resources/img/logo.png" alt="Example Navbar 1" class="mr-2" height="30"></a>
+        <a class="navbar-brand" href="${ pageContext.request.contextPath }"><img src="/meetAgain/resources/img/logo.png" alt="Example Navbar 1" class="mr-2" height="30"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7" aria-controls="navbarNavDropdown-7"
           aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -94,15 +94,15 @@
             </ul>
 			<ul class="navbar-nav ml-auto" id="login-nav">
             <li class="nav-item dropdown text-white" id="login">
-              <a class="nav-link" href="/meetAgain/views/login.jsp">로그인</a>
+              <a class="nav-link" href="${ pageContext.request.contextPath }/member/login.do">로그인</a>
             </li>
             <li class="nav-item dropdown" id="userIcon">
               <img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="test img-fluid rounded-circle" style="width : 60px;">
               <div class="dropdown-menu dropdown-menu-right dropMenuDiv" aria-labelledby="nav-inner-primary_dropdown_1">
-                <a class="dropdown-item" href="#" target="_blank">로그아웃</a>
-                <a class="dropdown-item" href="profile.html" target="_blank">마이페이지</a>
-                <a class="dropdown-item" href="#" target="_blank">개인정보수정</a>
-                <a class="dropdown-item" href="${ pageContext.request.contextPath }/views/member/membership.jsp">등급관리</a>
+                <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/logout.do">로그아웃</a>
+                <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage1.do">마이페이지</a>
+                <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage2.do">개인정보수정</a>
+                <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/membership.do">등급관리</a>
               </div>
             </li>
           </ul>
@@ -126,11 +126,11 @@
     
     
     function goNotice(){
-    	location.href='/meetAgain/views/board/notice.jsp';
+    	location.href='${ pageContext.request.contextPath }/board/notice.do';
     }
     
     function goGroup(){
-    	location.href='/meetAgain/views/sgroup/group.jsp';
+    	location.href='${ pageContext.request.contextPath }/sgroup/group.do';
     }
 
     </script>

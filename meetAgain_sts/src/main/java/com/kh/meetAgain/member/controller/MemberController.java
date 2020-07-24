@@ -9,15 +9,20 @@ public class MemberController {
 	
 	@RequestMapping("member/memberInsertForm.do")
 	public String memberInsertForm() {
-		return "board/memberInsertForm";
+		return "member/memberInsertForm";
 	}
 	@RequestMapping("member/memberInsertSuccess.do")
 	public String memberInsertSuccess() {
-		return "board/memberInsertSuccess";
+		return "member/memberInsertSuccess";
 	}
 	@RequestMapping("member/mTMIInsertForm.do")
 	public String mTMIInsertForm() {
-		return "board/mTMIInsertForm";
+		return "member/mTMIInsertForm";
+	}
+	
+	@RequestMapping("member/membership.do")
+	public String membership() {
+		return "member/membership";
 	}
 
 }
