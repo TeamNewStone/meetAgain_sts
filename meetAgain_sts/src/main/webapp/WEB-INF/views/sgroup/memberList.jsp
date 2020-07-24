@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" />
 <div class="container">
-<c:import url="/views/common/groupHeader.jsp" />
+<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
 
 	<!--===================== 소모임 페이지의 바디 부분 =====================-->
 	<h4>모임장</h4>
@@ -71,4 +71,4 @@
 	<br />
 	<br />
 	
-<c:import url="/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/common/footer.jsp" />

@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" />
 <div class="container">
-	<c:import url="/views/common/groupHeader.jsp" />
+	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
 	<!--===================== 소모임 페이지의 바디 부분 =====================-->
 	
 	<div id="tableArea">
@@ -28,7 +28,7 @@
 	</div>
 	
 	<div style="width: 33%; float: left;">
-		<button class="btn btn-secondary" onclick="location.href='/meetAgain/views/sgroup/gboardInsert.jsp'">작성하기</button>
+		<button class="btn btn-secondary" onclick="location.href='${ pageContext.request.contextPath }/sgroup/gboardInsert.do'">작성하기</button>
 	</div>
 	
 	<div style="width : 34%; float:left;">
@@ -66,4 +66,4 @@ $(function(){
 	}
 );
 </script>
-<c:import url="/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/common/footer.jsp" />

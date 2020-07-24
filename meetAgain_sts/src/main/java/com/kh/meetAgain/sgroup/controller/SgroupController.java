@@ -27,21 +27,25 @@ public class SgroupController {
 	public String groupCalendar() {
 		return "sgroup/groupCalendar";
 	}
-	@RequestMapping("sgroup/groupDetail")
+	@RequestMapping("sgroup/groupDetail.do")
 	public String groupDetail() {
 		return "sgroup/groupDetail";
 	}
-	@RequestMapping("sgroup/groupInfo")
+	@RequestMapping("sgroup/groupInfo.do")
 	public String groupInfo() {
 		return "sgroup/groupInfo";
 	}
-	@RequestMapping("sgroup/groupMap")
+	@RequestMapping("sgroup/groupMap.do")
 	public String groupMap() {
 		return "sgroup/groupMap";
 	}
-	@RequestMapping("sgroup/memberList")
+	@RequestMapping("sgroup/memberList.do")
 	public String memberList() {
 		return "sgroup/memberList";
+	}
+	@RequestMapping("sgroup/gboardInsert.do")
+	public String gboardInsert() {
+		return "sgroup/gboardInsert";
 	}
 	
 }
