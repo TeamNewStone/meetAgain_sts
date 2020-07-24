@@ -292,7 +292,7 @@
 		location.href = "myPage2.do";
 	}
 	function rateEdit() {
-		location.href = "${ pageContext.request.contextPath }/myPage/myPage1.do";
+		location.href = "${ pageContext.request.contextPath }/member/membership.do";
 	}
 </script>
 
