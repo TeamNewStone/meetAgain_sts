@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.meetAgain.board.model.dao.BoardDAO;
+import com.kh.meetAgain.board.model.vo.Board;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -22,6 +23,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int selectBoardTotalContents() {
 		return boardDAO.selectBoardTotalContents();
+	}
+
+	@Override
+	public Board SelectOneBoard(int bId) {
+		return boardDAO.selectOneBoard(bId);
 	}
 
 }

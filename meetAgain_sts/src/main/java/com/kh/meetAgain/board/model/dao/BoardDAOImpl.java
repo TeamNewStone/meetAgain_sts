@@ -7,6 +7,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.kh.meetAgain.board.model.vo.Board;
 @Repository
 public class BoardDAOImpl implements BoardDAO {
 	
@@ -23,6 +25,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int selectBoardTotalContents() {
 		return sqlSession.selectOne("boardMapper.selectBoardTotalContent");
+	}
+
+	@Override
+	public Board selectOneBoard(int bId) {
+		return sqlSession.selectOne("boardMapper.selectOneBoard", bId);
 	}	
 
 }

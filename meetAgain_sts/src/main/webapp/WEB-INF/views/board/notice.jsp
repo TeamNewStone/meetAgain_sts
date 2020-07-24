@@ -68,10 +68,10 @@
 <br />
 <script>
 	$(function() {
-		$("#noticeTable td").click(function() {
-			//var noticeNo = $(this).parent().children().eq(0).text();
+		$("tr[id]").click(function() {
+			var bId = $(this).attr("id");
 			//location.href="${ pageContext.request.contextPath }/views/board/noticeDetail.do?noticeNo=" + noticeNo;
-			location.href = "${pageContext.request.contextPath}/board/noticeDetail.do";
+			location.href = "${pageContext.request.contextPath}/board/noticeDetail.do?bId="+bId;
 
 		}).mouseenter(function() {
 			$(this).parent().css({
