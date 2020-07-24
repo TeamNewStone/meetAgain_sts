@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/header.jsp" />
+<c:import url="../common/header.jsp" />
 
 <div class="row bootstrap snippets" style="width:300px;float:left;">
     <div class="col-md-10 col-md-offset-2 col-sm-12">
@@ -24,7 +24,7 @@
                             
                             <div class="media-body">
                                 
-                                <a href="${ pageContext.request.contextPath }/views/serviceCenter/faq.jsp" class="nav-link">FAQ</a>
+                                <a href="${ pageContext.request.contextPath }/serviceCenter/faq.do" class="nav-link">FAQ</a>
                                 
                             </div>
                         </li>
@@ -32,7 +32,7 @@
                             
                             <div class="media-body">
                                 
-                                <a href="${ pageContext.request.contextPath }/views/serviceCenter/reportStatus.jsp" class="nav-link">신고현황</a>
+                                <a href="${ pageContext.request.contextPath }/serviceCenter/reportStatus.do" class="nav-link">신고현황</a>
                                 
                             </div>
                         </li>
@@ -40,7 +40,7 @@
                             
                             <div class="media-body">
                                 
-                                <a href="${ pageContext.request.contextPath }/views/serviceCenter/otoInquiry.jsp" class="nav-link">1:1문의</a>
+                                <a href="${ pageContext.request.contextPath }/serviceCenter/otoInquiry.do" class="nav-link">1:1문의</a>
                                 
                             </div>
                         </li>
@@ -90,4 +90,4 @@ thdalsgml13@naver.com 메일 문의 부탁드립니다.
 
 
 
-<c:import url="/views/common/footer.jsp" />
+<c:import url="../common/footer.jsp" />

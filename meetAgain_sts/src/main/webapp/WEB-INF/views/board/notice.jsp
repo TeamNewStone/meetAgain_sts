@@ -12,36 +12,29 @@
 			<div class="col-12">
 				<h1>공지사항</h1>
 				<br />
-				<table class="table" id="noticeTable">
+				
+				<table id="noticeTable" class=" table table-hover">
 					<thead style="background-color:#122b5f;color:white;">
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">First</th>
-							<th scope="col">Last</th>
-							<th scope="col">Handle</th>
-						</tr>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+						<th>조회수</th>
+					</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">1</th>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>@mdo</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>@fat</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>Larry</td>
-							<td>the Bird</td>
-							<td>@twitter</td>
-						</tr>
-					</tbody>
+					<c:forEach items="${list}" var="b"> 
+					<tr id="${b.BId}">
+						<td>${b.BId}</td>
+						<td>${b.BTitle}</td>
+						<td>${b.userId}</td>
+						<td>${b.BDate}</td>
+						<td>${b.BRate }</td>
+					</tr>
+					</c:forEach>
+					
 				</table>
+
 
 			</div>
 		</div>
@@ -51,7 +44,8 @@
 		</div>
 	</div>
 </div>
-<div style="width: 10%; margin: 0 auto; text-align: center;">
+				<c:out value="${pageBar}" escapeXml="false"/>		
+<!-- <div style="width: 10%; margin: 0 auto; text-align: center;">
 	<ul class="pagination">
 		<li class="page-item disabled"><a class="page-link" href="#a"><i
 				class="fas fa-long-arrow-alt-left"></i></a></li>
@@ -62,7 +56,7 @@
 		<li class="page-item"><a class="page-link" href="#a"><i
 				class="fas fa-long-arrow-alt-right"></i></a></li>
 	</ul>
-</div>
+</div> -->
 <!-- 임시 : 데이터 삽입 후 삭제! -->
 <br />
 <br />
@@ -74,10 +68,10 @@
 <br />
 <script>
 	$(function() {
-		$("#noticeTable td").click(function() {
-			//var noticeNo = $(this).parent().children().eq(0).text();
+		$("tr[id]").click(function() {
+			var bId = $(this).attr("id");
 			//location.href="${ pageContext.request.contextPath }/views/board/noticeDetail.do?noticeNo=" + noticeNo;
-			location.href = "${pageContext.request.contextPath}/board/noticeDetail.do";
+			location.href = "${pageContext.request.contextPath}/board/noticeDetail.do?bId="+bId;
 
 		}).mouseenter(function() {
 			$(this).parent().css({

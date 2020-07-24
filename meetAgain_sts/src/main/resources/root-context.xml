@@ -22,7 +22,7 @@
 		<!--  dataSource : 마이바티스 빈 객체에 사용할 DB 설정 객체 참조  -->
 		<property name="dataSource" ref="dataSource"/>
 		<!--  mapperLocations : mybatis-config에 작성하였던 mapper 파일들을 한번에 불러오기 위한 설정  -->
-		<property name="mapperLocations" value="classpath*:mappers/*.xml"/>
+		<property name="mapperLocations" value="classpath*:mapper/*.xml"/>
 		<!--  configLocation : mybatis-config 설정을 읽어 오기 위한 속성  -->
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>
 	</bean>

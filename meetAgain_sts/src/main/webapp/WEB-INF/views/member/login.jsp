@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
 <div class="container-fluid">
@@ -18,7 +19,8 @@
 				</div>
 				<form>
 					<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-					<div id="naverIdLogin"></div>
+				
+					 <div id="naverIdLogin"></div>
 					<!-- //네이버아이디로로그인 버튼 노출 영역 -->
 				</form>
 			</div>
@@ -27,8 +29,8 @@
 </div>
 <br /><br /><br /><br /><br /><br /><br />
 
-<script type="text/javascript">
-/*   	var naver_id_login = new naver_id_login("lQZcDrHxi5UeKZeLLXqp", "http://localhost:8088/meetAgain/callBack.jsp");
+<script "text/javascript">
+ /*	var naver_id_login = new naver_id_login("lQZcDrHxi5UeKZeLLXqp", "http://localhost:8088/meetAgain/member/callBack.do");
   	var state = naver_id_login.getUniqState();
   	naver_id_login.setButton("white", 5,70);
   	naver_id_login.setDomain("http://localhost:8088");
@@ -47,7 +49,7 @@
 	
 	/* 설정정보를 초기화하고 연동을 준비 */
 	naverLogin.init();
-  	
+
   </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
