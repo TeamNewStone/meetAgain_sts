@@ -37,13 +37,17 @@
 	<br />
 	<div id="noticeBtn">
 			<!-- 수정하기 버튼은 admin만 보이게! -->
-			<button type="button" class="btn btn-outline-secondary">수정하기</button>
+			<button type="button" class="btn btn-outline-secondary" onclick="goUpdate();">수정하기</button>
 			<button type="button" class="btn btn-secondary" onclick="goNotice();">돌아가기</button>
 	</div>
 </div>
 <script>
 	function goNotice(){
 		location.href="${ pageContext.request.contextPath }/board/notice.do"
+	}
+	function goUpdate(){
+		var bId = ${board.BId};
+		location.href="${ pageContext.request.contextPath }/board/noticeUpdate.do?bId="+bId;
 	}
 </script>
 <br />
