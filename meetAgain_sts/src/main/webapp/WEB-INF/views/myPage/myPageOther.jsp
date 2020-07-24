@@ -18,7 +18,7 @@
       }
   </style>
       
-<c:import url="/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" />
 
 <!-- <!DOCTYPE html>
 <html lang="ko">
@@ -273,8 +273,6 @@
   </body>
 </html> -->
 
-<c:import url="/views/common/footer.jsp" />
-
     <!-- 부가정보 스크립트 작성 -->    
     <!--   jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="${ pageContext.request.contextPath }/resources/vendor/popper/popper.min.js"></script>
@@ -299,4 +297,4 @@
 
 
 
-
+<c:import url="/WEB-INF/views/common/footer.jsp" />

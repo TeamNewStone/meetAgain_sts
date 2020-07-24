@@ -10,7 +10,7 @@
  }
 </style>
 
-<c:import url="/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" />
 
 <!-- 비어있는 소모임 -->
 <!-- <p class="lead"><span class="text-danger"><i class="far fa-frown-open"></i></span>비어있음.</p> -->
@@ -296,7 +296,7 @@
 	}
 </script>
 
-<c:import url="/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/common/footer.jsp" />
 
 
 

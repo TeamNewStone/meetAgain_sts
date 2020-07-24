@@ -17,7 +17,7 @@
 <!-- 우편번호 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     
-<c:import url="/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" />
 
 <!-- 기본정보수정 시작 -->
 <div class="col-12"><br></div>
@@ -99,8 +99,6 @@
 </div>
 
 <!-- 기본정보수정 끝 -->
-
-<c:import url="/views/common/footer.jsp" />
 
     <!-- 기본정보 스크립트 작성 -->
     <!--   jQuery first, then Popper.js, then Bootstrap JS -->
@@ -255,5 +253,4 @@
           };
   </script>
 
-  
-
+<c:import url="/WEB-INF/views/common/footer.jsp" />
