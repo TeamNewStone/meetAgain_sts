@@ -8,15 +8,14 @@
 	<br>
 	<div class="rows">
 		<div class="row">
-			<div class="col-2">
+			<div class="col-lg-3 col-md-3">
 				<p>
 					<a href="">해당 지역</a> 의 소모임 리스트를 보고 계십니다.
 				</p>
 				<div class="dropdown">
 					<button class="btn btn-secondary dropdown-toggle" type="button"
 						id="dropdownMenuButton" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"
-						style="margin-left: 100px;">지역선택</button>
+						aria-haspopup="true" aria-expanded="false">지역선택</button>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<a class="dropdown-item" href="#">역삼2동</a> <a
 							class="dropdown-item" href="#">역삼3동</a> <a class="dropdown-item"
@@ -24,7 +23,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-8 mx-auto">
+			<div class="col-lg-6 col-md-6">
 				<div class="rows">
 					<div class="row">
 						<div class="col-8">
@@ -136,8 +135,10 @@
 				</div>
 				<div class="col-1"></div>
 			</div>
+			<div class="col-lg-3 col-md-3">
+			<button type="button" class="btn btn-success" onclick="location.href='/meetAgain/views/sgroup/create.jsp'">소모임 생성하기!</button>
+			</div>
 		</div>
-		<div class="col-2"></div>
 	</div>
 	<div class="row">
 		<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
@@ -149,7 +150,7 @@
 					<div class="card">
 						<div class="card-header">
 							<img class="img-fluid"
-								src="../../resources/img/mountainGangster4.jpg"
+								src="/meetAgain/resources/img/mountainGangster1.jpg"
 								style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
 						</div>
 						<div class="card-body" style="height: 100%;">
@@ -167,7 +168,7 @@
 					<div class="card">
 						<div class="card-header">
 							<img class="img-fluid"
-								src="../../resources/img/mountainGangster2.jpg"
+								src="/meetAgain/resources/img/mountainGangster2.jpg"
 								style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
 						</div>
 						<div class="card-body" style="height: 100%;">
@@ -185,7 +186,7 @@
 					<div class="card">
 						<div class="card-header">
 							<img class="img-fluid"
-								src="../../resources/img/mountainGangster3.jpg"
+								src="/meetAgain/resources/img/mountainGangster3.jpg"
 								style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
 						</div>
 						<div class="card-body" style="height: 100%;">
@@ -203,7 +204,7 @@
 					<div class="card">
 						<div class="card-header">
 							<img class="img-fluid"
-								src="../../resources/img/mountainGangster4.jpg"
+								src="/meetAgain/resources/img/mountainGangster4.jpg"
 								style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
 						</div>
 						<div class="card-body" style="height: 100%;">
@@ -218,134 +219,132 @@
 			</div>
 		</div>
 	</div>
-<br>
-<br>
-<br>
-<div class="row">
-	<div class="col-md-3">
-		<div class="component">
-			<div class="card">
-				<div class="card-header">
-					<img class="img-fluid" src="../../resources/img/rebuild.png"
-						style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
+	<br> <br> <br>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="component">
+				<div class="card">
+					<div class="card-header">
+						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
+							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
+					</div>
+					<div class="card-body" style="height: 100%;">
+						<span class="badge badge-secondary mb-2">Hobby</span>
+						<h5 class="card-title">송파구 코딩 설명회</h5>
+						<p class="card-text">간단한 설명...</p>
+					</div>
 				</div>
-				<div class="card-body" style="height: 100%;">
-					<span class="badge badge-secondary mb-2">Hobby</span>
-					<h5 class="card-title">송파구 코딩 설명회</h5>
-					<p class="card-text">간단한 설명...</p>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="component">
+				<div class="card">
+					<div class="card-header">
+						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
+							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
+					</div>
+					<div class="card-body" style="height: 100%;">
+						<span class="badge badge-secondary mb-2">Hobby</span>
+						<h5 class="card-title">송파구 코딩 설명회</h5>
+						<p class="card-text">간단한 설명...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="component">
+				<div class="card">
+					<div class="card-header">
+						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
+							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
+					</div>
+					<div class="card-body" style="height: 100%;">
+						<span class="badge badge-secondary mb-2">Hobby</span>
+						<h5 class="card-title">송파구 코딩 설명회</h5>
+						<p class="card-text">간단한 설명...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="component">
+				<div class="card">
+					<div class="card-header">
+						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
+							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
+					</div>
+					<div class="card-body" style="height: 100%;">
+						<span class="badge badge-secondary mb-2">Hobby</span>
+						<h5 class="card-title">송파구 코딩 설명회</h5>
+						<p class="card-text">간단한 설명...</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
-		<div class="component">
-			<div class="card">
-				<div class="card-header">
-					<img class="img-fluid" src="../../resources/img/rebuild.png"
-						style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
+	<br>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="component">
+				<div class="card">
+					<div class="card-header">
+						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
+							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
+					</div>
+					<div class="card-body" style="height: 100%;">
+						<span class="badge badge-secondary mb-2">Hobby</span>
+						<h5 class="card-title">송파구 코딩 설명회</h5>
+						<p class="card-text">간단한 설명...</p>
+					</div>
 				</div>
-				<div class="card-body" style="height: 100%;">
-					<span class="badge badge-secondary mb-2">Hobby</span>
-					<h5 class="card-title">송파구 코딩 설명회</h5>
-					<p class="card-text">간단한 설명...</p>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="component">
+				<div class="card">
+					<div class="card-header">
+						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
+							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
+					</div>
+					<div class="card-body" style="height: 100%;">
+						<span class="badge badge-secondary mb-2">Hobby</span>
+						<h5 class="card-title">송파구 코딩 설명회</h5>
+						<p class="card-text">간단한 설명...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="component">
+				<div class="card">
+					<div class="card-header">
+						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
+							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
+					</div>
+					<div class="card-body" style="height: 100%;">
+						<span class="badge badge-secondary mb-2">Hobby</span>
+						<h5 class="card-title">송파구 코딩 설명회</h5>
+						<p class="card-text">간단한 설명...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="component">
+				<div class="card">
+					<div class="card-header">
+						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
+							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
+					</div>
+					<div class="card-body" style="height: 100%;">
+						<span class="badge badge-secondary mb-2">Hobby</span>
+						<h5 class="card-title">송파구 코딩 설명회</h5>
+						<p class="card-text">간단한 설명...</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
-		<div class="component">
-			<div class="card">
-				<div class="card-header">
-					<img class="img-fluid" src="../../resources/img/rebuild.png"
-						style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-				</div>
-				<div class="card-body" style="height: 100%;">
-					<span class="badge badge-secondary mb-2">Hobby</span>
-					<h5 class="card-title">송파구 코딩 설명회</h5>
-					<p class="card-text">간단한 설명...</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="component">
-			<div class="card">
-				<div class="card-header">
-					<img class="img-fluid" src="../../resources/img/rebuild.png"
-						style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-				</div>
-				<div class="card-body" style="height: 100%;">
-					<span class="badge badge-secondary mb-2">Hobby</span>
-					<h5 class="card-title">송파구 코딩 설명회</h5>
-					<p class="card-text">간단한 설명...</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<br>
-<div class="row">
-	<div class="col-md-3">
-		<div class="component">
-			<div class="card">
-				<div class="card-header">
-					<img class="img-fluid" src="../../resources/img/rebuild.png"
-						style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-				</div>
-				<div class="card-body" style="height: 100%;">
-					<span class="badge badge-secondary mb-2">Hobby</span>
-					<h5 class="card-title">송파구 코딩 설명회</h5>
-					<p class="card-text">간단한 설명...</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="component">
-			<div class="card">
-				<div class="card-header">
-					<img class="img-fluid" src="../../resources/img/rebuild.png"
-						style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-				</div>
-				<div class="card-body" style="height: 100%;">
-					<span class="badge badge-secondary mb-2">Hobby</span>
-					<h5 class="card-title">송파구 코딩 설명회</h5>
-					<p class="card-text">간단한 설명...</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="component">
-			<div class="card">
-				<div class="card-header">
-					<img class="img-fluid" src="../../resources/img/rebuild.png"
-						style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-				</div>
-				<div class="card-body" style="height: 100%;">
-					<span class="badge badge-secondary mb-2">Hobby</span>
-					<h5 class="card-title">송파구 코딩 설명회</h5>
-					<p class="card-text">간단한 설명...</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="component">
-			<div class="card">
-				<div class="card-header">
-					<img class="img-fluid" src="../../resources/img/rebuild.png"
-						style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-				</div>
-				<div class="card-body" style="height: 100%;">
-					<span class="badge badge-secondary mb-2">Hobby</span>
-					<h5 class="card-title">송파구 코딩 설명회</h5>
-					<p class="card-text">간단한 설명...</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 
 <script>
 	$(function() {
