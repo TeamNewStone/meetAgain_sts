@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" />
 <section class="pricing py-5">
   <div class="container">
     <div style="text-align:center;">
@@ -160,4 +160,4 @@
 				});
 		});
 	</script>
-<c:import url="/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/common/footer.jsp" />
