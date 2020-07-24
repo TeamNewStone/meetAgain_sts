@@ -3,6 +3,8 @@ package com.kh.meetAgain.board.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,6 +63,26 @@ public class BoardController {
 	public String noticeInsert() {
 		
 		return "board/noticeInsert";
+	}
+	
+	@RequestMapping("board/nInsert.do")
+	public String nInsert(Board board, Model model) {
+		
+		int result = boardService.insertBoard(board);
+		
+		model.addAttribute("board", board);
+		
+		if(result > 0) {
+			return "board/noticeDetail.do?bId"+board.getBId();
+		} else {
+			return "board/notice.do";
+		}
+	}
+	
+	@RequestMapping("board/noticeUpdate.do")
+	public String noticeUpdate(@RequestParam int bId, Model model) {
+		model.addAttribute("board", boardService.SelectOneBoard(bId));
+		return "board/noticeUpdateForm";
 	}
 	
 	@RequestMapping("board/review.do")

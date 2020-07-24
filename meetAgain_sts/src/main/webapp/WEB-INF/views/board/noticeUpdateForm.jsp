@@ -13,10 +13,10 @@
 		<div class="col-12">
 			<div class="content">
 			
-			<form action="${pageContext.request.contextPath}/board/nInsert.do">
+			<form action="${pageContext.request.contextPath}/board/nUpdate.do">
 				<div class="read-top">
 					<div id="title" class="text-left">
-						<label>제목 : &nbsp;</label> <input type="text" class="form-control" name="bTitle" style="width:400px; display:inline"/>
+						<label>제목 : &nbsp;</label> <input type="text" class="form-control" name="title" style="width:400px; display:inline" value="${board.BTitle }"/>
 					</div>
 				</div>
 				<div class="read-bt">
@@ -27,7 +27,7 @@
 				<br />
 	<div id="noticeBtn">
 
-			<button type="submit" class="btn btn-outline-secondary" onclick="complete();">작성완료</button>
+			<button type="submit" class="btn btn-outline-secondary">작성완료</button>
 			<button type="button" class="btn btn-secondary" onclick="goNotice();">돌아가기</button>
 	</div>
 			</form>	
@@ -46,6 +46,7 @@
 	
 	<script>
 	$(function(){
+		$('#summernote').summernote('editor.insertText', "${board.BContent}");
 		 $('#summernote').summernote({
 		 height : 300,	 
 		 toolbar: [
@@ -63,10 +64,6 @@
 		 
 		}
 	);
-	
-	function complete(){
-		var bContent = $('#summernote').code();
-	}
 	
 	</script>
 	

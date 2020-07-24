@@ -30,6 +30,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public Board selectOneBoard(int bId) {
 		return sqlSession.selectOne("boardMapper.selectOneBoard", bId);
+	}
+
+	@Override
+	public int insertBoard(Board board) {
+		return sqlSession.insert("boardMapper.insertBoard", board);
 	}	
 
 }
