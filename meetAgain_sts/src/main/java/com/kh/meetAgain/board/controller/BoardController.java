@@ -9,8 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.board.model.service.BoardService;
+import com.kh.meetAgain.board.model.vo.Board;
+import com.kh.meetAgain.common.util.Utils;
 
 
 @Controller
@@ -47,10 +48,11 @@ public class BoardController {
 		return "board/notice";
 	}
 	@RequestMapping("board/noticeDetail.do")
-	public String noticeDetail() {
+	public String noticeDetail(@RequestParam int bId, Model model) {
 		
+		Board b = boardService.SelectOneBoard(bId);
 		
-		
+		model.addAttribute("board", b);
 		
 		return "board/noticeDetail";
 	}

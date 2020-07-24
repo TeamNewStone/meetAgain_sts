@@ -13,7 +13,9 @@
 		SELECT COUNT(*) FROM BOARD
 	</select>
 
-
+	<select id="selectOneBoard" parameterType="_int" resultType="Board">
+		SELECT * FROM BOARD WHERE BID=#{bId}
+	</select>
 
 
 

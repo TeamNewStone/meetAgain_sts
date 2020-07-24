@@ -14,11 +14,12 @@
 		<div class="col-12">
 			<div class="content">
 				<div class="read-top">
-					<div class="subject">이벤트 안내</div>
-					<div id="noticeDate">2020.07.01</div>
+					<div class="subject">${board.BTitle}</div>
+					<div id="noticeDate">${board.BDate }</div>
 				</div>
 				<div class="read-bt">
-					2020년 5월 18일 동아제약 공식 브랜드몰 :Dmall 디몰이 그랜드 오픈 하였습니다.<br />
+				${board.BContent}
+					<!-- 2020년 5월 18일 동아제약 공식 브랜드몰 :Dmall 디몰이 그랜드 오픈 하였습니다.<br />
 					'건강한 삶' 의 기준을 만들고자<br />
 					끝없이 고민하는 동아제약 브랜드의 생각과<br />
 					
@@ -28,7 +29,7 @@
 					익숙하지만 늘 설레이고픈 당신을 위해<br />
 					디몰이 하루를 시작할 수 있는 에너지와 건강을 드릴게요.<br />
 					오늘도 스마일  :D몰 하세요~*<br />
-					자꾸 만나고 싶은 :D몰이 될게요~*
+					자꾸 만나고 싶은 :D몰이 될게요~* -->
 				</div>
 			</div>
 		</div>
@@ -50,4 +51,5 @@
 <br />
 <br />
 <br />
+<br /><br /><br />
 <c:import url="/WEB-INF/views/common/footer.jsp" />
