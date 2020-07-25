@@ -43,6 +43,7 @@
 											var name = naverLogin.user.getName();
 											var gender = naverLogin.user.getGender();
 											var age = naverLogin.user.getAge();
+
 											if (email == undefined || email == null
 													|| name == undefined || name == null
 													|| gender == undefined || gender == null
@@ -53,13 +54,8 @@
 												return;
 											}
 
-											window.location
-													.replace("http://"
-															+ window.location.hostname
-															+ ((location.port == "" || location.port == undefined) ? ""
-																	: ":"
-																			+ location.port)
-															+ "/meetAgain");
+											location.href='${ pageContext.request.contextPath }/member/selectOne.do?email='+email;
+											
 										} else {
 											console.log("callback 처리에 실패하였습니다.");
 										}
@@ -76,6 +72,26 @@
 				console.log("AccessToken이 올바르지 않습니다.");
 			}
 		});
+		
+	/*	function ajax(){
+			
+			var email = naverLogin.user.getEmail();
+			var name = naverLogin.user.getName();
+			var gender = naverLogin.user.getGender();
+			var age = naverLogin.user.getAge();
+			
+			$.ajax({
+				url : "/member/selectOne.do",
+				data : {"email="+email},
+				success : function(data){
+					location.href='${ pageContext.request.contextPath }/member/selectOne.do';
+				},
+				error : function(){
+					alert("에러 발생");
+				}
+			});
+		}
+	*/
 	</script> 	
 		
 <!------------------- 유저 토큰 받아오는 script		
