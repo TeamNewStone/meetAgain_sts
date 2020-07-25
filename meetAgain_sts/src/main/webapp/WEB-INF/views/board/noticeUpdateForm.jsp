@@ -13,16 +13,16 @@
 		<div class="col-12">
 			<div class="content">
 			
-			<form action="${pageContext.request.contextPath}/board/nUpdate.do">
+			<form id="nUpdateForm" action="${pageContext.request.contextPath}/board/nUpdate.do">
 				<div class="read-top">
 					<div id="title" class="text-left">
-						<label>제목 : &nbsp;</label> <input type="text" class="form-control" name="title" style="width:400px; display:inline" value="${board.BTitle }"/>
+					<input type="hidden" id="bId" name="bId" value="${board.BId }" />
+						<label>제목 : &nbsp;</label> <input type="text" class="form-control" id="bTitle" name="bTitle" style="width:400px; display:inline" value="${board.BTitle }"/>
 					</div>
 				</div>
 				<div class="read-bt">
-				
-				<div id="summernote" style="height:800px;"></div>
-					<!-- <textarea name="content" cols="135" rows="15" style="resize:none;"></textarea> -->
+					<textarea id="bContent" name="bContent" cols="135" rows="15" style="resize:none;">${board.BContent}</textarea>
+					
 				</div>
 				<br />
 	<div id="noticeBtn">
@@ -43,28 +43,31 @@
 	<br />
 	<br />
 	
-	
 	<script>
+		$('#nUpdateForm').submit(function(){
+			var str = $('#bContent').val();
+
+			str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+
+			$('#bContent').val(str);
+			$.ajax({
+				url:'${pageContext.request.contextPath}/board/nUpdate.do',
+				data:{
+					bId:$('#bId'),
+					bTitle:$('#bTitle').val(),
+					bContent:$('#bContent')
+				}, success:function(data){
+					if(data == 1) alert('가나다');
+					else alert('라마바');
+				}
+			});
+		});
+	</script>
+	
+<!-- 	<script>
 	$(function(){
 		$('#summernote').summernote('editor.insertText', "${board.BContent}");
-		 $('#summernote').summernote({
-		 height : 300,	 
-		 toolbar: [
-			    // [groupName, [list of button]]
-			    ['style', ['bold', 'italic', 'underline']],
-			    ['font', ['strikethrough']],
-			    ['fontsize', ['fontsize']],
-			    ['fontname', ['fontname']],
-			    ['color', ['forecolor', 'backcolor']],
-			    ['para', ['paragraph']],
-			    ['table', ['table']],
-			    ['insert', ['link', 'picture']],
-			  ]
-		 });
-		 
-		}
-	);
 	
-	</script>
+	</script> -->
 	
 <c:import url="/WEB-INF/views/common/footer.jsp" />

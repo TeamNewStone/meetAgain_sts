@@ -18,6 +18,7 @@
 					<div id="noticeDate">${board.BDate }</div>
 				</div>
 				<div class="read-bt">
+				<input type="hidden" id="bContent" value="${board.BContent }"/>
 				${board.BContent}
 					<!-- 2020년 5월 18일 동아제약 공식 브랜드몰 :Dmall 디몰이 그랜드 오픈 하였습니다.<br />
 					'건강한 삶' 의 기준을 만들고자<br />

@@ -70,19 +70,47 @@ public class BoardController {
 		
 		int result = boardService.insertBoard(board);
 		
-		model.addAttribute("board", board);
+		
+		String loc = "/board/notice.do";
+		String msg = "";
 		
 		if(result > 0) {
-			return "board/noticeDetail.do?bId"+board.getBId();
+			msg = "게시글 등록 성공!";
+			loc = "/board/noticeDetail.do?bId="+board.getBId();
+			
 		} else {
-			return "board/notice.do";
+			msg = "게시글 등록 실패!";
 		}
+		
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		
+		return "common/msg";
+		
 	}
 	
 	@RequestMapping("board/noticeUpdate.do")
 	public String noticeUpdate(@RequestParam int bId, Model model) {
 		model.addAttribute("board", boardService.SelectOneBoard(bId));
 		return "board/noticeUpdateForm";
+	}
+	
+	@RequestMapping("board/nUpdate.do")
+	public String nUpdate(Board board, Model model) {
+		int result = boardService.updateBoard(board);
+		
+		String loc = "/board/notice.do";
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "게시글 수정이 완료되었습니다";
+			loc = "/board/noticeDetail.do?bId="+board.getBId();
+		} else {
+			msg = "게시글 수정 실패. 다시 시도해주세요";
+		}
+		
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		
+		return "common/msg";
 	}
 	
 	@RequestMapping("board/review.do")

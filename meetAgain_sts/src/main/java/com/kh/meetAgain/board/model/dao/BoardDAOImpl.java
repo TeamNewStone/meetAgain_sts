@@ -35,6 +35,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int insertBoard(Board board) {
 		return sqlSession.insert("boardMapper.insertBoard", board);
+	}
+
+	@Override
+	public int updateBoard(Board board) {
+		return sqlSession.update("boardMapper.updateBoard", board);
 	}	
 
 }

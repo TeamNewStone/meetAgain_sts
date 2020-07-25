@@ -23,6 +23,8 @@ public class Board implements Serializable {
 	private int bRate;
 	private Date bDate;
 	private String bDel;
+
+	
 }
 	
 
