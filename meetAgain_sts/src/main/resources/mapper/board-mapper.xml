@@ -17,12 +17,18 @@
 		SELECT * FROM BOARD WHERE BID=#{bId}
 	</select>
 
-	<insert id="insertBoard">
+	<insert id="insertBoard" parameterType="Board">
 		INSERT INTO BOARD
 		VALUES
 		(SEQ_BID.NEXTVAL, 'admin', 0, #{bTitle}, #{bContent}, DEFAULT, DEFAULT, 'N')
+		<selectKey keyProperty="bId" resultType="_int" order="AFTER"> 
+		      SELECT SEQ_BID.CURRVAL FROM DUAL 
+		</selectKey>
 	</insert>
 
+	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD SET BTITLE = #{bTitle}, BCONTENT=#{bContent} WHERE BID=#{bId}
+	</update>
 
 
 

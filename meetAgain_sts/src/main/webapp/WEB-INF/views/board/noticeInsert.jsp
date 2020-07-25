@@ -13,21 +13,20 @@
 		<div class="col-12">
 			<div class="content">
 			
-			<form action="${pageContext.request.contextPath}/board/nInsert.do">
+			<form id="nInsertForm" action="${pageContext.request.contextPath}/board/nInsert.do">
 				<div class="read-top">
 					<div id="title" class="text-left">
-						<label>제목 : &nbsp;</label> <input type="text" class="form-control" name="bTitle" style="width:400px; display:inline"/>
+						<label>제목 : &nbsp;</label> <input type="text" class="form-control" name="bTitle" id="bTitle" style="width:400px; display:inline"/>
 					</div>
 				</div>
 				<div class="read-bt">
 				
-				<div id="summernote" style="height:800px;"></div>
-					<!-- <textarea name="content" cols="135" rows="15" style="resize:none;"></textarea> -->
+					 <textarea id="bContent" name="bContent" cols="135" rows="15" style="resize:none;"></textarea> 
 				</div>
 				<br />
 	<div id="noticeBtn">
 
-			<button type="submit" class="btn btn-outline-secondary" onclick="complete();">작성완료</button>
+			<button type="submit" class="btn btn-outline-secondary" >작성완료</button>
 			<button type="button" class="btn btn-secondary" onclick="goNotice();">돌아가기</button>
 	</div>
 			</form>	
@@ -42,32 +41,28 @@
 	<br />
 	<br />
 	<br />
-	
-	
-	<script>
-	$(function(){
-		 $('#summernote').summernote({
-		 height : 300,	 
-		 toolbar: [
-			    // [groupName, [list of button]]
-			    ['style', ['bold', 'italic', 'underline']],
-			    ['font', ['strikethrough']],
-			    ['fontsize', ['fontsize']],
-			    ['fontname', ['fontname']],
-			    ['color', ['forecolor', 'backcolor']],
-			    ['para', ['paragraph']],
-			    ['table', ['table']],
-			    ['insert', ['link', 'picture']],
-			  ]
-		 });
-		 
+
+<script>
+$('#nInsertForm').submit(function(){
+	var str = $('#bContent').val();
+
+	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+
+	$('#bContent').val(str);
+	$.ajax({
+		url:'${pageContext.request.contextPath}/board/nInsert.do',
+		data:{
+			bTitle:$('#bTitle').val(),
+			bContent:$('#bContent')
+		}, success:function(data){
+			if(data == 1) alert('가나다');
+			else alert('라마바');
 		}
-	);
+	});
+});
+
+</script>
 	
-	function complete(){
-		var bContent = $('#summernote').code();
-	}
-	
-	</script>
+
 	
 <c:import url="/WEB-INF/views/common/footer.jsp" />
