@@ -18,6 +18,7 @@
 		 -->		 
 		
 		 <typeAlias type="com.kh.meetAgain.board.model.vo.Board" alias="Board"/>
+		 <typeAlias type="com.kh.meetAgain.member.model.vo.Member" alias="Member"/>
 	</typeAliases>	
 	
 	<!-- 문자열과 배열을 치환해주는 객체 -->

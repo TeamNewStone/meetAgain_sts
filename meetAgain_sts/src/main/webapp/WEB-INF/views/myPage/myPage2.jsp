@@ -29,55 +29,59 @@
 	    </div>
 	    
       <div class="col-12 col-md-4">
+          <form action="${ pageContext.request.contextPath }/member/mUpdate.do">
         <div class="row">            
           <div class="col-12 text-left"><p style="font-size: 20px; font-weight: bold;">? 님의 기본정보 : </p></div>
+         
+          <!-- 로그인 되면 value ${member.userId} 로 바꿔야합니다 -->
+          <input type="hidden" name="userId" value="u20a001" />
+          
           <div class="col-12 col-md-3 text-right"><p id="textFm">닉네임 : </p></div>
-          <div class="col-12 col-md-9"><input type="text" class="form-control" name="nickName"></div>
-          <div class="col-12 col-md-3 text-right"><p id="textFm">비밀번호 : </p></div>
-          <div class="col-12 col-md-9"><input type="password" class="form-control" name="password"></div>
-          <div class="col-12 col-md-3 text-right"><p id="textFm" style="width: 75px;">비밀번호확인 : </p></div>
-          <div class="col-12 col-md-9"><input type="password" class="form-control" name="password"></div>
+          <div class="col-12 col-md-9"><input type="text" class="form-control" name="nickName" id="NickName" placeholder="2자 이상 6자 이하로 작성해주세요." maxlength="6" required>
+          <small><span class="error_next_box text-info" id="nickNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small></div>
+          
           <div class="col-12 col-md-3 text-right"><p id="textFm">휴대폰 : </p></div>
-          <div class="col-12 col-md-9"><input type="text" class="form-control" name="phone"></div>
+          <div class="col-12 col-md-9"><input type="text" class="form-control" name="phone"  id="phoneNo" placeholder="'-'없이 번호만 입력해주세요." required>
+          <small><span class="error_next_box" id="iphoneNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small></div>
           
 
           <div class="col-12 col-md-3 text-right"><p id="textFm">주소 (기본) : </p></div>          
           <div class="col-12 col-md-9 text-right">
             <div class="input-group">
-              <input type="text" class="form-control" name="address1">
+              <input type="text" class="form-control" name="addressCode1" required>
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="addressSearchBtn1();">검색</button>
               </div>
             </div>
           </div>
           <div class="col-12 col-md-3 text-right"><p id="textFm">주소 상세 : </p></div>
-          <div class="col-12 col-md-9"><input type="text" class="form-control" name="addressDetail1"></div>
+          <div class="col-12 col-md-9"><input type="text" class="form-control" name="address1" required></div>
 
 
           <div class="col-12 col-md-3 text-right"><p id="textFm">직장 : </p></div>
           <div class="col-12 col-md-9 text-right">
             <div class="input-group">
-              <input type="text" class="form-control" name="address2">
+              <input type="text" class="form-control" name="addressCode2">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="addressSearchBtn2();">검색</button>
               </div>
             </div>
           </div>
           <div class="col-12 col-md-3 text-right"><p id="textFm">직장 상세 : </p></div>
-          <div class="col-12 col-md-9"><input type="text" class="form-control" name="addressDetail2"></div>              
+          <div class="col-12 col-md-9"><input type="text" class="form-control" name="address2"></div>              
 
 
           <div class="col-12 col-md-3 text-right"><p id="textFm">선택 : </p></div>
           <div class="col-12 col-md-9 text-right">
             <div class="input-group">
-              <input type="text" class="form-control" name="address3">
+              <input type="text" class="form-control" name="addressCode3">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="addressSearchBtn3();">검색</button>
               </div>
             </div>
           </div>
           <div class="col-12 col-md-3 text-right"><p id="textFm">선택 상세 : </p></div>
-          <div class="col-12 col-md-9"><input type="text" class="form-control" name="addressDetail3"></div>                                                   
+          <div class="col-12 col-md-9"><input type="text" class="form-control" name="address3"></div>                                                   
         </div>
         
         <div class="col-12"><hr></div>
@@ -88,10 +92,12 @@
           <div class="col-12 col-md-4">
           <button type="button" class="btn btn-outline-primary btn-pill" onclick="memberOther();" id="Btn">부가정보</button></div>
           <div class="col-12 col-md-4">
-          <button type="button" class="btn btn-outline-primary btn-pill" id="Btn">수정완료</button></div>              
-        </div>            
+          <button type="submit" class="btn btn-outline-primary btn-pill" id="Btn" onclick="return send();">수정완료</button></div>              
+        </div>  
+        </form>          
 
       </div>
+
 
     </div>
   </div>
@@ -108,6 +114,67 @@
     <script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script>        
         
     <script>
+    
+    $('#NickName').keyup(function(){
+    	$(this).val($(this).val().replace(" ", ""));
+    });
+
+    
+    $('#phoneNo').keyup(function(){
+    	var phoneChk = /^[0-9]$/;
+    	if(!phoneChk.test($(this).val())){
+    		$(this).val($(this).val().replace(phoneChk,''));
+    		$(this).focus();
+    	}
+    	
+
+    	
+    });
+
+
+    function isCellPhone(p) {
+        var regPhone = /^((01[1|6|7|8|9])[1-9][0-9]{6,7})$|(010[1-9][0-9]{7})$/;
+        return regPhone.test(p);
+    }
+
+    function send(){
+    	
+    	
+        if(!isCellPhone($('#phoneNo').val())) {
+            showErrorMsg($("#iphoneNoMsg"),"형식에 맞지 않는 번호입니다.");
+            return false;
+        }else{
+        	$("#iphoneNoMsg").hide();
+        }
+        
+        if($('#NickName').val().length < 2){
+        	showErrorMsg($("#nickNoMsg"),"최소 2자 이상 입력해야 합니다.");
+            return false;
+        }else{
+        	$("#nickNoMsg").hide();
+    	   $.ajax({
+	            url  : "${pageContext.request.contextPath}/member/checkNnDuplicate.do",
+	            data : {nickName:$('#NickName').val()},
+	            dataType: "json",
+	            success : function(data){
+	                console.log(data);
+	                // if(data=="true") //stream 방식
+	                if(data.isUsable==true){ //viewName 방식
+	                    alert('사용 가능한 닉네임 입니다.');
+	                } else {
+	                    alert('이미 사용중인 닉네임입니다.');
+	                    return false;
+	                }
+	            }
+     	});  
+        }
+    }
+    function showErrorMsg(obj, msg) {
+        obj.attr("class", "error_next_box");
+        obj.html(msg);
+        obj.show();
+    }
+    
       function mainMyPage() {
         location.href="myPage1.jsp";
       }
@@ -120,9 +187,9 @@
         var option = "width=650px, height=650px";
         window.open(url, name, option);
       } */
-    </script>
-
-    <script>
+   		
+      </script>
+      <script>
       function addressSearchBtn1() {
       // 참조 API : http://postcode.map.daum.net/guide
           new daum.Postcode({
@@ -158,10 +225,10 @@
 
                   // 우편번호와 주소 정보를 해당 필드에 넣는다.
                   $('[name=address1]').val(fullAddr);
-                  $('[name=addressDetail1]').val(data.zonecode); //5자리 새우편번호 사용
+                  $('[name=addressCode1]').val(data.zonecode); //5자리 새우편번호 사용
 
                   // 커서를 상세주소 필드로 이동한다.
-                  $('[name=addressDetail1]').focus();
+                  $('[name=address1]').focus();
               }
           }).open();
       };
@@ -201,10 +268,10 @@
 
                       // 우편번호와 주소 정보를 해당 필드에 넣는다.
                       $('[name=address2]').val(fullAddr);
-                      $('[name=addressDetail2]').val(data.zonecode); //5자리 새우편번호 사용
+                      $('[name=addressCode2]').val(data.zonecode); //5자리 새우편번호 사용
 
                       // 커서를 상세주소 필드로 이동한다.
-                      $('[name=addressDetail2]').focus();
+                      $('[name=address2]').focus();
                   }
               }).open();
           };
@@ -244,10 +311,10 @@
 
                       // 우편번호와 주소 정보를 해당 필드에 넣는다.
                       $('[name=address3]').val(fullAddr);
-                      $('[name=addressDetail3]').val(data.zonecode); //5자리 새우편번호 사용
+                      $('[name=addressCode3]').val(data.zonecode); //5자리 새우편번호 사용
 
                       // 커서를 상세주소 필드로 이동한다.
-                      $('[name=addressDetail3]').focus();
+                      $('[name=address3]').focus();
                   }
               }).open();
           };

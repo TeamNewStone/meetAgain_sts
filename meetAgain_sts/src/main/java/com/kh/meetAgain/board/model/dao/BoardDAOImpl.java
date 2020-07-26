@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.meetAgain.board.model.vo.Board;
-@Repository
+@Repository("boardDAO")
 public class BoardDAOImpl implements BoardDAO {
 	
 	@Autowired
