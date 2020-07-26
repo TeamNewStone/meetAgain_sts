@@ -54,6 +54,10 @@ public class BoardController {
 		
 		Board b = boardService.SelectOneBoard(bId);
 		
+		int bRate = boardService.updateReadCount(bId); 
+		model.addAttribute("bRate",bRate);
+
+		
 		model.addAttribute("board", b);
 		
 		return "board/noticeDetail";

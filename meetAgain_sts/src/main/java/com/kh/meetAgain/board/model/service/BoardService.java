@@ -19,4 +19,6 @@ public interface BoardService {
 	int insertBoard(Board board);
 
 	int updateBoard(Board board);
+
+	int updateReadCount(int bId);
 }
