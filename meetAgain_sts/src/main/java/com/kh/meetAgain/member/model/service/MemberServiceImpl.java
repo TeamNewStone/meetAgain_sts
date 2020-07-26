@@ -26,7 +26,11 @@ public class MemberServiceImpl implements MemberService {
 	public int mUpdate(Member member) {
 		return memberDAO.mUpdate(member);
 	}
-	
-	
+  
+	@Override
+	public Member selectOne(String email) {
+		return memberDAO.selectOne(email); 
+	}
+
 
 }

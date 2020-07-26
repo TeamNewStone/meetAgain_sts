@@ -1,5 +1,4 @@
 package com.kh.meetAgain.member.controller;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,5 +75,19 @@ public class MemberController {
 		model.addAttribute("msg", msg);
 		
 		return "common/msg";
+
+	@RequestMapping("/member/selectOne.do")
+	public String selectOne(@RequestParam String email) {
+		
+		System.out.println(email);
+		Member result = memberService.selectOne(email);
+		
+		if(result == null) {
+			//회원이 아닐 경우
+			return "member/memberInsertForm";
+		}else {
+			//회원일 경우
+			return "redirect:/";
+		}
 	}
 }

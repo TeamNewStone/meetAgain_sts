@@ -1,5 +1,4 @@
 package com.kh.meetAgain.member.model.service;
-
 import com.kh.meetAgain.member.model.vo.Member;
 
 public interface MemberService {
@@ -8,4 +7,5 @@ public interface MemberService {
 
 	int mUpdate(Member member);
 
+	Member selectOne(String email);
 }
