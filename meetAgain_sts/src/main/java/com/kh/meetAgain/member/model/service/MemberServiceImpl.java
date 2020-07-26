@@ -1,5 +1,7 @@
 package com.kh.meetAgain.member.model.service;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,22 @@ public class MemberServiceImpl implements MemberService {
 	MemberDAO memberDAO;
 	
 	@Override
+	public int checkNnDuplicate(String nickName) {
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		hmap.put("nickName", nickName);
+		
+		return memberDAO.checkNnDuplicate(hmap);
+	}
+
+	@Override
+	public int mUpdate(Member member) {
+		return memberDAO.mUpdate(member);
+	}
+  
+	@Override
 	public Member selectOne(String email) {
 		return memberDAO.selectOne(email); 
 	}
+
 
 }

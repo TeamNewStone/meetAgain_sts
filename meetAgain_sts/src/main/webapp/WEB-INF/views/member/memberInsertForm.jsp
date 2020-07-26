@@ -94,6 +94,10 @@
 
 <script>
 
+$('#NickName').keyup(function(){
+	$(this).val($(this).val().replace(" ", ""));
+});
+
 $('#phone').keyup(function(){
 	var phoneChk = /^[0-9]$/;
 	if(!phoneChk.test($(this).val())){

@@ -5,8 +5,8 @@
 <mapper namespace="boardMapper">
 
 	<select id="selectBoardList" resultType="Board">
-		SELECT *
-		FROM BOARD ORDER BY BDATE DESC, BID DESC
+		SELECT BID, NICKNAME, BTYPE, BTITLE, BCONTENT, BRATE, BDATE, BDEL FROM BOARD
+		JOIN MEMBER USING(USERID) ORDER BY BID DESC
 	</select>
 
 	<select id="selectBoardTotalContent" resultType="_int">

@@ -27,7 +27,7 @@
 					<tr id="${b.BId}">
 						<td>${b.BId}</td>
 						<td>${b.BTitle}</td>
-						<td>${b.userId}</td>
+						<td>${b.nickName}</td>
 						<td>${b.BDate}</td>
 						<td>${b.BRate }</td>
 					</tr>
