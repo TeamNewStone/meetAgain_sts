@@ -30,6 +30,8 @@
 		UPDATE BOARD SET BTITLE = #{bTitle}, BCONTENT=#{bContent} WHERE BID=#{bId}
 	</update>
 
-
+	<update id="updateReadCount" parameterType="_int">
+		UPDATE BOARD SET BRATE = BRATE+1 WHERE BID=#{bId}
+	</update>
 
 </mapper>

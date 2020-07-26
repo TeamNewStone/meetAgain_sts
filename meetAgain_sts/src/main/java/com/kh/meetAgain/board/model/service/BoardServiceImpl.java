@@ -40,4 +40,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.updateBoard(board);
 	}
 
+	@Override
+	public int updateReadCount(int bId) {
+		return boardDAO.updateReadCount(bId);
+	}
+
 }

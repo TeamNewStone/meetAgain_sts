@@ -15,4 +15,6 @@ public interface BoardDAO {
 	int insertBoard(Board board);
 
 	int updateBoard(Board board);
+
+	int updateReadCount(int bId);
 }
