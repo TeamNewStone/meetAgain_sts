@@ -8,56 +8,66 @@
 
 
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-12 col-md-4 offset-md-4">
-			<div class="register-form">
-				<div class="mb-7">
-					<br /> <br /> <br />
-					<h1>회원가입</h1>
-					<br />
-				</div>
-				<form style="line-height: 1em;" action="memberInsertSuccess.do">
-					<div class="form-group">
-						<label for="Email1">* 이메일</label> <input type="email"
-							class="form-control" id="Email1" aria-describedby="emailHelp"
-							placeholder="${email}" readonly>
-						<!-- <small id="emailHelp" class="form-text text-info">We'll never share your email with anyone else.</small> -->
-					</div>
-					<div class="form-group">
-						<label for="userName">* 이름</label> <input type="text"
-							class="form-control" id="userName" placeholder="${name}" readonly>
-					</div>
-					<div class="form-group">
-						<label for="NickName">* 닉네임</label> <input type="text"
-							class="form-control" id="NickName"
-							placeholder="2자 이상 6자 이하로 작성해주세요." maxlength="6" required>
-						<small><span class="error_next_box text-info"
-							id="nickNoMsg" style="display: none; color: red;"
-							aria-live="assertive"></span></small>
-					</div>
-					<div class="form-group">
-						<label for="gender">* 성별</label><br /> <label
-							class="box-radio-input"><input type="radio" name="gender"
-							value="옵션1"
-							<c:if test="${gender eq 'M'}"><c:out value='checked="checked"'/>  </c:if>
-							disabled><span>남자</span></label>
+  <div class="row">
+	  <div class="col-12 col-md-4 offset-md-4">
+				  <div class="register-form">
+					  <div class="mb-7">
+					  <br />
+					  <br />
+					  <br />
+						  <h1>회원가입</h1>
+					  <br />
+					  </div>
+					  <form style="line-height:1em;" action="memberInsertSuccess.do">
+						  <div class="form-group">
+						    <label for="Email1">* 이메일</label>
+						    <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" placeholder="${email}" readonly>
+						    <!-- <small id="emailHelp" class="form-text text-info">We'll never share your email with anyone else.</small> -->
+						  </div>
+						  <div class="form-group">
+						    <label for="userName">* 이름</label>
+						    <input type="text" class="form-control" id="userName" placeholder="${name}" readonly>
+						  </div>
+						  <div class="form-group">
+						    <label for="NickName">* 닉네임</label>
+						    <input type="text" class="form-control" id="NickName" placeholder="2자 이상 10자 이하로 작성해주세요." maxlength="10" required>
+						    <small><span class="error_next_box text-info" id="nickNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
+						  </div>
+						  <div class="form-group">
+						    <label for="gender">* 성별</label><br />
+						    
+						    <label class="box-radio-input"><input type="radio" name="gender" value="옵션1" 
+						     <c:if test="${gender eq 'M'}"><c:out value='checked="checked"'/>  </c:if> disabled><span>남자</span></label>
+						  
+						    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						   
+							<label class="box-radio-input"><input type="radio" name="gender" value="옵션2" 
+							 <c:if test="${gender eq 'F'}"><c:out value='checked="checked"'/></c:if> disabled><span>여자</span></label>
+						
+						  </div>
+						  <div class="form-group">
+						  	
+						    <label for="birthday">* 생년월일</label> <br />
+								<div class="row">
+						    <input type="text" class="form-control" id="birthyear" maxlength="4" style="width:40%; margin-left : 13px;"/>
+						   	 &nbsp; _ &nbsp; 
+						    <input type="text" class="form-control" id="birthday" placeholder="${birth}" readonly  style="width:40%; ">
+						    </div>
+						  </div> <br />
+						  <div class="form-group">
+						    <label for="phoneNo">* 전화번호</label>
+						    <input type="text" class="form-control" id="phoneNo" placeholder="'-'없이 번호만 입력해주세요. ex)01012345678" required>
+						    <small><span class="error_next_box" id="iphoneNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
+						  </div>
+						  
+						  <div class="form-group">
+							<label for="zipCode" style="display:block;">* 주소(집)</label>
+								<input type="text" class="form-control2" id="zipCode1"
+									name="zipCode" placeholder="우편번호" style="width:50px important;" required>
+								<button type="button" class="btn btn-secondary mb-2" value="1" onclick="addrSearch1();">검색</button>
+								<input type="text" class="form-control" id="address1"
+									name="address1" placeholder="상세주소" required>
 
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-						<label class="box-radio-input"><input type="radio"
-							name="gender" value="옵션2"
-							<c:if test="${gender eq 'F'}"><c:out value='checked="checked"'/></c:if>
-							disabled><span>여자</span></label>
-
-					</div>
-					<div class="form-group">
-
-						<label for="birthday">* 생년월일</label> <br />
-						<div class="row">
-							<input type="text" class="form-control" id="birthyear"
-								maxlength="4" style="width: 40%; margin-left: 13px;" /> &nbsp; _
-							&nbsp; <input type="text" class="form-control" id="birthday"
-								placeholder="${birth}" readonly style="width: 40%;">
 						</div>
 					</div>
 					<br />
@@ -160,7 +170,7 @@ function send(){
     }else if($('#NickName').val().length > 10){
     	showErrorMsg($("#nickNoMsg"),"10자 이내로 입력해 주세요.");
         return false;
-        }
+       }
     else{
     	$("#nickNoMsg").hide();
     	 $.ajax({
@@ -177,8 +187,9 @@ function send(){
 	                    return false;
 	                }
 	            }
-  	});  
-    }
+  	});   
+
+  }
     
     
 }
