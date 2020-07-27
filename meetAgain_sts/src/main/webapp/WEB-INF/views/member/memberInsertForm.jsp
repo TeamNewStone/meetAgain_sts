@@ -59,7 +59,7 @@
 						    <input type="text" class="form-control" id="phoneNo" placeholder="'-'없이 번호만 입력해주세요. ex)01012345678" required>
 						    <small><span class="error_next_box" id="iphoneNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
 						  </div>
-						  
+						  <br />
 						  <div class="form-group">
 							<label for="zipCode" style="display:block;">* 주소(집)</label>
 								<input type="text" class="form-control2" id="zipCode1"
@@ -71,23 +71,8 @@
 						</div>
 					</div>
 					<br />
-					<div class="form-group">
-						<label for="phoneNo">* 전화번호</label> <input type="text"
-							class="form-control" id="phoneNo"
-							placeholder="'-'없이 번호만 입력해주세요. ex)01012345678" required>
-						<small><span class="error_next_box" id="iphoneNoMsg"
-							style="display: none; color: red;" aria-live="assertive"></span></small>
-					</div>
-					<br />
-					<div class="form-group">
-						<label for="zipCode" style="display: block;">* 주소(집)</label> <input
-							type="text" class="form-control2" id="zipCode1" name="zipCode"
-							placeholder="우편번호" style="width: 50px important;" required>
-						<button type="button" class="btn btn-secondary mb-2" value="1"
-							onclick="addrSearch1();">검색</button>
-						<input type="text" class="form-control" id="address1"
-							name="address1" placeholder="상세주소" required>
-					</div>
+				
+				
 					<!-- 
 						<div class="form-group">
 							<label for="zipCode" style="display:block;">주소(직장)</label>
