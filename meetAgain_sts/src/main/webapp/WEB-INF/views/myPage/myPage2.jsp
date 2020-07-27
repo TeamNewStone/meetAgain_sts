@@ -37,7 +37,9 @@
           <input type="hidden" name="userId" value="u20a001" />
           
           <div class="col-12 col-md-3 text-right"><p id="textFm">닉네임 : </p></div>
+
           <div class="col-12 col-md-9"><input type="text" class="form-control" name="nickName" id="NickName" placeholder="2자 이상 10자 이하로 작성해주세요." maxlength="10" required>
+
           <small><span class="error_next_box text-info" id="nickNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small></div>
           
           <div class="col-12 col-md-3 text-right"><p id="textFm">휴대폰 : </p></div>
