@@ -1,5 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="ko">
 
 <head>
 <meta charset="UTF-8">
@@ -12,8 +14,18 @@
 </head>
 
 <body>
+
 	callback 처리중입니다. 이 페이지에서는 callback을 처리하고 바로 main으로 redirect하기때문에 이 메시지가
 	보이면 안됩니다.
+	
+	
+	<form id = "userform" action="memberInsertForm.do" method="POST">
+<input type="text" id="email" name="email"/>
+<input type="text" id="name" name="name" />
+<input type="text" id="gender" name="gender" />
+<input type="text" id="age" name="age" />
+<input type="text" id="birth" name="birth" />
+</form>
 	
 	<!-- (1) LoginWithNaverId Javscript SDK -->
 	<script type="text/javascript"
@@ -43,18 +55,47 @@
 											var name = naverLogin.user.getName();
 											var gender = naverLogin.user.getGender();
 											var age = naverLogin.user.getAge();
-
+											var birth = naverLogin.user.getBirthday();
+	
+										
+																					
 											if (email == undefined || email == null
 													|| name == undefined || name == null
 													|| gender == undefined || gender == null
-													|| age == undefined	|| age == null) 
+													|| age == undefined	|| age == null
+													|| birth == undefined	|| birth == null) 
 											{alert("필수정보에 대한 정보제공을 모두 동의해주세요.");
 												/* (5-1) 사용자 정보 재동의를 위하여 다시 네아로 동의페이지로 이동함 */
 												naverLogin.reprompt();
 												return;
 											}
-
-											location.href='${ pageContext.request.contextPath }/member/selectOne.do?email='+email;
+											
+											$('#email').val(email);
+											$('#name').val(name);
+											$('#gender').val(gender);
+											$('#age').val(age);
+											$('#birth').val(birth);
+											
+											$.ajax({
+												url : "${ pageContext.request.contextPath }/member/selectOne.do",
+												data : {
+													email : email		
+												},
+												//dataType : "json",
+												//async : false,
+												success : function(data){
+													if(data.isNew == true){
+														$('#userform').submit();
+														//location.href='${pageContext.request.contextPath}/member/memberInsertForm.do';														
+													} else {
+														location.href="${ pageContext.request.contextPath}";
+													}
+												},
+												error : function(){
+													alert("에러 발생");
+												}
+											});
+										
 											
 										} else {
 											console.log("callback 처리에 실패하였습니다.");
@@ -72,28 +113,10 @@
 				console.log("AccessToken이 올바르지 않습니다.");
 			}
 		});
-		
-	/*	function ajax(){
-			
-			var email = naverLogin.user.getEmail();
-			var name = naverLogin.user.getName();
-			var gender = naverLogin.user.getGender();
-			var age = naverLogin.user.getAge();
-			
-			$.ajax({
-				url : "/member/selectOne.do",
-				data : {"email="+email},
-				success : function(data){
-					location.href='${ pageContext.request.contextPath }/member/selectOne.do';
-				},
-				error : function(){
-					alert("에러 발생");
-				}
-			});
-		}
-	*/
+	
+	
 	</script> 	
-		
+
 <!------------------- 유저 토큰 받아오는 script		
 <script>
   var naver_id_login = new naver_id_login("lQZcDrHxi5UeKZeLLXqp", "http://localhost:8088/meetAgain/member/callBack.do");
