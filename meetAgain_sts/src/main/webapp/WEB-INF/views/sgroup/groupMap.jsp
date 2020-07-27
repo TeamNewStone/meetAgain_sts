@@ -34,7 +34,7 @@
 			    // 지도생성
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 				mapOption = {
-					center : new kakao.maps.LatLng(37.4992176, 127.0326873), // 지도의 중심좌표
+					center : new kakao.maps.LatLng(37.4992176, 127.0326873), // 지도의 중심좌표 호산빌딩
 					level : 3, // 지도의 확대 레벨 기본값3  1~14
 					mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
 				};
@@ -72,6 +72,11 @@
 				    // 클릭한 위도, 경도 정보를 가져옵니다 
 				    var latlng = mouseEvent.latLng; 
 				    
+				    console.log(latlng);
+				    // 위도 경도 분리
+				    /* var weg = latlng.getLat();
+				    var geg = latlng.getLng(); */
+				    
 				    // 마커 위치를 클릭한 위치로 옮깁니다
 				    marker.setPosition(latlng);
 				    
@@ -82,6 +87,15 @@
 				    var resultDiv1 = document.getElementById('clickLatlng');
 				    resultDiv1.innerHTML = message1;
 				    
+				    var url = 'https://map.kakao.com/link/to/';
+				    
+					/* var url = 'https://map.kakao.com/link/to/카카오판교오피스,37.402056,127.108212'; */
+					// console.log(url + '다시만나모임장소' + ',' + latlng.Ha + ',' + latlng.Ga);
+					
+					
+					
+
+					/* var addAddr =  */
 				    
 				    // 마커 주소 전달
 				    
@@ -93,10 +107,8 @@
 				            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 				            
 				            var content = '<div class="bAddr" style="width: 350px; height: 130px;">' +
-				                            '<span class="title">선택하신 위치</span><br>' + 
-				                            detailAddr + 
-				                            '<button type="button" class="btn btn-info">출발지</button>' + 
-				                        '</div>';
+				                            '<span class="title">선택하신 핀포인트</span><br>' + 
+				                            detailAddr + '</div>';
 
 				            // 마커를 클릭한 위치에 표시합니다 
 				            marker.setPosition(latlng);
@@ -130,6 +142,21 @@
 						    resultDiv3.innerHTML = message3; */
 				        }   
 				    });
+
+					
+					$('#findRoad').on('click', function() {
+						
+						
+						if(confirm("카카오맵으로 넘어가시겠습니까?")){
+							window.open(url + '다시만나모임장소선택하신곳' + ',' + latlng.Ha + ',' + latlng.Ga, '_blank');
+							console.log(url + '다시만나모임장소선택하신곳' + ',' + latlng.Ha + ',' + latlng.Ga, '_blank');
+						} else {
+							null;
+						}
+						// var resultMapQuery = window.open(url + '다시만나모임장소선택하신곳' + ',' + latlng.Ha + ',' + latlng.Ga, '_blank');
+						// console.log(resultMapQuery);
+						// var resultQueryMap = window.open(url + '다시만나모임장소' + ',' + latlng.Ha + ',' + latlng.Ga, '_blank');						
+					});
 					
 				});
 				
@@ -161,23 +188,18 @@
 				    	
 				    }
 				    
-				  /*   if(div5.style.display=='none')
-				    	div5.style.display = 'block'; */
-					
-				    
 				};
 				
-				/* ${'#_mapMakerCheck2'}.on('change', function({
-					
-					var div6 = $('#_mapMakerCheck2').val();
-					
-				    if(div6.style.display=='none'){
-				    	div6.style.display = 'block';
-					} else {
-						div6.style.display = 'none';
-					}
-				});				
-				     */
+				
+				
+				/* function findRoad(){
+					var url = 'https://map.kakao.com/link/to/';					
+					window.open(url + weg + ',' + geg, '_blank');
+				} */
+				
+			/* latlng.getLat()
+				   latlng.getLng() */
+				
 				
 				
 			</script>
@@ -237,50 +259,10 @@
 		
 		
 		
-		
-		
 						
 						
 						
 						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-							
-					<!-- <script type="text/javascript"
-						src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	fffaeca75a32b9a21c2e06c950becd53"></script>
-					<script type="text/javascript"
-						src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=LIBRARY"></script>
-					services와 clusterer, drawing 라이브러리 불러오기
-					<script type="text/javascript"
-						src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
-					<script>
-				var container = document.getElementById('map');
-				var options = {
-					center: new kakao.maps.LatLng(33.450701, 126.570667),
-					level: 3
-				};
-		
-				var map = new kakao.maps.Map(container, options);
-			</script>	 -->
-														
-		
 		
 		<br /> <br />
 	</div>
@@ -322,8 +304,7 @@
 			<h3><span id="_mapPhone">전화번호가 들어갈 공간입니다.</span></h3>
 			<br />
 			<div>
-				<button type="button" class="btn btn-info"	id="findRoad" onclick="findRoad();">
-					&nbsp;&nbsp;&nbsp;길찾기&nbsp;&nbsp;&nbsp;</button>
+				<button type="button" class="btn btn-info"	id="findRoad">카카오맵에서<br>길찾기</button>
 				<!-- <button type="button" class="btn btn-light">&nbsp;&nbsp;장소변경&nbsp;&nbsp;</button> -->
 				<button type="button" class="btn btn-light" id="reloadmap">&nbsp;&nbsp;장소변경&nbsp;&nbsp;</button>
 			</div>
@@ -338,14 +319,7 @@
 		var url = 'https://map.kakao.com/link/to/카카오판교오피스,37.402056,127.108212';
 		window.open(url, '_blank');
 	} */
-	
-	/* ${'#_mapMakerCheck'}on.('click', function() {
-		var mappy = ${'#_mapMakerCheck'}.val();
-		
-		if(mappy == 'message2'){
-			location.reload();
-		}
-	}); */
+
 	$('#reloadmap').click(function() {
 		location.reload();
 		/* var con = document.getElementById("_mapMakerCheck2");
