@@ -23,9 +23,7 @@
 				<input type="checkbox" id="chkTraffic" onclick="setOverlayMapTypeId()" /> 교통정보 보기       
 				<input type="checkbox" id="chkBicycle" onclick="setOverlayMapTypeId()" /> 자전거도로 정보 보기
 			</p>
-			<!-- <p>
-				<input type="text" id="searchLoc"><button onclick="searchLocation();">검색</button>
-			</p> -->
+
 			<!-- 카카오맵 API  -->
 			<!-- <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdb0daf359d098be072ce9f3ea29cdf8"></script> -->
 				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdb0daf359d098be072ce9f3ea29cdf8&libraries=services,clusterer,drawing"></script>
@@ -88,23 +86,23 @@
 				    resultDiv1.innerHTML = message1;
 				    
 				    var url = 'https://map.kakao.com/link/to/';
-				    
-					/* var url = 'https://map.kakao.com/link/to/카카오판교오피스,37.402056,127.108212'; */
-					// console.log(url + '다시만나모임장소' + ',' + latlng.Ha + ',' + latlng.Ga);
-					
-					
-					
 
-					/* var addAddr =  */
-				    
 				    // 마커 주소 전달
 				    
 				    // 미등록된 도로명주소는 무시됨
 				    
+					function searchDetailAddrFromCoords(coords, callback) {
+						// 좌표로 법정동 상세 주소 정보를 요청합니다
+						geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+					}
+
 				    searchDetailAddrFromCoords(latlng, function(result, status) {
 				        if (status === kakao.maps.services.Status.OK) {
 				            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
 				            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+
+							var dAddr = !!result[0].road_address ? result[0].road_address.address_name : '';
+				            dAddr += result[0].address.address_name;
 				            
 				            var content = '<div class="bAddr" style="width: 350px; height: 130px;">' +
 				                            '<span class="title">선택하신 핀포인트</span><br>' + 
@@ -121,86 +119,47 @@
 				            // var message2 = '<br>선택하신 장소는 <br>도로명 : ' + result[0].road_address.address_name + '<br>지번 : ' + result[0].address.address_name;
 				            var message2 = '<br>선택하신 장소는' + '<br>' + detailAddr;
 						    						    
-						    var resultDiv2 = document.getElementById('_mapMakerCheck'); 
-						    resultDiv2.innerHTML = message2;
-						    
-						    /* var message3 = '<hr>법정동 기준 : '+ detailAddr;
-						    
-						    var resultDiv3 = document.getElementById('_mapMakerCheck'); 
-						    resultDiv3.innerHTML = message3; */
-						    	    
-						    
-						    /* var message3 = '도로명주소 : ' + result[0].road_address.address_name + '<br>지번주소 : ' + result[0].address.address_name;
-						    
-						    var resultDiv3 = document.getElementById('_mapAddr'); 
-						    resultDiv3.innerHTML = message3; */
-						    
-						    
-				            //var message3 = latlng.getLat() + '<br>' + latlng.getLng();
-				            
-						   /*  var resultDiv3 = document.getElementById('_mapAddr');
-						    resultDiv3.innerHTML = message3; */
-				        }   
+						    var resultDiv2 = document.getElementById('_mapMakerCheck2'); 
+						    resultDiv2.innerHTML = message2;						    
+						   
+						
+				        }
+
 				    });
 
-					
-					$('#findRoad').on('click', function() {
-						
-						
-						if(confirm("카카오맵으로 넘어가시겠습니까?")){
-							window.open(url + '다시만나모임장소선택하신곳' + ',' + latlng.Ha + ',' + latlng.Ga, '_blank');
-							console.log(url + '다시만나모임장소선택하신곳' + ',' + latlng.Ha + ',' + latlng.Ga, '_blank');
-						} else {
-							null;
-						}
-						// var resultMapQuery = window.open(url + '다시만나모임장소선택하신곳' + ',' + latlng.Ha + ',' + latlng.Ga, '_blank');
-						// console.log(resultMapQuery);
-						// var resultQueryMap = window.open(url + '다시만나모임장소' + ',' + latlng.Ha + ',' + latlng.Ga, '_blank');						
+					$('#findRoad').on('click', function() {						
+						if(confirm("카카오맵으로 넘어가시겠습니까?"))
+							window.open(url + '다시만나모임에서 선택한 장소' + ',' + latlng.Ha + ',' + latlng.Ga);							
+							console.log(latlng.Ha + ',' + latlng.Ga);														
 					});
-					
-				});
-				
-				function searchDetailAddrFromCoords(coords, callback) {
-				    // 좌표로 법정동 상세 주소 정보를 요청합니다
-				    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-				}
-				
+
+				});				
 				
 				// 장소검색
 				var places = new kakao.maps.services.Places();
-				
-				function searchLocation(){				
-					// 장소 검색 객체를 생성합니다
+
+				function searchLocation() {
+					// 	// 장소 검색 객체를 생성합니다
 					var loc = $("#searchLoc").val();
-					places.keywordSearch(loc, callback1); 
+					places.keywordSearch(loc, callback1);
+					console.log('검색어 : ' + loc);
 				}
-				
-				var callback1 = function(result, status) {
-				    var div5 = document.getElementById('_mapMakerCheck2');
-				    
-				    if (status === kakao.maps.services.Status.OK) {
-				        
-				        for(var i = 0; i < result.length; i++){
-				        	div5.innerHTML += '<br>' + result[i].address_name;
-				        	
-				        	console.log(result[i]);
-				        } 
-				    	
-				    }
-				    
+
+				var callback1 = function (result, status) {
+					var div5 = document.getElementById('_mapMakerCheck2');
+
+					if (status === kakao.maps.services.Status.OK) {
+
+						for (var i = 0; i < result.length; i++) {
+							div5.innerHTML += '<br>' + result[i].address_name;
+
+							console.log(result[i]);
+							// console.log(loc);
+						}
+
+					}
+
 				};
-				
-				
-				
-				/* function findRoad(){
-					var url = 'https://map.kakao.com/link/to/';					
-					window.open(url + weg + ',' + geg, '_blank');
-				} */
-				
-			/* latlng.getLat()
-				   latlng.getLng() */
-				
-				
 				
 			</script>
 	
@@ -253,60 +212,32 @@
 		
 				}
 			</script>
-		
-		
-		
-		
-		
-		
-						
-						
-						
-						
-		
+					
 		<br /> <br />
 	</div>
 
 	<div id="infoArea" style="width: 50%; float: left;">
 		<div id="areaName" style="display: flex; align-items: center;">
-			<!-- <div style="float: left;">
-				<svg width="3em" height="3em" viewBox="0 0 16 16"
-					class="bi bi-geo-alt" fill="currentColor"
-					xmlns="http://www.w3.org/2000/svg">
-		  <path fill-rule="evenodd"
-						d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-		</svg>
-			</div> -->
-			<div style="float: left;">
-				<p><i class="fa fa-map-marker fa-3x" aria-hidden="true"></i><h3>[모임장소위치]</h3><p>
-				
+			<div style="float: left;">				
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" id="searchLoc">
+					<input type="text" class="form-control" id="searchLoc" placeholder="법정동 주소 검색" style="">
 					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="button" onclick="searchLocation();">검색</button>						
+						<button class="btn btn-outline-secondary" id="searchBtn" type="button" onclick="searchLocation();">검색</button>					
 					</div>
-				</div>
-				<h6><span id="_mapMakerCheck">기본-호산빌딩</span></h6>
-				
+				</div>				
+				<i class="fa fa-map-marker fa-3x"></i><h3>[모임장소위치]</h3>
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
-				<%-- <c:forEach var ="name" begin="0" end="14">
-				<c:out value="${name}" />				
-				</c:forEach> --%>
-				<!-- <h3> ← 지도 마우스 클릭 테스트 </h3> -->
 			</div>
 		</div>
 
 		<div>
 			<br />
 			<hr />
-			<!-- <h5><span id="_mapAddr">주소 : </span></h5> -->
-			<!-- <h5><span id="_streetName">도로명 주소가 들어갈 공간입니다</span></h5> -->			
 			<h3><span id="_mapPhone">전화번호가 들어갈 공간입니다.</span></h3>
 			<br />
 			<div>
 				<button type="button" class="btn btn-info"	id="findRoad">카카오맵에서<br>길찾기</button>
-				<!-- <button type="button" class="btn btn-light">&nbsp;&nbsp;장소변경&nbsp;&nbsp;</button> -->
-				<button type="button" class="btn btn-light" id="reloadmap">&nbsp;&nbsp;장소변경&nbsp;&nbsp;</button>
+				<button type="button" class="btn btn-light" id="reloadmap" style="width: 113px; height: 60px;">장소변경</button>
 			</div>
 		</div>
 
@@ -315,103 +246,9 @@
 </div>
 
 <script>
-	/* function findRoad(){
-		var url = 'https://map.kakao.com/link/to/카카오판교오피스,37.402056,127.108212';
-		window.open(url, '_blank');
-	} */
-
 	$('#reloadmap').click(function() {
 		location.reload();
-		/* var con = document.getElementById("_mapMakerCheck2");
-		if(con.style.display=='block'){			
-			$('#_mapMakerCheck2').remove();
-		} */
 	});	
 </script>
+
 <c:import url="/WEB-INF/views/common/footer.jsp" />
-
-
-
-
-
-
-
-
-
-
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
-<div class="container" style="overflow: hidden; height: auto;">
-
-
-	<div id="mapArea" style="width: 50%; float: left;">
-		<div id="map" style="width: 90%; height: 500px;">
-			<script type="text/javascript"
-				src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	fffaeca75a32b9a21c2e06c950becd53"></script>
-			<script type="text/javascript"
-				src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=LIBRARY"></script>
-			<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
-			<script type="text/javascript"
-				src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
-			<script>
-		var container = document.getElementById('map');
-		var options = {
-			center: new kakao.maps.LatLng(33.450701, 126.570667),
-			level: 3
-		};
-
-		var map = new kakao.maps.Map(container, options);
-	</script>
-		</div>
-		<br /> <br />
-	</div>
-
-	<div id="infoArea" style="width: 50%; float: left;">
-		<div id="areaName" style="display: flex; align-items: center;">
-			<div style="float: left;">
-				<svg width="3em" height="3em" viewBox="0 0 16 16"
-					class="bi bi-geo-alt" fill="currentColor"
-					xmlns="http://www.w3.org/2000/svg">
-		  <path fill-rule="evenodd"
-						d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-		</svg>
-			</div>
-			<div style="float: left;">
-				<h3>모임장소 이름</h3>
-			</div>
-		</div>
-
-		<div>
-			<br />
-			<h5>주소가 들어갈 공간입니다.</h5>
-			<h5>도로명 주소가 들어갈 공간입니다</h5>
-			<br />
-			<h5>전화번호가 들어갈 공간입니다.</h5>
-			</br>
-			<div>
-				<button type="button" class="btn btn-info"	onclick="findRoad();">
-					&nbsp;&nbsp;&nbsp;길찾기&nbsp;&nbsp;&nbsp;</button>
-				<button type="button" class="btn btn-light">&nbsp;&nbsp;장소변경&nbsp;&nbsp;</button>
-			</div>
-		</div>
-
-	</div>
-	<br /> <br />
-</div>
-
-<script>
-function findRoad(){
-	location.href='https://map.kakao.com/link/to/카카오판교오피스,37.402056,127.108212';
-}
-$(function(){
-	$("#group-mapbtn").attr('class','btn btn-secondary');
-	
-	}
-);
-</script>
---%>
