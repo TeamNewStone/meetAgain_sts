@@ -1,74 +1,84 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<c:import url="/WEB-INF/views/common/header.jsp"/>
+<c:import url="/WEB-INF/views/common/header.jsp" />
 
 
 <div class="container-fluid">
-  <div class="row">
-	  <div class="col-12 col-md-4 offset-md-4">
-				  <div class="register-form">
-					  <div class="mb-7">
-					  <br />
-					  <br />
-					  <br />
-						  <h1>회원가입</h1>
-					  <br />
-					  </div>
-					  <form style="line-height:1em;" action="memberInsertSuccess.do">
-						  <div class="form-group">
-						    <label for="Email1">* 이메일</label>
-						    <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" placeholder="${email}" readonly>
-						    <!-- <small id="emailHelp" class="form-text text-info">We'll never share your email with anyone else.</small> -->
-						  </div>
-						  <div class="form-group">
-						    <label for="userName">* 이름</label>
-						    <input type="text" class="form-control" id="userName" placeholder="${name}" readonly>
-						  </div>
-						  <div class="form-group">
-						    <label for="NickName">*닉네임</label>
-						    <input type="text" class="form-control" id="NickName" placeholder="2자 이상 6자 이하로 작성해주세요." maxlength="6" required>
-						    <small><span class="error_next_box text-info" id="nickNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
-						  </div>
-						  <div class="form-group">
-						    <label for="gender">* 성별</label><br />
-						    
-						    <label class="box-radio-input"><input type="radio" name="gender" value="옵션1" 
-						     <c:if test="${gender eq 'M'}"><c:out value='checked="checked"'/>  </c:if> disabled><span>남자</span></label>
-						  
-						    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						   
-							<label class="box-radio-input"><input type="radio" name="gender" value="옵션2" 
-							 <c:if test="${gender eq 'F'}"><c:out value='checked="checked"'/></c:if> disabled><span>여자</span></label>
-						
-						  </div>
-						  <div class="form-group">
-						  	
-						    <label for="birthday">* 생년월일</label> <br />
-								<div class="row">
-						    <input type="text" class="form-control" id="birthyear" maxlength="4" style="width:40%; margin-left : 13px;"/>
-						   	 &nbsp; _ &nbsp; 
-						    <input type="text" class="form-control" id="birthday" placeholder="${birth}" readonly  style="width:40%; ">
-						    </div>
-						  </div> <br />
-						  <div class="form-group">
-						    <label for="phoneNo">* 전화번호</label>
-						    <input type="text" class="form-control" id="phoneNo" placeholder="'-'없이 번호만 입력해주세요. ex)01012345678" required>
-						    <small><span class="error_next_box" id="iphoneNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
-						  </div>
-						  
-						  <div class="form-group">
-							<label for="zipCode" style="display:block;">* 주소(집)</label>
-								<input type="text" class="form-control2" id="zipCode1"
-									name="zipCode" placeholder="우편번호" style="width:50px important;" required>
-								<button type="button" class="btn btn-secondary mb-2" value="1" onclick="addrSearch1();">검색</button>
-								<input type="text" class="form-control" id="address1"
-									name="address1" placeholder="상세주소" required>
+	<div class="row">
+		<div class="col-12 col-md-4 offset-md-4">
+			<div class="register-form">
+				<div class="mb-7">
+					<br /> <br /> <br />
+					<h1>회원가입</h1>
+					<br />
+				</div>
+				<form style="line-height: 1em;" action="memberInsertSuccess.do">
+					<div class="form-group">
+						<label for="Email1">* 이메일</label> <input type="email"
+							class="form-control" id="Email1" aria-describedby="emailHelp"
+							placeholder="${email}" readonly>
+						<!-- <small id="emailHelp" class="form-text text-info">We'll never share your email with anyone else.</small> -->
+					</div>
+					<div class="form-group">
+						<label for="userName">* 이름</label> <input type="text"
+							class="form-control" id="userName" placeholder="${name}" readonly>
+					</div>
+					<div class="form-group">
+						<label for="NickName">* 닉네임</label> <input type="text"
+							class="form-control" id="NickName"
+							placeholder="2자 이상 6자 이하로 작성해주세요." maxlength="6" required>
+						<small><span class="error_next_box text-info"
+							id="nickNoMsg" style="display: none; color: red;"
+							aria-live="assertive"></span></small>
+					</div>
+					<div class="form-group">
+						<label for="gender">* 성별</label><br /> <label
+							class="box-radio-input"><input type="radio" name="gender"
+							value="옵션1"
+							<c:if test="${gender eq 'M'}"><c:out value='checked="checked"'/>  </c:if>
+							disabled><span>남자</span></label>
+
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<label class="box-radio-input"><input type="radio"
+							name="gender" value="옵션2"
+							<c:if test="${gender eq 'F'}"><c:out value='checked="checked"'/></c:if>
+							disabled><span>여자</span></label>
+
+					</div>
+					<div class="form-group">
+
+						<label for="birthday">* 생년월일</label> <br />
+						<div class="row">
+							<input type="text" class="form-control" id="birthyear"
+								maxlength="4" style="width: 40%; margin-left: 13px;" /> &nbsp; _
+							&nbsp; <input type="text" class="form-control" id="birthday"
+								placeholder="${birth}" readonly style="width: 40%;">
 						</div>
-						<!-- 
+					</div>
+					<br />
+					<div class="form-group">
+						<label for="phoneNo">* 전화번호</label> <input type="text"
+							class="form-control" id="phoneNo"
+							placeholder="'-'없이 번호만 입력해주세요. ex)01012345678" required>
+						<small><span class="error_next_box" id="iphoneNoMsg"
+							style="display: none; color: red;" aria-live="assertive"></span></small>
+					</div>
+					<br />
+					<div class="form-group">
+						<label for="zipCode" style="display: block;">* 주소(집)</label> <input
+							type="text" class="form-control2" id="zipCode1" name="zipCode"
+							placeholder="우편번호" style="width: 50px important;" required>
+						<button type="button" class="btn btn-secondary mb-2" value="1"
+							onclick="addrSearch1();">검색</button>
+						<input type="text" class="form-control" id="address1"
+							name="address1" placeholder="상세주소" required>
+					</div>
+					<!-- 
 						<div class="form-group">
 							<label for="zipCode" style="display:block;">주소(직장)</label>
 								<input type="text" class="form-control2" id="zipCode2"
@@ -86,23 +96,24 @@
 								<input type="text" class="form-control" id="address3"
 									name="address" placeholder="상세주소" >
 						</div> -->
-<br />
-						  <button type="submit" class="btn btn-block btn-secondary" onclick="return send();">가입하기</button>
-						</form>
+					<br />
+					<button type="submit" class="btn btn-block btn-secondary"
+						onclick="return send();">가입하기</button>
+				</form>
 
-		  		</div>
-	  </div>
+			</div>
+		</div>
 
-  </div>
+	</div>
 </div>
 
-					  <br />
-					  <br />
-					  <br />
-					  <br />
-					  <br />
-					  <br />
-					  <br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 
 <script>
 
@@ -128,6 +139,14 @@ function isCellPhone(p) {
 }
 
 function send(){
+	/* var starty = Integer.parseInt(${age}.substring(0,1));
+	var endy = Integer.parseInt(${age}.substring(3,4));
+	var useryear = Integer.parseInt($('#birthyear'));
+	consol.log(starty);
+	consol.log(endy);
+	consol.log(useryear); */
+	
+	if('#birthyear')
     if(!isCellPhone($('#phoneNo').val())) {
         showErrorMsg($("#iphoneNoMsg"),"형식에 맞지 않는 번호입니다.");
         return false;
@@ -138,8 +157,27 @@ function send(){
     if($('#NickName').val().length < 2){
     	showErrorMsg($("#nickNoMsg"),"최소 2자 이상 입력해야 합니다.");
         return false;
-    }else{
+    }else if($('#NickName').val().length > 10){
+    	showErrorMsg($("#nickNoMsg"),"10자 이내로 입력해 주세요.");
+        return false;
+        }
+    else{
     	$("#nickNoMsg").hide();
+    	 $.ajax({
+	            url  : "${pageContext.request.contextPath}/member/checkNnDuplicate.do",
+	            data : {nickName:$('#NickName').val()},
+	            dataType: "json",
+	            success : function(data){
+	                console.log(data);
+	                // if(data=="true") //stream 방식
+	                if(data.isUsable==true){ //viewName 방식
+	                    alert('사용 가능한 닉네임 입니다.');
+	                } else {
+	                    alert('이미 사용중인 닉네임입니다.');
+	                    return false;
+	                }
+	            }
+  	});  
     }
     
     
@@ -336,12 +374,13 @@ function addrSearch3() {
 					$('#address3').focus();
 				}
 			}).open();
-};
+}
+
 
 
 
 </script>
 
 
-<c:import url="/WEB-INF/views/common/footer.jsp"/>
+<c:import url="/WEB-INF/views/common/footer.jsp" />
 
