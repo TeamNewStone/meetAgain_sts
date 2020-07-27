@@ -6,8 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.meetAgain.member.model.dao.MemberDAO;
+import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.member.model.vo.UserTMI;
 
 @Repository("memberDAO")
 public class MemberDAOImpl implements MemberDAO {
@@ -31,5 +32,18 @@ public class MemberDAOImpl implements MemberDAO {
 	public int mUpdate(Member member) {
 		return sqlSession.update("memberMapper.mUpdate", member);
 	}
+
+	@Override
+	public int mTMIUpdate(UserTMI userTMI) {
+		return sqlSession.update("memberMapper.mTMIUpdate",userTMI);
+	}
+
+	@Override
+	public int mCateUpdate(String c) {
+		System.out.println("MemberDAOImpl test : ");
+		return sqlSession.update("memberMapper.mCateUpdate", c);
+	}
+
+	
 
 }

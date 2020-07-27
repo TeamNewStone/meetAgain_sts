@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.meetAgain.member.model.service.MemberService;
+import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.member.model.vo.UserTMI;
 
 
 @Controller
@@ -104,5 +106,45 @@ public class MemberController {
 		map.put("isNew", isNew);
 		
 		return map;
+	}
+	
+	@RequestMapping("/member/mTMIUpdate.do")
+	public String mTMIUpdate(UserTMI userTMI, Model model) {
+		
+		System.out.println("MemberController test3 : "+userTMI);
+		int result = memberService.mTMIUpdate(userTMI);
+		int result2 = 0;
+
+		String loc="/";
+		String msg="";
+		
+		if(result > 0) {
+			msg="정보 수정이 완료되었습니다.";
+		}else {
+			msg="정보 수정 중 오류가 발생하였습니다. 다시 시도해 주세요.";
+		}
+		model.addAttribute("loc", loc);
+		model.addAttribute("msg", msg);
+		
+		return "common/msg";
+	}
+	
+	@RequestMapping("/member/mCateUpdate.do")
+	public String mCateUpdate(CateInfo cateInfo, Model model,
+			@RequestParam("cateId") String[] cateId) {
+		
+		System.out.println("cateInfo : " + cateInfo);
+		
+		int result = memberService.mCateUpdate(cateInfo, cateId);
+		String loc = "/";
+		String msg="";
+		if(result > 0) {
+			loc="/member/mTMIUpdate.do";			
+		}else {
+			msg="정보 수정 중 오류가 발생하였습니다. 다시 시도해주세요.";
+		}
+		model.addAttribute("loc", loc);
+		model.addAttribute("msg", msg);
+		return "common/msg";
 	}
 }

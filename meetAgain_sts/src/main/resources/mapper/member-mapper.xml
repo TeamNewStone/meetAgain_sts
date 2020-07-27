@@ -20,6 +20,17 @@ WHERE USERID=#{userId}
 	<select id="selectOne" parameterType="string" resultType="Member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
 	</select>
+	
+	<update id="mTMIUpdate" parameterType="UserTMI">
+		UPDATE USERTMI SET BLOOD=#{blood}, MBTI=#{mbti}, KEYWORD=#{keyword}, USERIMG=#{userImg}
+		WHERE USERID=#{userId}
+	</update>
+	
+	<insert id="mCateUpdate" parameterType="CateInfo">
+	
+		INSERT INTO CATEINFO VALUES(#{userId}, #{category})
+	
+	</insert>
 
 
 </mapper>
