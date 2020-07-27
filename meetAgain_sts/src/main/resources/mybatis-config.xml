@@ -19,6 +19,8 @@
 		
 		 <typeAlias type="com.kh.meetAgain.board.model.vo.Board" alias="Board"/>
 		 <typeAlias type="com.kh.meetAgain.member.model.vo.Member" alias="Member"/>
+		 <typeAlias type="com.kh.meetAgain.common.Str2ArrayHandler" alias="Str2ArrayHandler"/>
+		 <typeAlias type="com.kh.meetAgain.sgroup.model.vo.Sgroup" alias="Sgroup" />
 		 <typeAlias type="com.kh.meetAgain.member.model.vo.UserTMI" alias="UserTMI"/>
 		 <typeAlias type="com.kh.meetAgain.member.model.vo.CateInfo" alias="CateInfo"/>
 		 <typeAlias type="com.kh.meetAgain.member.model.vo.Category" alias="Category"/>

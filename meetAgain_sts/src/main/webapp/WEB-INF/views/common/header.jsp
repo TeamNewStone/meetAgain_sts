@@ -14,13 +14,14 @@
     <meta name="author" content="BootstrapBay">
     <link href="${ pageContext.request.contextPath }/resources/img/favicon.ico" rel="icon" type="image/png">
 	
-    <script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery-3.5.1.min.js"></script>
+ 	<script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
     
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
 	<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css' rel='stylesheet' type='text/css'>
-	
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/vendor/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/lazy.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/demo.css">
@@ -30,7 +31,7 @@
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/membership.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/serviceCenter.css">
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/group.css">
-	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 	<link href='${ pageContext.request.contextPath }/resources/css/main.css' rel='stylesheet' />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
     

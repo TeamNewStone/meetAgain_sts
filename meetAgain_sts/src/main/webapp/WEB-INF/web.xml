@@ -35,7 +35,7 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
- 
+
  <!-- 스프링에서 제공하는 인코딩 필터 사용하기 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -51,5 +51,5 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
- 
+
 </web-app>
