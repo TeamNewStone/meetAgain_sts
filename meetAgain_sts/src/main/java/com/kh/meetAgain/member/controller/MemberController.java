@@ -2,10 +2,14 @@ package com.kh.meetAgain.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,8 +23,20 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
-	@RequestMapping("member/memberInsertForm.do")
-	public String memberInsertForm() {
+	@RequestMapping(value = "member/memberInsertForm.do", method= RequestMethod.POST)
+	public String memberInsertForm(@RequestParam String email,
+			@RequestParam String name, @RequestParam String gender, @RequestParam String age,
+			@RequestParam String birth, Model model) {
+		
+
+		System.out.println(email+name+gender+age+birth);
+
+		model.addAttribute("email",email);
+		model.addAttribute("name",name);
+		model.addAttribute("gender",gender);
+		model.addAttribute("age",age);
+		model.addAttribute("birth",birth);
+		
 		return "member/memberInsertForm";
 	}
 	@RequestMapping("member/memberInsertSuccess.do")
@@ -77,18 +93,16 @@ public class MemberController {
 		return "common/msg";
 	}
 
-	@RequestMapping("/member/selectOne.do")
-	public String selectOne(@RequestParam String email) {
-		
+	@RequestMapping(value = "/member/selectOne.do", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> selectOne(HttpServletRequest request) {
+		String email = request.getParameter("email");
 		System.out.println(email);
-		Member result = memberService.selectOne(email);
+		Map<String, Object> map = new HashMap<String,Object>(); 
+		boolean isNew = memberService.selectOne(email)==null ? true : false;
 		
-		if(result == null) {
-			//회원이 아닐 경우
-			return "member/memberInsertForm";
-		}else {
-			//회원일 경우
-			return "redirect:/";
-		}
+		map.put("isNew", isNew);
+		
+		return map;
 	}
 }
