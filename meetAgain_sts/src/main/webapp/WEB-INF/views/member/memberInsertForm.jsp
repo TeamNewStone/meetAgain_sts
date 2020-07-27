@@ -28,8 +28,8 @@
 						    <input type="text" class="form-control" id="userName" placeholder="홍길동" readonly>
 						  </div>
 						  <div class="form-group">
-						    <label for="NickName">*닉네임</label>
-						    <input type="text" class="form-control" id="NickName" placeholder="2자 이상 6자 이하로 작성해주세요." maxlength="6" required>
+						    <label for="NickName">* 닉네임</label>
+						    <input type="text" class="form-control" id="NickName" placeholder="2자 이상 10자 이하로 작성해주세요." maxlength="10" required>
 						    <small><span class="error_next_box text-info" id="nickNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
 						  </div>
 						  <div class="form-group">
@@ -126,8 +126,26 @@ function send(){
     if($('#NickName').val().length < 2){
     	showErrorMsg($("#nickNoMsg"),"최소 2자 이상 입력해야 합니다.");
         return false;
+    }else if($('#NickName').val().length > 10){
+    	showErrorMsg($("#nickNoMsg"),"10자 이내로 입력해 주세요.");
+        return false;
     }else{
     	$("#nickNoMsg").hide();
+	   $.ajax({
+            url  : "${pageContext.request.contextPath}/member/checkNnDuplicate.do",
+            data : {nickName:$('#NickName').val()},
+            dataType: "json",
+            success : function(data){
+                console.log(data);
+                // if(data=="true") //stream 방식
+                if(data.isUsable==true){ //viewName 방식
+                    alert('사용 가능한 닉네임 입니다.');
+                } else {
+                    alert('이미 사용중인 닉네임입니다.');
+                    return false;
+                }
+            }
+ 	});  
     }
 }
 function showErrorMsg(obj, msg) {
