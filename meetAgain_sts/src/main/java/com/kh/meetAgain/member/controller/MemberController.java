@@ -75,6 +75,7 @@ public class MemberController {
 		model.addAttribute("msg", msg);
 		
 		return "common/msg";
+	}
 
 	@RequestMapping("/member/selectOne.do")
 	public String selectOne(@RequestParam String email) {
