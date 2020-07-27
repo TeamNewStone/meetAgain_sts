@@ -19,6 +19,9 @@
 		
 		 <typeAlias type="com.kh.meetAgain.board.model.vo.Board" alias="Board"/>
 		 <typeAlias type="com.kh.meetAgain.member.model.vo.Member" alias="Member"/>
+		 <typeAlias type="com.kh.meetAgain.member.model.vo.UserTMI" alias="UserTMI"/>
+		 <typeAlias type="com.kh.meetAgain.member.model.vo.CateInfo" alias="CateInfo"/>
+		 <typeAlias type="com.kh.meetAgain.member.model.vo.Category" alias="Category"/>
 	</typeAliases>	
 	
 	<!-- 문자열과 배열을 치환해주는 객체 -->
