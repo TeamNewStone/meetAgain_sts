@@ -70,7 +70,7 @@
 				    // 클릭한 위도, 경도 정보를 가져옵니다 
 				    var latlng = mouseEvent.latLng; 
 				    
-				    console.log(latlng);
+				    // console.log(latlng);
 				    // 위도 경도 분리
 				    /* var weg = latlng.getLat();
 				    var geg = latlng.getLng(); */
@@ -130,7 +130,7 @@
 					$('#findRoad').on('click', function() {						
 						if(confirm("카카오맵으로 넘어가시겠습니까?"))
 							window.open(url + '다시만나모임에서 선택한 장소' + ',' + latlng.Ha + ',' + latlng.Ga);							
-							console.log(latlng.Ha + ',' + latlng.Ga);														
+							// console.log(latlng.Ha + ',' + latlng.Ga);														
 					});
 
 				});				
