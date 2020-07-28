@@ -56,7 +56,7 @@
 						<div class="row">
 						<input type="hidden" id="age" value="${age}"/>
 							<input type="text" class="form-control" id="birthyear" name="year"
-								maxlength="4" style="width: 40%; margin-left: 13px;" numberonly="true" /> &nbsp;
+								maxlength="4" style="width: 40%; margin-left: 13px;" numberonly="true" required/> &nbsp;
 							_ &nbsp; <input type="text" class="form-control" id="birthday" name="birth"
 								value="${birth}" readonly style="width: 40%;">
 							<label id="yearalert" style="color:red; font-size:0.7em;">사용자의 정보와 일치하는 값을 입력해주세요.</label>
