@@ -30,16 +30,16 @@ public class MemberController {
 	@RequestMapping(value = "member/memberInsertForm.do")
 	public String memberInsertForm(@RequestParam String email,
 			@RequestParam String name, @RequestParam String gender, @RequestParam String age,
-			@RequestParam String birth, Model model) {
-		
+			@RequestParam String birth, @RequestParam int id, Model model) {
 
-		System.out.println(email+name+gender+age+birth);
+		System.out.println(email+name+gender+age+birth+id);
 
 		model.addAttribute("email",email);
 		model.addAttribute("name",name);
 		model.addAttribute("gender",gender);
 		model.addAttribute("age",age);
 		model.addAttribute("birth",birth);
+		model.addAttribute("id",id);
 		
 		return "member/memberInsertForm";
 	}
