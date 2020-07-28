@@ -29,5 +29,5 @@ public class Sgroup implements Serializable {
 	private String isFin;
 	private int gPwd;
 	private String joinType;
-	private String[] setGroup;
+	private String[] limitGroup;
 }
