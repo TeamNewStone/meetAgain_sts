@@ -48,7 +48,7 @@
 				class="col-12 col-md-8 d-flex flex-column align-items-center align-items-lg-start">
 				<div class="d-flex flex-row align-items-start mt-3 mt-lg-0">
 					<div class="name">
-						<h2 class="mb-0">에바 그린</h2>
+						<h2 class="mb-0">${member.nickName }</h2>
 
 					</div>
 
@@ -62,19 +62,19 @@
 					id="_follow">
 					<div class="posts ml-2 ml-lg-0">
 						<p class="lead" id="_fwfw">
-							<b>134</b> 소모임
+							소모임 <b>134</b> 
 						</p>
 					</div>
-					&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;
 					<div class="posts">
 						<p class="lead" id="_fwfw">
-							<b>6.6m</b> 팔로워
+							 팔로워  <b>6.6m</b>
 						</p>
 					</div>
-					&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;
 					<div class="posts">
 						<p class="lead" id="_fwfw">
-							<b>201</b> 팔로잉
+							팔로잉  <b>201</b> 
 						</p>
 					</div>
 					&nbsp;
