@@ -4130,7 +4130,7 @@ var FullCalendar = (function (exports) {
             month: '월',
             week: '주',
             day: '일',
-            list: '리스트'
+            list: '목록'
         },
         weekText: 'W',
         allDayText: 'all-day',
