@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="A new design system for developing with less effort.">
     <meta name="author" content="BootstrapBay">
-    <link href="${ pageContext.request.contextPath }/resources/img/favicon.ico" rel="icon" type="image/png">
+    <link href="${ pageContext.request.contextPath }/resources/img/fav02.png" rel="icon" type="image/png">
 	
  	<script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
@@ -94,10 +94,13 @@
               <a class="nav-link" href="#" id="nav-inner-primary_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="goGroup();">소모임</a>
             </li>
             </ul>
+
 			<ul class="navbar-nav ml-auto" id="login-nav">
+		<c:if test="${empty member}">
             <li class="nav-item dropdown text-white" id="login">
               <a class="nav-link" href="${ pageContext.request.contextPath }/member/login.do">로그인</a>
             </li>
+            </c:if>
             <li class="nav-item dropdown" id="userIcon">
               <img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="test img-fluid rounded-circle" style="width : 60px;">
               <div class="dropdown-menu dropdown-menu-right dropMenuDiv" aria-labelledby="nav-inner-primary_dropdown_1">

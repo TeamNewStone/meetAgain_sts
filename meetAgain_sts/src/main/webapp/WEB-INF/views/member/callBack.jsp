@@ -14,16 +14,18 @@
 </head>
 
 <body>
-
 	
-	
-	<form id = "userform" action="memberInsertForm.do" method="POST">
+	<form id = "userform" action="memberInsertForm.do">
 <input type="hidden" id="email" name="email"/>
 <input type="hidden" id="name" name="name" />
 <input type="hidden" id="gender" name="gender" />
 <input type="hidden" id="age" name="age" />
 <input type="hidden" id="birth" name="birth" />
 </form>
+
+	<form id = "loginform" action="userLogin.do" >
+	<input type="hidden" id="email2" name="email"/>
+	</form>
 	
 	<!-- (1) LoginWithNaverId Javscript SDK -->
 	<script type="text/javascript"
@@ -54,9 +56,7 @@
 											var gender = naverLogin.user.getGender();
 											var age = naverLogin.user.getAge();
 											var birth = naverLogin.user.getBirthday();
-	
-										
-																					
+																															
 											if (email == undefined || email == null
 													|| name == undefined || name == null
 													|| gender == undefined || gender == null
@@ -73,7 +73,7 @@
 											$('#gender').val(gender);
 											$('#age').val(age);
 											$('#birth').val(birth);
-											
+											$('#email2').val(email);
 											$.ajax({
 												url : "${ pageContext.request.contextPath }/member/selectOne.do",
 												data : {
@@ -83,10 +83,10 @@
 												//async : false,
 												success : function(data){
 													if(data.isNew == true){
-														$('#userform').submit();
-														//location.href='${pageContext.request.contextPath}/member/memberInsertForm.do';														
+														alert("존재하지 않는 아이디입니다. 회원가입 페이지로 이동합니다.");
+														$('#userform').submit();														
 													} else {
-														location.href="${ pageContext.request.contextPath}";
+														$('#loginform').submit();
 													}
 												},
 												error : function(){
