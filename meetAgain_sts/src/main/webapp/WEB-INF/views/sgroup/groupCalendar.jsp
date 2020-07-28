@@ -4,7 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/common/header.jsp" />
+
+<script src="${ pageContext.request.contextPath }/resources/js/main.js"></script>
+<script src="${ pageContext.request.contextPath }/resources/css/main.css"></script>
+
 <script>
+
+
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
 		var today = new Date();
@@ -12,12 +18,12 @@
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 			headerToolbar : {
 				left : 'prev,next today',
-				center : 'title',
+				center : 'title, #dayday',
 				right : 'dayGridMonth'
 			},
 			initialDate : today, //현재날짜로 초기화
-			navLinks : false, // can click day/week names to navigate views
-			editable : false,
+			navLinks : true, // can click day/week names to navigate views
+			editable : true,
 			dayMaxEvents : true, // allow "more" link when too many events
 			events : [ {
 				title : 'Long Event',
@@ -44,9 +50,36 @@
 				start : '2020-07-17'
 			} ]
 		});
+		
+		// 왼쪽 버튼을 클릭하였을 경우
+				
+	    $("button.fc-prev-button").click(function() {
+	            var date = $("#calendar").main("getDate");
+	            convertDate(date);
+	        });
+
+	        // 오른쪽 버튼을 클릭하였을 경우
+	        $("button.fc-next-button").click(function() {
+	            var date = $("#calendar").main("getDate");
+	            convertDate(date);
+	        });
 
 		calendar.render();
 	});
+	
+	function convertDate(date) {
+        var date = new Date(date);
+        alert(date.yyyymmdd());
+    }
+
+    // 받은 날짜값을 YYYY-MM-DD 형태로 출력하기위한 함수.
+    Date.prototype.yyyymmdd = function() {
+        var yyyy = this.getFullYear().toString();
+        var mm = (this.getMonth() + 1).toString();
+        var dd = this.getDate().toString();
+        return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]);
+    }
+    
 </script>
 <style>
 body {
@@ -83,8 +116,8 @@ body {
 	</svg>
 					</div>
 					&nbsp;&nbsp;&nbsp;
-					<div style="float: left;">
-						<h3>7월의 일정</h3>
+					<div style="float: left;" id="myScore">
+						<h3 id="dayday">7월의 일정</h3>
 					</div>
 					&nbsp;&nbsp;&nbsp;
 					<button data-toggle="modal" data-target="#exampleModal"
@@ -177,6 +210,22 @@ $(function(){
 	
 	}
 );
+
+
+	document.getElementById('myScore').addEventListener('click',
+	function() {
+		calendar.next();
+	});
+	
+	document.getElementById('dayday').addEventListener('click', function() {
+		  var date = calendar.getDate();
+		  alert("The current date of the calendar is " + date.toISOString());
+		});
+
+	function increaseScore() {
+		score1++;
+		document.getElementById("myScore").innerHTML = score1;
+	}
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
