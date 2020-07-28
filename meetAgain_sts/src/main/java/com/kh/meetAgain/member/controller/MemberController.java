@@ -49,7 +49,7 @@ public class MemberController {
 		int month = Integer.parseInt(birth.substring(0, 2));
 		int day = Integer.parseInt(birth.substring(3,5));
 
-		Date date = new Date(year,month,day);
+		Date date = new Date(year,month-1,day);
 		
 		member.setBirthday(date);
 		
