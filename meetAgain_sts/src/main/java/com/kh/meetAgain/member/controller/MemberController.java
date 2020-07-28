@@ -67,9 +67,14 @@ public class MemberController {
 	@RequestMapping("member/mTMIInsertForm.do")
 	public String mTMIInsertForm(@RequestParam String email, Model model) {
 		System.out.println(email);
-		UserTMI ut = memberService.selectOneTMI(email);
+		
+		Map<String, Object> map = memberService.selectOneTMI(email);
+		UserTMI ut = (UserTMI)map.get("ut");
+		CateInfo cateInfo = (CateInfo)map.get("cateInfo");
+		
 		model.addAttribute("UserTMI", ut);
-		System.out.println(ut);
+		model.addAttribute("CateInfo", cateInfo);
+		
 		return "member/mTMIInsertForm";
 	}
 	
@@ -132,12 +137,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/mTMIUpdate.do")
-	public String mTMIUpdate(UserTMI userTMI, Model model) {
+	public String mTMIUpdate(UserTMI userTMI, CateInfo cateInfo, Model model) {
+		
 		
 		System.out.println("MemberController test3 : "+userTMI);
-		int result = memberService.mTMIUpdate(userTMI);
-		int result2 = 0;
-
+		System.out.println(userTMI.getUserId()); 
+		int result = memberService.mTMIUpdate(userTMI, cateInfo);
+		 
 		String loc="/";
 		String msg="";
 		
@@ -152,22 +158,4 @@ public class MemberController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("/member/mCateUpdate.do")
-	public String mCateUpdate(CateInfo cateInfo, Model model,
-			@RequestParam("cateId") String[] cateId) {
-		
-		System.out.println("cateInfo : " + cateInfo);
-		
-		int result = memberService.mCateUpdate(cateInfo, cateId);
-		String loc = "/";
-		String msg="";
-		if(result > 0) {
-			loc="/member/mTMIUpdate.do";			
-		}else {
-			msg="정보 수정 중 오류가 발생하였습니다. 다시 시도해주세요.";
-		}
-		model.addAttribute("loc", loc);
-		model.addAttribute("msg", msg);
-		return "common/msg";
-	}
 }

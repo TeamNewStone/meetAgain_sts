@@ -1,6 +1,7 @@
 package com.kh.meetAgain.member.model.service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,25 +36,31 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int mTMIUpdate(UserTMI userTMI) {
-		return memberDAO.mTMIUpdate(userTMI);
-	}
-
-	@Override
-	public int mCateUpdate(CateInfo cateInfo, String[] cateId) {
-		System.out.println("MemberServiceImpl test : "+cateInfo.getCateId());
-		int result = 0;
-		if(cateId.length > 0) {
-			for(String c : cateId) {
-				result = memberDAO.mCateUpdate(c);
-			}
+	public int mTMIUpdate(UserTMI userTMI, CateInfo cateInfo) {
+		System.out.println("ServiceImpl : " + userTMI + " / " + userTMI.getUserId());
+		int result1 = memberDAO.mTMIUpdate(userTMI);
+		int result2 = 0;
+		
+		for(int i = 0; i < cateInfo.getCateId().length; i++) {
+			result2 = memberDAO.mCateUpdate(userTMI.getUserId(), cateInfo.getCateId()[i]);
+			if(result2 == 0) break;
 		}
-		return result;
+		
+		if(result1 != 0 && result2 != 0) {
+			return 1;
+		} else {
+			return 0;
+		} 
 	}
 
 	@Override
-	public UserTMI selectOneTMI(String email) {
-		return memberDAO.selectOneTMI(email);
+	public Map<String, Object> selectOneTMI(String email) {
+		HashMap<String, Object> map = new HashMap();
+		UserTMI ut = memberDAO.selectOneTMI(email);
+		map.put("ut", ut);
+		map.put("cateInfo", memberDAO.selectCateInfo(ut.getUserId()));
+		
+		return map;
 	}
 
 	@Override

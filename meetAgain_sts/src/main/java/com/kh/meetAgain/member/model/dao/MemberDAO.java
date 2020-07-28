@@ -18,9 +18,9 @@ public interface MemberDAO {
 
 	int insertMember(Member m);
 	
-	int mCateUpdate(String c);
+	int mCateUpdate(String userId, String cateId);
 
 	UserTMI selectOneTMI(String email);
 	
-
+	CateInfo selectCateInfo(String userId);
 }
