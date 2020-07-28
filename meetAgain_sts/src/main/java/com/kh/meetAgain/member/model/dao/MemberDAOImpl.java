@@ -49,6 +49,9 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne("memberMapper.selectOneTMI", email);
 	}
 
-	
+	@Override
+	public int insertMember(Member m) {
+		return sqlSession.insert("memberMapper.insertMember",m);
+	}
 
 }

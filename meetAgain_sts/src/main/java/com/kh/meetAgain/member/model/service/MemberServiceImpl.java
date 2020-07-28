@@ -56,5 +56,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.selectOneTMI(email);
 	}
 
+	@Override
+	public int insertMember(Member m) {
+		return memberDAO.insertMember(m);
+	}
 
 }

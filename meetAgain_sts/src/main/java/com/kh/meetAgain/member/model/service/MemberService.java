@@ -16,4 +16,6 @@ public interface MemberService {
 	int mCateUpdate(CateInfo cateInfo, String[] cateId);
 
 	UserTMI selectOneTMI(String email);
+	
+	int insertMember(Member m);
 }

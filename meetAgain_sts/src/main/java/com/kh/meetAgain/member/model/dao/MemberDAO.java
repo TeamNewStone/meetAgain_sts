@@ -16,7 +16,8 @@ public interface MemberDAO {
 
 	int mTMIUpdate(UserTMI userTMI);
 
-
+	int insertMember(Member m);
+	
 	int mCateUpdate(String c);
 
 	UserTMI selectOneTMI(String email);
