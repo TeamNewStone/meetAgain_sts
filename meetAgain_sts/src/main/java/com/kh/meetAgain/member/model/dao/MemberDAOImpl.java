@@ -1,6 +1,7 @@
 package com.kh.meetAgain.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,32 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int mCateUpdate(String c) {
+	public int mCateUpdate(String userId, String cateId) {
 		System.out.println("MemberDAOImpl test : ");
-		return sqlSession.update("memberMapper.mCateUpdate", c);
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("cateId", cateId);
+		
+		return sqlSession.update("memberMapper.mCateUpdate", map);
+	}
+	
+	@Override
+	public CateInfo selectCateInfo(String userId) {
+		
+		List<CateInfo> ci = sqlSession.selectList("memberMapper.selectCateInfo", userId);
+		
+		CateInfo ci_All = new CateInfo();
+		ci_All.setUserId(userId);
+		String[] cate_id = new String[ci.size()];
+		int i = 0;
+		for(CateInfo c : ci) {
+			cate_id[i] = c.getCate_id();
+			i++;
+		}
+		ci_All.setCateId(cate_id);
+		
+		return ci_All;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import="com.kh.meetAgain.member.model.vo.*, java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -19,8 +20,8 @@
 					  </div>
 					  <form style="line-height:1em;"action="${ pageContext.request.contextPath }/member/mTMIUpdate.do">
 					  
-					  <!-- 로그인 완료되면 value=${member.userId} 로 바뀌어야합니다 -->
-					  <input type="hidden" name="userId" value="u20a001" />
+					  
+					  <input type="hidden" name="userId" value="${UserTMI.userId }" />
 					  
 					  
 						  <div class="form-group" style="text-align:center;">
@@ -49,43 +50,51 @@
 						    <label for="MBTI">MBTI &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						    <button type="button" class="btn btn-outline-secondary" onclick="window.open('https://www.16personalities.com/ko','_blank')">테스트하러 가기</button></label><br />
 						    <c:if test="${UserTMI.mbti eq ''}">
-						    <input type="text" class="form-control" id="MBTI" placeholder="ex) ISFP" name="MBTI" maxlength="4" style="text-transform:uppercase;" >
+						    <input type="text" class="form-control" id="MBTI" placeholder="ex) ISFP" name="mbti" maxlength="4" style="text-transform:uppercase;" >
 						    </c:if>
 						    <c:if test="${UserTMI.mbti ne ''}">
-						    <input type="text" class="form-control" id="MBTI" placeholder="ex) ISFP" name="MBTI" maxlength="4" value="${UserTMI.mbti}" style="text-transform:uppercase;" >
+						    <input type="text" class="form-control" id="MBTI" placeholder="ex) ISFP" name="mbti" maxlength="4" value="${UserTMI.mbti}" style="text-transform:uppercase;" >
 						    </c:if>
 						    <small><span class="error_next_box text-info" id="mbtiNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
 						  </div>
 						  <div class="form-group">
 						    <label for="interest">주 관심사</label>
 						    <div class="custom-control custom-checkbox my-2">
+						    <% 
+					    		List<String> cateList = null;
+								/* List.contains메소드를 사용하기 위해 String[] => List로 형변환함.  */
+								String[] cate_id = ((CateInfo)request.getAttribute("CateInfo")).getCateId();
+
+								if(cate_id != null)//이 조건이 없다면,취미체크박스에 하나도 체크하지 않았다면, Array.asList(null)=>NullPointerException 
+									cateList = Arrays.asList(cate_id);
+							%>
 						    <span>
-						    <input type="checkbox" class="custom-control-input" name="category" value="C01" id="customCheck1">
+						    <input type="checkbox" class="custom-control-input" name="cateId" value="C01" id="customCheck1" <%=cateList!=null && cateList.contains("C01")?"checked":""%>>
 						    <label class="custom-control-label" for="customCheck1" style="width:150px;">운동</label></span>
 						    &nbsp;&nbsp;&nbsp;&nbsp;<span>
-						    <input type="checkbox" class="custom-control-input" name="category" value="C02" id="customCheck2">
+						    <input type="checkbox" class="custom-control-input" name="cateId" value="C02" id="customCheck2" <%=cateList!=null && cateList.contains("C02")?"checked":""%>>
 						    <label class="custom-control-label" for="customCheck2" style="width:150px;">친목</label></span>
 						    &nbsp;&nbsp;&nbsp;&nbsp;<span>
-						    <input type="checkbox" class="custom-control-input" name="category" value="C03" id="customCheck3">
+						    <input type="checkbox" class="custom-control-input" name="cateId" value="C03" id="customCheck3" <%=cateList!=null && cateList.contains("C03")?"checked":""%>>
 						    <label class="custom-control-label" for="customCheck3" style="width:150px;">공부</label></span>
 						    </div>
 						    <div class="custom-control custom-checkbox my-2">
 						    <span>
-						    <input type="checkbox" class="custom-control-input" name="category" value="C04" id="customCheck4">
+						    <input type="checkbox" class="custom-control-input" name="cateId" value="C04" id="customCheck4" <%=cateList!=null && cateList.contains("C04")?"checked":""%>>
 						    <label class="custom-control-label" for="customCheck4" style="width:150px;">취미생활</label></span>
 						     &nbsp;&nbsp;&nbsp;&nbsp;<span>
-						    <input type="checkbox" class="custom-control-input" name="category" value="C05" id="customCheck5">
+						    <input type="checkbox" class="custom-control-input" name="cateId" value="C05" id="customCheck5" <%=cateList!=null && cateList.contains("C05")?"checked":""%>>
 						    <label class="custom-control-label" for="customCheck5" style="width:150px;">문화생활</label></span>
 						    &nbsp;&nbsp;&nbsp;&nbsp;<span>
-						    <input type="checkbox" class="custom-control-input" name="category" value="C06" id="customCheck6">
+						    <input type="checkbox" class="custom-control-input" name="cateId" value="C06" id="customCheck6" <%=cateList!=null && cateList.contains("C06")?"checked":""%>>
 						    <label class="custom-control-label" for="customCheck6" style="width:150px;">여행</label></span>
 						    </div>
 						    <div class="custom-control custom-checkbox my-2">
 						    <span>
-						    <input type="checkbox" class="custom-control-input" name="category" value="C07" id="customCheck7">
+						    <input type="checkbox" class="custom-control-input" name="cateId" value="C07" id="customCheck7" <%=cateList!=null && cateList.contains("C07")?"checked":""%>>
 						    <label class="custom-control-label" for="customCheck7" style="width:150px;">봉사</label></span>
 						     &nbsp;&nbsp;&nbsp;&nbsp;<span>
-						    <input type="checkbox" class="custom-control-input" name="category" value="C08" id="customCheck8">
+						    <input type="checkbox" class="custom-control-input" name="cateId" value="C08" id="customCheck8" <%=cateList!=null && cateList.contains("C08")?"checked":""%>>
 						    <label class="custom-control-label" for="customCheck8" style="width:150px;">기타</label></span>
 						    </div>
 						    
@@ -179,26 +188,8 @@ function tmiInsert(){
 	if($('.fail').length > 0){
 		return false;
 	}else{
-	    var checkArr = [];     // 배열 초기화
-	    $("input[name='category']:checked").each(function(i) {
-	        checkArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
-	    });
-	 
-	    $.ajax({
-	        url: '${ pageContext.request.contextPath }/member/mCateUpdate.do'
-	        , type: 'post'
-	        , dataType: 'text'
-	        , data: {
-	            cateId: checkArr
-	        }, success: function(data){
-	        	console.log(data);
-	        }
-	    });
-		
+		return true;
 	}
-	
-	
-
 }
 
 function showErrorMsg(obj, msg) {

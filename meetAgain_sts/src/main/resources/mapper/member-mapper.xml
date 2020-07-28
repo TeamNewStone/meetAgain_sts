@@ -26,9 +26,9 @@ WHERE USERID=#{userId}
 		WHERE USERID=#{userId}
 	</update>
 	
-	<insert id="mCateUpdate" parameterType="CateInfo">
+	<insert id="mCateUpdate" parameterType="hashmap">
 	
-		INSERT INTO CATEINFO VALUES(#{userId}, #{category})
+		INSERT INTO CATEINFO VALUES(#{userId}, #{cateId})
 	
 	</insert>
 	
@@ -41,4 +41,9 @@ INSERT INTO MEMBER VALUES(SEQ_USERID.NEXTVAL, #{userName}, #{address1}, DEFAULT,
 #{nickName}, #{birthday}, #{gender}, #{email}, #{phone}, DEFAULT, DEFAULT, DEFAULT, 
 DEFAULT, DEFAULT, DEFAULT,DEFAULT, DEFAULT)
 </insert>
+
+	
+	<select id="selectCateInfo" parameterType="string" resultType="CateInfo">
+		SELECT * FROM CATEINFO WHERE USERID = #{userId} 
+	</select>
 </mapper>
