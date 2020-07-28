@@ -136,7 +136,7 @@
 				<div class="col-1"></div>
 			</div>
 			<div class="col-lg-3 col-md-3">
-			<button type="button" class="btn btn-success" onclick="location.href='/meetAgain/views/sgroup/create.jsp'">소모임 생성하기!</button>
+			<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">소모임 생성하기!</button>
 			</div>
 		</div>
 	</div>

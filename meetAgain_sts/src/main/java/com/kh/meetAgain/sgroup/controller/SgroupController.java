@@ -37,35 +37,28 @@ public class SgroupController {
 	@RequestMapping("sgroup/sgroupCreateEnd.do")
 	public String sgroupCreateEnd(Sgroup sgroup,  Model model, HttpSession session,
 	         @RequestParam(value="sgroupImg", required = false) MultipartFile[] sgroupImg,
-	         @RequestParam("gTitle") String gTitle) {
+	         @RequestParam("joinType") String joinType) {
 		
-		System.out.println("gTitle : " + gTitle);
-		System.out.println("sgroup : " + sgroup);
-		System.out.println("멀티파트 : " + sgroupImg);
+		System.out.println("joinType : " + joinType);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
-	      
 
-	      // 2. 폴더 유무 확인 후 생성
 	      File dir = new File(saveDir);
 	      
 	      System.out.println("폴더가 있나요? " + dir.exists());
 	      
-	      if(dir.exists() == false) dir.mkdirs(); // 폴더가 없다면 만들어줌
+	      if(dir.exists() == false) dir.mkdirs();
 	      
-	      // 3. 파일 업로드 시작 (MultipartFile 사용 시 )
 	      for(MultipartFile f : sgroupImg) {
 	         if(!f.isEmpty()) {
-	            // 원본 이름 가져오기
+	        	 
 	            String originName = f.getOriginalFilename();
 	            String ext = originName.substring(originName.lastIndexOf(".")+1);
 	            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 	            
 	            int rndNum = (int)(Math.random() * 1000);
 	            
-	            // 서버에서 저장 후 관리할 파일 명
 	            String renamedName = sdf.format(new Date()) + "_" + rndNum + "." + ext;
-	            
-	            // 실제 파일을 지정한 파일명으로 변환하며 데이터를 저장한다.
+
 	            try {
 	               f.transferTo(new File(saveDir + "/" + renamedName));
 	            } catch (IllegalStateException | IOException e) {
@@ -77,7 +70,7 @@ public class SgroupController {
 	         }
 	      }
 	
- int result = sgroupService.insertSgroup(sgroup);
+	      	int result = sgroupService.insertSgroup(sgroup);
 	   		String msg = "";
 	   		
 	   		if (result >0) {
@@ -88,32 +81,8 @@ public class SgroupController {
 	   			System.out.println("모임생성완료");
 	   		}
 	   		
-	   		return "redirect:/board/notice.do";
+	   		return "redirect:/sgroup/group.do";
 	   		
-				/*
-				 * int result = 0;
-				 * 
-				 * try {
-				 * 
-				 * result = sgroupService.insertSgroup(sgroup);
-				 * 
-				 * } catch(Exception e) {
-				 * 
-				 * e.getStackTrace();
-				 * 
-				 * }
-				 * 
-				 * System.out.println("result : " + result); String loc = "/board/notice.do";
-				 * String msg = "";
-				 * 
-				 * if(result > 0) { msg = "게시글 등록 성공!"; loc = "/board/notice.do";
-				 * 
-				 * } else { msg = "게시글 등록 실패!"; }
-				 * 
-				 * model.addAttribute("loc", loc).addAttribute("msg", msg);
-				 * 
-				 * return "common/msg";
-				 */
 
 	}
 	
