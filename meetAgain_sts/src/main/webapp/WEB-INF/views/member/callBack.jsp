@@ -17,6 +17,7 @@
 	
 	<form id = "userform" action="memberInsertForm.do">
 <input type="hidden" id="email" name="email"/>
+<input type="hidden" id="id" name="id"/>
 <input type="hidden" id="name" name="name" />
 <input type="hidden" id="gender" name="gender" />
 <input type="hidden" id="age" name="age" />
@@ -56,6 +57,7 @@
 											var gender = naverLogin.user.getGender();
 											var age = naverLogin.user.getAge();
 											var birth = naverLogin.user.getBirthday();
+											var id = naverLogin.user.getId();
 																															
 											if (email == undefined || email == null
 													|| name == undefined || name == null
@@ -73,6 +75,7 @@
 											$('#gender').val(gender);
 											$('#age').val(age);
 											$('#birth').val(birth);
+											$('#id').val(id);
 											$('#email2').val(email);
 											$.ajax({
 												url : "${ pageContext.request.contextPath }/member/selectOne.do",

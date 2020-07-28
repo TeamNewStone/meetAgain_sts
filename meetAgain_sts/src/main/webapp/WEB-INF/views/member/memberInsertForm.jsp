@@ -24,8 +24,10 @@
 						<!-- <small id="emailHelp" class="form-text text-info">We'll never share your email with anyone else.</small> -->
 					</div>
 					<div class="form-group">
-						<label for="userName">* 이름</label> <input type="text" name="userName"
+						<label for="userName">* 이름</label> 
+						<input type="text" name="userName"
 							class="form-control" id="userName" value="${name}" readonly>
+						<input type="hidden" name="userId" value="${id}" />
 					</div>
 					<div class="form-group">
 						<label for="NickName">* 닉네임</label> <input type="text" name="nickName"
