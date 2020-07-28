@@ -45,8 +45,6 @@
 <!-- footer 끝 -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <%--     <script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script> --%>
-    <script src="${ pageContext.request.contextPath }/resources/vendor/popper/popper.min.js"></script>
-    <script src="${ pageContext.request.contextPath }/resources/vendor/bootstrap/bootstrap.min.js" ></script>
 
     <!-- optional plugins -->
     <script src="${ pageContext.request.contextPath }/resources/vendor/nouislider/js/nouislider.min.js"></script>
