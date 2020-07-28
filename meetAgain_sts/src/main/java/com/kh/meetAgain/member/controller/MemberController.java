@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -140,19 +139,22 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/userLogin.do")
-	public ModelAndView userLogin(@RequestParam("email") String email){
+	public ModelAndView userLogin(@RequestParam("email") String email) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		
+		try {
 		Member m = memberService.selectOne(email);
 		
-		String msg = "";
+		String msg = "로그인 성공!";
 		String loc = "/";
 		
 		mav.addObject("member", m);
 		mav.addObject("loc", loc);
 		mav.addObject("msg", msg);
 		mav.setViewName("common/msg");
-		
+		}catch(Exception e) {
+		 throw new Exception();
+		}
 		return mav;
 	}
 	
@@ -187,6 +189,12 @@ public class MemberController {
 			status.setComplete();
 		
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/member/memberOut.do")
+	public String memberOut(Member m) {
+		//int result = memberService.memberOut(m);
+		return "/member/logout";
 	}
 	
 }
