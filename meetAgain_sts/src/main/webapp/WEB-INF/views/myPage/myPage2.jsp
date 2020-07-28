@@ -33,8 +33,8 @@
         <div class="row">            
           <div class="col-12 text-left"><p style="font-size: 20px; font-weight: bold;">? 님의 기본정보 : </p></div>
          
-          <!-- 로그인 되면 value ${member.userId} 로 바꿔야합니다 -->
-          <input type="hidden" name="userId" value="u20a001" />
+          <!-- 로그인 되면 value ${member.email} 로 바꿔야합니다 -->
+          <input type="hidden" id="email" name="email" value="example@naver.com" />
           
           <div class="col-12 col-md-3 text-right"><p id="textFm">닉네임 : </p></div>
 
@@ -184,7 +184,8 @@
         location.href="myPage1.jsp";
       }
       function memberOther() {        
-        location.href="${ pageContext.request.contextPath }/member/mTMIInsertForm.do";
+    	  var email = $('#email').val();
+        location.href="${ pageContext.request.contextPath }/member/mTMIInsertForm.do?email="+email;
       }    
      /*  function addressSearchBtn2() {
         var url = "mapMarker.jsp";

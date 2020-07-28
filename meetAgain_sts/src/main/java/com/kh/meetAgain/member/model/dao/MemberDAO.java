@@ -18,6 +18,8 @@ public interface MemberDAO {
 
 
 	int mCateUpdate(String c);
+
+	UserTMI selectOneTMI(String email);
 	
 
 }

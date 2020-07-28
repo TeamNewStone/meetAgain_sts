@@ -31,6 +31,10 @@ WHERE USERID=#{userId}
 		INSERT INTO CATEINFO VALUES(#{userId}, #{category})
 	
 	</insert>
+	
+	<select id="selectOneTMI" parameterType="string" resultType="UserTMI">
+		SELECT * FROM USERTMI JOIN MEMBER USING(USERID) WHERE EMAIL=#{email}
+	</select>
 
 
 </mapper>

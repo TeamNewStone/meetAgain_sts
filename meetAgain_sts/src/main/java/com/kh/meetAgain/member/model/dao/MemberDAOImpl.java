@@ -44,6 +44,11 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.update("memberMapper.mCateUpdate", c);
 	}
 
+	@Override
+	public UserTMI selectOneTMI(String email) {
+		return sqlSession.selectOne("memberMapper.selectOneTMI", email);
+	}
+
 	
 
 }
