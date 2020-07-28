@@ -12,20 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 
-
+@SessionAttributes(value= {"member"})
 @Controller
 public class MemberController {
 	
 	@Autowired
 	MemberService memberService;
 	
-	@RequestMapping(value = "member/memberInsertForm.do", method= RequestMethod.POST)
+	@RequestMapping(value = "member/memberInsertForm.do")
 	public String memberInsertForm(@RequestParam String email,
 			@RequestParam String name, @RequestParam String gender, @RequestParam String age,
 			@RequestParam String birth, Model model) {
@@ -42,16 +45,16 @@ public class MemberController {
 		return "member/memberInsertForm";
 	}
 	@RequestMapping("member/memberInsertSuccess.do")
-	public String memberInsertSuccess(Member m, Model model,
+	public String memberInsertSuccess(Member member, Model model,
 			@RequestParam("year") int year, @RequestParam("birth") String birth) {
 		int month = Integer.parseInt(birth.substring(0, 2));
 		int day = Integer.parseInt(birth.substring(3,5));
 
 		Date date = new Date(year,month,day);
 		
-		m.setBirthday(date);
+		member.setBirthday(date);
 		
-		int result = memberService.insertMember(m);
+		int result = memberService.insertMember(member);
 		
 		String loc = "/";
 		String msg = "";
@@ -123,17 +126,34 @@ public class MemberController {
 		return "common/msg";
 	}
 
-	@RequestMapping(value = "/member/selectOne.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/member/selectOne.do")
 	@ResponseBody
 	public Map<String,Object> selectOne(HttpServletRequest request) {
 		String email = request.getParameter("email");
-		System.out.println(email);
+		//System.out.println(email);
 		Map<String, Object> map = new HashMap<String,Object>(); 
 		boolean isNew = memberService.selectOne(email)==null ? true : false;
 		
 		map.put("isNew", isNew);
 		
 		return map;
+	}
+	
+	@RequestMapping(value="/member/userLogin.do")
+	public ModelAndView userLogin(@RequestParam("email") String email){
+		ModelAndView mav = new ModelAndView();
+		
+		Member m = memberService.selectOne(email);
+		
+		String msg = "";
+		String loc = "/";
+		
+		mav.addObject("member", m);
+		mav.addObject("loc", loc);
+		mav.addObject("msg", msg);
+		mav.setViewName("common/msg");
+		
+		return mav;
 	}
 	
 	@RequestMapping("/member/mTMIUpdate.do")
@@ -156,6 +176,17 @@ public class MemberController {
 		model.addAttribute("msg", msg);
 		
 		return "common/msg";
+	}
+	
+	@RequestMapping("/member/logout.do")
+	public String memberLogout(SessionStatus status) {
+		// SessionStatus 는 현재 사용자가 접속한 웹 브라우저와
+		// 서버 사이의 세션의 설정을 가지는 객체
+		// 세션이 아직 완료되지 않았다면 세션을 종료시켜라!
+		if(! status.isComplete())
+			status.setComplete();
+		
+		return "redirect:/";
 	}
 	
 }
