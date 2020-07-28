@@ -3,7 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page import="com.kh.meetAgain.member.model.vo.Member"%>
     
+<%
+	Member m = (Member)session.getAttribute("member");
+%>
+
 <style>
   #_fwfw{
    font-size: 20px;

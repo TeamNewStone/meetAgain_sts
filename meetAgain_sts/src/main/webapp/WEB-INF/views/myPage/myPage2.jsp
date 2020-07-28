@@ -34,7 +34,7 @@
           <div class="col-12 text-left"><p style="font-size: 20px; font-weight: bold;">${member.nickName } 님의 기본정보 : </p></div>
          
           <!-- 로그인 되면 value ${member.email} 로 바꿔야합니다 -->
-          <input type="hidden" id="email" name="email" value="example@naver.com" />
+          <input type="hidden" id="email" name="email" value="${member.email}" />
           
           <div class="col-12 col-md-3 text-right"><p id="textFm">닉네임 : </p></div>
 
