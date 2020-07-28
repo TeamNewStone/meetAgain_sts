@@ -1,10 +1,10 @@
 package com.kh.meetAgain.member.controller;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,8 +42,27 @@ public class MemberController {
 		return "member/memberInsertForm";
 	}
 	@RequestMapping("member/memberInsertSuccess.do")
-	public String memberInsertSuccess() {
-		return "member/memberInsertSuccess";
+	public String memberInsertSuccess(Member m, Model model,
+			@RequestParam("year") int year, @RequestParam("birth") String birth) {
+		int month = Integer.parseInt(birth.substring(0, 2));
+		int day = Integer.parseInt(birth.substring(3,5));
+
+		Date date = new Date(year,month,day);
+		
+		m.setBirthday(date);
+		
+		int result = memberService.insertMember(m);
+		
+		String loc = "/";
+		String msg = "";
+		
+		if (result > 0) msg = "회원 가입 성공!";
+		else msg = "회원 가입 실패!";
+		
+		model.addAttribute("loc", loc);  // like request.setAttribute("loc", loc);
+		model.addAttribute("msg", msg);
+		
+		return "common/msg";
 	}
 	@RequestMapping("member/mTMIInsertForm.do")
 	public String mTMIInsertForm(@RequestParam String email, Model model) {

@@ -20,11 +20,11 @@
 	
 	
 	<form id = "userform" action="memberInsertForm.do" method="POST">
-<input type="text" id="email" name="email"/>
-<input type="text" id="name" name="name" />
-<input type="text" id="gender" name="gender" />
-<input type="text" id="age" name="age" />
-<input type="text" id="birth" name="birth" />
+<input type="hidden" id="email" name="email"/>
+<input type="hidden" id="name" name="name" />
+<input type="hidden" id="gender" name="gender" />
+<input type="hidden" id="age" name="age" />
+<input type="hidden" id="birth" name="birth" />
 </form>
 	
 	<!-- (1) LoginWithNaverId Javscript SDK -->
