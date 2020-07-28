@@ -96,20 +96,26 @@
             </ul>
 
 			<ul class="navbar-nav ml-auto" id="login-nav">
-		<c:if test="${empty member}">
+			<c:if test="${empty member}">
             <li class="nav-item dropdown text-white" id="login">
               <a class="nav-link" href="${ pageContext.request.contextPath }/member/login.do">로그인</a>
             </li>
             </c:if>
+            <c:if test="${!empty member}">
+            <li>
+             <p style="color : white; width : 200px;"> ${member.nickName}님, 안녕하세요!</p>
+            </li>
             <li class="nav-item dropdown" id="userIcon">
-              <img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="test img-fluid rounded-circle" style="width : 60px;">
+                   <img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="test img-fluid rounded-circle" style="width : 60px;">
               <div class="dropdown-menu dropdown-menu-right dropMenuDiv" aria-labelledby="nav-inner-primary_dropdown_1">
-                <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/logout.do">로그아웃</a>
+                <!-- <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/logout.do">로그아웃</a>-->
+                <a class="dropdown-item" onclick="userLogout();">로그아웃</a>
                 <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage1.do">마이페이지</a>
                 <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage2.do">개인정보수정</a>
                 <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/membership.do">등급관리</a>
               </div>
             </li>
+               </c:if>
           </ul>
           </div>
         </div>
@@ -136,6 +142,10 @@
     
     function goGroup(){
     	location.href='${ pageContext.request.contextPath }/sgroup/group.do';
+    }
+    function userLogout(){
+    	var confirm = window.confirm("로그아웃 하시겠습니까?");
+    	if(confirm) location.href="${ pageContext.request.contextPath }/member/logout.do";
     }
 
     </script>
