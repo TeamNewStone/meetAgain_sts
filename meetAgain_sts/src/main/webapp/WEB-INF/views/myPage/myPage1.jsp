@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+    
 <style>
   #_fwfw{
    font-size: 20px;
@@ -245,14 +245,8 @@
 		</div>  
 			
 		<div class="tab-pane fade text-center" id="myPost">
-	    
-	      <%-- 게시물 리스트. --%>
-	
-			<%-- <c:forEach var="name" items="${myGroupList}" varStatus="status">
-			
-			</c:forEach> --%>
-	
-			<table class="table">
+
+			<!-- <table class="table">
 
 				<thead>
 					<tr>
@@ -267,8 +261,44 @@
 						<td>굽남모임</td>
 						<td>제목1</td>
 					</tr>
+					<tr>
+						<td>1</td>
+						<td>굽남모임</td>
+						<td>제목1</td>
+					</tr>
 				</tbody>
-			</table> 
+			</table>  -->
+			
+			<section id="gBoardList" class="container">
+				<p>총 ${totalContents}건의 게시물이 있습니다.</p>
+				
+				<table id="tbl-board" class="table table-striped table-hover">
+					<tr>
+						<th>소모임글번호</th>
+
+						<th>소모임_게시판글제목</th>
+
+						<th>조회수</th>
+
+						<th>작성일</th>
+
+						<th>삭제여부</th>
+						
+						<th>작성자</th>
+					</tr>
+					<c:forEach items="${list}" var="gb"> 
+						<tr id="${gb.gbid}">
+							<td>${gb.gbtitle}</td>
+							<td>${gb.gbrate}</td>
+							<td>${gb.gbdate}</td>
+							<td>${gb.gbdel}</td>
+							<td>${m.userName}</td>
+						</tr>
+					</c:forEach>
+				</table>
+				<c:out value="${pageBar}" escapeXml="false"/>
+			</section>
+			<input type="button" value="새로고침" class="btn btn-outline-success" onclick="fn_refresh();"/>
 	     
  		</div>
 
@@ -293,6 +323,9 @@
 	}
 	function rateEdit() {
 		location.href = "${ pageContext.request.contextPath }/member/membership.do";
+	}
+	function fn_refresh(){
+		location.reload();
 	}
 </script>
 
