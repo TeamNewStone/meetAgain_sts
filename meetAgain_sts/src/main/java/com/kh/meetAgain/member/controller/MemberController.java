@@ -46,7 +46,11 @@ public class MemberController {
 		return "member/memberInsertSuccess";
 	}
 	@RequestMapping("member/mTMIInsertForm.do")
-	public String mTMIInsertForm() {
+	public String mTMIInsertForm(@RequestParam String email, Model model) {
+		System.out.println(email);
+		UserTMI ut = memberService.selectOneTMI(email);
+		model.addAttribute("UserTMI", ut);
+		System.out.println(ut);
 		return "member/mTMIInsertForm";
 	}
 	

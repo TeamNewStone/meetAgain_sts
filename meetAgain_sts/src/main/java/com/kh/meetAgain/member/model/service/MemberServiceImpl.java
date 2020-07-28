@@ -51,5 +51,10 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@Override
+	public UserTMI selectOneTMI(String email) {
+		return memberDAO.selectOneTMI(email);
+	}
+
 
 }

@@ -33,7 +33,12 @@
 						  </div>
 						  <div class="form-group">
 						    <label for="blood">혈액형</label>
+						    <c:if test="${UserTMI.blood eq ''}">
 						    <input type="text" class="form-control" id="blood" maxlength="2" name="blood" placeholder="ex) AB" style="text-transform:uppercase;">
+						    </c:if>
+						    <c:if test="${UserTMI.blood ne ''}">
+						    <input type="text" class="form-control" id="blood" maxlength="2" name="blood" placeholder="ex) AB" value="${UserTMI.blood}" style="text-transform:uppercase;">
+						    </c:if>
 						    <small><span class="error_next_box text-info" id="bloodNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
 						  </div>
 						  <div class="form-group">
@@ -43,7 +48,12 @@
 						  <div class="form-group">
 						    <label for="MBTI">MBTI &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						    <button type="button" class="btn btn-outline-secondary" onclick="window.open('https://www.16personalities.com/ko','_blank')">테스트하러 가기</button></label><br />
+						    <c:if test="${UserTMI.mbti eq ''}">
 						    <input type="text" class="form-control" id="MBTI" placeholder="ex) ISFP" name="MBTI" maxlength="4" style="text-transform:uppercase;" >
+						    </c:if>
+						    <c:if test="${UserTMI.mbti ne ''}">
+						    <input type="text" class="form-control" id="MBTI" placeholder="ex) ISFP" name="MBTI" maxlength="4" value="${UserTMI.mbti}" style="text-transform:uppercase;" >
+						    </c:if>
 						    <small><span class="error_next_box text-info" id="mbtiNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
 						  </div>
 						  <div class="form-group">
@@ -84,7 +94,12 @@
 						  <div class="form-group">
 						    <label for="exampleInputPassword1">키워드</label>
 						    <small id="emailHelp" class="form-text text-info">본인을 소개하는 키워드를 # 태그를 이용해 자유롭게 표현해주세요!</small>
+						    <c:if test="${UserTMI.keyword eq ''}">
 						    <input type="text" class="form-control" name="keyword" id="keyword" >
+						    </c:if>
+						    <c:if test="${UserTMI.keyword ne ''}">
+						    <input type="text" class="form-control" name="keyword" id="keyword" value="${UserTMI.keyword}" >
+						    </c:if>
 						  </div>
 
 <br />
