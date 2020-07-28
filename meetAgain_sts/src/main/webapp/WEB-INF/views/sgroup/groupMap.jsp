@@ -232,8 +232,7 @@
 
 		<div>
 			<br />
-			<hr />
-			<h3><span id="_mapPhone">전화번호가 들어갈 공간입니다.</span></h3>
+			<hr />			
 			<br />
 			<div>
 				<button type="button" class="btn btn-info"	id="findRoad">카카오맵에서<br>길찾기</button>

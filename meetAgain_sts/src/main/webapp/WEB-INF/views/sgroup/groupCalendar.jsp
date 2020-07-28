@@ -7,6 +7,7 @@
 
 <script src="${ pageContext.request.contextPath }/resources/js/main.js"></script>
 <script src="${ pageContext.request.contextPath }/resources/css/main.css"></script>
+<script src="${ pageContext.request.contextPath }/resources/js/locales/ko.js"></script>
 
 <script>
 
@@ -17,9 +18,9 @@
 
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 			headerToolbar : {
-				left : 'prev,next today',
-				center : 'title, #dayday',
-				right : 'dayGridMonth'
+				left : 'prev,next',
+				center : 'title',
+				right : 'dayGridMonth today'
 			},
 			initialDate : today, //현재날짜로 초기화
 			navLinks : true, // can click day/week names to navigate views
@@ -50,35 +51,10 @@
 				start : '2020-07-17'
 			} ]
 		});
-		
-		// 왼쪽 버튼을 클릭하였을 경우
-				
-	    $("button.fc-prev-button").click(function() {
-	            var date = $("#calendar").main("getDate");
-	            convertDate(date);
-	        });
-
-	        // 오른쪽 버튼을 클릭하였을 경우
-	        $("button.fc-next-button").click(function() {
-	            var date = $("#calendar").main("getDate");
-	            convertDate(date);
-	        });
 
 		calendar.render();
+		
 	});
-	
-	function convertDate(date) {
-        var date = new Date(date);
-        alert(date.yyyymmdd());
-    }
-
-    // 받은 날짜값을 YYYY-MM-DD 형태로 출력하기위한 함수.
-    Date.prototype.yyyymmdd = function() {
-        var yyyy = this.getFullYear().toString();
-        var mm = (this.getMonth() + 1).toString();
-        var dd = this.getDate().toString();
-        return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]);
-    }
     
 </script>
 <style>
@@ -117,7 +93,8 @@ body {
 					</div>
 					&nbsp;&nbsp;&nbsp;
 					<div style="float: left;" id="myScore">
-						<h3 id="dayday">7월의 일정</h3>
+						<!-- 소모임 일정 표시 -->
+						<h2 id="scheduleList"></h2>
 					</div>
 					&nbsp;&nbsp;&nbsp;
 					<button data-toggle="modal" data-target="#exampleModal"
@@ -147,6 +124,14 @@ body {
 				</div>
 			</tr>
 		</table>
+	</div>
+	
+	<div class="navigation d-flex justify-content-center">
+		<ul>
+			<li class="nav-item">
+				<a href="#">ㄹㄹ</a>
+			</li>
+		</ul>
 	</div>
 
 	<!------------------ modal 영역 ---------------------------->
@@ -205,27 +190,139 @@ body {
 </div>
 
 <script>
-$(function(){
-	$("#group-calbtn").attr('class','btn btn-secondary');
 	
-	}
-);
+	$(function(){
+	$('.fc-prev-button').on('click',function(){
+	
+		var test1 = $('.fc-toolbar-title').html();
+		// console.log(test1);
+		var test2 = test1.split(' ');
+		// console.log(test2);
 
+		for (var i in test2){
+			// console.log(test2[i]);
+			// if(test2[0] === 'September'){
+			// 	console.log('9월의 일정');
+			// }
+
+			switch (test2[0]) {
+				case 'January':
+					// console.log('1월의 일정');
+					$('#scheduleList').html('<div><h2>1월의 일정</h2></div>');
+					break;
+				case 'February':
+					$('#scheduleList').html('<div><h2>2월의 일정</h2></div>');
+					break;
+				case 'March':
+					$('#scheduleList').html('<div><h2>3월의 일정</h2></div>');
+					break;
+				case 'April':
+					$('#scheduleList').html('<div><h2>4월의 일정</h2></div>');
+					break;
+				case 'May':
+					$('#scheduleList').html('<div><h2>5월의 일정</h2></div>');
+					break;
+				case 'June':
+					$('#scheduleList').html('<div><h2>6월의 일정</h2></div>');
+					break;
+				case 'July':
+					$('#scheduleList').html('<div><h2>7월의 일정</h2></div>');
+					break;
+				case 'August':
+					$('#scheduleList').html('<div><h2>8월의 일정</h2></div>');
+					break;
+				case 'September':
+					$('#scheduleList').html('<div><h2>9월의 일정</h2></div>');
+					break;
+				case 'October':
+					$('#scheduleList').html('<div><h2>10월의 일정</h2></div>');
+					break;
+				case 'November':
+					$('#scheduleList').html('<div><h2>11월의 일정</h2></div>');
+					break;
+				case 'December':
+					$('#scheduleList').html('<div><h2>12월의 일정</h2></div>');
+					break;
+
+				default:
+					break;
+			}
+
+		}
+		
+	});
+	
+	$('.fc-next-button').on('click',function(){
+		
+		var test1 = $('.fc-toolbar-title').html();
+		// console.log(test1);
+		var test2 = test1.split(' ');
+		// console.log(test2);
+
+		for (var i in test2){
+			// console.log(test2[i]);
+			// if(test2[0] === 'September'){
+			// 	console.log('9월의 일정');
+			// }
+
+			switch (test2[0]) {
+				case 'January':
+					$('#scheduleList').html('<div><h2>1월의 일정</h2></div>');
+					break;
+				case 'February':
+					$('#scheduleList').html('<div><h2>2월의 일정</h2></div>');
+					break;
+				case 'March':
+					$('#scheduleList').html('<div><h2>3월의 일정</h2></div>');
+					break;
+				case 'April':
+					$('#scheduleList').html('<div><h2>4월의 일정</h2></div>');
+					break;
+				case 'May':
+					$('#scheduleList').html('<div><h2>5월의 일정</h2></div>');
+					break;
+				case 'June':
+					$('#scheduleList').html('<div><h2>6월의 일정</h2></div>');
+					break;
+				case 'July':
+					$('#scheduleList').html('<div><h2>7월의 일정</h2></div>');
+					break;
+				case 'August':
+					$('#scheduleList').html('<div><h2>8월의 일정</h2></div>');
+					break;
+				case 'September':
+					$('#scheduleList').html('<div><h2>9월의 일정</h2></div>');
+					break;
+				case 'October':
+					$('#scheduleList').html('<div><h2>10월의 일정</h2></div>');
+					break;
+				case 'November':
+					$('#scheduleList').html('<div><h2>11월의 일정</h2></div>');
+					break;
+				case 'December':
+					$('#scheduleList').html('<div><h2>12월의 일정</h2></div>');
+					break;
+
+				default:
+					break;
+			}
+			
+		}
+
+	});
+
+	});
 
 	document.getElementById('myScore').addEventListener('click',
 	function() {
 		calendar.next();
 	});
 	
-	document.getElementById('dayday').addEventListener('click', function() {
-		  var date = calendar.getDate();
-		  alert("The current date of the calendar is " + date.toISOString());
-		});
-
 	function increaseScore() {
 		score1++;
 		document.getElementById("myScore").innerHTML = score1;
 	}
+
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
