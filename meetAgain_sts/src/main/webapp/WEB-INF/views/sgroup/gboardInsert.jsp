@@ -7,12 +7,12 @@
 <div class="container">
 	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
 	
-	<form action="post">
+	<form action="${pageContext.request.contextPath}/sgroup/gbInsert.do" method="post">
 	<div id="titleArea">
-	<input type="text" class="form-control" name = "title" placeholder="제목을 입력하세요"/>
+	<input type="text" class="form-control" id="gbTitle" name = "title" placeholder="제목을 입력하세요"/>
 	</div>
 	<br />
-	<div id="summernote" style="height:800px;"></div>
+	<textarea id="summernote" class="gbContent" style="height:800px;"></textarea>
 	<br /> 
 	<div align ="center">
 	<button type="submit" class="btn btn-outline-secondary">작성하기</button>	
@@ -21,29 +21,36 @@
 	</form>
 	<br /> <br /> <br />
 </div>
+ <script src="${ pageContext.request.contextPath }/resources/vendor/summernote/summernote-lite.min.js"></script>  
 
 <script>
 $(function(){
 	$("#group-boardbtn").attr('class','btn btn-secondary');
-	 $('#summernote').summernote({
+});
+$('#summernote').summernote({
 	 height : 300,	 
 	 toolbar: [
-		    // [groupName, [list of button]]
-		    ['style', ['bold', 'italic', 'underline']],
-		    ['font', ['strikethrough']],
-		    ['fontsize', ['fontsize']],
-		    ['fontname', ['fontname']],
-		    ['color', ['forecolor', 'backcolor']],
-		    ['para', ['paragraph']],
-		    ['table', ['table']],
-		    ['insert', ['link', 'picture']],
-		  ]
-	 });
-	 
-	}
-);
+	    ['style', ['bold', 'italic', 'underline']],
+	    ['font', ['strikethrough']],
+	    ['fontsize', ['fontsize']],
+	    ['fontname', ['fontname']],
+	    ['color', ['forecolor', 'backcolor']],
+	    ['para', ['paragraph']],
+	    ['table', ['table']],
+	    ['insert', ['link', 'picture']],
+	  ]
+});
 $(function(){
 	   $('.note-btn-group').children('button').removeClass('dropdown-toggle');
 	});
+	
+$('#post').submit(function(){
+	var str = $('.gbContent').val();
+
+	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+
+	$('.gbContent').val(str);
+});
+
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
