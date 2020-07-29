@@ -3,7 +3,6 @@ package com.kh.meetAgain.sgroup.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -39,8 +38,7 @@ public class SgroupController {
 	public String sgroupCreateEnd(Sgroup sgroup,  Model model, HttpSession session,
 	         @RequestParam(value="sgroupImg", required = false) MultipartFile[] sgroupImg,
 	         @RequestParam String userId) {
-		
-		System.out.println("userId : " + userId);
+
 		System.out.println("sgroup : " + sgroup);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
 

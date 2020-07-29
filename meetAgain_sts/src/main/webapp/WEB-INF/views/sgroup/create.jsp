@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
 
@@ -56,7 +56,7 @@
 				<div class="form-group">
 				<p style="margin-bottom:-1px"> * 모임 장소 선택 </p>
 				<input type="text" class="form-control2" id="zipCode1" name="zipCode"
-				       placeholder="우편번호" style="width: 150px;" required readonly>
+				       placeholder="우편번호" style="width: 150px;" required>
 				<button type="button" class="btn btn-secondary mb-2" onclick="addrSearch1();">검색</button>
 				<input type="text" class="form-control" id="address1"
 					   name="address1" placeholder="상세주소" required>
@@ -87,9 +87,9 @@
 				</div>
 				
 				<p>시작 날짜 </p>
-				<input type="text" id="startDate" class="form-control" style="margin-top:-15px" readonly required />
-				<p id="durateP" style="display:none">종료 날짜</p>
-				<input type="text" id="durate" name="durate" class="form-control" style="display:none; margin-top:-15px" disabled/>
+				<input type="text" id="startDate" class="form-control" style="margin-top:-15px; background:white" readonly/>
+				<p id="durateP" style="display:none;">종료 날짜</p>
+				<input type="text" id="durate" class="form-control" style="display:none; margin-top:-15px" readonly/>
 				<div id="datepicker"></div>
 				<label id="noticeDurate" style="color:red; display:none;">*일반회원일 경우 모임 연장 불가</label>
 				
@@ -97,11 +97,12 @@
 					
 					$("#gType").on("change", function(){
 						 if($(this).val()=='L'){
-							 $('#durate').css('display', 'block');
+							 $('#durate').css('display', 'block').attr('name', 'durate');
 							 $('#durateP').css('display', 'block');
 							 $('#noticeDurate').css('display', 'block');
+							 $('#startDate').removeAttr('name');
 						 } else if($(this).val()=='S'){
-							 $('#durate').css('display', 'none');
+							 $('#durate').css('display', 'none').removeAttr('name');
 							 $('#durateP').css('display', 'none');
 							 $('#noticeDurate').css('display', 'none');
 							 $('#startDate').attr('name', 'durate');
@@ -244,10 +245,10 @@ function validate(){
 	} else if($("#cateId").children().first().is(":selected")){
 		alert("카테고리를 선택해주세요.");
 		return false;
-	} /* else if($('#startDate').val().length==0){
+	}  else if($('#startDate').val().length==0){
 		alert("시작 날짜를 선택해주세요.");
 		return false;
-	} */
+	}
 	
 }
 
@@ -320,6 +321,7 @@ function validate(){
 			minDate: new Date()
 			
 		});
+		
 		
 		$("#gType").on("change", function(){
 	        console.log($(this).val());
