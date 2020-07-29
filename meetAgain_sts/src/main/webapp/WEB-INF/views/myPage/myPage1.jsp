@@ -275,33 +275,40 @@
 			</table>  -->
 			
 			<section id="gBoardList" class="container">
-				<p>총 ${totalContents}건의 게시물이 있습니다.</p>
 				
-				<table id="tbl-board" class="table table-striped table-hover">
+				<table id="tbl-board" class="table" style="text-align:center;">
+				<thead>
 					<tr>
-						<th>소모임글번호</th>
+						<th>소모임명</th>
 
-						<th>소모임_게시판글제목</th>
-
-						<th>조회수</th>
+						<th>게시글 제목</th>
 
 						<th>작성일</th>
 
-						<th>삭제여부</th>
-						
-						<th>작성자</th>
+						<th>조회수</th>
 					</tr>
+				</thead>
+				<tbody class="table-hover">
+					<c:if test="${list ne null }">
 					<c:forEach items="${list}" var="gb"> 
-						<tr id="${gb.gbid}">
-							<td>${gb.gbtitle}</td>
-							<td>${gb.gbrate}</td>
-							<td>${gb.gbdate}</td>
-							<td>${gb.gbdel}</td>
-							<td>${m.userName}</td>
+						<tr id="${gb.gbId}">
+							<td>${gb.GTitle}</td>
+							<td>${gb.gbTitle}</td>
+							<td>${gb.gbDate}</td>
+							<td>${gb.gbRate}</td>
 						</tr>
 					</c:forEach>
+					</c:if>
+					<c:if test="${empty list}">
+						<tr>
+							<td colspan="4"><p>아직 작성한 게시글이 없습니다.</p></td>
+						</tr>
+					</c:if>
+				</tbody>
 				</table>
-				<c:out value="${pageBar}" escapeXml="false"/>
+					<c:if test="${list eq null }">
+					<c:out value="${pageBar}" escapeXml="false"/>
+					</c:if>
 			</section>
 			<input type="button" value="새로고침" class="btn btn-outline-success" onclick="fn_refresh();"/>
 	     
