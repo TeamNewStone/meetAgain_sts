@@ -41,6 +41,10 @@ INSERT INTO MEMBER VALUES(#{userId}, #{userName}, #{address1}, DEFAULT, DEFAULT,
 #{nickName}, #{birthday}, #{gender}, #{email}, #{phone}, DEFAULT, DEFAULT, DEFAULT, 
 DEFAULT, DEFAULT, DEFAULT,DEFAULT, DEFAULT)
 </insert>
+<insert id="insertTmi" parameterType="Member">
+INSERT INTO USERTMI VALUES(#{userId}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+
+</insert>
 
 	
 	<select id="selectCateInfo" parameterType="string" resultType="CateInfo">
