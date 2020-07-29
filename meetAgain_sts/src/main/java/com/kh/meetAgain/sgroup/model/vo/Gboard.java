@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Gboard implements Serializable {
+public class Gboard extends Sgroup implements Serializable {
 
 	/**
 	 * 
@@ -23,7 +23,7 @@ public class Gboard implements Serializable {
 	private String gbContent;
 	private int gbRate;
 	private Date gbDate;
-	private boolean gbDel;
+	private String gbDel;
 	private int gbRec;
 	private boolean isNotice;
 }
