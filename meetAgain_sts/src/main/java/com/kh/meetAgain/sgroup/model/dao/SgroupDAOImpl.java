@@ -47,6 +47,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Override
 	public int insertgBoard(Gboard Gboard) {
+		System.out.println("Gboard : " + Gboard);
 		return sqlSession.insert("sgroupMapper.insertgBoard", Gboard);
 	}
 

@@ -39,6 +39,7 @@ public class SgroupServiceImpl implements SgroupService {
 
 	@Override
 	public int insertgBoard(Gboard Gboard) {
+		System.out.println("service : " + Gboard);
 		return sgroupDAO.insertgBoard(Gboard);
 	}
 
