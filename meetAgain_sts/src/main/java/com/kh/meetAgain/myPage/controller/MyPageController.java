@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.meetAgain.common.util.Utils;
+import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.myPage.model.service.MyPageService;
 
@@ -21,14 +22,16 @@ public class MyPageController {
 	
 	
 	  @Autowired MyPageService mpSvc;
-	 
+	 @Autowired MemberService mservice;
 	
 	@RequestMapping("myPage/myPage1.do")
-	public String myPage1(@ModelAttribute("member") Member m, @RequestParam(value="cPage", required=false, defaultValue="1")
+	public String myPage1(@ModelAttribute("member") Member m, @RequestParam("uid") String userId, @RequestParam(value="cPage", required=false, defaultValue="1")
 	int cPage, Model model) {
-		int following = mpSvc.totalFollowing(m.getUserId());
-		int follower = mpSvc.totalFollower(m.getUserId());
-		int groupSum = mpSvc.totalGroup(m.getUserId());
+		
+		Member owner = mservice.selectOne(userId);
+		int following = mpSvc.totalFollowing(userId);
+		int follower = mpSvc.totalFollower(userId);
+		int groupSum = mpSvc.totalGroup(userId);
 		
 		
 		System.out.println("마이페이지 세션 테스트 : "+ m);
@@ -52,6 +55,7 @@ public class MyPageController {
 		
 		model.addAttribute("list", list);
 		
+		model.addAttribute("owner",owner);
 		model.addAttribute("totalContents", totalContents);
 		model.addAttribute("numPerPage", numPerPage);
 		model.addAttribute("pageBar", pageBar);

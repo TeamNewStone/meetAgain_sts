@@ -18,7 +18,7 @@ WHERE USERID=#{userId}
 </update>
 
 	<select id="selectOne" parameterType="string" resultType="Member">
-		SELECT * FROM MEMBER WHERE EMAIL = #{email}
+		SELECT * FROM MEMBER WHERE USERID = #{userId}
 	</select>
 	
 	<update id="mTMIUpdate" parameterType="UserTMI">
@@ -33,7 +33,7 @@ WHERE USERID=#{userId}
 	</insert>
 	
 	<select id="selectOneTMI" parameterType="string" resultType="UserTMI">
-		SELECT * FROM USERTMI JOIN MEMBER USING(USERID) WHERE EMAIL=#{email}
+		SELECT * FROM USERTMI JOIN MEMBER USING(USERID) WHERE USERID=#{userId}
 	</select>
 
 <insert id="insertMember" parameterType="Member">

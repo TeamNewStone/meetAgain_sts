@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +31,7 @@ public class MemberController {
 	@RequestMapping(value = "member/memberInsertForm.do")
 	public String memberInsertForm(@RequestParam String email,
 			@RequestParam String name, @RequestParam String gender, @RequestParam String age,
-			@RequestParam String birth, @RequestParam int id, Model model) {
+			@RequestParam String birth, @RequestParam String id, Model model) {
 
 		System.out.println(email+name+gender+age+birth+id);
 
@@ -67,10 +68,9 @@ public class MemberController {
 		return "member/memberInsertSuccess";
 	}
 	@RequestMapping("member/mTMIInsertForm.do")
-	public String mTMIInsertForm(@RequestParam String email, Model model) {
-		System.out.println(email);
+	public String mTMIInsertForm(@ModelAttribute("member") Member m, Model model) {
 		
-		Map<String, Object> map = memberService.selectOneTMI(email);
+		Map<String, Object> map = memberService.selectOneTMI(m.getUserId());
 		UserTMI ut = (UserTMI)map.get("ut");
 		CateInfo cateInfo = (CateInfo)map.get("cateInfo");
 		
@@ -129,10 +129,10 @@ public class MemberController {
 	@RequestMapping(value = "/member/selectOne.do")
 	@ResponseBody
 	public Map<String,Object> selectOne(HttpServletRequest request) {
-		String email = request.getParameter("email");
-		//System.out.println(email);
+		String userId = request.getParameter("id");
+
 		Map<String, Object> map = new HashMap<String,Object>(); 
-		boolean isNew = memberService.selectOne(email)==null ? true : false;
+		boolean isNew = memberService.selectOne(userId)==null ? true : false;
 		
 		map.put("isNew", isNew);
 		
@@ -140,11 +140,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/userLogin.do")
-	public ModelAndView userLogin(@RequestParam("email") String email) throws Exception{
+	public ModelAndView userLogin(@RequestParam("userId") String userId) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		
 		try {
-		Member m = memberService.selectOne(email);
+		Member m = memberService.selectOne(userId);
 		
 		String msg = "로그인 성공!";
 		String loc = "/";

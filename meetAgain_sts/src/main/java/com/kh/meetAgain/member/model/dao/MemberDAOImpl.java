@@ -18,8 +18,8 @@ public class MemberDAOImpl implements MemberDAO {
 	SqlSessionTemplate sqlSession;
 	
 	@Override
-	public Member selectOne(String email) {
-		return sqlSession.selectOne("memberMapper.selectOne", email);
+	public Member selectOne(String userId) {
+		return sqlSession.selectOne("memberMapper.selectOne", userId);
 	}
 	
 	@Override
@@ -69,8 +69,8 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public UserTMI selectOneTMI(String email) {
-		return sqlSession.selectOne("memberMapper.selectOneTMI", email);
+	public UserTMI selectOneTMI(String userId) {
+		return sqlSession.selectOne("memberMapper.selectOneTMI", userId);
 	}
 
 	@Override
