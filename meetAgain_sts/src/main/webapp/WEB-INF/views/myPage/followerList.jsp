@@ -14,13 +14,17 @@
 <div class="row bootstrap snippets" >
         <div class="comment-wrapper">
             <div class="panel panel-info">
+            <div class="panel-heading" style="text-align:center;">
+                    <h4>follower</h4>
+                </div>
+                <hr />
                 <div class="panel-body">
                    
                     <div class="clearfix"></div>
                     <ul class="media-list">
                     <c:if test="${list ne null }">
                     <c:forEach items="${list }" var="f">
-                        <ul class="media">
+                        <ul class="media" style="border-bottom-width: 1px;padding-bottom: 20px;padding-left: 60px;">
                             
                             <div class="media-body">
                             	<%-- <c:if test=""></c:if>

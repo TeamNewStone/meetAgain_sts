@@ -22,7 +22,7 @@
                     <c:forEach items="${list }" var="f">
                         <ul class="media">
                             
-                            <div class="media-body">
+                            <div class="media-body" style="border-bottom-width: 1px;padding-bottom: 20px;padding-left: 60px;">
                             	<%-- <c:if test="${empty f.userImg}">
                             	<img src="${ pageContext.request.contextPath }/resources/img/usericon.png" alt="사용자사진" />     
                             	</c:if>
