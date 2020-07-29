@@ -18,8 +18,8 @@ public class MemberDAOImpl implements MemberDAO {
 	SqlSessionTemplate sqlSession;
 	
 	@Override
-	public Member selectOne(String email) {
-		return sqlSession.selectOne("memberMapper.selectOne", email);
+	public Member selectOne(String userId) {
+		return sqlSession.selectOne("memberMapper.selectOne", userId);
 	}
 	
 	@Override
@@ -69,13 +69,22 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public UserTMI selectOneTMI(String email) {
-		return sqlSession.selectOne("memberMapper.selectOneTMI", email);
+	public UserTMI selectOneTMI(String userId) {
+		return sqlSession.selectOne("memberMapper.selectOneTMI", userId);
 	}
 
 	@Override
 	public int insertMember(Member m) {
-		return sqlSession.insert("memberMapper.insertMember",m);
+		int result = sqlSession.insert("memberMapper.insertMember",m);
+		sqlSession.insert("memberMapper.insertTmi",m);
+		return result;
+	}
+
+	@Override
+	public int checkNnDuplicate2(HashMap<String, Object> hmap) {
+		sqlSession.selectOne("memberMapper.checkNnDuplicate2", hmap);
+		
+		return (Integer)hmap.get("result");
 	}
 
 }

@@ -11,11 +11,15 @@ public interface MemberService {
 
 	int mUpdate(Member member);
 
-	Member selectOne(String email);
+
+	Member selectOne(String userId);
+
 	
-	Map<String, Object> selectOneTMI(String email);
+	Map<String, Object> selectOneTMI(String userId);
 
 	int mTMIUpdate(UserTMI userTMI, CateInfo cateInfo);
 	
 	int insertMember(Member m);
+
+	int checkNnDuplicate2(String nickName);
 }

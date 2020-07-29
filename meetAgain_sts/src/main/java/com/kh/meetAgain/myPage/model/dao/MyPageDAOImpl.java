@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.meetAgain.member.model.vo.UserTMI;
+
 @Repository("mpDAO")
 public class MyPageDAOImpl implements MyPageDAO {
 	
@@ -25,5 +27,35 @@ public class MyPageDAOImpl implements MyPageDAO {
 	public int selectMyBoardTotalContents() {
 		return sqlSession.selectOne("myPageMapper.selectMyBoardTotalContent");
 	}
+
+	@Override
+	public int totalFollwing(String userId) {
+		return sqlSession.selectOne("myPageMapper.totalFollowing",userId);
+	}
+
+	@Override
+	public int totalFollwer(String userId) {
+		return sqlSession.selectOne("myPageMapper.totalFollower",userId);
+	}
+
+	@Override
+	public int totalGroup(String userId) {
+		return sqlSession.selectOne("myPageMapper.totalGroup",userId);
+	}
+
+	@Override
+	public UserTMI selectUserTMI(String userId) {
+		return sqlSession.selectOne("myPageMapper.selectUserTMI");
+	}
+	
+	@Override
+	public List<Map<String, String>> selectFollowerList(String userId) {
+		return sqlSession.selectList("myPageMapper.selectFollowerList",userId);
+	}
+	
+	@Override
+	public List<Map<String, String>> selectFollowingList(String userId) {
+		return sqlSession.selectList("myPageMapper.selectFollowingList",userId);
+	}	
 
 }

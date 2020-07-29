@@ -9,10 +9,10 @@
 	
 	<form action="${pageContext.request.contextPath}/sgroup/gbInsert.do" method="post">
 	<div id="titleArea">
-	<input type="text" class="form-control" id="gbTitle" name = "title" placeholder="제목을 입력하세요"/>
+	<input type="text" class="form-control" id="gbTitle" name = "gbTitle" placeholder="제목을 입력하세요"/>
 	</div>
 	<br />
-	<textarea id="summernote" class="gbContent" style="height:800px;"></textarea>
+	<textarea id="summernote" class="gbContent" style="height:800px;" name = "gbContent"></textarea>
 	<br /> 
 	<div align ="center">
 	<button type="submit" class="btn btn-outline-secondary">작성하기</button>	
@@ -49,7 +49,19 @@ $('#post').submit(function(){
 
 	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 
-	$('.gbContent').val(str);
+	$('#gbContent').val(str);
+	$.ajax({
+		url:'/meetAgain/sgroup/gbInsert.do',
+		data:{
+			gbTitle:$('#gbTitle').val(),
+			
+			gbContent:$('#gbContent').val()
+		}, success:function(data){
+			if(data == 1) alert('가나다');
+			else alert('라마바');
+		}
+	});
+	console.log(gbTitle);
 });
 
 </script>

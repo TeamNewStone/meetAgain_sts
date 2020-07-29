@@ -17,15 +17,17 @@
 				<th width="15%">작성일</th> 
 				<th width="13%">조회수</th>
 			</tr>
+			<c:if test="${list ne null }">
 			<c:forEach items="${list}" var="gb">
-				<tr id="${gb.GBId}">
-					<td>${gb.GBId}</td>
-					<td>${gb.GBTittle}</td>
-					<td>${gb.nickName}</td>
-					<td>${gb.GBDate}</td>
-					<td>${gb.GBRate}</td>
+				<tr id="${gb.gbId}">
+					<td>${gb.gbId}</td>
+					<td>${gb.gbTitle}</td>
+					<td>${gb.nickName}</td> <!-- 해결 -->
+					<td>${gb.gbDate}</td>
+					<td>${gb.gbRate}</td>
 				</tr>
 			</c:forEach>
+			</c:if>
 		</table>
 	</div>
 
@@ -62,22 +64,22 @@
 </div>
 
 <script>
-	$(function() {
-		$("#group-boardbtn").attr('class', 'btn btn-secondary');
-		$("tr[id]")
-				.click(
-						function() {
-							var gbId = $(this).attr("id");
-							location.href = "${pageContext.request.contextPath}/sgroup/groupDetail.do?gbId="
-									+ gbId;
+// 	$(function() {
+// 		$("#group-boardbtn").attr('class', 'btn btn-secondary');
+// 		$("tr[id]")
+// 				.click(
+// 						function() {
+// 							var gbId = $(this).attr("id");
+// 							location.href = "${pageContext.request.contextPath}/sgroup/groupDetail.do?gbId="
+// 									+ gbId;
 
-						}).mouseenter(function() {
-					$(this).parent().css({
-						"cursor" : "pointer"
-					});
+// 						}).mouseenter(function() {
+// 					$(this).parent().css({
+// 						"cursor" : "pointer"
+// 					});
 
-				})
-	});
+// 				})
+// 	});
 
 	function gboardInsert() {
 		location.href = "${pageContext.request.contextPath}/sgroup/gboardInsert.do";

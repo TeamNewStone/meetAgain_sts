@@ -62,7 +62,7 @@
           <div class="col-12 col-md-9"><input type="text" class="form-control" name="address1" 
           value="${member.address1}" required></div>
 
-
+<c:if test="${member.MLevel eq 1 }">
           <div class="col-12 col-md-3 text-right"><p id="textFm">직장 : </p></div>
           <div class="col-12 col-md-9 text-right">
             <div class="input-group">
@@ -86,7 +86,8 @@
             </div>
           </div>
           <div class="col-12 col-md-3 text-right"><p id="textFm">선택 상세 : </p></div>
-          <div class="col-12 col-md-9"><input type="text" class="form-control" name="address3"></div>                                                   
+          <div class="col-12 col-md-9"><input type="text" class="form-control" name="address3"></div>            
+          </c:if>                                       
         </div>
         
         <div class="col-12"><hr></div>
@@ -167,7 +168,7 @@
 	            success : function(data){
 	                console.log(data);
 	                // if(data=="true") //stream 방식
-	                if(data.isUsable==true){ //viewName 방식
+	                if(data.isUsable2==true){ //viewName 방식
 	                    alert('사용 가능한 닉네임 입니다.');
 	                } else {
 	                    alert('이미 사용중인 닉네임입니다.');
@@ -188,8 +189,8 @@
         if(confirm) location.href="${ pageContext.request.contextPath }/member/logout.do";
       }
       function memberOther() {        
-    	  var email = $('#email').val();
-        location.href="${ pageContext.request.contextPath }/member/mTMIInsertForm.do?email="+email;
+    	  var userId = ${member.userId};
+        location.href="${ pageContext.request.contextPath }/member/mTMIInsertForm.do?uid="+userId;
       }    
      /*  function addressSearchBtn2() {
         var url = "mapMarker.jsp";

@@ -2,9 +2,14 @@ package com.kh.meetAgain.sgroup.model.dao;
 
 import java.util.List;
 
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
@@ -19,6 +24,17 @@ public class SgroupDAOImpl implements SgroupDAO {
 		
 		return sqlSession.insert("sgroupMapper.insertSgroup", sgroup);
 	}
+// -----------------------------------------------------------------------
+	@Override
+	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		List<Map<String, String>> list = sqlSession.selectList("sgroupMapper.selectgBoardList", null, rows);
+		
+		System.out.println("cPage : "+cPage);
+		System.out.println("numPerPage : "+numPerPage);
+		System.out.println("list 출력 : " +list);
+		return list;
+	}
 
 	@Override
 	public List<Sgroup> selectSgroupList() {
@@ -30,4 +46,29 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.selectOne("sgroupMapper.selectOneSgroup", gId);
 	}
 
+	public int selectgBoardTotalContents() {
+		return sqlSession.selectOne("sgroupMapper.selectgBoardTotalContent");
+	}
+
+	@Override
+	public Gboard selectOnegBoard(int gbId) {
+		return sqlSession.selectOne("sgroupMapper.selectOnegBoard", gbId);
+	}
+
+	@Override
+	public int insertgBoard(Gboard Gboard) {
+		System.out.println("Gboard : " + Gboard);
+		return sqlSession.insert("sgroupMapper.insertgBoard", Gboard);
+	}
+
+	@Override
+	public int updategBoard(Gboard Gboard) {
+		return sqlSession.update("sgroupMapper.updateBoard", Gboard);
+	}
+
+	@Override
+	public int updateReadCount(int gbId) {
+		return sqlSession.update("sgroupMapper.updateReadCount", gbId);
+	}	
 }
+

@@ -31,8 +31,8 @@ public class MemberServiceImpl implements MemberService {
 	}
   
 	@Override
-	public Member selectOne(String email) {
-		return memberDAO.selectOne(email); 
+	public Member selectOne(String userId) {
+			return memberDAO.selectOne(userId);
 	}
 
 	@Override
@@ -54,11 +54,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Map<String, Object> selectOneTMI(String email) {
+	public Map<String, Object> selectOneTMI(String userId) {
 		HashMap<String, Object> map = new HashMap();
-		UserTMI ut = memberDAO.selectOneTMI(email);
+		UserTMI ut = memberDAO.selectOneTMI(userId);
 		map.put("ut", ut);
-		map.put("cateInfo", memberDAO.selectCateInfo(ut.getUserId()));
+		map.put("cateInfo", memberDAO.selectCateInfo(userId));
 		
 		return map;
 	}
@@ -66,6 +66,14 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insertMember(Member m) {
 		return memberDAO.insertMember(m);
+	}
+
+	@Override
+	public int checkNnDuplicate2(String nickName) {
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		hmap.put("nickName", nickName);
+		
+		return memberDAO.checkNnDuplicate2(hmap);
 	}
 
 }

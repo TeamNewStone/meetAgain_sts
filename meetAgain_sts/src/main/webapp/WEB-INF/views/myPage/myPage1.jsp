@@ -48,13 +48,15 @@
 				class="col-12 col-md-8 d-flex flex-column align-items-center align-items-lg-start">
 				<div class="d-flex flex-row align-items-start mt-3 mt-lg-0">
 					<div class="name">
-						<h2 class="mb-0">${member.nickName }</h2>
+						<h2 class="mb-0">${owner.nickName}</h2>
 
 					</div>
 
+				<c:if test="${member.userId ne owner.userId}">
 					<form action="">
 						<a href="#a" class="btn btn-primary btn-pill btn-sm ml-3 mt-1">팔로우하기</a>
 					</form>
+					</c:if>
 				</div>
 				<br>
 				<div
@@ -62,30 +64,32 @@
 					id="_follow">
 					<div class="posts ml-2 ml-lg-0">
 						<p class="lead" id="_fwfw">
-							소모임 <b>134</b> 
+							소모임 <b>${groupSum}</b> 
 						</p>
 					</div>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<div class="posts">
+					<div class="posts" id="followerDiv">
 						<p class="lead" id="_fwfw">
-							 팔로워  <b>6.6m</b>
+						<input type="hidden" id="follower" value="${follower}" />
+							 팔로워  <b>${follower}</b>
 						</p>
 					</div>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<div class="posts">
+					<div class="posts" id="followingDiv">
 						<p class="lead" id="_fwfw">
-							팔로잉  <b>201</b> 
+						<input type="hidden" id="following" value="${following}" />
+							팔로잉  <b>${following}</b> 
 						</p>
 					</div>
 					&nbsp;
 
 				</div>
 				<p class="lead mb-0 mt-2" style="color: green;">
-					<b>나의 키워드</b>
+					<b>키워드</b>
 				</p>
 				<%-- 		        <i class="fa fa-plus-circle" id="addKeyword" onclick="location.href='${ pageContext.request.contextPath }/#'"></i> --%>
 
-				<p class="lead text-center text-lg-left">#키워드</p>
+				<p class="lead text-center text-lg-left">${tmi.getKeyword()}</p>
 			</div>
 		</div>
 
@@ -275,33 +279,40 @@
 			</table>  -->
 			
 			<section id="gBoardList" class="container">
-				<p>총 ${totalContents}건의 게시물이 있습니다.</p>
 				
-				<table id="tbl-board" class="table table-striped table-hover">
+				<table id="tbl-board" class="table" style="text-align:center;">
+				<thead>
 					<tr>
-						<th>소모임글번호</th>
+						<th>소모임명</th>
 
-						<th>소모임_게시판글제목</th>
-
-						<th>조회수</th>
+						<th>게시글 제목</th>
 
 						<th>작성일</th>
 
-						<th>삭제여부</th>
-						
-						<th>작성자</th>
+						<th>조회수</th>
 					</tr>
+				</thead>
+				<tbody class="table-hover">
+					<c:if test="${list ne null }">
 					<c:forEach items="${list}" var="gb"> 
-						<tr id="${gb.gbid}">
-							<td>${gb.gbtitle}</td>
-							<td>${gb.gbrate}</td>
-							<td>${gb.gbdate}</td>
-							<td>${gb.gbdel}</td>
-							<td>${m.userName}</td>
+						<tr id="${gb.gbId}">
+							<td>${gb.GTitle}</td>
+							<td>${gb.gbTitle}</td>
+							<td>${gb.gbDate}</td>
+							<td>${gb.gbRate}</td>
 						</tr>
 					</c:forEach>
+					</c:if>
+					<c:if test="${empty list}">
+						<tr>
+							<td colspan="4"><p>아직 작성한 게시글이 없습니다.</p></td>
+						</tr>
+					</c:if>
+				</tbody>
 				</table>
-				<c:out value="${pageBar}" escapeXml="false"/>
+					<c:if test="${list eq null }">
+					<c:out value="${pageBar}" escapeXml="false"/>
+					</c:if>
 			</section>
 			<input type="button" value="새로고침" class="btn btn-outline-success" onclick="fn_refresh();"/>
 	     
@@ -332,6 +343,33 @@
 	function fn_refresh(){
 		location.reload();
 	}
+	
+	$(function() {
+		if($('#follower').val() > 0){
+		$("#followerDiv").click(function() {
+			var userId = ${member.userId};
+			window.open('${pageContext.request.contextPath}/myPage/followerList.do?uid='+userId,'팔로워','width=300, height=500');
+		}).mouseenter(function() {
+			$(this).css({
+				"cursor" : "pointer"
+			});
+
+		})
+		}
+		
+		if($('#following').val() > 0){
+			$("#followingDiv").click(function() {
+				var userId = ${member.userId};
+				window.open('${pageContext.request.contextPath}/myPage/followingList.do?uid='+userId,'팔로잉','width=300, height=500');
+			}).mouseenter(function() {
+				$(this).css({
+					"cursor" : "pointer"
+				});
+
+			})
+			}
+	});
+	
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
