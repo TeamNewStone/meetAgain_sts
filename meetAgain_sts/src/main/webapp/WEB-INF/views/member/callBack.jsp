@@ -25,7 +25,7 @@
 </form>
 
 	<form id = "loginform" action="userLogin.do" >
-	<input type="hidden" id="email2" name="email"/>
+	<input type="hidden" id="userId" name="userId"/>
 	</form>
 	
 	<!-- (1) LoginWithNaverId Javscript SDK -->
@@ -76,11 +76,12 @@
 											$('#age').val(age);
 											$('#birth').val(birth);
 											$('#id').val(id);
-											$('#email2').val(email);
+											$('#userId').val(id);
+											
 											$.ajax({
 												url : "${ pageContext.request.contextPath }/member/selectOne.do",
 												data : {
-													email : email		
+													id : id
 												},
 												//dataType : "json",
 												//async : false,

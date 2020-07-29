@@ -22,4 +22,7 @@
 	<select id="totalGroup" resultType="_int">
 		SELECT COUNT(*) FROM JOING WHERE USERID = #{userId}
 	</select>
+	<select id="selectUserTMI" resultType = "UserTMI">
+		SELECT * FROM USERTMI WHERE USERID = #{userId}
+	</select>
 </mapper>

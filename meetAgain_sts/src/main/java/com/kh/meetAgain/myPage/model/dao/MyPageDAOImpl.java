@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.meetAgain.member.model.vo.UserTMI;
+
 @Repository("mpDAO")
 public class MyPageDAOImpl implements MyPageDAO {
 	
@@ -39,6 +41,11 @@ public class MyPageDAOImpl implements MyPageDAO {
 	@Override
 	public int totalGroup(String userId) {
 		return sqlSession.selectOne("myPageMapper.totalGroup");
+	}
+
+	@Override
+	public UserTMI selectUserTMI(String userId) {
+		return sqlSession.selectOne("myPageMapper.selectUserTMI");
 	}
 
 }

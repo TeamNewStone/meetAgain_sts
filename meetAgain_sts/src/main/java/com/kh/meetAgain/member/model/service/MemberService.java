@@ -11,7 +11,9 @@ public interface MemberService {
 
 	int mUpdate(Member member);
 
-	Member selectOne(String email);
+
+	Member selectOne(String userId);
+
 	
 	Map<String, Object> selectOneTMI(String email);
 

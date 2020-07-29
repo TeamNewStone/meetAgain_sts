@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.dao.MyPageDAO;
 
 @Service("mpSvc")
@@ -36,6 +37,11 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public int totalGroup(String userId) {
 		return mpDAO.totalGroup(userId);
+	}
+
+	@Override
+	public UserTMI selectUserTMI(String userId) {
+		return mpDAO.selectUserTMI(userId);
 	}
 
 }

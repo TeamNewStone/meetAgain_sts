@@ -113,7 +113,7 @@
               <div class="dropdown-menu dropdown-menu-right dropMenuDiv" aria-labelledby="nav-inner-primary_dropdown_1">
                 <!-- <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/logout.do">로그아웃</a>-->
                 <a class="dropdown-item" onclick="userLogout();">로그아웃</a>
-                <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage1.do">마이페이지</a>
+                <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage1.do?uid=${member.userId}">마이페이지</a>
                 <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage2.do">개인정보수정</a>
                 <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/membership.do">등급관리</a>
               </div>
