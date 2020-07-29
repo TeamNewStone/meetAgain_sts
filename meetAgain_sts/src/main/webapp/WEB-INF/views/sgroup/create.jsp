@@ -3,10 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
 
-			<form action="${ pageContext.request.contextPath }/sgroup/sgroupCreateEnd.do" method="post" enctype="multipart/form-data">
+<form action="${ pageContext.request.contextPath }/sgroup/sgroupCreateEnd.do" method="post" enctype="multipart/form-data" onsubmit="return validate(this);">
 <div class="container">
 	<div class="intro">
 		<div class="col-12">
@@ -14,6 +15,7 @@
 				<div style="border-bottom:1px solid black">
 					<p style="font-size:1.2em">모임 생성하기</p>
 				</div>
+				<div style="margin-left: 5%;">
 				<svg width="1em" height="4em" viewBox="0 0 16 16" class="bi bi-card-image" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 				  <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
 				  <path d="M10.648 7.646a.5.5 0 0 1 .577-.093L15.002 9.5V13h-14v-1l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71z"/>
@@ -23,7 +25,9 @@
 				
 				
 			<div class="row">
-				<div class="sgroupPicture" id="imgArea" style="display:inline">
+			<input type="hidden" name="userId" value="${member.userId }"/>
+			<input type="hidden" name="birthday" value="${ member.birthday }" />
+				<div class="sgroupPicture" id="imgArea" style="display:inline; margin-top:-15px">
 					<img src="${pageContext.request.contextPath}/resources/img/dog-3.jpg" style="width:400px; height:300px;" id="sampleImg"><br /><br>
 					<div style="width:400px; text-align:center;">
 						<button type="button" class="btn btn-secondary" id="mimgBtn" style="background:#ffb5b6; border:#ffb5b6;">사진 첨부</button>
@@ -32,23 +36,34 @@
 				</div> 
 
 			<div style="display : inline; margin-left:10%">
-			<p>모임 타이틀</p>
+			<p>* 모임 타이틀</p>
 			<div class="form-group">
-			  <input type="text" class="form-control" id="gTitle" name="gTitle" placeholder="모임의 타이틀을 작성해주세요.">
+			  <input type="text" class="form-control" id="gTitle" name="gTitle" placeholder="모임의 타이틀을 작성해주세요." required style="margin-top:-15px">
 			</div>
 
 				<div class="form-group">
-				<span> 지역 선택 : </span>
-				  <select class="custom-select" id="gPlace" name="gPlace" style="display:inline">
+				<span> * 지역 선택 : </span>
+				  <select class="custom-select" id="gPlace" name="gPlace" style="display:inline" required>
 				    <option selected>--내가 설정한 주소--</option>
-				    <option value="address">주소1</option>
-				    <option value="adrCom">주소2</option>
-				    <option value="adrOther">주소3</option>
+				    <option value="${member.address1 }">${member.address1 }</option>
+				    <c:if test="${ !empty member.address2 && member.address3}">
+				    <option value="${member.address2 }">${member.address2 }</option>
+				    <option value="${member.address3 }">${member.address3 }</option>
+				    </c:if>
 				  </select>
 				</div>
 				
 				<div class="form-group">
-				<span> 모임 카테고리 : </span>
+				<p style="margin-bottom:-1px"> * 모임 장소 선택 </p>
+				<input type="text" class="form-control2" id="zipCode1" name="zipCode"
+				       placeholder="우편번호" style="width: 150px;" required readonly>
+				<button type="button" class="btn btn-secondary mb-2" onclick="addrSearch1();">검색</button>
+				<input type="text" class="form-control" id="address1"
+					   name="address1" placeholder="상세주소" required>
+				</div>
+				
+				<div class="form-group">
+				<span> * 모임 카테고리 : </span>
 				  <select class="custom-select" id="cateId" name="cateId" style="display:inline">
 				    <option selected>--카테고리--</option>
 				    <option value="C01">운동</option>
@@ -64,7 +79,7 @@
 				
 				<div class="form-group">
 				<span> 기간  </span>
-				  <select class="custom-select" id="gType" name="gType" style="display:inline">
+				  <select class="custom-select" id="gType" name="gType" style="display:inline" required>
 				    <option selected>--기간--</option>
 				    <option value="S">단기</option>
 				    <option value="L">장기</option>
@@ -72,25 +87,51 @@
 				</div>
 				
 				<p>시작 날짜 </p>
-				<input type="text" id="startDate" class="form-control" />
-				<p>종료 날짜</p>
-				<input type="text" id="durate" name="durate" class="form-control" />
+				<input type="text" id="startDate" class="form-control" style="margin-top:-15px" readonly required />
+				<p id="durateP" style="display:none">종료 날짜</p>
+				<input type="text" id="durate" name="durate" class="form-control" style="display:none; margin-top:-15px" disabled/>
 				<div id="datepicker"></div>
-				<label for="" style="color:red;">*일반회원일 경우 모임 연장 불가</label>
+				<label id="noticeDurate" style="color:red; display:none;">*일반회원일 경우 모임 연장 불가</label>
 				
+				<script>
+					
+					$("#gType").on("change", function(){
+						 if($(this).val()=='L'){
+							 $('#durate').css('display', 'block');
+							 $('#durateP').css('display', 'block');
+							 $('#noticeDurate').css('display', 'block');
+						 } else if($(this).val()=='S'){
+							 $('#durate').css('display', 'none');
+							 $('#durateP').css('display', 'none');
+							 $('#noticeDurate').css('display', 'none');
+							 $('#startDate').attr('name', 'durate');
+						 }
+					});
+				</script>
 				
-				<!-- #charge 값이 on일경우 회비x , off일 경우 회비 o!! -->
 				<div class="form-group">
 				  <div class="custom-control custom-switch my-2">
-				    <input type="checkbox" class="custom-control-input" id="charge" name="charge" value="Y">
-				    <label class="custom-control-label" for="charge">회비여부</label>
+				  	<input type="hidden" name="charge" id="charge" value="N"/>
+				    <input type="checkbox" class="custom-control-input" id="chargeCheck" name="chargeCheck" value="N">
+				    <label class="custom-control-label" for="chargeCheck">회비여부</label>
 				  </div>
-				  <input type="number" id="gFee" name="gFee" class="form-control" placeholder="회비 금액을 입력해주세요.">
+
+				  <input type="hidden" id="gFee" name="gFee">
+				  <input type="text" id="gFeeCopy" class="form-control" numberonly="true" placeholder="회비 금액을 입력해주세요." style="display:none;">
 				</div>
+				<script>
+				$('#gFeeCopy').focusout(function(){
+					var origin = $('#gFeeCopy').val();
+					$('#gFee').val(origin);
+					$('#gFeeCopy').val(parseInt($('#gFeeCopy').val()).toLocaleString());
+					
+				});
+				</script>
+
 				
 				<div class="form-group">
-				  <span> 인원수 </span>
-				  <input type="number" class="form-control" id="maxNum" name="maxNum" placeholder="인원은 최소 2명 / 최대 30명 입니다.">
+				  <span> * 인원수 </span>
+				  <input type="text" class="form-control" id="maxNum" name="maxNum" numberonly="true" placeholder="인원은 최소 2명 / 최대 30명 입니다." required>
 				</div>
 				
 				<p>성별 선택</p>
@@ -137,27 +178,30 @@
 				<p>공개 여부</p>
 				<div class="form-group" style="margin-top:-20px">
 				  <div class="custom-control custom-switch my-2">
-				    <input type="checkbox" class="custom-control-input" id="private">
+				    <input type="checkbox" class="custom-control-input" id="private" value="N">
 				    <label class="custom-control-label" for="private">비공개</label>
 				  </div>
-				  <input type="number" id="gPwd" name="gPwd" class="form-control" placeholder="모임 비밀번호  4자리를 입력해주세요.">
+				  <input type="text" id="gPwd" name="gPwd" class="form-control" numberonly="true" maxlength="4" placeholder="모임 비밀번호  4자리를 입력해주세요." style="display:none;">
 				</div>
 				
 				<p>모임승인제</p>
 				<div class="form-group" style="margin-top:-20px">
 				  <div class="custom-control custom-switch my-2">
-				    <input type="checkbox" class="custom-control-input" name="joinType" id="joinType" value="C">
-				    <label class="custom-control-label" for="joinType">모임 승인제</label>
+				  	<input type="hidden" name="joinType" id="joinType" value="F" />
+				    <input type="checkbox" class="custom-control-input" name="joinTypeCheck" id="joinTypeCheck">
+				    <label class="custom-control-label" for="joinTypeCheck">모임 승인제</label>
 				  </div>
 				</div>
 				
 				<p> 모임 소개 </p>
 				 <div class="form-group">
-				    <textarea class="form-control" id="exampleFormControlTextarea1" name="gIntro" rows="5" placeholder="자유롭게 모임 소개글을 작성해주세요~!"></textarea>
+				    <textarea class="form-control" id="exampleFormControlTextarea1" name="gIntro" rows="5" placeholder="자유롭게 모임 소개글을 작성해주세요~!" required></textarea>
 				  </div>
-				
-				<button type="submit">작성완료</button>
+				<div style="width: 400px; text-align: center;">
+					<button type="submit" class="btn btn-primary">작성완료</button>
 				</div>
+				</div>
+			</div>
 			</div>
 		</div>
 	</div>
@@ -166,6 +210,46 @@
 	</form>
 
 <script>
+// form 정규식
+$(document).on("keyup", "input:text[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );});
+
+
+function validate(){
+	var gPwd = $("#gPwd");
+	var gFeeCopy = $("#gFeeCopy");
+	var charge = $("#charge").val();
+	var tePrivate = $("#private").val();
+	var maxNum = $('#maxNum');
+	
+	if(tePrivate=='Y' && gPwd.val().trim().length<4){
+		
+		alert("모임 비밀번호는 4자리이어야 합니다.");
+		gPwd.focus();
+		return false;
+		
+	} else if(charge=='Y' && gFeeCopy.val().trim().length==0){
+		alert("회비 금액을 입력해주세요.");
+		gFeeCopy.focus();
+		return false;
+	} else if(maxNum.val()<2 ||maxNum.val()>30 ){
+		alert("모임 인원은 최소 2명 / 최대 30명 입니다.");
+		maxNum.focus();
+		return false;
+	} else if($("#gType").children().first().is(":selected")){
+		alert("기간을 선택해주세요.");
+		return false;
+	} else if($("#gPlace").children().first().is(":selected")){
+		alert("지역을 선택해주세요.");
+		return false;
+	} else if($("#cateId").children().first().is(":selected")){
+		alert("카테고리를 선택해주세요.");
+		return false;
+	} /* else if($('#startDate').val().length==0){
+		alert("시작 날짜를 선택해주세요.");
+		return false;
+	} */
+	
+}
 
 	$('#imgArea').on('click', function() {
 		$('#groupImgBtn').click();
@@ -185,32 +269,6 @@
 		}
 	};
 	
-	$('#maxNum').on('keyup', function() {
-	    if (/\D/.test(this.value)) {
-	        this.value = this.value.replace(/\D/g, '')
-	        alert('숫자만 입력가능합니다.');
-	    } else {
-			  if (this.value > 30) {
-			      this.value = null;
-			      alert('모임 인원은 30명까지 가능합니다.');
-			  } else if (this.value < 2){
-				  this.value = null;
-				  alert('모임 최소 인원은 2명부터 가능합니다.');
-			  }
-	    }
-	});
-	
-/* 	$('#gPwd').on('keydown', function() {
-	   
-			  if (this.value.length > 5) {
-			      this.value = null;
-			      alert('비밀번호는 4자리 미만입니다.');
-			  } else if (this.value.length < 4){
-				  this.value = null;
-				  alert('비밀번호 4자리 이상 입력해주세요.');
-			  }
-	   
-	}); */
 	
 	function getFormatDate(date){
 	    var year = date.getFullYear();              //yyyy
@@ -224,30 +282,38 @@
 	
 	
 	$(function(){
-		/* $("#private").on("change", function(){
-			if($("#private").val()=='on'){
-	        $(this).val('off');
+		
+		$('#chargeCheck').change(function(){
+			
+			if($('#chargeCheck').is(":checked")){
+				$("#gFeeCopy").css('display', 'block');
+				$("#charge").val('Y');
+				
 			} else {
-				$(this).val('on');
+				$("#gFeeCopy").css('display', 'none');
+				$("#charge").val('N');
 			}
 		});
 		
-		$("#charge").on("change", function(){
-			if($("#charge").val()=='on'){
-	        $(this).val('off');
+		$('#private').change(function(){
+			if($('#private').is(":checked")){
+				$('#gPwd').css('display', 'block');
+				$("#private").val('Y');
 			} else {
-				$(this).val('on');
+				$('#gPwd').css('display', 'none');
+				$("#private").val('N');
 			}
 		});
-	
-		$("#joinType").on("change", function(){
-			if($("#joinType").val()=='on'){
-	        $(this).val('off');
+		$('#joinTypeCheck').change(function(){
+			if($('#joinTypeCheck').is(":checked")){
+				
+				$("#joinType").val('C');
 			} else {
-				$(this).val('on');
+				$("#joinType").val('F');
 			}
-		}); */
-	
+		});
+		
+		
 		
 		$( "#startDate" ).datepicker({ 
 			dateFormat: 'yy-mm-dd' , 
@@ -274,21 +340,61 @@
 	    			
 	    			durate.minDate = date;
 	    			console.log("endDate.minDate : " + date);
-	    			
-	    			/* var test = $('#endDate').datepicker("option", "minDate", date ); */
+
 	    			$('#durate').val(durate.minDate);
 	    		
 	    		});
 	    	
 	    	}
 	    });
-
-		
 	 });
-	 
+	
+	// 참조 API : http://postcode.map.daum.net/guide
+	function addrSearch1() {
+		new daum.Postcode(
+				{
+					oncomplete : function(data) {
+						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
+						// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+						var fullAddr = ''; // 최종 주소 변수
+						var extraAddr = ''; // 조합형 주소 변수
 
-		
+						// 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+						if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+							fullAddr = data.roadAddress;
+
+						} else { // 사용자가 지번 주소를 선택했을 경우(J)
+							fullAddr = data.jibunAddress;
+						}
+
+						// 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+						if (data.userSelectedType === 'R') {
+							//법정동명이 있을 경우 추가한다.
+							if (data.bname !== '') {
+								extraAddr += data.bname;
+							}
+							// 건물명이 있을 경우 추가한다.
+							if (data.buildingName !== '') {
+								extraAddr += (extraAddr !== '' ? ', '
+										+ data.buildingName : data.buildingName);
+							}
+							// 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+							fullAddr += (extraAddr !== '' ? ' (' + extraAddr
+									+ ')' : '');
+						}
+
+						// 우편번호와 주소 정보를 해당 필드에 넣는다.
+						$('#zipCode1').val(data.zonecode); //5자리 새우편번호 사용
+
+						$('#address1').val(fullAddr);
+
+						// 커서를 상세주소 필드로 이동한다.
+						$('#address1').focus();
+					}
+				}).open();
+	};
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />

@@ -1,6 +1,7 @@
 package com.kh.meetAgain.sgroup.model.dao;
 
 import java.util.List;
+
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -36,6 +37,15 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 
 	@Override
+	public List<Sgroup> selectSgroupList() {
+		return sqlSession.selectList("sgroupMapper.selectSgroupList");
+	}
+
+	@Override
+	public Sgroup selectOneSgroup(String gId) {
+		return sqlSession.selectOne("sgroupMapper.selectOneSgroup", gId);
+	}
+
 	public int selectgBoardTotalContents() {
 		return sqlSession.selectOne("sgroupMapper.selectgBoardTotalContent");
 	}

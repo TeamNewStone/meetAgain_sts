@@ -1,6 +1,7 @@
 package com.kh.meetAgain.sgroup.model.service;
 
 import java.util.List;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,16 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
+	public List<Sgroup> selectSgroupList() {
+		return sgroupDAO.selectSgroupList();
+	}
+
+	@Override
+	public Sgroup selectOneSgroup(String gId) {
+		return sgroupDAO.selectOneSgroup(gId);
+	}
+
+
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
 
 		return sgroupDAO.selectgBoardList(cPage, numPerPage);
@@ -54,6 +65,5 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 	
 // -----------------------------------------------------------
-	
-	
+
 }

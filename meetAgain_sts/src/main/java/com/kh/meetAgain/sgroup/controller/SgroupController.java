@@ -34,13 +34,14 @@ public class SgroupController {
 	public String create() {
 		return "sgroup/create";
 	}
-
+	
 	@RequestMapping("sgroup/sgroupCreateEnd.do")
 	public String sgroupCreateEnd(Sgroup sgroup,  Model model, HttpSession session,
 	         @RequestParam(value="sgroupImg", required = false) MultipartFile[] sgroupImg,
-	         @RequestParam("joinType") String joinType) {
+	         @RequestParam String userId) {
 		
-		System.out.println("joinType : " + joinType);
+		System.out.println("userId : " + userId);
+		System.out.println("sgroup : " + sgroup);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
 
 	      File dir = new File(saveDir);
@@ -83,9 +84,9 @@ public class SgroupController {
 	   		}
 	   		
 	   		return "redirect:/sgroup/group.do";
+	   		
 
 	}
-
 	@RequestMapping("sgroup/group.do")
 	public String group() {
 		return "sgroup/group";
@@ -186,3 +187,4 @@ public class SgroupController {
 	}
 
 }
+

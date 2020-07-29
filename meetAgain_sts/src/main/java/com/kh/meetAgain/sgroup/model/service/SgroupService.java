@@ -1,6 +1,7 @@
 package com.kh.meetAgain.sgroup.model.service;
 
 import java.util.List;
+
 import java.util.Map;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
@@ -9,6 +10,10 @@ public interface SgroupService {
 
 	int insertSgroup(Sgroup sgroup);
 	
+	List<Sgroup> selectSgroupList();
+	
+	Sgroup selectOneSgroup(String gId);
+
 // -----------------------------------------------------------
 	static int BOARD_SERVICE_ERROR = 0;
 	static int BOARD_SERVICE_COMPLETE = 1;
@@ -25,3 +30,4 @@ public interface SgroupService {
 
 	int updateReadCount(int bId);
 }
+
