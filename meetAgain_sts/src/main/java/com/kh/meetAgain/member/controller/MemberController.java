@@ -54,17 +54,17 @@ public class MemberController {
 		member.setBirthday(date);
 		
 		int result = memberService.insertMember(member);
-		
 		String loc = "/";
 		String msg = "";
 		
 		if (result > 0) msg = "회원 가입 성공!";
 		else msg = "회원 가입 실패!";
 		
+		
 		model.addAttribute("loc", loc);  // like request.setAttribute("loc", loc);
 		model.addAttribute("msg", msg);
 		
-		return "common/msg";
+		return "member/memberInsertSuccess";
 	}
 	@RequestMapping("member/mTMIInsertForm.do")
 	public String mTMIInsertForm(@RequestParam String email, Model model) {

@@ -22,8 +22,8 @@
 					  </div>
 					  <form>
 						  <div class="form-group">
-						  <button type="button" class="btn btn-block btn-info" onclick="location.href='/meetAgain/views/member/mTMIInsertForm.jsp'">부가정보 입력</button>
-						  <button type="button" class="btn btn-block btn-secondary" onclick="location.href='/meetAgain/index.jsp'">메인으로</button>
+						  <button type="button" class="btn btn-block btn-info" onclick="location.href='${ pageContext.request.contextPath }/member/mTMIInsertForm.do?email=${member.email}'">부가정보 입력</button>
+						  <button type="button" class="btn btn-block btn-secondary" onclick="location.href='${ pageContext.request.contextPath }'">메인으로</button>
 
 						  </div>
 

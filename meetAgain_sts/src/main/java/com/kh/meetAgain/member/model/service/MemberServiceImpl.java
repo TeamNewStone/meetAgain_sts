@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
   
 	@Override
 	public Member selectOne(String email) {
-		return memberDAO.selectOne(email); 
+			return memberDAO.selectOne(email);
 	}
 
 	@Override
