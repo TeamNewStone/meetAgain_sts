@@ -37,9 +37,10 @@ public class SgroupController {
 	@RequestMapping("sgroup/sgroupCreateEnd.do")
 	public String sgroupCreateEnd(Sgroup sgroup,  Model model, HttpSession session,
 	         @RequestParam(value="sgroupImg", required = false) MultipartFile[] sgroupImg,
-	         @RequestParam("joinType") String joinType) {
+	         @RequestParam String userId) {
 		
-		System.out.println("joinType : " + joinType);
+		System.out.println("userId : " + userId);
+		System.out.println("sgroup : " + sgroup);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
 
 	      File dir = new File(saveDir);

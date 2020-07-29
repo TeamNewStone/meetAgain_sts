@@ -22,12 +22,13 @@ public class Sgroup implements Serializable {
 	private Date createDate;
 	private int maxNum;
 	private String charge;
-	private int gFee;
+	private String gFee;
 	private String gPlace;
 	private String gType;
 	private Date durate;
 	private String isFin;
-	private int gPwd;
+	private String gPwd;
 	private String joinType;
 	private String[] limitGroup;
+	private String userId;
 }
