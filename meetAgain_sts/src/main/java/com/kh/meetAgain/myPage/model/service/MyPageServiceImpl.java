@@ -23,4 +23,19 @@ public class MyPageServiceImpl implements MyPageService {
 		return mpDAO.selectMyBoardTotalContents();
 	}
 
+	@Override
+	public int totalFollowing(String userId) {
+		return mpDAO.totalFollwing(userId);
+	}
+
+	@Override
+	public int totalFollower(String userId) {
+		return mpDAO.totalFollwer(userId);
+	}
+
+	@Override
+	public int totalGroup(String userId) {
+		return mpDAO.totalGroup(userId);
+	}
+
 }

@@ -6,13 +6,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.meetAgain.common.util.Utils;
+import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.myPage.model.service.MyPageService;
 
-
+@SessionAttributes(value= {"member"})
 @Controller
 public class MyPageController {
 	
@@ -21,9 +24,16 @@ public class MyPageController {
 	 
 	
 	@RequestMapping("myPage/myPage1.do")
-	public String myPage1(@RequestParam(value="cPage", required=false, defaultValue="1")
+	public String myPage1(@ModelAttribute("member") Member m, @RequestParam(value="cPage", required=false, defaultValue="1")
 	int cPage, Model model) {
-
+		int following = mpSvc.totalFollowing(m.getUserId());
+		int follower = mpSvc.totalFollower(m.getUserId());
+		int groupSum = mpSvc.totalGroup(m.getUserId());
+		
+		
+		System.out.println("마이페이지 세션 테스트 : "+ m);
+		
+		/*======================작성한 게시글 데이터 가져오기======================*/
 		// 한 페이지 당 게시글 수 
 		int numPerPage = 10; // limit 역할
 		
@@ -45,8 +55,9 @@ public class MyPageController {
 		model.addAttribute("totalContents", totalContents);
 		model.addAttribute("numPerPage", numPerPage);
 		model.addAttribute("pageBar", pageBar);
-		
-
+		model.addAttribute("following", following);
+		model.addAttribute("follower", follower);
+		model.addAttribute("groupSum", groupSum);
 		
 		return "myPage/myPage1";
 	}

@@ -9,4 +9,8 @@ public interface MyPageService {
 
 	int selectMyBoardTotalContents();
 
+	int totalFollowing(String userId);
+	int totalFollower(String userId);
+
+	int totalGroup(String userId);
 }

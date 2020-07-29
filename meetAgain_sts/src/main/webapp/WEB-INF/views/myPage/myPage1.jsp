@@ -62,19 +62,19 @@
 					id="_follow">
 					<div class="posts ml-2 ml-lg-0">
 						<p class="lead" id="_fwfw">
-							소모임 <b>134</b> 
+							소모임 <b>${groupSum}</b> 
 						</p>
 					</div>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<div class="posts">
 						<p class="lead" id="_fwfw">
-							 팔로워  <b>6.6m</b>
+							 팔로워  <b>${follower}</b>
 						</p>
 					</div>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<div class="posts">
 						<p class="lead" id="_fwfw">
-							팔로잉  <b>201</b> 
+							팔로잉  <b>${following}</b> 
 						</p>
 					</div>
 					&nbsp;

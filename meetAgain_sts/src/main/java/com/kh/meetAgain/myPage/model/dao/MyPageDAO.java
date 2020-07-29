@@ -9,4 +9,9 @@ public interface MyPageDAO {
 
 	int selectMyBoardTotalContents();
 
+	int totalFollwing(String userId);
+
+	int totalFollwer(String userId);
+
+	int totalGroup(String userId);
 }

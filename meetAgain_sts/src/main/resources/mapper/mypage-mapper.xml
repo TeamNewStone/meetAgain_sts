@@ -13,4 +13,13 @@
 		SELECT COUNT(*) FROM GBOARD WHERE USERID=#{userId}
 	</select>
 
+	<select id="totalFollowing" resultType="_int">
+		SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWER = #{userId}
+	</select>
+	<select id="totalFollower" resultType="_int">
+		SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWIN = #{userId}
+	</select>
+	<select id="totalGroup" resultType="_int">
+		SELECT COUNT(*) FROM JOING WHERE USERID = #{userId}
+	</select>
 </mapper>
