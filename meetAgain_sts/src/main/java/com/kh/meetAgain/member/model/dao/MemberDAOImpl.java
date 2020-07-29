@@ -80,4 +80,11 @@ public class MemberDAOImpl implements MemberDAO {
 		return result;
 	}
 
+	@Override
+	public int checkNnDuplicate2(HashMap<String, Object> hmap) {
+		sqlSession.selectOne("memberMapper.checkNnDuplicate2", hmap);
+		
+		return (Integer)hmap.get("result");
+	}
+
 }

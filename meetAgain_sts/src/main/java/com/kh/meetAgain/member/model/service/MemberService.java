@@ -18,4 +18,6 @@ public interface MemberService {
 	int mTMIUpdate(UserTMI userTMI, CateInfo cateInfo);
 	
 	int insertMember(Member m);
+
+	int checkNnDuplicate2(String nickName);
 }

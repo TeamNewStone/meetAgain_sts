@@ -66,13 +66,13 @@
 						</p>
 					</div>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<div class="posts">
+					<div class="posts" id="followerDiv">
 						<p class="lead" id="_fwfw">
 							 팔로워  <b>${follower}</b>
 						</p>
 					</div>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<div class="posts">
+					<div class="posts" id="followingDiv">
 						<p class="lead" id="_fwfw">
 							팔로잉  <b>${following}</b> 
 						</p>
@@ -339,6 +339,11 @@
 	function fn_refresh(){
 		location.reload();
 	}
+	
+	$('#followerDiv').click(function(){
+		window.open('${pageContext.request.contextPath}/myPage/follower.do','팔로워','width=300, height=500');
+	});
+	
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
