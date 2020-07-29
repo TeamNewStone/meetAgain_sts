@@ -159,6 +159,7 @@ public class SgroupController {
 	public String gboardInsert() {
 
 		return "sgroup/gboardInsert";
+		
 	}
 
 	@RequestMapping("sgroup/gbInsert.do")
