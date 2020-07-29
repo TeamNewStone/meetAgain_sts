@@ -38,8 +38,9 @@
 							aria-live="assertive"></span></small>
 					</div>
 					<div class="form-group">
+					<input type="hidden" name = "gender" value="${gender}" />
 						<label for="gender">* 성별</label><br /> <label
-							class="box-radio-input"><input type="radio" name="gender"
+							class="box-radio-input"><input type="radio"
 							value="M"
 							<c:if test="${gender eq 'M'}"><c:out value='checked="checked"'/>  </c:if>
 							disabled><span>남자</span></label>
