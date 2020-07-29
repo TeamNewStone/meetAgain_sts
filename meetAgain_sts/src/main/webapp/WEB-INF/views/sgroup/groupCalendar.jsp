@@ -21,13 +21,15 @@
 			headerToolbar : {
 				left : 'prev,next',
 				center : 'title',
-				right : 'dayGridMonth today'
+				right : 'today dayGridMonth timeGridWeek timeGridDay listMonth'
 			},
+			
 			initialDate : today, //현재날짜로 초기화
 			navLinks : true, // can click day/week names to navigate views
 			editable : true,
 			dayMaxEvents : true, // allow "more" link when too many events
 			locale : 'ko',
+			
 			events : [ {
 				title : 'Long Event',
 				start : '2020-06-07',
@@ -52,6 +54,7 @@
 				title : '정기모임',
 				start : '2020-07-17'
 			} ]
+			
 		});
 
 		calendar.render();
