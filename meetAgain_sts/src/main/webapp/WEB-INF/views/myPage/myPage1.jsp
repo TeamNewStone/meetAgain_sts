@@ -48,13 +48,15 @@
 				class="col-12 col-md-8 d-flex flex-column align-items-center align-items-lg-start">
 				<div class="d-flex flex-row align-items-start mt-3 mt-lg-0">
 					<div class="name">
-						<h2 class="mb-0">${member.nickName }</h2>
+						<h2 class="mb-0">${owner.nickName}</h2>
 
 					</div>
 
+				<c:if test="${member.userId ne owner.userId}">
 					<form action="">
 						<a href="#a" class="btn btn-primary btn-pill btn-sm ml-3 mt-1">팔로우하기</a>
 					</form>
+					</c:if>
 				</div>
 				<br>
 				<div
@@ -81,11 +83,11 @@
 
 				</div>
 				<p class="lead mb-0 mt-2" style="color: green;">
-					<b>나의 키워드</b>
+					<b>키워드</b>
 				</p>
 				<%-- 		        <i class="fa fa-plus-circle" id="addKeyword" onclick="location.href='${ pageContext.request.contextPath }/#'"></i> --%>
 
-				<p class="lead text-center text-lg-left">#키워드</p>
+				<p class="lead text-center text-lg-left">${tmi.getKeyword()}</p>
 			</div>
 		</div>
 

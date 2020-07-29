@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.service.MyPageService;
 
 @SessionAttributes(value= {"member"})
@@ -28,13 +29,13 @@ public class MyPageController {
 	public String myPage1(@ModelAttribute("member") Member m, @RequestParam("uid") String userId, @RequestParam(value="cPage", required=false, defaultValue="1")
 	int cPage, Model model) {
 		
-		Member owner = mservice.selectOne(userId);
+		/*===============프로필화면에 표시될 값 가져오기===============*/
+		Member owner = mservice.selectOne(userId);//마이페이지 주인의 정보값
 		int following = mpSvc.totalFollowing(userId);
 		int follower = mpSvc.totalFollower(userId);
 		int groupSum = mpSvc.totalGroup(userId);
+		UserTMI tmi = (UserTMI)mservice.selectOneTMI(userId).get("ut");
 		
-		
-		System.out.println("마이페이지 세션 테스트 : "+ m);
 		
 		/*======================작성한 게시글 데이터 가져오기======================*/
 		// 한 페이지 당 게시글 수 
@@ -62,6 +63,7 @@ public class MyPageController {
 		model.addAttribute("following", following);
 		model.addAttribute("follower", follower);
 		model.addAttribute("groupSum", groupSum);
+		model.addAttribute("tmi",tmi);
 		
 		return "myPage/myPage1";
 	}
