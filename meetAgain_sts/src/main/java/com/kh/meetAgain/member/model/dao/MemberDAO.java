@@ -23,4 +23,6 @@ public interface MemberDAO {
 	UserTMI selectOneTMI(String email);
 	
 	CateInfo selectCateInfo(String userId);
+
+	int checkNnDuplicate2(HashMap<String, Object> hmap);
 }

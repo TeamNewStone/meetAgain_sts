@@ -68,4 +68,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.insertMember(m);
 	}
 
+	@Override
+	public int checkNnDuplicate2(String nickName) {
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		hmap.put("nickName", nickName);
+		
+		return memberDAO.checkNnDuplicate2(hmap);
+	}
+
 }

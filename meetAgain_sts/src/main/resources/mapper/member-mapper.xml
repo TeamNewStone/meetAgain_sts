@@ -50,4 +50,8 @@ INSERT INTO USERTMI VALUES(#{userId}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	<select id="selectCateInfo" parameterType="string" resultType="CateInfo">
 		SELECT * FROM CATEINFO WHERE USERID = #{userId} 
 	</select>
+	
+	<select id="checkNnDuplicate2" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE NICKNAME=#{nickName} AND EMAIL!=#{email}
+	</select>
 </mapper>
