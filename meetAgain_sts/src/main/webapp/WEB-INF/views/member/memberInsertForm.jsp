@@ -3,77 +3,93 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
 
 <div class="container-fluid">
-  <div class="row">
-	  <div class="col-12 col-md-4 offset-md-4">
-				  <div class="register-form">
-					  <div class="mb-7">
-					  <br />
-					  <br />
-					  <br />
-						  <h1>회원가입</h1>
-					  <br />
-					  </div>
-					  <form style="line-height:1em;" action="memberInsertSuccess.do">
-						  <div class="form-group">
-						    <label for="Email1">* 이메일</label>
-						    <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" placeholder="${email}" readonly>
-						    <!-- <small id="emailHelp" class="form-text text-info">We'll never share your email with anyone else.</small> -->
-						  </div>
-						  <div class="form-group">
-						    <label for="userName">* 이름</label>
-						    <input type="text" class="form-control" id="userName" placeholder="${name}" readonly>
-						  </div>
-						  <div class="form-group">
-						    <label for="NickName">* 닉네임</label>
-						    <input type="text" class="form-control" id="NickName" placeholder="2자 이상 10자 이하로 작성해주세요." maxlength="10" required>
-						    <small><span class="error_next_box text-info" id="nickNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
-						  </div>
-						  <div class="form-group">
-						    <label for="gender">* 성별</label><br />
-						    
-						    <label class="box-radio-input"><input type="radio" name="gender" value="옵션1" 
-						     <c:if test="${gender eq 'M'}"><c:out value='checked="checked"'/>  </c:if> disabled><span>남자</span></label>
-						  
-						    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						   
-							<label class="box-radio-input"><input type="radio" name="gender" value="옵션2" 
-							 <c:if test="${gender eq 'F'}"><c:out value='checked="checked"'/></c:if> disabled><span>여자</span></label>
-						
-						  </div>
-						  <div class="form-group">
-						  	
-						    <label for="birthday">* 생년월일</label> <br />
-								<div class="row">
-						    <input type="text" class="form-control" id="birthyear" maxlength="4" style="width:40%; margin-left : 13px;"/>
-						   	 &nbsp; _ &nbsp; 
-						    <input type="text" class="form-control" id="birthday" placeholder="${birth}" readonly  style="width:40%; ">
-						    </div>
-						  </div> <br />
-						  <div class="form-group">
-						    <label for="phoneNo">* 전화번호</label>
-						    <input type="text" class="form-control" id="phoneNo" placeholder="'-'없이 번호만 입력해주세요. ex)01012345678" required>
-						    <small><span class="error_next_box" id="iphoneNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small>
-						  </div>
-						  <br />
-						  <div class="form-group">
-							<label for="zipCode" style="display:block;">* 주소(집)</label>
-								<input type="text" class="form-control2" id="zipCode1"
-									name="zipCode" placeholder="우편번호" style="width:50px important;" required>
-								<button type="button" class="btn btn-secondary mb-2" value="1" onclick="addrSearch1();">검색</button>
-								<input type="text" class="form-control" id="address1"
-									name="address1" placeholder="상세주소" required>
+	<div class="row">
+		<div class="col-12 col-md-4 offset-md-4">
+			<div class="register-form">
+				<div class="mb-7">
+					<br /> <br /> <br />
+					<h1>회원가입</h1>
+					<br />
+				</div>
+				<form action="memberInsertSuccess.do">
+					<div class="form-group">
+						<label for="Email1">* 이메일</label> <input type="email" name="email"
+							class="form-control" id="Email1" aria-describedby="emailHelp"
+							value="${email}" readonly>
+						<!-- <small id="emailHelp" class="form-text text-info">We'll never share your email with anyone else.</small> -->
+					</div>
+					<div class="form-group">
+						<label for="userName">* 이름</label> 
+						<input type="text" name="userName"
+							class="form-control" id="userName" value="${name}" readonly>
+						<input type="hidden" name="userId" value="${id}" />
+					</div>
+					<div class="form-group">
+						<label for="NickName">* 닉네임</label> <input type="text" name="nickName"
+							class="form-control" id="NickName"
+							placeholder="2자 이상 10자 이하로 작성해주세요." maxlength="10" required>
+						<small><span class="error_next_box text-info"
+							id="nickNoMsg" style="display: none; color: red;"
+							aria-live="assertive"></span></small>
+					</div>
+					<div class="form-group">
+					<input type="hidden" name = "gender" value="${gender}" />
+						<label for="gender">* 성별</label><br /> <label
+							class="box-radio-input"><input type="radio"
+							value="M"
+							<c:if test="${gender eq 'M'}"><c:out value='checked="checked"'/>  </c:if>
+							disabled><span>남자</span></label>
 
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<label class="box-radio-input"><input type="radio"
+							name="gender" value="F"
+							<c:if test="${gender eq 'F'}"><c:out value='checked="checked"'/></c:if>
+							disabled><span>여자</span></label>
+
+					</div>
+					<div class="form-group">
+
+						<label for="birthday">* 생년월일</label> <br />
+						<div class="row">
+						<input type="hidden" id="age" value="${age}"/>
+							<input type="text" class="form-control" id="birthyear" name="year"
+								maxlength="4" style="width: 40%; margin-left: 13px;" numberonly="true" required/> &nbsp;
+							_ &nbsp; <input type="text" class="form-control" id="birthday" name="birth"
+								value="${birth}" readonly style="width: 40%;">
+							<label id="yearalert" style="color:red; font-size:0.7em;">사용자의 정보와 일치하는 값을 입력해주세요.</label>
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="phoneNo">* 전화번호</label> <input type="text"
+							class="form-control" id="phoneNo" name="phone"
+							placeholder="'-'없이 번호만 입력해주세요. ex)01012345678" required>
+						<small><span class="error_next_box" id="iphoneNoMsg"
+							style="display: none; color: red;" aria-live="assertive"></span></small>
+					</div>
+					<div class="form-group">
+						<label for="zipCode" style="display: block;">* 주소(집)</label> <input
+							type="text" class="form-control2" id="zipCode1" name="zipCode"
+							placeholder="우편번호" style="width: 50px important;" required>
+						<button type="button" class="btn btn-secondary mb-2"
+							onclick="addrSearch1();">검색</button>
+						<input type="text" class="form-control" id="address1"
+							name="address1" placeholder="상세주소" required>
+
+					</div>
 					<br />
-				
-				
-					<!-- 
+					<button type="submit" class="btn btn-block btn-secondary"
+						onclick="return send();">가입하기</button>
+				</form>
+			</div>
+			<br />
+
+			<!-- 
 						<div class="form-group">
 							<label for="zipCode" style="display:block;">주소(직장)</label>
 								<input type="text" class="form-control2" id="zipCode2"
@@ -91,16 +107,10 @@
 								<input type="text" class="form-control" id="address3"
 									name="address" placeholder="상세주소" >
 						</div> -->
-					<br />
-					<button type="submit" class="btn btn-block btn-secondary"
-						onclick="return send();">가입하기</button>
-				</form>
-
-			</div>
 		</div>
-
 	</div>
 </div>
+
 
 <br />
 <br />
@@ -112,6 +122,32 @@
 
 <script>
 
+
+$(function(){
+
+	$(document).on("keyup", "input:text[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );});
+	
+	function checkAge(){
+		var year = new Date().getFullYear();
+		var age = $('#age').val(); //연령대 불러옴(ex.20-29)
+		var starty = age.substr(0,2); //연령대 시작나이
+		var endy = age.substr(3,5);//연령대 마지막나이
+		var useryear = $('#birthyear').val();//작성한 생년
+		var userage = year-useryear+1;
+		
+		if(userage<starty || userage>endy){
+			$('#yearalert').show();
+			$('#birthyear').val('');
+		}else{
+			$('#yearalert').hide();
+		}
+	}
+	
+$('#birthyear').blur(function(){
+		checkAge();
+});//생년월일 박스에서 포커스 지워질때 값 체크
+
+
 $('#NickName').keyup(function(){
 	$(this).val($(this).val().replace(" ", ""));
 });
@@ -122,10 +158,11 @@ $('#phone').keyup(function(){
 		$(this).val($(this).val().replace(phoneChk,''));
 		$(this).focus();
 	}
-	
-
-	
 });
+
+
+});
+
 
 
 function isCellPhone(p) {
@@ -134,12 +171,6 @@ function isCellPhone(p) {
 }
 
 function send(){
-	/* var starty = Integer.parseInt(${age}.substring(0,1));
-	var endy = Integer.parseInt(${age}.substring(3,4));
-	var useryear = Integer.parseInt($('#birthyear'));
-	consol.log(starty);
-	consol.log(endy);
-	consol.log(useryear); */
 	
 	if('#birthyear')
     if(!isCellPhone($('#phoneNo').val())) {
@@ -183,7 +214,6 @@ function showErrorMsg(obj, msg) {
     obj.html(msg);
     obj.show();
 }
-
 
 // 참조 API : http://postcode.map.daum.net/guide
 function addrSearch1() {
@@ -231,6 +261,7 @@ function addrSearch1() {
 				}
 			}).open();
 };
+<!--
 //참조 API : http://postcode.map.daum.net/guide
 function addrSearch2() {
 	new daum.Postcode(
@@ -371,6 +402,7 @@ function addrSearch3() {
 				}
 			}).open();
 }
+-->
 
 
 

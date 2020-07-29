@@ -10,14 +10,19 @@ public interface MemberDAO {
 
 	int checkNnDuplicate(HashMap<String, Object> hmap);
 	
-	Member selectOne(String email);
+	Member selectOne(String userId);
 
 	int mUpdate(Member member);
 
 	int mTMIUpdate(UserTMI userTMI);
 
-
-	int mCateUpdate(String c);
+	int insertMember(Member m);
 	
+	int mCateUpdate(String userId, String cateId);
 
+	UserTMI selectOneTMI(String userId);
+	
+	CateInfo selectCateInfo(String userId);
+
+	int checkNnDuplicate2(HashMap<String, Object> hmap);
 }

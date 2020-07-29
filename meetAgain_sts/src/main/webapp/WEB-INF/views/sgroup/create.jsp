@@ -82,10 +82,10 @@
 				<!-- #charge 값이 on일경우 회비x , off일 경우 회비 o!! -->
 				<div class="form-group">
 				  <div class="custom-control custom-switch my-2">
-				    <input type="checkbox" class="custom-control-input" id="charge" name="charge">
+				    <input type="checkbox" class="custom-control-input" id="charge" name="charge" value="Y">
 				    <label class="custom-control-label" for="charge">회비여부</label>
 				  </div>
-				  <input type="number" id="gfee" name="gfee" class="form-control" placeholder="회비 금액을 입력해주세요.">
+				  <input type="number" id="gFee" name="gFee" class="form-control" placeholder="회비 금액을 입력해주세요.">
 				</div>
 				
 				<div class="form-group">
@@ -96,15 +96,15 @@
 				<p>성별 선택</p>
 				<div class="form-group" style="margin-top:-20px">
 				  <div class="custom-control custom-radio my-2 groupGender" style="display:inline">
-				    <input type="radio" id="customRadio1" name="setGroup" value="A" class="custom-control-input" checked>
+				    <input type="radio" id="customRadio1" name="limitGroup" value="A" class="custom-control-input" checked>
 				    <label class="custom-control-label" for="customRadio1">성별무관</label>
 				  </div>
 				  <div class="custom-control custom-radio my-2 groupGender" style="display:inline; margin-left:5%">
-				    <input type="radio" id="customRadio2" name="setGroup" value="M"class="custom-control-input">
+				    <input type="radio" id="customRadio2" name="limitGroup" value="M"class="custom-control-input">
 				    <label class="custom-control-label" for="customRadio2">남</label>
 				  </div>
 				  <div class="custom-control custom-radio my-2 groupGender" style="display:inline; margin-left:5%">
-				    <input type="radio" id="customRadio3" name="setGroup" value="F" class="custom-control-input">
+				    <input type="radio" id="customRadio3" name="limitGroup" value="F" class="custom-control-input">
 				    <label class="custom-control-label" for="customRadio3">여</label>
 				  </div>
 				</div>
@@ -112,23 +112,23 @@
 				<p>모임 연령대</p>
 				<div class="form-group" style="margin-top:-20px">
 				  <div class="custom-control custom-checkbox my-2 ageGroup">
-				    <input type="checkbox" class="custom-control-input" id="customCheck1" name="setGroup" value="10대">
+				    <input type="checkbox" class="custom-control-input" id="customCheck1" name="limitGroup" value="10대">
 				    <label class="custom-control-label" for="customCheck1">10대</label>
 				  </div>
 				  <div class="custom-control custom-checkbox my-2 ageGroup">
-				    <input type="checkbox" class="custom-control-input" id="customCheck2" name="setGroup" value="20대">
+				    <input type="checkbox" class="custom-control-input" id="customCheck2" name="limitGroup" value="20대">
 				    <label class="custom-control-label" for="customCheck2">20대</label>
 				  </div>
 				  <div class="custom-control custom-checkbox my-2 ageGroup">
-				    <input type="checkbox" class="custom-control-input" id="customCheck3" name="setGroup" value="30대">
+				    <input type="checkbox" class="custom-control-input" id="customCheck3" name="limitGroup" value="30대">
 				    <label class="custom-control-label" for="customCheck3">30대</label>
 				  </div>
 				  <div class="custom-control custom-checkbox my-2 ageGroup">
-				    <input type="checkbox" class="custom-control-input" id="customCheck4" name="setGroup" value="40대">
+				    <input type="checkbox" class="custom-control-input" id="customCheck4" name="limitGroup" value="40대">
 				    <label class="custom-control-label" for="customCheck4">40대</label>
 				  </div>
 				  <div class="custom-control custom-checkbox my-2 ageGroup">
-				    <input type="checkbox" class="custom-control-input" id="customCheck5" name="setGroup" value="50대">
+				    <input type="checkbox" class="custom-control-input" id="customCheck5" name="limitGroup" value="50대">
 				    <label class="custom-control-label" for="customCheck5">50대</label>
 				  </div>
 				</div>
@@ -137,7 +137,7 @@
 				<p>공개 여부</p>
 				<div class="form-group" style="margin-top:-20px">
 				  <div class="custom-control custom-switch my-2">
-				    <input type="checkbox" class="custom-control-input" name="private" id="private">
+				    <input type="checkbox" class="custom-control-input" id="private">
 				    <label class="custom-control-label" for="private">비공개</label>
 				  </div>
 				  <input type="number" id="gPwd" name="gPwd" class="form-control" placeholder="모임 비밀번호  4자리를 입력해주세요.">
@@ -146,7 +146,7 @@
 				<p>모임승인제</p>
 				<div class="form-group" style="margin-top:-20px">
 				  <div class="custom-control custom-switch my-2">
-				    <input type="checkbox" class="custom-control-input" name="joinType" id="joinType">
+				    <input type="checkbox" class="custom-control-input" name="joinType" id="joinType" value="C">
 				    <label class="custom-control-label" for="joinType">모임 승인제</label>
 				  </div>
 				</div>
@@ -166,6 +166,7 @@
 	</form>
 
 <script>
+
 	$('#imgArea').on('click', function() {
 		$('#groupImgBtn').click();
 	});
@@ -223,7 +224,7 @@
 	
 	
 	$(function(){
-		$("#private").on("change", function(){
+		/* $("#private").on("change", function(){
 			if($("#private").val()=='on'){
 	        $(this).val('off');
 			} else {
@@ -245,7 +246,7 @@
 			} else {
 				$(this).val('on');
 			}
-		});
+		}); */
 	
 		
 		$( "#startDate" ).datepicker({ 

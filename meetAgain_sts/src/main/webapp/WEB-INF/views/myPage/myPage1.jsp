@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page import="com.kh.meetAgain.member.model.vo.Member"%>
+    
+<%
+	Member m = (Member)session.getAttribute("member");
+%>
 
 <style>
   #_fwfw{
@@ -43,13 +48,15 @@
 				class="col-12 col-md-8 d-flex flex-column align-items-center align-items-lg-start">
 				<div class="d-flex flex-row align-items-start mt-3 mt-lg-0">
 					<div class="name">
-						<h2 class="mb-0">에바 그린</h2>
+						<h2 class="mb-0">${owner.nickName}</h2>
 
 					</div>
 
+				<c:if test="${member.userId ne owner.userId}">
 					<form action="">
 						<a href="#a" class="btn btn-primary btn-pill btn-sm ml-3 mt-1">팔로우하기</a>
 					</form>
+					</c:if>
 				</div>
 				<br>
 				<div
@@ -57,30 +64,30 @@
 					id="_follow">
 					<div class="posts ml-2 ml-lg-0">
 						<p class="lead" id="_fwfw">
-							<b>134</b> 소모임
+							소모임 <b>${groupSum}</b> 
 						</p>
 					</div>
-					&nbsp;
-					<div class="posts">
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<div class="posts" id="followerDiv">
 						<p class="lead" id="_fwfw">
-							<b>6.6m</b> 팔로워
+							 팔로워  <b>${follower}</b>
 						</p>
 					</div>
-					&nbsp;
-					<div class="posts">
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<div class="posts" id="followingDiv">
 						<p class="lead" id="_fwfw">
-							<b>201</b> 팔로잉
+							팔로잉  <b>${following}</b> 
 						</p>
 					</div>
 					&nbsp;
 
 				</div>
 				<p class="lead mb-0 mt-2" style="color: green;">
-					<b>나의 키워드</b>
+					<b>키워드</b>
 				</p>
 				<%-- 		        <i class="fa fa-plus-circle" id="addKeyword" onclick="location.href='${ pageContext.request.contextPath }/#'"></i> --%>
 
-				<p class="lead text-center text-lg-left">#키워드</p>
+				<p class="lead text-center text-lg-left">${tmi.getKeyword()}</p>
 			</div>
 		</div>
 
@@ -245,14 +252,8 @@
 		</div>  
 			
 		<div class="tab-pane fade text-center" id="myPost">
-	    
-	      <%-- 게시물 리스트. --%>
-	
-			<%-- <c:forEach var="name" items="${myGroupList}" varStatus="status">
-			
-			</c:forEach> --%>
-	
-			<table class="table">
+
+			<!-- <table class="table">
 
 				<thead>
 					<tr>
@@ -267,8 +268,51 @@
 						<td>굽남모임</td>
 						<td>제목1</td>
 					</tr>
+					<tr>
+						<td>1</td>
+						<td>굽남모임</td>
+						<td>제목1</td>
+					</tr>
 				</tbody>
-			</table> 
+			</table>  -->
+			
+			<section id="gBoardList" class="container">
+				
+				<table id="tbl-board" class="table" style="text-align:center;">
+				<thead>
+					<tr>
+						<th>소모임명</th>
+
+						<th>게시글 제목</th>
+
+						<th>작성일</th>
+
+						<th>조회수</th>
+					</tr>
+				</thead>
+				<tbody class="table-hover">
+					<c:if test="${list ne null }">
+					<c:forEach items="${list}" var="gb"> 
+						<tr id="${gb.gbId}">
+							<td>${gb.GTitle}</td>
+							<td>${gb.gbTitle}</td>
+							<td>${gb.gbDate}</td>
+							<td>${gb.gbRate}</td>
+						</tr>
+					</c:forEach>
+					</c:if>
+					<c:if test="${empty list}">
+						<tr>
+							<td colspan="4"><p>아직 작성한 게시글이 없습니다.</p></td>
+						</tr>
+					</c:if>
+				</tbody>
+				</table>
+					<c:if test="${list eq null }">
+					<c:out value="${pageBar}" escapeXml="false"/>
+					</c:if>
+			</section>
+			<input type="button" value="새로고침" class="btn btn-outline-success" onclick="fn_refresh();"/>
 	     
  		</div>
 
@@ -294,6 +338,14 @@
 	function rateEdit() {
 		location.href = "${ pageContext.request.contextPath }/member/membership.do";
 	}
+	function fn_refresh(){
+		location.reload();
+	}
+	
+	$('#followerDiv').click(function(){
+		window.open('${pageContext.request.contextPath}/myPage/follower.do','팔로워','width=300, height=500');
+	});
+	
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />

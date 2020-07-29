@@ -31,19 +31,21 @@
       <div class="col-12 col-md-4">
           <form action="${ pageContext.request.contextPath }/member/mUpdate.do">
         <div class="row">            
-          <div class="col-12 text-left"><p style="font-size: 20px; font-weight: bold;">? 님의 기본정보 : </p></div>
+          <div class="col-12 text-left"><p style="font-size: 20px; font-weight: bold;">${member.nickName } 님의 기본정보 : </p></div>
          
-          <!-- 로그인 되면 value ${member.userId} 로 바꿔야합니다 -->
-          <input type="hidden" name="userId" value="u20a001" />
+          <!-- 로그인 되면 value ${member.email} 로 바꿔야합니다 -->
+          <input type="hidden" id="email" name="email" value="${member.email}" />
           
           <div class="col-12 col-md-3 text-right"><p id="textFm">닉네임 : </p></div>
 
-          <div class="col-12 col-md-9"><input type="text" class="form-control" name="nickName" id="NickName" placeholder="2자 이상 10자 이하로 작성해주세요." maxlength="10" required>
+          <div class="col-12 col-md-9"><input type="text" class="form-control" name="nickName" id="NickName" placeholder="2자 이상 10자 이하로 작성해주세요." maxlength="10" 
+          value="${member.nickName}" required>
 
           <small><span class="error_next_box text-info" id="nickNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small></div>
           
           <div class="col-12 col-md-3 text-right"><p id="textFm">휴대폰 : </p></div>
-          <div class="col-12 col-md-9"><input type="text" class="form-control" name="phone"  id="phoneNo" placeholder="'-'없이 번호만 입력해주세요." required>
+          <div class="col-12 col-md-9"><input type="text" class="form-control" name="phone"  
+          id="phoneNo" placeholder="'-'없이 번호만 입력해주세요." value="${member.phone}" required>
           <small><span class="error_next_box" id="iphoneNoMsg" style="display:none;color:red;" aria-live="assertive"></span></small></div>
           
 
@@ -57,9 +59,10 @@
             </div>
           </div>
           <div class="col-12 col-md-3 text-right"><p id="textFm">주소 상세 : </p></div>
-          <div class="col-12 col-md-9"><input type="text" class="form-control" name="address1" required></div>
+          <div class="col-12 col-md-9"><input type="text" class="form-control" name="address1" 
+          value="${member.address1}" required></div>
 
-
+<c:if test="${member.MLevel eq 1 }">
           <div class="col-12 col-md-3 text-right"><p id="textFm">직장 : </p></div>
           <div class="col-12 col-md-9 text-right">
             <div class="input-group">
@@ -83,14 +86,15 @@
             </div>
           </div>
           <div class="col-12 col-md-3 text-right"><p id="textFm">선택 상세 : </p></div>
-          <div class="col-12 col-md-9"><input type="text" class="form-control" name="address3"></div>                                                   
+          <div class="col-12 col-md-9"><input type="text" class="form-control" name="address3"></div>            
+          </c:if>                                       
         </div>
         
         <div class="col-12"><hr></div>
         
         <div class="row">
           <div class="col-12 col-md-4">
-          <button type="button" class="btn btn-outline-primary btn-pill" onclick="mainMyPage();" id="Btn">마이페이지</button></div>
+          <button type="button" class="btn btn-outline-primary btn-pill" onclick="memberOut();" id="Btn">회원탈퇴</button></div>
           <div class="col-12 col-md-4">
           <button type="button" class="btn btn-outline-primary btn-pill" onclick="memberOther();" id="Btn">부가정보</button></div>
           <div class="col-12 col-md-4">
@@ -164,7 +168,7 @@
 	            success : function(data){
 	                console.log(data);
 	                // if(data=="true") //stream 방식
-	                if(data.isUsable==true){ //viewName 방식
+	                if(data.isUsable2==true){ //viewName 방식
 	                    alert('사용 가능한 닉네임 입니다.');
 	                } else {
 	                    alert('이미 사용중인 닉네임입니다.');
@@ -180,11 +184,13 @@
         obj.show();
     }
     
-      function mainMyPage() {
-        location.href="myPage1.jsp";
+      function memberOut() {
+        var confirm = window.confirm("탈퇴 시 재가입이 불가능합니다. 탈퇴하시겠습니까?");
+        if(confirm) location.href="${ pageContext.request.contextPath }/member/logout.do";
       }
       function memberOther() {        
-        location.href="${ pageContext.request.contextPath }/member/mTMIInsertForm.do";
+    	  var userId = ${member.userId};
+        location.href="${ pageContext.request.contextPath }/member/mTMIInsertForm.do?uid="+userId;
       }    
      /*  function addressSearchBtn2() {
         var url = "mapMarker.jsp";

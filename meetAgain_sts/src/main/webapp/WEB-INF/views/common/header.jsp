@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="A new design system for developing with less effort.">
     <meta name="author" content="BootstrapBay">
-    <link href="${ pageContext.request.contextPath }/resources/img/favicon.ico" rel="icon" type="image/png">
+    <link href="${ pageContext.request.contextPath }/resources/img/fav02.png" rel="icon" type="image/png">
 	
  	<script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
@@ -97,19 +97,28 @@
               <a class="nav-link" href="#" id="nav-inner-primary_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="goGroup();">소모임</a>
             </li>
             </ul>
+
 			<ul class="navbar-nav ml-auto" id="login-nav">
+			<c:if test="${empty member}">
             <li class="nav-item dropdown text-white" id="login">
               <a class="nav-link" href="${ pageContext.request.contextPath }/member/login.do">로그인</a>
             </li>
+            </c:if>
+            <c:if test="${!empty member}">
+            <li>
+             <p style="color : white; width : 200px;"> ${member.nickName}님, 안녕하세요!</p>
+            </li>
             <li class="nav-item dropdown" id="userIcon">
-              <img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="test img-fluid rounded-circle" style="width : 60px;">
+                   <img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="test img-fluid rounded-circle" style="width : 60px;">
               <div class="dropdown-menu dropdown-menu-right dropMenuDiv" aria-labelledby="nav-inner-primary_dropdown_1">
-                <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/logout.do">로그아웃</a>
-                <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage1.do">마이페이지</a>
+                <!-- <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/logout.do">로그아웃</a>-->
+                <a class="dropdown-item" onclick="userLogout();">로그아웃</a>
+                <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage1.do?uid=${member.userId}">마이페이지</a>
                 <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage2.do">개인정보수정</a>
                 <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/membership.do">등급관리</a>
               </div>
             </li>
+               </c:if>
           </ul>
           </div>
         </div>
@@ -136,6 +145,10 @@
     
     function goGroup(){
     	location.href='${ pageContext.request.contextPath }/sgroup/group.do';
+    }
+    function userLogout(){
+    	var confirm = window.confirm("로그아웃 하시겠습니까?");
+    	if(confirm) location.href="${ pageContext.request.contextPath }/member/logout.do";
     }
 
     </script>

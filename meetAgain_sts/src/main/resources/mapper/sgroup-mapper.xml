@@ -10,7 +10,7 @@
 	</resultMap>
 	<insert id="insertSgroup" parameterType="Sgroup">
 	INSERT INTO SGROUP VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro}, DEFAULT, #{maxNum}, #{charge}, #{gFee},
-	#{gPlace}, #{gType}, #{durate}, DEFAULT, #{gPwd}, NULL, #{setGroup, typeHandler=Str2ArrayHandler})
+	#{gPlace}, #{gType}, #{durate}, DEFAULT, #{gPwd}, #{joinType}, #{limitGroup, typeHandler=Str2ArrayHandler})
 	</insert>
 	
 	

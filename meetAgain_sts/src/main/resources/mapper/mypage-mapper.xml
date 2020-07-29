@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myPageMapper">
+
+	<select id="selectMyBoardList" resultType="Gboard">
+		SELECT GBID, GTITLE, GID, GBTITLE, GBRATE, GBDATE, GBDEL FROM GBOARD 
+		JOIN SGROUP USING(GID) WHERE USERID=#{userId} AND GBDEL='N' ORDER BY GBDATE DESC
+	</select>
+
+	<select id="selectMyBoardTotalContent" resultType="_int">
+		SELECT COUNT(*) FROM GBOARD WHERE USERID=#{userId}
+	</select>
+
+	<select id="totalFollowing" resultType="_int">
+		SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWER = #{userId}
+	</select>
+	<select id="totalFollower" resultType="_int">
+		SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWIN = #{userId}
+	</select>
+	<select id="totalGroup" resultType="_int">
+		SELECT COUNT(*) FROM JOING WHERE USERID = #{userId}
+	</select>
+	<select id="selectUserTMI" resultType = "UserTMI">
+		SELECT * FROM USERTMI WHERE USERID = #{userId}
+	</select>
+</mapper>

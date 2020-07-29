@@ -13,4 +13,5 @@ public class CateInfo extends UserTMI {
 	
 	private String userId;
 	private String[] cateId;
+	private String cate_id; /* DBMS와 연결할 가상 변수 */
 }

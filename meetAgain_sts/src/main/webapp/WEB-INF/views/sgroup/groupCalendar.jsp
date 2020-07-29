@@ -3,22 +3,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <c:import url="/WEB-INF/views/common/header.jsp" />
+
+<script src="${ pageContext.request.contextPath }/resources/js/main.js"></script>
+<script src="${ pageContext.request.contextPath }/resources/css/main.css"></script>
+<script src="${ pageContext.request.contextPath }/resources/js/locales/ko.js"></script>
+
 <script>
+
+
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
 		var today = new Date();
 
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 			headerToolbar : {
-				left : 'prev,next today',
+				left : 'prev,next',
 				center : 'title',
-				right : 'dayGridMonth'
+				right : 'today dayGridMonth timeGridWeek timeGridDay listMonth'
 			},
+			
 			initialDate : today, //현재날짜로 초기화
-			navLinks : false, // can click day/week names to navigate views
-			editable : false,
+			navLinks : true, // can click day/week names to navigate views
+			editable : true,
 			dayMaxEvents : true, // allow "more" link when too many events
+			locale : 'ko',
+			
 			events : [ {
 				title : 'Long Event',
 				start : '2020-06-07',
@@ -43,10 +54,13 @@
 				title : '정기모임',
 				start : '2020-07-17'
 			} ]
+			
 		});
 
 		calendar.render();
+		
 	});
+    
 </script>
 <style>
 body {
@@ -83,8 +97,9 @@ body {
 	</svg>
 					</div>
 					&nbsp;&nbsp;&nbsp;
-					<div style="float: left;">
-						<h3>7월의 일정</h3>
+					<div style="float: left;" id="myScore">
+						<!-- 소모임 일정 표시 -->
+						<h2 id="scheduleList"></h2>
 					</div>
 					&nbsp;&nbsp;&nbsp;
 					<button data-toggle="modal" data-target="#exampleModal"
@@ -115,6 +130,14 @@ body {
 			</tr>
 		</table>
 	</div>
+	
+	<!-- <div class="navigation d-flex justify-content-center">
+		<ul>
+			<li class="nav-item">
+				<a href="#">ㄹㄹ</a>
+			</li>
+		</ul>
+	</div> -->
 
 	<!------------------ modal 영역 ---------------------------->
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -172,11 +195,139 @@ body {
 </div>
 
 <script>
-$(function(){
-	$("#group-calbtn").attr('class','btn btn-secondary');
 	
+	$(function(){
+	$('.fc-prev-button').on('click',function(){
+	
+		var test1 = $('.fc-toolbar-title').html();
+		console.log(test1);
+		var test2 = test1.split(' ');
+		console.log(test2);
+
+		for (var i in test2){
+			// console.log(test2[i]);
+			// if(test2[0] === 'September'){
+			// 	console.log('9월의 일정');
+			// }
+
+			switch (test2[1]) {
+				case '1월':
+					// console.log('1월의 일정');
+					$('#scheduleList').html('<div><h2>1월의 일정</h2></div>');
+					break;
+				case '2월':
+					$('#scheduleList').html('<div><h2>2월의 일정</h2></div>');
+					break;
+				case '3월':
+					$('#scheduleList').html('<div><h2>3월의 일정</h2></div>');
+					break;
+				case '4월':
+					$('#scheduleList').html('<div><h2>4월의 일정</h2></div>');
+					break;
+				case '5월':
+					$('#scheduleList').html('<div><h2>5월의 일정</h2></div>');
+					break;
+				case '6월':
+					$('#scheduleList').html('<div><h2>6월의 일정</h2></div>');
+					break;
+				case '7월':
+					$('#scheduleList').html('<div><h2>7월의 일정</h2></div>');
+					break;
+				case '8월':
+					$('#scheduleList').html('<div><h2>8월의 일정</h2></div>');
+					break;
+				case '9월':
+					$('#scheduleList').html('<div><h2>9월의 일정</h2></div>');
+					break;
+				case '10월':
+					$('#scheduleList').html('<div><h2>10월의 일정</h2></div>');
+					break;
+				case '11월':
+					$('#scheduleList').html('<div><h2>11월의 일정</h2></div>');
+					break;
+				case '12월':
+					$('#scheduleList').html('<div><h2>12월의 일정</h2></div>');
+					break;
+
+				default:
+					break;
+			}
+
+		}
+		
+	});
+	
+	$('.fc-next-button').on('click',function(){
+		
+		var test1 = $('.fc-toolbar-title').html();
+		// console.log(test1);
+		var test2 = test1.split(' ');
+		// console.log(test2);
+
+		for (var i in test2){
+			// console.log(test2[i]);
+			// if(test2[0] === 'September'){
+			// 	console.log('9월의 일정');
+			// }
+
+			switch (test2[1]) {
+				case '1월':
+					$('#scheduleList').html('<div><h2>1월의 일정</h2></div>');
+					break;
+				case '2월':
+					$('#scheduleList').html('<div><h2>2월의 일정</h2></div>');
+					break;
+				case '3월':
+					$('#scheduleList').html('<div><h2>3월의 일정</h2></div>');
+					break;
+				case '4월':
+					$('#scheduleList').html('<div><h2>4월의 일정</h2></div>');
+					break;
+				case '5월':
+					$('#scheduleList').html('<div><h2>5월의 일정</h2></div>');
+					break;
+				case '6월':
+					$('#scheduleList').html('<div><h2>6월의 일정</h2></div>');
+					break;
+				case '7월':
+					$('#scheduleList').html('<div><h2>7월의 일정</h2></div>');
+					break;
+				case '8월':
+					$('#scheduleList').html('<div><h2>8월의 일정</h2></div>');
+					break;
+				case '9월':
+					$('#scheduleList').html('<div><h2>9월의 일정</h2></div>');
+					break;
+				case '10월':
+					$('#scheduleList').html('<div><h2>10월의 일정</h2></div>');
+					break;
+				case '11월':
+					$('#scheduleList').html('<div><h2>11월의 일정</h2></div>');
+					break;
+				case '12월':
+					$('#scheduleList').html('<div><h2>12월의 일정</h2></div>');
+					break;
+
+				default:
+					break;
+			}
+			
+		}
+
+	});
+
+	});
+
+	document.getElementById('myScore').addEventListener('click',
+	function() {
+		calendar.next();
+	});
+	
+	function increaseScore() {
+		score1++;
+		document.getElementById("myScore").innerHTML = score1;
 	}
-);
+
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />

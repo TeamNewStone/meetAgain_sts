@@ -1,6 +1,7 @@
 package com.kh.meetAgain.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class MemberDAOImpl implements MemberDAO {
 	SqlSessionTemplate sqlSession;
 	
 	@Override
-	public Member selectOne(String email) {
-		return sqlSession.selectOne("memberMapper.selectOne", email);
+	public Member selectOne(String userId) {
+		return sqlSession.selectOne("memberMapper.selectOne", userId);
 	}
 	
 	@Override
@@ -39,11 +40,51 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int mCateUpdate(String c) {
+	public int mCateUpdate(String userId, String cateId) {
 		System.out.println("MemberDAOImpl test : ");
-		return sqlSession.update("memberMapper.mCateUpdate", c);
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("cateId", cateId);
+		
+		return sqlSession.update("memberMapper.mCateUpdate", map);
+	}
+	
+	@Override
+	public CateInfo selectCateInfo(String userId) {
+		
+		List<CateInfo> ci = sqlSession.selectList("memberMapper.selectCateInfo", userId);
+		
+		CateInfo ci_All = new CateInfo();
+		ci_All.setUserId(userId);
+		String[] cate_id = new String[ci.size()];
+		int i = 0;
+		for(CateInfo c : ci) {
+			cate_id[i] = c.getCate_id();
+			i++;
+		}
+		ci_All.setCateId(cate_id);
+		
+		return ci_All;
 	}
 
-	
+	@Override
+	public UserTMI selectOneTMI(String userId) {
+		return sqlSession.selectOne("memberMapper.selectOneTMI", userId);
+	}
+
+	@Override
+	public int insertMember(Member m) {
+		int result = sqlSession.insert("memberMapper.insertMember",m);
+		sqlSession.insert("memberMapper.insertTmi",m);
+		return result;
+	}
+
+	@Override
+	public int checkNnDuplicate2(HashMap<String, Object> hmap) {
+		sqlSession.selectOne("memberMapper.checkNnDuplicate2", hmap);
+		
+		return (Integer)hmap.get("result");
+	}
 
 }

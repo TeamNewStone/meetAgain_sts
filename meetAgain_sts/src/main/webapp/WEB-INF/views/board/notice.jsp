@@ -23,6 +23,7 @@
 						<th>조회수</th>
 					</tr>
 					</thead>
+					<c:if test="${list ne null }">
 					<c:forEach items="${list}" var="b"> 
 					<tr id="${b.BId}">
 						<td>${b.BId}</td>
@@ -32,7 +33,7 @@
 						<td>${b.BRate }</td>
 					</tr>
 					</c:forEach>
-					
+					</c:if>
 				</table>
 
 

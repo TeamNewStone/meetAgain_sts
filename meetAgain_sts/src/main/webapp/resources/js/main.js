@@ -4121,16 +4121,16 @@ var FullCalendar = (function (exports) {
         },
         direction: 'ltr',
         buttonText: {
-            prev: 'prev',
-            next: 'next',
-            prevYear: 'prev year',
-            nextYear: 'next year',
-            year: 'year',
-            today: 'today',
-            month: 'month',
-            week: 'week',
-            day: 'day',
-            list: 'list'
+            prev: '이전',
+            next: '다음',
+            prevYear: '전 해',
+            nextYear: '다음 해',
+            year: '년',
+            today: '오늘',
+            month: '월',
+            week: '주',
+            day: '일',
+            list: '목록'
         },
         weekText: 'W',
         allDayText: 'all-day',
@@ -7670,8 +7670,12 @@ var FullCalendar = (function (exports) {
                 var widget = widgetGroup_1[_i];
                 var buttonName = widget.buttonName, buttonClick = widget.buttonClick, buttonText = widget.buttonText, buttonIcon = widget.buttonIcon;
                 if (buttonName === 'title') {
+					/* if (buttonName === 'title' || buttonName === 'prev')  */
                     isOnlyButtons = false;
                     children.push(createElement("h2", { className: 'fc-toolbar-title' }, props.title));
+					// 버튼위치
+					// children.push(createElement("h3", { className: 'fc-icon fc-icon-chevron-left' }, props.left));
+					// children.push(createElement("h3", { className: 'fc-icon fc-icon-chevron-left' }, props.right));
                 }
                 else {
                     var ariaAttrs = buttonIcon ? { 'aria-label': buttonName } : {};
