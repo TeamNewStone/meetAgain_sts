@@ -43,5 +43,15 @@ public class MyPageServiceImpl implements MyPageService {
 	public UserTMI selectUserTMI(String userId) {
 		return mpDAO.selectUserTMI(userId);
 	}
+	
+	@Override
+	public List<Map<String, String>> selectFollowerList(String userId) {
+		return mpDAO.selectFollowerList(userId);
+	}
+	
+	@Override
+	public List<Map<String, String>> selectFollowingList(String userId) {
+		return mpDAO.selectFollowingList(userId);
+	}
 
 }

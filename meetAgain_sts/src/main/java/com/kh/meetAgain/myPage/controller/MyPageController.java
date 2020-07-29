@@ -16,6 +16,7 @@ import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.service.MyPageService;
+import com.kh.meetAgain.myPage.model.vo.Follow;
 
 @SessionAttributes(value= {"member"})
 @Controller
@@ -100,5 +101,17 @@ public class MyPageController {
 	public String myPageOther() {
 		return "myPage/myPageOther";
 	}	
+	@RequestMapping("myPage/followerList.do")
+	public String followerList(@RequestParam("uid") String userId, Model model) {
+		List<Map<String, String>> list = mpSvc.selectFollowerList(userId);
+		model.addAttribute("list", list);
+		return "myPage/followerList";
+	}
+	@RequestMapping("myPage/followingList.do")
+	public String followingList(@RequestParam("uid") String userId, Model model) {
+		List<Map<String, String>> list = mpSvc.selectFollowingList(userId);
+		model.addAttribute("list", list);
+		return "myPage/followingList";
+	}
 
 }

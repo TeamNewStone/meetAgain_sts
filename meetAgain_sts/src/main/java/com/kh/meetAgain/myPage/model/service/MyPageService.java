@@ -17,4 +17,8 @@ public interface MyPageService {
 	int totalGroup(String userId);
 
 	UserTMI selectUserTMI(String userId);
+	
+	List<Map<String, String>> selectFollowerList(String userId);
+
+	List<Map<String, String>> selectFollowingList(String userId);	
 }
