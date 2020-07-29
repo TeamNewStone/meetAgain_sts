@@ -13,7 +13,7 @@
 		SELECT COUNT(*) FROM GBOARD WHERE USERID=#{userId}
 	</select>
 
-	<select id="totalFollowing" resultType="_int">
+	<select id="totalFollowing" parameterType="string" resultType="_int">
 		SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWER = #{userId}
 	</select>
 	<select id="totalFollower" resultType="_int">
@@ -24,5 +24,13 @@
 	</select>
 	<select id="selectUserTMI" resultType = "UserTMI">
 		SELECT * FROM USERTMI WHERE USERID = #{userId}
+	</select>
+	
+	<select id="selectFollowerList" resultType="Follow">
+		SELECT M.NICKNAME FROM FOLLOW JOIN MEMBER M ON(FOLLOWER = M.USERID) WHERE FOLLOWIN=#{userId}
+	</select>
+	
+	<select id="selectFollowingList" resultType="Follow">
+		SELECT M.NICKNAME FROM FOLLOW JOIN MEMBER M ON(FOLLOWIN = M.USERID) WHERE FOLLOWER=#{userId}
 	</select>
 </mapper>

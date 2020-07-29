@@ -70,12 +70,14 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<div class="posts" id="followerDiv">
 						<p class="lead" id="_fwfw">
+						<input type="hidden" id="follower" value="${follower}" />
 							 팔로워  <b>${follower}</b>
 						</p>
 					</div>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<div class="posts" id="followingDiv">
 						<p class="lead" id="_fwfw">
+						<input type="hidden" id="following" value="${following}" />
 							팔로잉  <b>${following}</b> 
 						</p>
 					</div>
@@ -342,8 +344,30 @@
 		location.reload();
 	}
 	
-	$('#followerDiv').click(function(){
-		window.open('${pageContext.request.contextPath}/myPage/follower.do','팔로워','width=300, height=500');
+	$(function() {
+		if($('#follower').val() > 0){
+		$("#followerDiv").click(function() {
+			var userId = ${member.userId};
+			window.open('${pageContext.request.contextPath}/myPage/followerList.do?uid='+userId,'팔로워','width=300, height=500');
+		}).mouseenter(function() {
+			$(this).css({
+				"cursor" : "pointer"
+			});
+
+		})
+		}
+		
+		if($('#following').val() > 0){
+			$("#followingDiv").click(function() {
+				var userId = ${member.userId};
+				window.open('${pageContext.request.contextPath}/myPage/followingList.do?uid='+userId,'팔로잉','width=300, height=500');
+			}).mouseenter(function() {
+				$(this).css({
+					"cursor" : "pointer"
+				});
+
+			})
+			}
 	});
 	
 </script>

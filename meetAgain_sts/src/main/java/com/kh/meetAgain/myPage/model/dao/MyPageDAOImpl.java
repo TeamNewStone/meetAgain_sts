@@ -30,22 +30,32 @@ public class MyPageDAOImpl implements MyPageDAO {
 
 	@Override
 	public int totalFollwing(String userId) {
-		return sqlSession.selectOne("myPageMapper.totalFollowing");
+		return sqlSession.selectOne("myPageMapper.totalFollowing",userId);
 	}
 
 	@Override
 	public int totalFollwer(String userId) {
-		return sqlSession.selectOne("myPageMapper.totalFollower");
+		return sqlSession.selectOne("myPageMapper.totalFollower",userId);
 	}
 
 	@Override
 	public int totalGroup(String userId) {
-		return sqlSession.selectOne("myPageMapper.totalGroup");
+		return sqlSession.selectOne("myPageMapper.totalGroup",userId);
 	}
 
 	@Override
 	public UserTMI selectUserTMI(String userId) {
 		return sqlSession.selectOne("myPageMapper.selectUserTMI");
 	}
+	
+	@Override
+	public List<Map<String, String>> selectFollowerList(String userId) {
+		return sqlSession.selectList("myPageMapper.selectFollowerList",userId);
+	}
+	
+	@Override
+	public List<Map<String, String>> selectFollowingList(String userId) {
+		return sqlSession.selectList("myPageMapper.selectFollowingList",userId);
+	}	
 
 }
