@@ -4,6 +4,7 @@ import java.util.List;
 
 import java.util.Map;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
+import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 public interface SgroupService {
@@ -31,5 +32,8 @@ public interface SgroupService {
 	int deletegBoard(int gbId);
 
 	int updateReadCount(int bId);
+	
+	int addCalendar(Calendar calendar);
+	
 }
 

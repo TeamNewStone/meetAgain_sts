@@ -1,5 +1,7 @@
 package com.kh.meetAgain.myPage.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +18,7 @@ import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.service.MyPageService;
-import com.kh.meetAgain.myPage.model.vo.Follow;
+import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @SessionAttributes(value= {"member"})
 @Controller
@@ -36,6 +38,21 @@ public class MyPageController {
 		int follower = mpSvc.totalFollower(userId);
 		int groupSum = mpSvc.totalGroup(userId);
 		UserTMI tmi = (UserTMI)mservice.selectOneTMI(userId).get("ut");
+		
+		/*================팔로우 여부================*/
+		String muserId = m.getUserId();
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("muserId", muserId);
+		map.put("userId", userId);
+		int followYN = mpSvc.selectFollowYN(map);
+		model.addAttribute("followYN", followYN);
+		
+		/*======================소모임 목록 가져오기======================*/
+		List<Sgroup> group = new ArrayList<Sgroup>(); // 가입한 소모임
+		List<Sgroup> mgroup = new ArrayList<Sgroup>();
+		
+		group = mpSvc.getMyGroup(userId);
+		mgroup = mpSvc.getCreateGroup(userId);	
 		
 		
 		/*======================작성한 게시글 데이터 가져오기======================*/
@@ -65,6 +82,8 @@ public class MyPageController {
 		model.addAttribute("follower", follower);
 		model.addAttribute("groupSum", groupSum);
 		model.addAttribute("tmi",tmi);
+		model.addAttribute("mygroup",group);
+		model.addAttribute("cgroup",mgroup);
 		
 		return "myPage/myPage1";
 	}
@@ -113,5 +132,45 @@ public class MyPageController {
 		model.addAttribute("list", list);
 		return "myPage/followingList";
 	}
+	@RequestMapping("myPage/follow.do")
+	public String follow(@RequestParam("uid") String userId, @RequestParam("muserId") String muserId, Model model) {
+		String msg = "";
+		String loc="/myPage/myPage1.do?uid="+userId;
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("muserId", muserId);
+		int result = mpSvc.insertFollow(map);
+		
+		if(result > 0) {
+			msg = "팔로우를 완료하였습니다!";
+		}else {
+			msg = "팔로우에 실패하였습니다. 다시 시도해 주세요.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("loc", loc);
+		return "common/msg";
+	}
+	@RequestMapping("myPage/unFollow.do")
+	public String unFollow(@RequestParam("uid") String userId, @RequestParam("muserId") String muserId, Model model) {
+		String msg = "";
+		String loc = "/myPage/myPage1.do?uid="+userId;
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("muserId", muserId);
+		int result = mpSvc.deleteFollow(map);
+		
+		if(result > 0) {
+			msg = "언팔로우를 완료하였습니다!";
+		}else {
+			msg = "언팔로우에 실패하였습니다. 다시 시도해 주세요.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("loc", loc);
+		return "common/msg";
+	}	
 
 }

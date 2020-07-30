@@ -2,9 +2,8 @@ package com.kh.meetAgain.sgroup.model.dao;
 import java.util.List;
 import java.util.Map;
 
-import java.util.List;
-
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
+import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 public interface SgroupDAO {
@@ -30,6 +29,8 @@ public interface SgroupDAO {
 	int updateReadCount(int bId);
 
 	int deletegBoard(int gbId);
+
+	int addCalendar(Calendar calendar);
 
 
 }

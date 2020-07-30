@@ -27,10 +27,30 @@
 	</select>
 	
 	<select id="selectFollowerList" resultType="Follow">
-		SELECT M.NICKNAME FROM FOLLOW JOIN MEMBER M ON(FOLLOWER = M.USERID) WHERE FOLLOWIN=#{userId}
+		SELECT M.NICKNAME, M.USERID FROM FOLLOW JOIN MEMBER M ON(FOLLOWER = M.USERID) WHERE FOLLOWIN=#{userId}
 	</select>
 	
 	<select id="selectFollowingList" resultType="Follow">
-		SELECT M.NICKNAME FROM FOLLOW JOIN MEMBER M ON(FOLLOWIN = M.USERID) WHERE FOLLOWER=#{userId}
+		SELECT M.NICKNAME, M.USERID FROM FOLLOW JOIN MEMBER M ON(FOLLOWIN = M.USERID) WHERE FOLLOWER=#{userId}
 	</select>
+	
+	<select id="getMyGroup" resultType="Sgroup">
+		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId}
+	</select>
+	
+	<select id="getCreateGroup" resultType="Sgroup">
+		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId} AND ISCPT='Y'
+	</select>
+	
+	<select id="selectFollowYN" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWER=#{muserId} AND FOLLOWIN=#{userId}
+	</select>
+	
+	<insert id="insertFollow" parameterType="hashmap">
+		INSERT INTO FOLLOW VALUES(#{muserId}, #{userId})
+	</insert>
+	
+	<delete id="deleteFollow" parameterType="hashmap">
+		DELETE FROM FOLLOW WHERE FOLLOWER=#{muserId} AND FOLLOWIN=#{userId}
+	</delete>
 </mapper>

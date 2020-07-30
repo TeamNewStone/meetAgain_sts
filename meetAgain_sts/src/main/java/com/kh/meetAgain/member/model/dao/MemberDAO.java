@@ -1,6 +1,7 @@
 package com.kh.meetAgain.member.model.dao;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
@@ -24,5 +25,5 @@ public interface MemberDAO {
 	
 	CateInfo selectCateInfo(String userId);
 
-	int checkNnDuplicate2(HashMap<String, Object> hmap);
+	int checkNnDuplicate2(Map<String, String> map);
 }

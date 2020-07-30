@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
@@ -24,7 +25,6 @@ public class SgroupDAOImpl implements SgroupDAO {
 		
 		return sqlSession.insert("sgroupMapper.insertSgroup", sgroup);
 	}
-// -----------------------------------------------------------------------
 	@Override
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
 		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
@@ -76,6 +76,12 @@ public class SgroupDAOImpl implements SgroupDAO {
 	@Override
 	public int updateReadCount(int gbId) {
 		return sqlSession.update("sgroupMapper.updateReadCount", gbId);
+	}	
+  
+	@Override
+	public int addCalendar(Calendar calendar) {
+		System.out.println("DAO: "+calendar);
+		return sqlSession.insert("calendarMapper.insertSchedule", calendar);
 	}
 	
 }

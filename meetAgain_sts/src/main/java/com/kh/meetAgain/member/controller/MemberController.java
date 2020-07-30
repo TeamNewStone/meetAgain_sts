@@ -49,9 +49,10 @@ public class MemberController {
 			@RequestParam("year") int year, @RequestParam("birth") String birth) {
 		int month = Integer.parseInt(birth.substring(0, 2));
 		int day = Integer.parseInt(birth.substring(3,5));
-
-		Date date = new Date(year,month-1,day);
+		System.out.println("year테스트 : "+year);
 		
+		Date date = new Date(year-1900,month-1,day);
+		System.out.println("date 확인 : "+date);
 		member.setBirthday(date);
 		
 		int result = memberService.insertMember(member);
@@ -99,15 +100,27 @@ public class MemberController {
 		
 		Map<String, Object> map = new HashMap<String, Object>(); 
 		boolean isUsable = memberService.checkNnDuplicate(nickName) == 0 ? true : false;
-		boolean isUsable2 = memberService.checkNnDuplicate2(nickName) == 0 ? true : false;
 		map.put("isUsable", isUsable);
-		map.put("isUsable2", isUsable2);
 		
 		// @ResponseBody 는 결과가 viewResolver로 가지 않고,
 		// 직접 그 결과 자체를 화면으로 전달한다.
 		return map;
 	}
-	
+	@RequestMapping("/member/checkNnDuplicate2.do")
+	@ResponseBody
+	public Map<String, Object> responseBodyProcess1(Member member,@RequestParam String nickName){
+		
+		Map<String, Object> map = new HashMap<String, Object>(); 
+		Map<String, String> map2 =  new HashMap<String, String>();
+		map2.put("nickName", nickName);
+		map2.put("email", member.getEmail());
+		boolean isUsable2 = memberService.checkNnDuplicate2(map2) == 0 ? true : false;
+		map.put("isUsable2", isUsable2);
+		
+		// @ResponseBody 는 결과가 viewResolver로 가지 않고,
+		// 직접 그 결과 자체를 화면으로 전달한다.
+		return map;
+	}	
 	@RequestMapping("member/mUpdate.do")
 	public String mUpdate(Member member, Model model) {
 		int result = memberService.mUpdate(member);

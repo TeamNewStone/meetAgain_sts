@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.meetAgain.member.model.vo.UserTMI;
+import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 public interface MyPageService {
 
@@ -20,5 +21,15 @@ public interface MyPageService {
 	
 	List<Map<String, String>> selectFollowerList(String userId);
 
-	List<Map<String, String>> selectFollowingList(String userId);	
+	List<Map<String, String>> selectFollowingList(String userId);
+
+	List<Sgroup> getMyGroup(String userId);
+
+	List<Sgroup> getCreateGroup(String userId);
+
+	int selectFollowYN(Map<String, String> map);
+
+	int insertFollow(Map<String, String> map);
+
+	int deleteFollow(Map<String, String> map);	
 }
