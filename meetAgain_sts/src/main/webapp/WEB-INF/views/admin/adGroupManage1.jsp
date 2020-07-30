@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/adminHeader.jsp" />
+<c:import url="/WEB-INF/views/common/adminHeader.jsp" />
 <div class="rows">
 	<div class="row">
 		<div class="col-2"></div>
@@ -86,4 +86,4 @@
 		</div>
 	</div>
 </div>
-<c:import url="/views/common/adminFooter.jsp"/>
+<c:import url="/WEB-INF/views/common/adminFooter.jsp"/>

@@ -162,14 +162,14 @@
         }else{
         	$("#nickNoMsg").hide();
     	   $.ajax({
-	            url  : "${pageContext.request.contextPath}/member/checkNnDuplicate.do",
+	            url  : "${pageContext.request.contextPath}/member/checkNnDuplicate2.do",
 	            data : {nickName:$('#NickName').val()},
 	            dataType: "json",
 	            success : function(data){
 	                console.log(data);
 	                // if(data=="true") //stream 방식
 	                if(data.isUsable2==true){ //viewName 방식
-	                    alert('사용 가능한 닉네임 입니다.');
+	                    
 	                } else {
 	                    alert('이미 사용중인 닉네임입니다.');
 	                    return false;
