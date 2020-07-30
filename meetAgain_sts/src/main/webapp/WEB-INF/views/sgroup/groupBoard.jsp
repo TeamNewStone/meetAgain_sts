@@ -64,22 +64,22 @@
 </div>
 
 <script>
-// 	$(function() {
-// 		$("#group-boardbtn").attr('class', 'btn btn-secondary');
-// 		$("tr[id]")
-// 				.click(
-// 						function() {
-// 							var gbId = $(this).attr("id");
-// 							location.href = "${pageContext.request.contextPath}/sgroup/groupDetail.do?gbId="
-// 									+ gbId;
+	$(function() {
+		$("#group-boardbtn").attr('class', 'btn btn-secondary');
+		$("tr[id]")
+				.click(
+						function() {
+							var gbId = $(this).attr("id");
+							location.href = "${pageContext.request.contextPath}/sgroup/groupBoardDetail.do?gbId="
+									+ gbId;
 
-// 						}).mouseenter(function() {
-// 					$(this).parent().css({
-// 						"cursor" : "pointer"
-// 					});
+						}).mouseenter(function() {
+					$(this).parent().css({
+						"cursor" : "pointer"
+					});
 
-// 				})
-// 	});
+				})
+	});
 
 	function gboardInsert() {
 		location.href = "${pageContext.request.contextPath}/sgroup/gboardInsert.do";

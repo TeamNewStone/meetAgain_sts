@@ -63,12 +63,20 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Override
 	public int updategBoard(Gboard Gboard) {
-		return sqlSession.update("sgroupMapper.updateBoard", Gboard);
+		System.out.println("updategBoard : " + Gboard);
+		return sqlSession.update("sgroupMapper.updategBoard", Gboard);
 	}
 
 	@Override
+	public int deletegBoard(int gbId) {
+		System.out.println("deleteDAO : "+gbId);
+		return sqlSession.delete("sgroupMapper.deletegBoard", gbId);
+	}
+	
+	@Override
 	public int updateReadCount(int gbId) {
 		return sqlSession.update("sgroupMapper.updateReadCount", gbId);
-	}	
+	}
+	
 }
 

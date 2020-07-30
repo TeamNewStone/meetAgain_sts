@@ -29,5 +29,7 @@ public interface SgroupDAO {
 
 	int updateReadCount(int bId);
 
+	int deletegBoard(int gbId);
+
 
 }
