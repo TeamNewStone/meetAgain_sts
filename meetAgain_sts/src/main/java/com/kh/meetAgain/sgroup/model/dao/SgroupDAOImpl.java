@@ -39,7 +39,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Override
 	public List<Sgroup> selectSgroupList() {
-		return sqlSession.selectList("sgroupMapper.selectSgroupList");
+		return sqlSession.selectList("sgroupMapper.selectListSgroup");
 	}
 
 	@Override

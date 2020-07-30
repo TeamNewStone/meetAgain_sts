@@ -1378,9 +1378,9 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-    background-color: #611F6A;
-    border-color: #611F6A;
-    color: #611F6A
+    background-color: #132742;
+    border-color: #132742;
+    color: #132742
 }
 
 .custom-checkbox .custom-control-input:disabled~.custom-control-label::before {
@@ -1393,8 +1393,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .custom-radio .custom-control-input:checked~.custom-control-label::before {
-    background-color: #611F6A;
-    border-color: #611F6A
+    background-color: #132742;
+    border-color: #132742
 }
 
 .custom-radio .custom-control-input:disabled~.custom-control-label::before {
@@ -1423,8 +1423,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .custom-switch .custom-control-input:checked~.custom-control-label::before {
-    background-color: #611F6A;
-    border-color: #611F6A
+    background-color: #132742;
+    border-color: #132742
 }
 
 .custom-switch .custom-control-input:checked~.custom-control-label::after {
