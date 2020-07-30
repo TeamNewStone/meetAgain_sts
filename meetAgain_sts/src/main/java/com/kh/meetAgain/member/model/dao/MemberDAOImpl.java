@@ -85,5 +85,8 @@ public class MemberDAOImpl implements MemberDAO {
 	public int checkNnDuplicate2(Map<String, String> map) {
 		return sqlSession.selectOne("memberMapper.checkNnDuplicate2", map);
 	}
+	@Override public int memberOut(Member m) {
+		 sqlSession.delete("memberMapper.delUserInfo",m); return
+		  sqlSession.update("memberMapper.memberOut",m); }
 
 }

@@ -67,12 +67,6 @@
 		EMAIL!=#{email}
 	</select>
 
-	
-	<select id="selectAdmin" parameterType="hashmap" resultType="_int">
-		SELECT COUNT(*) FROM MEMBER WHERE USERID=#{adminId} AND BIRTHDAY=#{adminBirthday} AND EMAIL=#{adminEmail}
-	</select>
-
-
 	<update id="memberOut" parameterType="Member" statementType="CALLABLE">
 		{CALL DEL_USERINFO(#{userId})}
 	</update>

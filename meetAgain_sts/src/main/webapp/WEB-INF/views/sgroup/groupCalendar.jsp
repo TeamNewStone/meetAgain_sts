@@ -189,7 +189,7 @@ body {
 						</table>
 						<div class="custom-control custom-checkbox my-2">
 							<input type="checkbox" class="custom-control-input"
-								id="customCheck2" name="isctn" > 
+								id="customCheck2" name="isctn" value="Y" > 
 								<label class="custom-control-label" for="customCheck2">
 								정기 모임일 시 체크</label>
 						</div>
@@ -341,14 +341,20 @@ body {
 	document.getElementById('myScore').addEventListener('click',
 	function() {
 		calendar.next();
+		console.log(gtime);
+		console.log('${tagTwo}');
 	});
 	
 	function increaseScore() {
 		score1++;
 		document.getElementById("myScore").innerHTML = score1;
+		console.log(gtime);
+		console.log('${tagTwo}');
 	}
 	
 	function _addSc() {
+		console.log(gtime);
+		console.log('${tagTwo}');
 		location.href="${ pageContext.request.contextPath }/sgroup/addCalendar.do";
 	}
 	
