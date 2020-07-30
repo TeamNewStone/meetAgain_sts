@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.dao.MyPageDAO;
+import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @Service("mpSvc")
 public class MyPageServiceImpl implements MyPageService {
@@ -52,6 +53,16 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public List<Map<String, String>> selectFollowingList(String userId) {
 		return mpDAO.selectFollowingList(userId);
+	}
+
+	@Override
+	public List<Sgroup> getMyGroup(String userId) {
+		return mpDAO.getMyGroup(userId);
+	}
+
+	@Override
+	public List<Sgroup> getCreateGroup(String userId) {
+		return mpDAO.getCreateGroup(userId);
 	}
 
 }
