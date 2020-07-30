@@ -149,7 +149,7 @@ public class SgroupController {
 
 	}
 
-	@RequestMapping("sgroup/groupDetail.do")
+	@RequestMapping("sgroup/groupBoardDetail.do")
 	public String groupDetail(@RequestParam int gbId, Model model) {
 
 		Gboard gb = sgroupService.SelectOnegBoard(gbId);
@@ -159,7 +159,7 @@ public class SgroupController {
 
 		model.addAttribute("Gboard", gb);
 
-		return "sgroup/groupDetail";
+		return "sgroup/groupBoardDetail";
 	}
 
 	@RequestMapping("sgroup/gboardInsert.do")
@@ -174,12 +174,11 @@ public class SgroupController {
 
 		int result = sgroupService.insertgBoard(Gboard);
 
-		String loc = "/sgroup/groupBoard.do";
+		String loc = "/sgroup/groupBoardDetail.do";
 		String msg = "";
-
 		if (result > 0) {
 			msg = "게시글 등록 성공!";
-			loc = "/sgroup/groupDetail.do?gbId=" + Gboard.getGbId();
+			loc = "/sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
 
 		} else {
 			msg = "게시글 등록 실패!";
@@ -191,6 +190,51 @@ public class SgroupController {
 		return "common/msg";
 
 	}
-
+	
+	@RequestMapping("sgroup/groupBoardUpdate.do")
+	public String noticeUpdate(@RequestParam int gbId, Model model) {
+		model.addAttribute("Gboard", sgroupService.SelectOnegBoard(gbId));
+		System.out.println("updateController : " + model);
+		return "sgroup/groupBoardUpdateForm";
+	}
+	
+	@RequestMapping("sgroup/gbUpdate.do")
+	public String gbUpdate(Gboard Gboard, Model model) {
+		int result = sgroupService.updategBoard(Gboard);
+		
+		String loc = "/sgroup/groupBoard.do";
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "게시글 수정이 완료되었습니다";
+			loc = "/sgroup/groupBoardDetail.do?gbId="+Gboard.getGbId();
+		} else {
+			msg = "게시글 수정 실패. 다시 시도해주세요";
+		}
+		
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		System.out.println("updateController : " + Gboard);
+		
+		return "common/msg";
+	}
+	
+	@RequestMapping("sgroup/groupBoardDelete.do")
+	public String groupBoardDelete(@RequestParam int gbId, HttpSession session, Model model) {
+		int result = sgroupService.deletegBoard(gbId);
+		
+		String loc = "/sgroup/groupBoard.do";
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "게시글 삭제 성공!";
+			
+		} else {
+			msg = "게시글 삭제 실패!";
+		}
+		
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		System.out.println("deleteController : "+model);
+		return "common/msg";
+	}
 }
 

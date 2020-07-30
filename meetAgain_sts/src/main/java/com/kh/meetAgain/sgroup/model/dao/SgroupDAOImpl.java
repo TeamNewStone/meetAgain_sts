@@ -25,7 +25,6 @@ public class SgroupDAOImpl implements SgroupDAO {
 		
 		return sqlSession.insert("sgroupMapper.insertSgroup", sgroup);
 	}
-// -----------------------------------------------------------------------
 	@Override
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
 		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
@@ -39,12 +38,15 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Override
 	public List<Sgroup> selectSgroupList() {
-		return sqlSession.selectList("sgroupMapper.selectListSgroup");
+		return sqlSession.selectList("sgroupMapper.selectSgroupList");
 	}
 
 	@Override
 	public Sgroup selectOneSgroup(String gId) {
 		return sqlSession.selectOne("sgroupMapper.selectOneSgroup", gId);
+	}
+	public List<Sgroup> selectSgroupList() {
+		return sqlSession.selectList("sgroupMapper.selectListSgroup");
 	}
 
 	public int selectgBoardTotalContents() {
@@ -64,14 +66,21 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Override
 	public int updategBoard(Gboard Gboard) {
-		return sqlSession.update("sgroupMapper.updateBoard", Gboard);
+		System.out.println("updategBoard : " + Gboard);
+		return sqlSession.update("sgroupMapper.updategBoard", Gboard);
 	}
 
+	@Override
+	public int deletegBoard(int gbId) {
+		System.out.println("deleteDAO : "+gbId);
+		return sqlSession.delete("sgroupMapper.deletegBoard", gbId);
+	}
+	
 	@Override
 	public int updateReadCount(int gbId) {
 		return sqlSession.update("sgroupMapper.updateReadCount", gbId);
 	}	
-	
+  
 	@Override
 	public int addCalendar(Calendar calendar) {
 		System.out.println("DAO: "+calendar);
