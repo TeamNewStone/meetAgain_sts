@@ -15,7 +15,7 @@ public class Calendar {
 	private String gid;
 	private Date gdate;
 	private String ginfo;
-	private String gtimeStr; // 시간을 문자열로 받아옴
+	private String gtimeStr; // 시간
 	private Timestamp gtime;	
 	private String isctn;
 
