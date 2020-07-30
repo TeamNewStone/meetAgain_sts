@@ -32,5 +32,4 @@ public interface SgroupDAO {
 
 	int addCalendar(Calendar calendar);
 
-
 }
