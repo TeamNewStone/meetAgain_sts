@@ -184,7 +184,7 @@
         obj.show();
     }
     
-      function memberOut() {
+    function memberOut() {
         var confirm = window.confirm("탈퇴 시 이후 3개월간 재가입이 불가능합니다. 탈퇴하시겠습니까?");
         if(confirm) location.href="${ pageContext.request.contextPath }/member/memberOut.do";
       }

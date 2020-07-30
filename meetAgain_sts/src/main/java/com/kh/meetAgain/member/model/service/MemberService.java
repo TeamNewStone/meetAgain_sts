@@ -22,6 +22,5 @@ public interface MemberService {
 	int insertMember(Member m);
 
 	int checkNnDuplicate2(String nickName);
-
 	 int memberOut(Member m); 
 }

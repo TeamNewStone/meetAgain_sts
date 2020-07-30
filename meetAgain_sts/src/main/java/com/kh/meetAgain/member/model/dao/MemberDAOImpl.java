@@ -86,10 +86,8 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		return (Integer)hmap.get("result");
 	}
+	@Override public int memberOut(Member m) {
+		 sqlSession.delete("memberMapper.delUserInfo",m); return
+		  sqlSession.update("memberMapper.memberOut",m); }
 
-	
-	  @Override public int memberOut(Member m) {
-	 sqlSession.delete("memberMapper.delUserInfo",m); return
-	  sqlSession.update("memberMapper.memberOut",m); }
-	 
 }
