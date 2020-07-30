@@ -14,12 +14,15 @@
 		INSERT ALL INTO SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE,
 		MAXNUM, CHARGE, GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE,
 		LIMITGROUP)
-		VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro}, DEFAULT, #{maxNum},
+		VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg},
+		#{gIntro}, DEFAULT, #{maxNum},
 		#{charge}, #{gFee}, #{gPlace},
-		#{gType}, #{durate}, DEFAULT, #{gPwd}, #{joinType}, #{limitGroup,
+		#{gType},
+		#{durate}, DEFAULT, #{gPwd}, #{joinType}, #{limitGroup,
 		typeHandler=Str2ArrayHandler})
 
-		INTO JOING(USERID, GID, ISCPT, ISREADY, ISOUT, ISLEAVE)
+		INTO JOING(USERID, GID, ISCPT, ISREADY,
+		ISOUT, ISLEAVE)
 		VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y',
 
 		<choose>
@@ -42,11 +45,9 @@
 	<select id="selectListSgroup" resultMap="sgroupMap">
 		SELECT * FROM SGROUP
 	</select>
-	
-<!-- 	<select id="selectOneSgroup" parameterType="_string" resultMap="sgroupMap">
-		SELECT * FROM SGROUP
-		WHERE GID = #{gId}
-	</select>  -->
+
+	<!-- <select id="selectOneSgroup" parameterType="_string" resultMap="sgroupMap"> 
+		SELECT * FROM SGROUP WHERE GID = #{gId} </select> -->
 
 
 	<resultMap type="Gboard" id="gboardMap">
@@ -60,20 +61,12 @@
 		VALUES
 		(SEQ_GBID.NEXTVAL, '1', '1', #{gbTitle}, #{gbContent}, DEFAULT, DEFAULT, DEFAULT,
 		DEFAULT, DEFAULT)
-		<!-- 전달한 board객체의 boardNo 프로퍼티에 결과값을 담는다. -->
+		전달한 board객체의 boardNo 프로퍼티에 결과값을 담는다.
 		<selectKey keyProperty="gbId" resultType="_int"
 			order="AFTER">
 			SELECT SEQ_GBID.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
-	INSERT INTO GBOARD
-	VALUES
-	(SEQ_GBID.NEXTVAL, '1', '1', #{gbTitle}, #{gbContent}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
-	전달한 board객체의 boardNo 프로퍼티에 결과값을 담는다.
-	<selectKey keyProperty="gbId" resultType="_int" order="AFTER">
-			SELECT SEQ_GBID.CURRVAL FROM DUAL
-	</selectKey>
-	</insert> 
 
 	<select id="selectgBoardList" resultType="Gboard">
 		SELECT GBID, NICKNAME,
@@ -104,7 +97,8 @@
 
 	<delete id="deletegBoard" parameterType="_int">
 		DELETE FROM GBOARD
-		WHERE GBID = #{gbId}
+		WHERE
+		GBID = #{gbId}
 	</delete>
 
 </mapper>
