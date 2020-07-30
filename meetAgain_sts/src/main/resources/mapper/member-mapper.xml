@@ -54,4 +54,8 @@ INSERT INTO USERTMI VALUES(#{userId}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	<select id="checkNnDuplicate2" parameterType="hashmap" resultType="_int">
 		SELECT COUNT(*) FROM MEMBER WHERE NICKNAME=#{nickName} AND EMAIL!=#{email}
 	</select>
+	
+	<select id="selectAdmin" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE USERID=#{adminId} AND BIRTHDAY=#{adminBirthday} AND EMAIL=#{adminEmail}
+	</select>
 </mapper>

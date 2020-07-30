@@ -72,12 +72,15 @@
 					<p class="lead" style="font-size: 13px; color: #a9a9a9;">관리자 로그인 페이지입니다.</p>
 					<hr />
 				</div>
-				<form>
+				<form action="${pageContext.request.contextPath}/admin/adminLogin.do">
 					<div class="form-group">
-					<input type="text" class="form-control" name="adminId" id="adminId" placeholder="아이디"/>
+					<input type="text" class="form-control" name="adminId" id="adminId" placeholder="입력정보1" required/>
 					</div>
 					<div class="form-group">
-					<input type="text" class="form-control" name="adminPwd" id="adminPwd" placeholder="비밀번호"/>
+					<input type="password" class="form-control" name="adminBirthday" id="adminBirthday" placeholder="입력정보2" required/>
+					</div>
+					<div class="form-group">
+					<input type="password" class="form-control" name="adminEmail" id="adminEmail" placeholder="입력정보3" required/>
 					</div>
 					<div class="form-group">
 					<button type="submit" class="btn btn-block btn-secondary">로그인</button>
