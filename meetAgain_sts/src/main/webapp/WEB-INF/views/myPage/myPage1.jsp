@@ -347,7 +347,7 @@
 	$(function() {
 		if($('#follower').val() > 0){
 		$("#followerDiv").click(function() {
-			var userId = ${member.userId};
+			var userId = ${owner.userId};
 			window.open('${pageContext.request.contextPath}/myPage/followerList.do?uid='+userId,'팔로워','width=300, height=500');
 		}).mouseenter(function() {
 			$(this).css({
@@ -359,7 +359,7 @@
 		
 		if($('#following').val() > 0){
 			$("#followingDiv").click(function() {
-				var userId = ${member.userId};
+				var userId = ${owner.userId};
 				window.open('${pageContext.request.contextPath}/myPage/followingList.do?uid='+userId,'팔로잉','width=300, height=500');
 			}).mouseenter(function() {
 				$(this).css({
