@@ -5,7 +5,7 @@
 <mapper namespace="calendarMapper">
 	
 	<insert id="insertSchedule" parameterType="Calendar">
-		INSERT INTO CALENDAR VALUES(#{gid}, #{gdate}, #{ginfo}, TO_CHAR(#{gtime}, 'HH:MI:SS'), DEFAULT)
+		INSERT INTO CALENDAR VALUES(#{gid}, #{gdate}, #{ginfo}, #{gtime}, DEFAULT)
 	</insert>
 	
 	<select id="selectCalendar" resultType="Calendar">
