@@ -32,9 +32,21 @@
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/admin.css">
 <style>
 * { font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif'; }
+.form-control2{
+    font-weight: 400;
+    height: 2.375rem;
+    border: 1px solid #787878;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    font-size: .9rem;
+    border-radius: .25rem;
+    padding: .5rem 1rem;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
 </style>
 </head>
-<body class="documentation language-html">
+<body class="documentation language-html" onload="focusId();">
 
 <nav class="navbar navbar-expand-md navbar-dark bg-primary" style="z-index:200;">
         <a class="navbar-brand"
@@ -57,12 +69,19 @@
 				<div class="mb-7" style="line-height: 2em;">
 					<br /> <br /> <br /> <br /> <br />
 					<p style="font-size: 50px; font-weight: bold;">Login</p>
-					<p class="lead" style="font-size: 13px; color: #a9a9a9;">로그인
-						하시면 더욱 다양한 '다시만나'의 서비스를 즐기실 수 있습니다.</p>
+					<p class="lead" style="font-size: 13px; color: #a9a9a9;">관리자 로그인 페이지입니다.</p>
 					<hr />
 				</div>
 				<form>
-					아이디 : <input type="text" class="form-control" />
+					<div class="form-group">
+					<input type="text" class="form-control" name="adminId" id="adminId" placeholder="아이디"/>
+					</div>
+					<div class="form-group">
+					<input type="text" class="form-control" name="adminPwd" id="adminPwd" placeholder="비밀번호"/>
+					</div>
+					<div class="form-group">
+					<button type="submit" class="btn btn-block btn-secondary">로그인</button>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -71,7 +90,11 @@
 
 
 
-
+<script type="text/javascript">
+function focusId(){
+	$('#adminId').focus();
+}
+</script>
 
 
 

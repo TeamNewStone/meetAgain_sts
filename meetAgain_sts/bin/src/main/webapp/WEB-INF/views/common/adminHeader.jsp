@@ -79,7 +79,7 @@
 	</nav> -->
 <nav class="navbar navbar-expand-md navbar-dark bg-primary" style="z-index:200;">
         <a class="navbar-brand"
-			href="${ pageContext.request.contextPath }/admin/adMain.do"><img
+			href="${ pageContext.request.contextPath }/views/admin/adMain.jsp"><img
 			src="${ pageContext.request.contextPath }/resources/img/logo.png" alt="Example Navbar 1"
 			class="ml-2" height="30"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -103,7 +103,7 @@
 		<div class="row">
 			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
 				<div class="sidebar-sticky">
-					<a href="${ pageContext.request.contextPath }/admin/adMain.do"
+					<a href="${ pageContext.request.contextPath }/views/admin/adMain.jsp"
 						class="sidebar-heading core" onclick="show1();">
 						<h6 class="sidebar-heading">메인 화면</h6>
 					</a>
@@ -114,23 +114,20 @@
 					<ul class="nav flex-column">
 
 						<li class="nav-item cantSee"><a
-							href="${ pageContext.request.contextPath }/admin/adBoardManage.do" class="nav-link">
+							href="${ pageContext.request.contextPath }/views/admin/adBoardManage.jsp" class="nav-link">
 								게시글 관리 </a></li>
 
 						<li class="nav-item cantSee"><a
-							href="${ pageContext.request.contextPath }/admin/adCommentManage.do"
+							href="${ pageContext.request.contextPath }/views/admin/adCommentManage.jsp"
 							class="nav-link"> 댓글 관리 </a></li>
 					</ul>
 
-					<a href="${ pageContext.request.contextPath }/admin/adMemberManage.do"
+					<a href="${ pageContext.request.contextPath }/views/admin/adMemberManage.jsp"
 						class="sidebar-heading core">
 						<h6 class="sidebar-heading" id="mManage">회원 관리</h6>
-					</a> <a href="${ pageContext.request.contextPath }/admin/adGroupManage1.do"
+					</a> <a href="${ pageContext.request.contextPath }/views/admin/adGroupManage.jsp"
 						class="sidebar-heading core">
 						<h6 class="sidebar-heading" id="gManage">모임 관리</h6>
-					</a> <a href="${ pageContext.request.contextPath }/admin/adNoticeManage.do"
-						class="sidebar-heading core">
-						<h6 class="sidebar-heading" id="notice">공지사향 관리</h6>
 					</a>
 
 				</div>
