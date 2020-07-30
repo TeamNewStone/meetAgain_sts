@@ -72,6 +72,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int addCalendar(Calendar calendar) {
 		return sqlSession.insert("calendarMapper.insertSchedule", calendar);
 	}
-	
-}
+  
+  @Override
+	public int deletegBoard(int gbId) {
+		System.out.println("deleteDAO : "+gbId);
+		return sqlSession.delete("sgroupMapper.deletegBoard", gbId);
+	}
 
+}
