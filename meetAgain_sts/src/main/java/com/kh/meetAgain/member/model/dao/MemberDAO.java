@@ -25,4 +25,6 @@ public interface MemberDAO {
 	CateInfo selectCateInfo(String userId);
 
 	int checkNnDuplicate2(HashMap<String, Object> hmap);
+
+	 int memberOut(Member m); 
 }

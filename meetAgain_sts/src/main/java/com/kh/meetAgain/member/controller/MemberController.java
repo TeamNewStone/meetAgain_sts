@@ -194,9 +194,22 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/memberOut.do")
-	public String memberOut(Member m) {
-		//int result = memberService.memberOut(m);
-		return "/member/logout";
+	public String memberOut(@ModelAttribute("member") Member m, Model model) {
+		String msg = "";
+		String loc = "/";
+		int result = memberService.memberOut(m);
+		
+		if(result>0) {
+			msg = "회원 탈퇴가 완료되었습니다.";
+			return "/member/logout";
+		}
+		else {
+			msg = "오류가 발생했습니다.";
+			model.addAttribute("loc",loc);
+			model.addAttribute("msg",msg);
+			return "common/msg";
+		}
+		
 	}
 	
 }

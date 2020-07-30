@@ -76,4 +76,8 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.checkNnDuplicate2(hmap);
 	}
 
+	
+	 @Override public int memberOut(Member m) { return memberDAO.memberOut(m); }
+	 
+
 }
