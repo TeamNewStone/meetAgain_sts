@@ -8,4 +8,8 @@
 		INSERT INTO CALENDAR VALUES(#{gid}, #{gdate}, #{ginfo}, #{gtime}, DEFAULT)
 	</insert>
 	
+	<select id="selectCalendar" resultType="Calendar">
+		SELECT C.*, TO_CHAR(GTIME, 'HH24:MI') "GTIMESTR" FROM CALENDAR C
+	</select>
+	
 </mapper>

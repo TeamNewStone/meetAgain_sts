@@ -1,13 +1,13 @@
 package com.kh.meetAgain.sgroup.controller;
 
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.sql.Timestamp;
+import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 
@@ -19,26 +19,43 @@ public class CalendarController {
 	SgroupService sgroupService;	
 	
 	@RequestMapping("sgroup/addCalendar.do")
-	public String addCalendar(Calendar calendar) {
+	public String addCalendar(
+				@RequestParam String ginfo,
+				@RequestParam String gdate, 
+				@RequestParam String gtime,
+				@RequestParam(required = false, defaultValue = "N") String isctn) {
+
+		System.out.println(gtime); // 12:01
 		
-		String s = "[HH:mm]";
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.KOREA);
-		long ms;
+		Date date = Date.valueOf(gdate);
+		int hour = Integer.parseInt(gtime.substring(0, 2));
+		int min = Integer.parseInt(gtime.substring(3));
 		
-		try {
-			ms = sdf.parse(s).getTime();
-			Time t = new Time(ms);		
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Timestamp time = Timestamp.valueOf(date.toString() + " " + hour + ":" + min + ":00"); // 20: + 14 + :00
+				
+		System.out.println(min);
+		//Timestamp time1 = Timestamp.valueOf(hour + ":" + min+":00");
+		
+		//System.out.println(date.toString());
+		System.out.println(time);
+
+		Calendar cal = new Calendar(null, date, ginfo, null, time, isctn);
+		
+		int result = sgroupService.addCalendar(cal);	
+						
+		String addMsg = "";
+		
+		/*
+		if (result >0) {
+			addMsg = "일정 생성됨";
+			System.out.println("일정 생성됨");
+		} else {
+			addMsg = "생성 실패";
+			System.out.println("생성 실패");
 		}
-		
-		calendar.setGid("001");
-		System.out.println("controller : " + calendar);
-		int result = sgroupService.addCalendar(calendar);
-		/* List<Calendar> list = sgroupService.addCalendar(); */
+		*/
 		
 		return "redirect:groupCalendar.do";	
 	}
-	
+
 }
