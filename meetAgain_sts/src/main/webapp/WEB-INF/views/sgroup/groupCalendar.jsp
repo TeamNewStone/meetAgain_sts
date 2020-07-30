@@ -12,7 +12,6 @@
 
 <script>
 
-
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
 		var today = new Date();
@@ -53,7 +52,27 @@
 			}, {
 				title : '정기모임',
 				start : '2020-07-17'
-			} ]
+			} 
+			
+		<%-- 	<% 
+		  	  for (int i = 0; i < list.size(); i++) {
+		  	  	ScheduleDTO dto = (ScheduleDTO)list.get(i);
+		%>	
+		  	  {
+		  	   title : '<%= dto.getSubject() %>',
+		  	   start : '<%= dto.getStartDate() %>',
+		  	   end : '<%= dto.getEndDate() %>'
+		  	   },
+		<%
+			}
+		%>
+				{
+				   title : 'default',
+				   start : "2019-01-01",
+				   end : "2019-01-01"
+				  } --%>			
+			
+			]
 			
 		});
 
@@ -62,6 +81,7 @@
 	});
     
 </script>
+
 <style>
 body {
 	padding: 0;
@@ -73,6 +93,17 @@ body {
 	max-width: 1100px;
 	margin: 0 auto;
 }
+.add-button {
+    position: absolute;
+    top: 1px;
+    right: 230px;
+    background: #2C3E50;
+    border: 0;
+    color: white;
+    height: 35px;
+    border-radius: 3px;
+    width: 157px;
+}
 </style>
 <div class="container" style="overflow: hidden; height: auto;">
 	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
@@ -80,21 +111,15 @@ body {
 	<div id="infoArea" class="col-lg-4" style="float: left;">
 		<table style="text-align: center; width: 100%;">
 			<tr>
-				<div id="monthMove" style="display: flex; align-items: center;"
-					align="center">
+				<div id="monthMove" style="display: flex; align-items: center;" align="center">
 
 					<br /> <br />
 					<div style="float: left;">
-						<svg width="2.2em" height="2.2em" viewBox="0 0 16 16"
-							class="bi bi-calendar-check" fill="currentColor"
-							xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd"
-								d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-  <path fill-rule="evenodd"
-								d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z" />
-  <path fill-rule="evenodd"
-								d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z" />
-	</svg>
+						<svg width="2.2em" height="2.2em" viewBox="0 0 16 16" class="bi bi-calendar-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						  <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+						  <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z" />
+						  <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z" />
+					  </svg>
 					</div>
 					&nbsp;&nbsp;&nbsp;
 					<div style="float: left;" id="myScore">
@@ -102,18 +127,12 @@ body {
 						<h2 id="scheduleList"></h2>
 					</div>
 					&nbsp;&nbsp;&nbsp;
-					<button data-toggle="modal" data-target="#exampleModal"
-						style="border: 0; outline: 0; background: white;">
-						<svg width="2em" height="2em" viewBox="0 0 16 16"
-							class="bi bi-plus-circle" fill="currentColor"
-							xmlns="http://www.w3.org/2000/svg">
- 	 <path fill-rule="evenodd"
-								d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
- 	 <path fill-rule="evenodd"
-								d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
- 	 <path fill-rule="evenodd"
-								d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-	</svg>
+					<button data-toggle="modal" data-target="#exampleModal" style="border: 0; outline: 0; background: white;">
+						<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					 	 <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+					 	 <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+					 	 <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+						</svg>
 					</button>
 				</div>
 			</tr>
@@ -140,6 +159,9 @@ body {
 	</div> -->
 
 	<!------------------ modal 영역 ---------------------------->
+	
+	<form method="POST" action="addCalendar.do">
+	
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
@@ -148,42 +170,40 @@ body {
 					<h5 class="modal-title" id="exampleModalLabel">모임 일정 추가</h5>
 				</div>
 				<div class="modal-body">
-					<form action="submit">
 						<table style="width: 100%; padding: 10px;">
 							<tr>
 								<td>일정 날짜</td>
-								<td><input type="date" name="" id="" class="form-control"  /></td>
+								<td><input type="date" name="gdate" id="" class="form-control"  /></td>
 							</tr>
 							<tr>
 								<td>약속 시간</td>
-								<td><input type="time" name="" id="" class="form-control"  /></td>
+								<td><input type="time" name="gtime" id="time" class="form-control"  /></td>
 							</tr>
 							<tr>
 								<td colspan="2">일정 설명</td>
 							</tr>
 							<tr>
-								<td colspan="2"><input type="text" name=""
+								<td colspan="2"><input type="text" name="ginfo"
 									class="form-control" /></td>
 							</tr>
 						</table>
 						<div class="custom-control custom-checkbox my-2">
 							<input type="checkbox" class="custom-control-input"
-								id="customCheck2" > 
+								id="customCheck2" name="isctn" > 
 								<label class="custom-control-label" for="customCheck2">
 								정기 모임일 시 체크</label>
 						</div>
-					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light"
 						data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary">일정 등록</button>
+					<button type="submit" class="btn btn-primary">일정 등록</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
+	
+	</form>
 
 	<!------------------ calendar 영역 ---------------------------->
 	<div id="calendarArea" class="col-lg-8" style="float: left;">
@@ -327,6 +347,21 @@ body {
 		score1++;
 		document.getElementById("myScore").innerHTML = score1;
 	}
+	
+	function _addSc() {
+		location.href="${ pageContext.request.contextPath }/sgroup/addCalendar.do";
+	}
+	
+	$('#time').on('change', function() {
+		
+		var result = $('#time').toISOString().slice(10, 19).replace('T', '').replace(/:/gi, '');
+		
+		console.log(result);
+		
+		return result;
+		
+	});
+	
 
 </script>
 
