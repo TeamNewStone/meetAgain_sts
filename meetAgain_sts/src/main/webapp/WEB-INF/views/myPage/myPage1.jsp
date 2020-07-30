@@ -107,19 +107,21 @@
     <ul class="nav nav-primary nav-tabs mt-3 d-flex flex-column flex-md-row">
       <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#myGroupList">
-          <i class="fa fa-heart"></i> 내가 가입한 소모임
+          <i class="fa fa-heart"></i> 가입한 소모임
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#myCreatedGroupList">
-          <i class="fa fas fa-seedling"></i> 내가 만든 소모임
+          <i class="fa fas fa-seedling"></i> 생성한 소모임
         </a>
       </li>  
+    	<c:if test="${member.userId eq owner.userId}">
       <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#myPost">
           <i class="fa fa-list-alt"></i> 작성한 게시글
         </a>
       </li>      
+      </c:if>
     </ul>
   </div>
   

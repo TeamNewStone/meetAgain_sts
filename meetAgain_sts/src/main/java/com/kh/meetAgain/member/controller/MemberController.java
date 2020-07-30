@@ -49,9 +49,10 @@ public class MemberController {
 			@RequestParam("year") int year, @RequestParam("birth") String birth) {
 		int month = Integer.parseInt(birth.substring(0, 2));
 		int day = Integer.parseInt(birth.substring(3,5));
-
-		Date date = new Date(year,month-1,day);
+		System.out.println("year테스트 : "+year);
 		
+		Date date = new Date(year-1900,month-1,day);
+		System.out.println("date 확인 : "+date);
 		member.setBirthday(date);
 		
 		int result = memberService.insertMember(member);
