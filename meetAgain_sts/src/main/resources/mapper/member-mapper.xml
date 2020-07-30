@@ -4,54 +4,75 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
 
-<select id="checkNnDuplicate" parameterType="hashmap" statementType="CALLABLE">
-	{ CALL NN_DUP_CHK(
-            #{nickName, mode=IN, jdbcType=VARCHAR}, 
-	        #{result, mode=OUT, jdbcType=NUMERIC, javaType=integer} ) 
-	 }
-</select>
-
-<update id="mUpdate" parameterType="string">
-UPDATE MEMBER SET
-ADDRESS1=#{address1}, ADDRESS2=#{address2}, ADDRESS3=#{address3}, NICKNAME=#{nickName}, PHONE=#{phone}
-WHERE USERID=#{userId}
-</update>
-
-	<select id="selectOne" parameterType="string" resultType="Member">
-		SELECT * FROM MEMBER WHERE USERID = #{userId}
+	<resultMap id = 'updateOutMember' type="hashmap"></resultMap>
+	<select id="checkNnDuplicate" parameterType="hashmap"
+		statementType="CALLABLE">
+		{ CALL NN_DUP_CHK(
+		#{nickName, mode=IN, jdbcType=VARCHAR},
+		#{result, mode=OUT, jdbcType=NUMERIC, javaType=integer} )
+		}
 	</select>
-	
-	<update id="mTMIUpdate" parameterType="UserTMI">
-		UPDATE USERTMI SET BLOOD=#{blood}, MBTI=#{mbti}, KEYWORD=#{keyword}, USERIMG=#{userImg}
+
+	<update id="mUpdate" parameterType="string">
+		UPDATE MEMBER SET
+		ADDRESS1=#{address1}, ADDRESS2=#{address2}, ADDRESS3=#{address3}, NICKNAME=#{nickName},
+		PHONE=#{phone}
 		WHERE USERID=#{userId}
 	</update>
-	
+
+	<select id="selectOne" parameterType="string"
+		resultType="Member">
+		SELECT * FROM MEMBER WHERE USERID = #{userId}
+	</select>
+
+	<update id="mTMIUpdate" parameterType="UserTMI">
+		UPDATE USERTMI SET
+		BLOOD=#{blood}, MBTI=#{mbti}, KEYWORD=#{keyword}, USERIMG=#{userImg}
+		WHERE USERID=#{userId}
+	</update>
+
 	<insert id="mCateUpdate" parameterType="hashmap">
-	
+
 		INSERT INTO CATEINFO VALUES(#{userId}, #{cateId})
-	
+
 	</insert>
-	
-	<select id="selectOneTMI" parameterType="string" resultType="UserTMI">
-		SELECT * FROM USERTMI JOIN MEMBER USING(USERID) WHERE USERID=#{userId}
+
+	<select id="selectOneTMI" parameterType="string"
+		resultType="UserTMI">
+		SELECT * FROM USERTMI JOIN MEMBER USING(USERID) WHERE
+		USERID=#{userId}
 	</select>
 
-<insert id="insertMember" parameterType="Member">
-INSERT INTO MEMBER VALUES(#{userId}, #{userName}, #{address1}, DEFAULT, DEFAULT, 
-#{nickName}, #{birthday}, #{gender}, #{email}, #{phone}, DEFAULT, DEFAULT, DEFAULT, 
-DEFAULT, DEFAULT, DEFAULT,DEFAULT, DEFAULT)
-</insert>
-<insert id="insertTmi" parameterType="Member">
-INSERT INTO USERTMI VALUES(#{userId}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER VALUES(#{userId}, #{userName}, #{address1}, DEFAULT,
+		DEFAULT,
+		#{nickName}, #{birthday}, #{gender}, #{email}, #{phone}, DEFAULT, DEFAULT,
+		DEFAULT,
+		DEFAULT, DEFAULT, DEFAULT,DEFAULT, DEFAULT)
+	</insert>
+	<insert id="insertTmi" parameterType="Member">
+		INSERT INTO USERTMI VALUES(#{userId}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 
-</insert>
+	</insert>
 
-	
-	<select id="selectCateInfo" parameterType="string" resultType="CateInfo">
-		SELECT * FROM CATEINFO WHERE USERID = #{userId} 
+
+	<select id="selectCateInfo" parameterType="string"
+		resultType="CateInfo">
+		SELECT * FROM CATEINFO WHERE USERID = #{userId}
 	</select>
-	
-	<select id="checkNnDuplicate2" parameterType="hashmap" resultType="_int">
-		SELECT COUNT(*) FROM MEMBER WHERE NICKNAME=#{nickName} AND EMAIL!=#{email}
+
+	<select id="checkNnDuplicate2" parameterType="hashmap"
+		resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE NICKNAME=#{nickName} AND
+		EMAIL!=#{email}
 	</select>
+
+	<update id="memberOut" parameterType="Member" statementType="CALLABLE">
+		{CALL DEL_USERINFO(#{userId})}
+	</update>
+
+	<delete id="delUserInfo" parameterType="Member">
+		{CALL DEL_USER(#{userId})}
+	</delete>
+
 </mapper>

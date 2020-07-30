@@ -72,5 +72,5 @@ public class MemberServiceImpl implements MemberService {
 	public int checkNnDuplicate2(Map<String, String> map) {
 		return memberDAO.checkNnDuplicate2(map);
 	}
-
+	 @Override public int memberOut(Member m) { return memberDAO.memberOut(m); }
 }
