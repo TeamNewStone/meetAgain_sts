@@ -36,6 +36,7 @@
 				<div>
 					<hr>
 				</div>
+				<c:if test="${owner.userId eq member.userId}">
 				<div>
 					<button type="button" class="lead btn btn-sm btn-light"
 						onclick="accountEdit();">회원정보수정</button>
@@ -43,6 +44,18 @@
 						onclick="rateEdit();">등급관리</button>
 					<!-- <button type="button" class="lead btn btn-sm btn-light">프로필편집</button> -->
 				</div>
+				</c:if>
+				<c:if test="${member.userId ne owner.userId}">
+					<!-- <form action="">
+						<a href="#a" class="btn btn-primary btn-pill btn-sm ml-3 mt-1">팔로우하기</a>
+					</form> -->
+					<c:if test="${followYN eq 1}">
+						<button class="btn btn-outline-primary btn-pill btn-sm" onclick="unFollow();">언팔로우</button>
+					</c:if>
+					<c:if test="${followYN eq 0}">
+						<button class="btn btn-primary btn-pill btn-sm" onclick="follow();">팔로우하기</button>
+					</c:if>
+				</c:if>
 			</div>
 			<div
 				class="col-12 col-md-8 d-flex flex-column align-items-center align-items-lg-start">
@@ -52,11 +65,6 @@
 
 					</div>
 
-				<c:if test="${member.userId ne owner.userId}">
-					<form action="">
-						<a href="#a" class="btn btn-primary btn-pill btn-sm ml-3 mt-1">팔로우하기</a>
-					</form>
-					</c:if>
 				</div>
 				<br>
 				<div
@@ -341,6 +349,21 @@
 			})
 			}
 	});
+	
+	function unFollow(){
+		var confirm = window.confirm('정말 팔로우를 끊으시겠습니까?');
+		if(confirm){
+			var userId = ${owner.userId};
+			var muserId = ${member.userId};
+			location.href="${pageContext.request.contextPath}/myPage/unFollow.do?uid="+userId+"&muserId="+muserId;
+		}
+	}
+	
+	function follow(){
+		var userId = ${owner.userId};
+		var muserId = ${member.userId};
+		location.href="${pageContext.request.contextPath}/myPage/follow.do?uid="+userId+"&muserId="+muserId;
+	}
 	
 </script>
 

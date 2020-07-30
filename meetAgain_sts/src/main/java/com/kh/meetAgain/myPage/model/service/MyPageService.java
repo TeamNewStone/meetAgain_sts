@@ -25,5 +25,11 @@ public interface MyPageService {
 
 	List<Sgroup> getMyGroup(String userId);
 
-	List<Sgroup> getCreateGroup(String userId);	
+	List<Sgroup> getCreateGroup(String userId);
+
+	int selectFollowYN(Map<String, String> map);
+
+	int insertFollow(Map<String, String> map);
+
+	int deleteFollow(Map<String, String> map);	
 }

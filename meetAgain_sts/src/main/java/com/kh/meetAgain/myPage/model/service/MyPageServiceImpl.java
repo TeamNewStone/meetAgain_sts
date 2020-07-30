@@ -65,4 +65,19 @@ public class MyPageServiceImpl implements MyPageService {
 		return mpDAO.getCreateGroup(userId);
 	}
 
+	@Override
+	public int selectFollowYN(Map<String, String> map) {
+		return mpDAO.selectFollowYN(map);
+	}
+
+	@Override
+	public int insertFollow(Map<String, String> map) {
+		return mpDAO.insertFollow(map);
+	}
+
+	@Override
+	public int deleteFollow(Map<String, String> map) {
+		return mpDAO.deleteFollow(map);
+	}
+
 }

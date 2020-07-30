@@ -58,7 +58,7 @@ public class MyPageDAOImpl implements MyPageDAO {
 	public List<Map<String, String>> selectFollowingList(String userId) {
 		return sqlSession.selectList("myPageMapper.selectFollowingList",userId);
 	}
-
+	
 	@Override
 	public List<Sgroup> getMyGroup(String userId) {
 		return sqlSession.selectList("myPageMapper.getMyGroup",userId);
@@ -67,6 +67,20 @@ public class MyPageDAOImpl implements MyPageDAO {
 	@Override
 	public List<Sgroup> getCreateGroup(String userId) {
 		return sqlSession.selectList("myPageMapper.getCreateGroup",userId);
-	}	
+	}
 
+	@Override
+	public int selectFollowYN(Map<String, String> map) {
+		return sqlSession.selectOne("myPageMapper.selectFollowYN",map);
+	}
+
+	@Override
+	public int insertFollow(Map<String, String> map) {
+		return sqlSession.insert("myPageMapper.insertFollow", map);
+	}
+
+	@Override
+	public int deleteFollow(Map<String, String> map) {
+		return sqlSession.delete("myPageMapper.deleteFollow", map);
+	}
 }
