@@ -26,7 +26,7 @@
                     <ul class="media-list" style="text-align:center;padding-left: 20px;">
                     <c:if test="${list ne null }">
                     <c:forEach items="${list }" var="f" varStatus="st">
-                        <ul class="media" id="mediaItem" style="margin:auto;padding-left: 20px;" onclick="mediaItemfn();">
+                        <ul class="media" id="mediaItem-${st.index }" style="margin:auto;padding-left: 20px;">
                             
                             <div class="media-body">
                             	<%-- <c:if test=""></c:if>
@@ -36,6 +36,23 @@
                                 
                             </div>
                         </ul>
+                        <script>
+						$(function(){
+							
+							$('#mediaItem-${st.index }').click(function() {
+								window.close();
+									var userId = '${f.userId}';
+									opener.location.href='${pageContext.request.contextPath}/myPage/myPage1.do?uid='+userId;
+									
+							}).mouseenter(function() {
+								$(this).css({
+									"cursor" : "pointer"
+								});
+							
+							});
+							
+						})
+					</script>
                     </c:forEach>
                     </c:if>
 
@@ -47,25 +64,6 @@
     </div>
 </div>
 
-<script>
-$('#mediaItem').click(function() {
-	window.close();
-	var listSize = '${list.size()}';
-	console.log(listSize);
-	for(var i = 0; i < listSize; i++){
-		var userId = $('#userId-'+i).val();
-		opener.location.href='${pageContext.request.contextPath}/myPage/myPage1.do?uid='+userId;
-		
-	}
-}).mouseenter(function() {
-	$(this).css({
-		"cursor" : "pointer"
-	});
-
-});
-
-
-</script>
 
 </body>
 </html>
