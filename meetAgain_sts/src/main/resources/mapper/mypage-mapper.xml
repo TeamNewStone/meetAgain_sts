@@ -33,4 +33,12 @@
 	<select id="selectFollowingList" resultType="Follow">
 		SELECT M.NICKNAME, M.USERID FROM FOLLOW JOIN MEMBER M ON(FOLLOWIN = M.USERID) WHERE FOLLOWER=#{userId}
 	</select>
+	
+	<select id="getMyGroup" resultType="Sgroup">
+		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId}
+	</select>
+	
+	<select id="getCreateGroup" resultType="Sgroup">
+		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId} AND ISCPT='Y'
+	</select>
 </mapper>

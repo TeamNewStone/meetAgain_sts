@@ -1,5 +1,6 @@
 package com.kh.meetAgain.myPage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.service.MyPageService;
-import com.kh.meetAgain.myPage.model.vo.Follow;
+import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @SessionAttributes(value= {"member"})
 @Controller
@@ -36,6 +37,13 @@ public class MyPageController {
 		int follower = mpSvc.totalFollower(userId);
 		int groupSum = mpSvc.totalGroup(userId);
 		UserTMI tmi = (UserTMI)mservice.selectOneTMI(userId).get("ut");
+		
+		/*======================소모임 목록 가져오기======================*/
+		List<Sgroup> group = new ArrayList<Sgroup>(); // 가입한 소모임
+		List<Sgroup> mgroup = new ArrayList<Sgroup>();
+		
+		group = mpSvc.getMyGroup(userId);
+		mgroup = mpSvc.getCreateGroup(userId);	
 		
 		
 		/*======================작성한 게시글 데이터 가져오기======================*/
@@ -65,6 +73,8 @@ public class MyPageController {
 		model.addAttribute("follower", follower);
 		model.addAttribute("groupSum", groupSum);
 		model.addAttribute("tmi",tmi);
+		model.addAttribute("mygroup",group);
+		model.addAttribute("cgroup",mgroup);
 		
 		return "myPage/myPage1";
 	}

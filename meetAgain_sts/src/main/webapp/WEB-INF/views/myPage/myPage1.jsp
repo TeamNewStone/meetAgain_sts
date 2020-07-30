@@ -115,7 +115,7 @@
     </ul>
   </div>
   
-  <!-- 나의 소모임 시작 -->
+<!-- 나의 소모임 시작 -->
   <!-- 카드 고정폭 500px 더보기 아래로-->
 	<div class="profile profile-tabs tab-content">
   
@@ -123,59 +123,45 @@
 	
 			<div class="row">
 				
-				<%-- <c:forEach var="Group" items="${cardGroupList}"> --%>
-								
+				<c:forEach items="${mygroup}" var="mg"> 		
 				  <div class="col-md-4" style="max-width: 500px;">
 				    <div class="component">
 				      <div class="card">
 				        <div class="card-header">
-				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/dog-6.jpg" alt="dog">
+				        <c:if test="${mg.getGImg() eq null}">
+				        <c:if test="${mg.getGType() eq 'S'}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav02.png">
+				          </c:if>
+				          <c:if test="${mg.getGType() eq 'L'}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav01.png">
+				          </c:if>
+				          </c:if>
+				          <c:if test="${mg.getGImg() ne null}">
+				          <img class="card-img" src="${mg.getGImg()}">
+				          </c:if>
 				        </div>
 				        <div class="card-body">				          
-				          <h4 class="card-title mt-2">Getting Started With Your Puppy</h4>
-				          <p class="card-text">This new addition to your family will require lots of love, attention and plenty of supplies. This new addition to your family will require lots of love, attention and plenty of supplies. This new addition to your family will require lots of love, attention and plenty of supplies. This new addition to your family will require lots of love, attention and plenty of supplies. </p>
+				          <h4 class="card-title mt-2">${mg.getGTitle()}</h4>
+				          <p class="card-text">
+				          <c:choose>
+				          <c:when test="${fn:length(mg.getGIntro()) gt 11}">
+				          <c:out value="${fn:substring(mg.getGIntro(),0,10)}..."></c:out>
+				          </c:when>
+				          <c:otherwise>
+				          ${mg.getGIntro()}
+				          </c:otherwise>
+				          </c:choose>
+				          </p>
 				        </div>
+				        <c:if test="${mg.getIsFin() eq 'Y'}">
 				        <div class="card-footer">
-				          <a href="#a" class="btn btn-outline-primary">Read More</a>
+				          <a href="#a" class="btn btn-outline-dark">리뷰 작성</a>
 				        </div>
+				        </c:if>
 				      </div>
 				    </div>
 				  </div>
-				  
-				  <div class="col-md-4" style="max-width: 500px;">
-				    <div class="component">
-				      <div class="card">
-				        <div class="card-header">
-				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/dog-6.jpg" alt="dog">
-				        </div>
-				        <div class="card-body">				          
-				          <h4 class="card-title mt-2">Woof! How to find dog-friendly beaches in Spain</h4>
-				          <p class="card-text">Considering Spain's abundant coastline, beaches that do allow you to take your pooch to feel sand... </p>
-				        </div>
-				        <div class="card-footer">
-				          <a href="#a" class="btn btn-outline-primary">Read More</a>
-				        </div>
-				      </div>
-				    </div>
-				  </div>
-				  
-				  <div class="col-md-4" style="max-width: 500px;">
-				    <div class="component">
-				      <div class="card">
-				        <div class="card-header">
-				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/dog-6.jpg" alt="dog">
-				        </div>
-				        <div class="card-body">				          
-				          <h4 class="card-title mt-2">Woof! How to find dog-friendly beaches in Spain</h4>
-				          <p class="card-text">Considering Spain's abundant coastline, beaches that do allow you to take your pooch to feel sand... </p>
-				        </div>
-				        <div class="card-footer">
-				          <a href="#a" class="btn btn-outline-primary">Read More</a>
-				        </div>
-				      </div>
-				    </div>
-				  </div>
-				  
+				</c:forEach>  				  
 				<%-- </c:forEach> --%>
 				  
 			</div>
@@ -185,65 +171,51 @@
 				</div>
 				
 	    </div>
-	    	<!-- 작성한 게시물 -->
+	    	<!--=================== 생성한 소모임 리스트================== -->
 	    <div class="tab-pane fade" id="myCreatedGroupList">
 		    
 		    <div class="row">
 					
-				<%-- <c:forEach var="Group" items="${cardGroupList}"> --%>
+				<c:forEach var="cg" items="${cgroup}">
 								
 				  <div class="col-md-4" style="max-width: 500px;">
 				    <div class="component">
 				      <div class="card">
 				        <div class="card-header">
-				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/dog-6.jpg" alt="dog">
-				        </div>
+				          <c:if test="${cg.getGImg() eq null}">
+				        <c:if test="${cg.getGType() eq 'S'}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav02.png">
+				          </c:if>
+				          <c:if test="${cg.getGType() eq 'L'}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav01.png">
+				          </c:if>
+				          </c:if>
+				          <c:if test="${cg.getGImg() ne null}">
+				          <img class="card-img" src="${cg.getGImg()}">
+				          </c:if>
+				          </div>
 				        <div class="card-body">				          
-				          <h4 class="card-title mt-2">Getting Started With Your Puppy</h4>
-				          <p class="card-text">This new addition to your family will require lots of love, attention and plenty of supplies. This new addition to your family will require lots of love, attention and plenty of supplies. This new addition to your family will require lots of love, attention and plenty of supplies. This new addition to your family will require lots of love, attention and plenty of supplies. </p>
+				          <h4 class="card-title mt-2">${cg.getGTitle()}</h4>
+				          <p class="card-text">
+				           <c:choose>
+				          <c:when test="${fn:length(cg.getGIntro()) gt 11}">
+				          <c:out value="${fn:substring(cg.getGIntro(),0,10)}..."></c:out>
+				          </c:when>
+				          <c:otherwise>
+				          ${cg.getGIntro()}
+				          </c:otherwise>
+				          </c:choose>
+				          </p>
 				        </div>
+				       <c:if test="${cg.getIsFin() eq 'Y'}">
 				        <div class="card-footer">
-				          <a href="#a" class="btn btn-outline-primary">Read More</a>
+				          <a href="#a" class="btn btn-outline-dark">리뷰 작성</a>
 				        </div>
+				        </c:if>
 				      </div>
 				    </div>
 				  </div>
-				  
-				  <div class="col-md-4" style="max-width: 500px;">
-				    <div class="component">
-				      <div class="card">
-				        <div class="card-header">
-				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/dog-7.jpg" alt="dog">
-				        </div>
-				        <div class="card-body">				          
-				          <h4 class="card-title mt-2">Woof! How to find dog-friendly beaches in Spain</h4>
-				          <p class="card-text">Considering Spain's abundant coastline, beaches that do allow you to take your pooch to feel sand... </p>
-				        </div>
-				        <div class="card-footer">
-				          <a href="#a" class="btn btn-outline-primary">Read More</a>
-				        </div>
-				      </div>
-				    </div>
-				  </div>
-				  
-				  <div class="col-md-4" style="max-width: 500px;">
-				    <div class="component">
-				      <div class="card">
-				        <div class="card-header">
-				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/dog-6.jpg" alt="dog">
-				        </div>
-				        <div class="card-body">				          
-				          <h4 class="card-title mt-2">Woof! How to find dog-friendly beaches in Spain</h4>
-				          <p class="card-text">Considering Spain's abundant coastline, beaches that do allow you to take your pooch to feel sand... </p>
-				        </div>
-				        <div class="card-footer">
-				          <a href="#a" class="btn btn-outline-primary">Read More</a>
-				        </div>
-				      </div>
-				    </div>
-				  </div>
-				  
-				<%-- </c:forEach> --%>
+				  </c:forEach>
 					  
 			</div>
 					
