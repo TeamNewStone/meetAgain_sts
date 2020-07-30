@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!-- <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
 
@@ -43,7 +43,7 @@
 
 				<div class="form-group">
 				<span> * 지역 선택 : </span>
-				  <select class="custom-select" id="gPlace" name="gPlace" style="display:inline" required>
+				  <select class="custom-select" id="address1" style="display:inline" required>
 				    <option selected>--내가 설정한 주소--</option>
 				    <option value="${member.address1 }">${member.address1 }</option>
 				    <c:if test="${ !empty member.address2 && member.address3}">
@@ -56,10 +56,10 @@
 				<div class="form-group">
 				<p style="margin-bottom:-1px"> * 모임 장소 선택 </p>
 				<input type="text" class="form-control2" id="zipCode1" name="zipCode"
-				       placeholder="우편번호" style="width: 150px;" required>
+				       placeholder="우편번호" style="width: 150px;" required readonly >
 				<button type="button" class="btn btn-secondary mb-2" onclick="addrSearch1();">검색</button>
-				<input type="text" class="form-control" id="address1"
-					   name="address1" placeholder="상세주소" required>
+				<input type="text" class="form-control" id="gPlace"
+					   name="gPlace" placeholder="상세주소" required>
 				</div>
 				
 				<div class="form-group">
@@ -150,7 +150,68 @@
 				    <label class="custom-control-label" for="customRadio3">여</label>
 				  </div>
 				</div>
+				<div id="map"></div>
+				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d68e73a49c2fc0deedbcbca59ca49574&libraries=services,clusterer,drawing"></script>
+				<script>
 				
+				// 거리계산 함수
+				function test33(X, Y, userX, userY){
+					var polyline=new kakao.maps.Polyline({
+						path : [
+						new kakao.maps.LatLng(Y,X),
+						new kakao.maps.LatLng(userY,userX)
+						]
+					});
+					
+					return Math.round(polyline.getLength());
+				}
+				
+				var coords, userAdr;
+				var X, Y, userX, userY;
+
+				var container = document.getElementById('map');
+				var options = {
+					center: new kakao.maps.LatLng(33.450701, 126.570667),
+					level: 3
+				};
+
+				var map = new kakao.maps.Map(container, options);
+				var geocoder = new kakao.maps.services.Geocoder();
+				
+				
+				$('#gPlace').blur(function(){
+					// 사용자가 고른 모임장소 좌표
+					geocoder.addressSearch($('#gPlace').val(), function(result, status) {
+					    if (status === kakao.maps.services.Status.OK) {
+					        
+					        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					        console.log(coords);
+					        
+					        X = coords.getLng();
+							Y = coords.getLat();
+					    }
+					});
+					
+					// 사용자가 선택한 주소 좌표
+					geocoder.addressSearch($('#address1').val(), function(result, status) {
+					    if (status === kakao.maps.services.Status.OK) {
+					        
+					        userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
+					        console.log(userAdr);
+					        
+					        userX = userAdr.getLng();
+							userY = userAdr.getLat();
+					    }
+					});
+					
+					test33(X, Y, userX, userY);
+					
+				
+				});
+				
+				
+			
+			</script>
 				<p>모임 연령대</p>
 				<div class="form-group" style="margin-top:-20px">
 				  <div class="custom-control custom-checkbox my-2 ageGroup">
@@ -214,7 +275,6 @@
 // form 정규식
 $(document).on("keyup", "input:text[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );});
 
-
 function validate(){
 	var gPwd = $("#gPwd");
 	var gFeeCopy = $("#gFeeCopy");
@@ -239,7 +299,7 @@ function validate(){
 	} else if($("#gType").children().first().is(":selected")){
 		alert("기간을 선택해주세요.");
 		return false;
-	} else if($("#gPlace").children().first().is(":selected")){
+	} else if($("#address1").children().first().is(":selected")){
 		alert("지역을 선택해주세요.");
 		return false;
 	} else if($("#cateId").children().first().is(":selected")){
@@ -247,6 +307,12 @@ function validate(){
 		return false;
 	}  else if($('#startDate').val().length==0){
 		alert("시작 날짜를 선택해주세요.");
+		return false;
+	} else if(test33(X, Y, userX, userY) > 10000){
+		alert('선택한 주소의 10km이내의 장소를 선택해주세요.');
+		return false;
+	} else if ($('#gPlace').val().length==0){
+		alert('모임 장소를 선택해주세요.');
 		return false;
 	}
 	
@@ -390,13 +456,15 @@ function validate(){
 						// 우편번호와 주소 정보를 해당 필드에 넣는다.
 						$('#zipCode1').val(data.zonecode); //5자리 새우편번호 사용
 
-						$('#address1').val(fullAddr);
+						$('#gPlace').val(fullAddr);
 
 						// 커서를 상세주소 필드로 이동한다.
-						$('#address1').focus();
+						$('#gPlace').focus();
 					}
 				}).open();
 	};
+	
 </script>
+
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
