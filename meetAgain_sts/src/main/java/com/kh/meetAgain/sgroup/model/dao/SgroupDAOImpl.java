@@ -45,6 +45,9 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public Sgroup selectOneSgroup(String gId) {
 		return sqlSession.selectOne("sgroupMapper.selectOneSgroup", gId);
 	}
+	public List<Sgroup> selectSgroupList() {
+		return sqlSession.selectList("sgroupMapper.selectListSgroup");
+	}
 
 	public int selectgBoardTotalContents() {
 		return sqlSession.selectOne("sgroupMapper.selectgBoardTotalContent");

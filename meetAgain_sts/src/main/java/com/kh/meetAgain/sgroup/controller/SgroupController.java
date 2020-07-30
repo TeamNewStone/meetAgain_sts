@@ -3,6 +3,7 @@ package com.kh.meetAgain.sgroup.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +37,7 @@ public class SgroupController {
 	
 	@RequestMapping("sgroup/sgroupCreateEnd.do")
 	public String sgroupCreateEnd(Sgroup sgroup,  Model model, HttpSession session,
-	         @RequestParam(value="sgroupImg", required = false) MultipartFile[] sgroupImg,
-	         @RequestParam String userId) {
+	         @RequestParam(value="sgroupImg", required = false) MultipartFile[] sgroupImg) {
 
 		System.out.println("sgroup : " + sgroup);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
@@ -85,8 +85,16 @@ public class SgroupController {
 	   		
 
 	}
+	
+	
+	// 소모임 전체 리스트 출력
 	@RequestMapping("sgroup/group.do")
-	public String group() {
+	public String group(Model model) {
+		
+		List<Sgroup> list = sgroupService.selectSgroupList();
+		
+		model.addAttribute("list", list);
+		
 		return "sgroup/group";
 	}
 
