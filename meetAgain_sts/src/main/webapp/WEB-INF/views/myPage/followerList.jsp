@@ -9,6 +9,8 @@
 <meta charset="UTF-8">
 <title>팔로워</title>
 	<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/serviceCenter.css">
+	<script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script> 
+    <script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <div class="row bootstrap snippets" >
@@ -21,15 +23,16 @@
                 <div class="panel-body">
                    
                     <div class="clearfix"></div>
-                    <ul class="media-list">
+                    <ul class="media-list" style="text-align:center;padding-left: 20px;">
                     <c:if test="${list ne null }">
                     <c:forEach items="${list }" var="f">
-                        <ul class="media" style="border-bottom-width: 1px;padding-bottom: 20px;padding-left: 60px;">
+                        <ul class="media" id="mediaItem" style="margin:auto;padding-left: 20px;">
                             
                             <div class="media-body">
                             	<%-- <c:if test=""></c:if>
                             	<img src="${ pageContext.request.contextPath }/resources/img/usericon.png" alt="사용자사진" /> --%>    
-                                <a href="#" class="nav-link">${f.nickName}</a>
+                            	<input type="hidden" id="userId" value="${f.userId}" />
+                                <p class="nav-link">${f.nickName}</p>
                                 
                             </div>
                         </ul>
@@ -43,6 +46,19 @@
 
     </div>
 </div>
+
+<script>
+$('#mediaItem').click(function() {
+	window.close();
+	var userId = $('#userId').val();
+	opener.location.href='${pageContext.request.contextPath}/myPage/myPage1.do?uid='+userId;
+}).mouseenter(function() {
+	$(this).css({
+		"cursor" : "pointer"
+	});
+
+});
+</script>
 
 </body>
 </html>
