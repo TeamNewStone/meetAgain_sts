@@ -4,24 +4,29 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/common/header.jsp" />
+<section style="border-bottom: 1px solid #e0e0e0;">
 <div class="container">
 	<br>
-	<div class="rows">
 		<div class="row">
 			<div class="col-lg-3 col-md-3">
 				<p>
-					<a href="">해당 지역</a> 의 소모임 리스트를 보고 계십니다.
+					<a href="">${fn:substring(member.address1,3,7)}</a> 의 소모임 리스트를 보고 계십니다.
 				</p>
 				<div class="dropdown">
 					<button class="btn btn-secondary dropdown-toggle" type="button"
 						id="dropdownMenuButton" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false">지역선택</button>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="#">역삼2동</a> <a
-							class="dropdown-item" href="#">역삼3동</a> <a class="dropdown-item"
-							href="#">지역추가</a>
+
+						<a class="dropdown-item" href="#">${fn:substring(member.address1,3,7)}</a>
+					<c:if test="${ !empty member.address2 && member.address3}">
+						<a class="dropdown-item" href="#">${fn:substring(member.address2,3,7)}</a> 
+						<a class="dropdown-item" href="#">${fn:substring(member.address3,3,7)}</a>
+					</c:if>
 					</div>
 				</div>
+
+				  
 			</div>
 			<div class="col-lg-6 col-md-6">
 				<div class="rows">
@@ -139,213 +144,110 @@
 			<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">소모임 생성하기!</button>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
-	</div>
-	<div class="rows">
-		<div class="row" style="border: thick inset #f44336;">
-			<div class="col-md-3 col-sm-3">
-				<div class="component">
-					<div class="card">
-						<div class="card-header">
-							<img class="img-fluid"
-								src="/meetAgain/resources/img/mountainGangster1.jpg"
-								style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-						</div>
-						<div class="card-body" style="height: 100%;">
-							<span class="badge badge-secondary mb-2">camping</span>
-							<h5 class="card-title">
-								캠핑모임1 <span class="badge badge-pill badge-secondary">추천모임</span>
-							</h5>
-							<p class="card-text">초빙강사 밥굽남...</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 col-sm-3">
-				<div class="component">
-					<div class="card">
-						<div class="card-header">
-							<img class="img-fluid"
-								src="/meetAgain/resources/img/mountainGangster2.jpg"
-								style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-						</div>
-						<div class="card-body" style="height: 100%;">
-							<span class="badge badge-secondary mb-2">camping</span>
-							<h5 class="card-title">
-								캠핑모임2 <span class="badge badge-pill badge-secondary">추천모임</span>
-							</h5>
-							<p class="card-text">분반입니다...</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 col-sm-3">
-				<div class="component">
-					<div class="card">
-						<div class="card-header">
-							<img class="img-fluid"
-								src="/meetAgain/resources/img/mountainGangster3.jpg"
-								style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-						</div>
-						<div class="card-body" style="height: 100%;">
-							<span class="badge badge-secondary mb-2">cook</span>
-							<h5 class="card-title">
-								굽남 요리교실 <span class="badge badge-pill badge-secondary">추천모임</span>
-							</h5>
-							<p class="card-text">야외에서 할겁니다...</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 col-sm-3">
-				<div class="component">
-					<div class="card">
-						<div class="card-header">
-							<img class="img-fluid"
-								src="/meetAgain/resources/img/mountainGangster4.jpg"
-								style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-						</div>
-						<div class="card-body" style="height: 100%;">
-							<span class="badge badge-secondary mb-2">drink</span>
-							<h5 class="card-title">
-								야유회 <span class="badge badge-pill badge-secondary">추천모임</span>
-							</h5>
-							<p class="card-text">밖에서 할겁니다...</p>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="row">
+			<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
 		</div>
-	</div>
+		<div class="rows">
+		</div>
+		</div>
+</section>
 	<br> <br> <br>
+<div class="container">
 	<div class="row">
-		<div class="col-md-3">
-			<div class="component">
-				<div class="card">
-					<div class="card-header">
-						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
-							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-					</div>
-					<div class="card-body" style="height: 100%;">
-						<span class="badge badge-secondary mb-2">Hobby</span>
-						<h5 class="card-title">송파구 코딩 설명회</h5>
-						<p class="card-text">간단한 설명...</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="component">
-				<div class="card">
-					<div class="card-header">
-						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
-							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-					</div>
-					<div class="card-body" style="height: 100%;">
-						<span class="badge badge-secondary mb-2">Hobby</span>
-						<h5 class="card-title">송파구 코딩 설명회</h5>
-						<p class="card-text">간단한 설명...</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="component">
-				<div class="card">
-					<div class="card-header">
-						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
-							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-					</div>
-					<div class="card-body" style="height: 100%;">
-						<span class="badge badge-secondary mb-2">Hobby</span>
-						<h5 class="card-title">송파구 코딩 설명회</h5>
-						<p class="card-text">간단한 설명...</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="component">
-				<div class="card">
-					<div class="card-header">
-						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
-							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-					</div>
-					<div class="card-body" style="height: 100%;">
-						<span class="badge badge-secondary mb-2">Hobby</span>
-						<h5 class="card-title">송파구 코딩 설명회</h5>
-						<p class="card-text">간단한 설명...</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<br>
-	<div class="row">
-		<div class="col-md-3">
-			<div class="component">
-				<div class="card">
-					<div class="card-header">
-						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
-							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-					</div>
-					<div class="card-body" style="height: 100%;">
-						<span class="badge badge-secondary mb-2">Hobby</span>
-						<h5 class="card-title">송파구 코딩 설명회</h5>
-						<p class="card-text">간단한 설명...</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="component">
-				<div class="card">
-					<div class="card-header">
-						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
-							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-					</div>
-					<div class="card-body" style="height: 100%;">
-						<span class="badge badge-secondary mb-2">Hobby</span>
-						<h5 class="card-title">송파구 코딩 설명회</h5>
-						<p class="card-text">간단한 설명...</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="component">
-				<div class="card">
-					<div class="card-header">
-						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
-							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-					</div>
-					<div class="card-body" style="height: 100%;">
-						<span class="badge badge-secondary mb-2">Hobby</span>
-						<h5 class="card-title">송파구 코딩 설명회</h5>
-						<p class="card-text">간단한 설명...</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="component">
-				<div class="card">
-					<div class="card-header">
-						<img class="img-fluid" src="/meetAgain/resources/img/rebuild.png"
-							style="width: 100%; display: block; margin: 0px auto; width: 271px; height: 117px;">
-					</div>
-					<div class="card-body" style="height: 100%;">
-						<span class="badge badge-secondary mb-2">Hobby</span>
-						<h5 class="card-title">송파구 코딩 설명회</h5>
-						<p class="card-text">간단한 설명...</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+		<c:forEach items="${list}" var="sg"> 		
+				  <div class="col-md-4" style="max-width: 500px;">
+				    <div class="component">
+				      <div class="card" style="cursor:pointer;">
+				        <div class="card-header">
+				        <c:if test="${sg.getGImg() eq null}">
+				        <c:if test="${sg.getGType() eq 'S'}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height:200px;">
+				          </c:if>
+				          <c:if test="${sg.getGType() eq 'L'}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav01.png" style="height:200px;">
+				          </c:if>
+				          </c:if>
+				          <c:if test="${sg.getGImg() ne null}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/upload/groupImg/${sg.getGImg()}" style="height:200px;">
+				          </c:if>
+				        </div>
+				        <div class="card-body">
+				        
+				        <c:if test="${sg.getGType() eq 'S' }">
+					       	<span class="badge badge-primary mb-2">단기</span>			        
+				        </c:if>
+				        <c:if test="${sg.getGType() eq 'L' }">
+					       	<span class="badge badge-primary mb-2">장기</span>			        
+				        </c:if>
+				        
+				        
+				        <c:if test="${sg.getCateId() eq 'C01' }">
+					       	<span class="badge badge-secondary mb-2">운동</span>			        
+				        </c:if>
+				        <c:if test="${sg.getCateId() eq 'C02' }">
+					       	<span class="badge badge-secondary mb-2">친목</span>			        
+				        </c:if>
+				        <c:if test="${sg.getCateId() eq 'C03' }">
+					       	<span class="badge badge-secondary mb-2">공부</span>			        
+				        </c:if>
+				        <c:if test="${sg.getCateId() eq 'C04' }">
+					       	<span class="badge badge-secondary mb-2">취미생활</span>			        
+				        </c:if>
+				        <c:if test="${sg.getCateId() eq 'C05' }">
+					       	<span class="badge badge-secondary mb-2">문화생활</span>			        
+				        </c:if>
+				        <c:if test="${sg.getCateId() eq 'C06' }">
+					       	<span class="badge badge-secondary mb-2">여행</span>			        
+				        </c:if>
+				        <c:if test="${sg.getCateId() eq 'C07' }">
+					       	<span class="badge badge-secondary mb-2">봉사</span>			        
+				        </c:if>
+				        <c:if test="${sg.getCateId() eq 'C08' }">
+					       	<span class="badge badge-secondary mb-2">기타</span>			        
+				        </c:if>
+				        
+				       	<c:if test="${sg.getLimitGroup()[0] eq 'M'}">
+     						<span class="badge badge-danger">남자만</span>
+     					</c:if>
+     					<c:if test="${sg.getLimitGroup()[0] eq 'F'}">
+     						<span class="badge badge-danger">여자만</span>
+     					</c:if>
+     					<c:if test="${sg.getLimitGroup()[0] eq 'A'}">
+     						<span class="badge badge-success">성별무관</span>
+     					</c:if>
+     					 
+     					<c:if test="${fn:length(sg.getLimitGroup()) eq 6}">
+     						<span class="badge badge-success">나이 무관</span>
+     					</c:if>
+     					
+     					<c:if test="${fn:length(sg.getLimitGroup()) lt 6}">
+     						<span class="badge badge-danger">나이 제한</span>
+     					</c:if>
 
+     					 
+     					 
+     					 
+				          <h4 class="card-title mt-2">${sg.getGTitle()}</h4>
+				          <p class="card-text">
+				          <c:choose>
+				          <c:when test="${fn:length(sg.getGIntro()) gt 11}">
+				          <c:out value="${fn:substring(sg.getGIntro(),0,15)}..."></c:out>
+				          </c:when>
+				          <c:otherwise>
+				          ${sg.getGIntro()}
+				          </c:otherwise>
+				          </c:choose>
+				          </p>
+				        </div>
+	
+				      </div>
+				    </div>
+				    
+				<br /><br /><br />
+				  </div>
+				</c:forEach> 
+	</div>
+</div>
 <script>
 	$(function() {
 		$('.form-group label').each(function() {
@@ -354,11 +256,4 @@
 	});
 </script>
 
-<!-- optional plugins -->
-<script
-	src="${ pageContext.request.contextPath }/resources/vendor/nouislider/js/nouislider.min.js"></script>
-
-<!--   lazy javascript -->
-<script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script>
-</div>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

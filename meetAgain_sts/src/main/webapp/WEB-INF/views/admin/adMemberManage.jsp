@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/views/common/adminHeader.jsp"/>
+<c:import url="/WEB-INF/views/common/adminHeader.jsp"/>
 
 
         <div class="col-md-8 offset-md-2 content">
@@ -85,4 +85,4 @@ function search(){
 
 
 
-<c:import url="/views/common/adminFooter.jsp"/>
+<c:import url="/WEB-INF/views/common/adminFooter.jsp"/>

@@ -2,6 +2,7 @@ package com.kh.meetAgain.member.model.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,10 +82,8 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int checkNnDuplicate2(HashMap<String, Object> hmap) {
-		sqlSession.selectOne("memberMapper.checkNnDuplicate2", hmap);
-		
-		return (Integer)hmap.get("result");
+	public int checkNnDuplicate2(Map<String, String> map) {
+		return sqlSession.selectOne("memberMapper.checkNnDuplicate2", map);
 	}
 	@Override public int memberOut(Member m) {
 		 sqlSession.delete("memberMapper.delUserInfo",m); return

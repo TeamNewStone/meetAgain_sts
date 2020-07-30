@@ -26,8 +26,12 @@
 				
 			<div class="row">
 			<input type="hidden" name="userId" value="${member.userId }"/>
-			<input type="hidden" name="birthday" value="${ member.birthday }" />
-				<div class="sgroupPicture" id="imgArea" style="display:inline; margin-top:-15px">
+			<input type="hidden" id="birthday" name="birthday" value="${ member.birthday }" />
+			
+<!-- 			<script>
+				$('#birthday').val().substr(2,2);
+			</script> -->
+				<div class="sgroupPicture" id="imgArea" style="display:inline; margin-top:-15px;width:400px; height:350px;" >
 					<img src="${pageContext.request.contextPath}/resources/img/dog-3.jpg" style="width:400px; height:300px;" id="sampleImg"><br /><br>
 					<div style="width:400px; text-align:center;">
 						<button type="button" class="btn btn-secondary" id="mimgBtn" style="background:#ffb5b6; border:#ffb5b6;">사진 첨부</button>
@@ -240,7 +244,7 @@
 				<p>공개 여부</p>
 				<div class="form-group" style="margin-top:-20px">
 				  <div class="custom-control custom-switch my-2">
-				    <input type="checkbox" class="custom-control-input" id="private" value="N">
+				    <input type="checkbox" class="custom-control-input" id="private" value="N" style="background:#132742;">
 				    <label class="custom-control-label" for="private">비공개</label>
 				  </div>
 				  <input type="text" id="gPwd" name="gPwd" class="form-control" numberonly="true" maxlength="4" placeholder="모임 비밀번호  4자리를 입력해주세요." style="display:none;">
@@ -260,7 +264,7 @@
 				    <textarea class="form-control" id="exampleFormControlTextarea1" name="gIntro" rows="5" placeholder="자유롭게 모임 소개글을 작성해주세요~!" required></textarea>
 				  </div>
 				<div style="width: 400px; text-align: center;">
-					<button type="submit" class="btn btn-primary">작성완료</button>
+					<button type="submit" class="btn btn-secondary">작성완료</button>
 				</div>
 				</div>
 			</div>
