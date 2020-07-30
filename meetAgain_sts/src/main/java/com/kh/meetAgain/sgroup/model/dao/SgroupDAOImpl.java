@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
@@ -70,5 +71,12 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int updateReadCount(int gbId) {
 		return sqlSession.update("sgroupMapper.updateReadCount", gbId);
 	}	
+	
+	@Override
+	public int addCalendar(Calendar calendar) {
+		System.out.println("DAO: "+calendar);
+		return sqlSession.insert("calendarMapper.insertSchedule", calendar);
+	}
+	
 }
 
