@@ -33,10 +33,10 @@
 		SELECT * FROM SGROUP
 	</select>
 	
-<!-- 	<select id="selectOneSgroup" parameterType="_string" resultMap="sgroupMap">
+	<select id="selectOneSgroup" parameterType="string" resultMap="sgroupMap">
 		SELECT * FROM SGROUP
 		WHERE GID = #{gId}
-	</select>  -->
+	</select>
 
 	<resultMap type="Gboard" id="gboardMap">
 		<result property="gbId" column="GBID"/>

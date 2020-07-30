@@ -4,8 +4,18 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/common/header.jsp" />
+
 <section style="border-bottom: 1px solid #e0e0e0;">
 <div class="container">
+<input type="hidden" value="${member.userId }" />
+<input type="hidden" id="address1" value="${member.address1 }" />
+<c:if test="${ !empty member.address2 && member.address3}">
+	<input type="hidden" id="address2" value="${member.address2}" />
+	<input type="hidden" id="address3" value="${member.address3}" />
+</c:if>
+
+
+
 	<br>
 		<div class="row">
 			<div class="col-lg-3 col-md-3">
@@ -155,9 +165,10 @@
 <div class="container">
 	<div class="row">
 		<c:forEach items="${list}" var="sg"> 		
-				  <div class="col-md-4" style="max-width: 500px;">
+				  <div class="col-md-4 cardOne" style="max-width: 500px;">
 				    <div class="component">
-				      <div class="card" style="cursor:pointer;">
+				      <div class="card" id="${ sg.getGId()}" style="cursor:pointer;">
+				 <%--        <input type="hidden" value="${ sg.getGId()}" /> --%>
 				        <div class="card-header">
 				        <c:if test="${sg.getGImg() eq null}">
 				        <c:if test="${sg.getGType() eq 'S'}">
@@ -173,6 +184,7 @@
 				        </div>
 				        <div class="card-body">
 				        
+				        <input type="hidden" value="${sg.getGPlace() }" />
 				        <c:if test="${sg.getGType() eq 'S' }">
 					       	<span class="badge badge-primary mb-2">단기</span>			        
 				        </c:if>
@@ -216,12 +228,15 @@
      						<span class="badge badge-success">성별무관</span>
      					</c:if>
      					 
-     					<c:if test="${fn:length(sg.getLimitGroup()) eq 6}">
+     					<c:if test="${fn:length(sg.getLimitGroup()) eq 6 or fn:length(sg.getLimitGroup()) eq 1 }">
      						<span class="badge badge-success">나이 무관</span>
+     						
      					</c:if>
      					
      					<c:if test="${fn:length(sg.getLimitGroup()) lt 6}">
-     						<span class="badge badge-danger">나이 제한</span>
+     						<c:if test="${ fn:length(sg.getLimitGroup()) ne 1}">
+	     						<span class="badge badge-danger">나이 제한</span>
+     						</c:if>
      					</c:if>
 
      					 
@@ -254,6 +269,15 @@
 			$(this).css('font-weight', '400');
 		});
 	});
+	
+	$(function(){
+		$(".card[id]").on("click",function(){
+			var gId = $(this).attr("id");
+			console.log("gId="+gId);
+			location.href = "${pageContext.request.contextPath}/sgroup/groupInfo.do?gId="+gId;
+		});
+	});
+	
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
