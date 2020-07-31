@@ -85,11 +85,30 @@ public class SgroupController {
 	   		
 
 	}
-	@RequestMapping("/sgroup/group.do")
-	public String group() {
+	// 소모임 전체 리스트 출력
+	@RequestMapping("sgroup/group.do")
+	public String group(Model model) {
+		
+		List<Sgroup> list = sgroupService.selectSgroupList();
+		
+		model.addAttribute("list", list);
+		
 		return "sgroup/group";
 	}
 
+	// 소모임 한개 출력
+	@RequestMapping("sgroup/groupInfo.do")
+	public String groupInfo(@RequestParam String gId, Model model) {
+		
+		Sgroup sr = sgroupService.selectOneSgroup(gId);
+		
+		System.out.println("sr1111 : " + sr);
+	
+		model.addAttribute("sgroup", sr);
+
+		return "sgroup/groupInfo";
+	}
+	
 	@RequestMapping("/sgroup/groupAlbum.do")
 	public String groupAlbum() {
 		return "sgroup/groupAlbum";
@@ -100,10 +119,6 @@ public class SgroupController {
 		return "sgroup/groupCalendar";
 	}
 
-	@RequestMapping("/sgroup/groupInfo.do")
-	public String groupInfo() {
-		return "sgroup/groupInfo";
-	}
 
 	@RequestMapping("/sgroup/groupMap.do")
 	public String groupMap() {
