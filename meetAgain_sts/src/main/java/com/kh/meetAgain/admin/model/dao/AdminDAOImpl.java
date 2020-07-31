@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.member.model.vo.Member;
 
@@ -36,6 +37,23 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public int selectNoticeTotalContents() {
 		return sqlSession.selectOne("boardMapper.selectBoardTotalContent");
+	}
+
+	@Override
+	public List<Map<String, String>> selectBoardList(int cPage, int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		
+		return sqlSession.selectList("adminMapper.selectBoardList", null, rows);
+	}
+
+	@Override
+	public int selectBoardTotalContents() {
+		return sqlSession.selectOne("adminMapper.selectBoardTotalContent");
+	}
+
+	@Override
+	public Report selectOneBoard(int rcId) {
+		return sqlSession.selectOne("adminMapper.selectOneBoard", rcId);
 	}
 
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.meetAgain.admin.model.service.AdminService;
-import com.kh.meetAgain.board.model.vo.Board;
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.member.model.vo.Member;
 @SessionAttributes(value= {"member"})
@@ -52,11 +52,35 @@ public class AdminController {
 		return "common/msg";
 	}
 	@RequestMapping("/admin/adBoardDetail.do")
-	public String adBoardDetail() {
+	public String adBoardDetail(@RequestParam int rcId, Model model) {
+		Report r = adminService.selectOneBoard(rcId);
+		model.addAttribute("report", r);
 		return "admin/adBoardDetail";
 	}
 	@RequestMapping("/admin/adBoardManage.do")
-	public String adBoardManage() {
+	public String adBoardManage(@RequestParam(value="cPage", required=false, defaultValue="1")
+			int cPage, Model model
+			) {
+			// 한 페이지 당 게시글 수 
+			int numPerPage = 10; // limit 역할
+			
+			// 1. 현재 페이지 게시글 목록 가져오기
+			// 실제 데이터베이스의 데이터에서
+			// 머릿글 : 키(key) , 실제 값 : 값(value) => 여러 개니까 List에 담기
+			List<Map<String, String>> list
+				= adminService.selectBoardList(cPage, numPerPage);
+			
+			// 2. 페이지 계산을 위한 총 페이지 개수
+			int totalContents = adminService.selectBoardTotalContents();
+			
+			// 3. 패아자 HTML 생성
+			String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "notice.do");
+			
+			model.addAttribute("list", list);
+			
+			model.addAttribute("totalContents", totalContents);
+			model.addAttribute("numPerPage", numPerPage);
+			model.addAttribute("pageBar", pageBar);
 		return "admin/adBoardManage";
 	}
 	@RequestMapping("/admin/adCommentDetail.do")
