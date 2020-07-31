@@ -60,7 +60,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Override
 	public int updategBoard(Gboard Gboard) {
-		return sqlSession.update("sgroupMapper.updateBoard", Gboard);
+		return sqlSession.update("sgroupMapper.updategBoard", Gboard);
 	}
 
 	@Override
