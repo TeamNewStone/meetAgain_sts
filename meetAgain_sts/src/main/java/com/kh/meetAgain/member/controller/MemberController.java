@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -153,8 +154,9 @@ public class MemberController {
 		}else {
 			isNew=false;
 			map.put("wdYN",m.getWd_Yn());
+			System.out.println("wdYN : "+m.getWd_Yn());
 		}
-
+		
 		map.put("isNew", isNew);
 		return map;
 	}
@@ -213,21 +215,23 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/memberOut.do")
-	public String memberOut(@ModelAttribute("member") Member m, Model model) {
+	public String memberOut(@ModelAttribute("member") Member m, Model model, SessionStatus status) {
 		String msg = "";
 		String loc = "/";
 		
 		int result = memberService.memberOut(m);
 		
-		if(result>0) {
-			msg = "회원 탈퇴가 완료되었습니다.";
-			return "/member/logout";
-		}
-		else {
+		if(result<2) {
 			msg = "오류가 발생했습니다.";
 			model.addAttribute("loc",loc);
 			model.addAttribute("msg",msg);
 			return "common/msg";
+		}
+		else {
+			msg = "회원 탈퇴가 완료되었습니다.";
+			status.setComplete();
+			
+			return "redirect:/";
 		}
 		
 	}
