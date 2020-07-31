@@ -65,7 +65,7 @@
 	}
 	#userIcon {
 		position: absolute;
-		right: 26%;
+		right: 27%;
 		top: 15%;
 	}
 }
@@ -106,7 +106,7 @@
             </c:if>
             <c:if test="${!empty member}">
             <li>
-             <p style="color : white; width : 200px;"> ${member.nickName}님, 안녕하세요!</p>
+             <p style="color :#fff; width : 200px; margin-top:5px" id="login"> ${member.nickName}님, 안녕하세요!</p>
             </li>
             <li class="nav-item dropdown" id="userIcon">
                    <img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="test img-fluid rounded-circle" style="width : 60px;">

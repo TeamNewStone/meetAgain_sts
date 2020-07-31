@@ -1,0 +1,33 @@
+@charset "UTF-8";
+.content .read-top #noticeDate {
+    color: #8f8f8f;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.content .read-top {
+    position: relative;
+    padding: 0 0 35px;
+    border-bottom: 2px solid #494949;
+    text-align: center;
+}
+
+.content .read-top .subject {
+    padding: 0 100px;
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 500;
+    color: #000;
+}
+
+.content .read-bt {
+    padding: 35px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+    color: #494949;
+}
+
+#noticeBtn{
+	float:right;
+	
+}

@@ -27,7 +27,7 @@ public interface SgroupDAO {
 
 	int updateReadCount(int bId);
 
-	int deletegBoard(int gbId);
+//	int deletegBoard(int gbId);
 
 	int addCalendar(Calendar calendar);
 

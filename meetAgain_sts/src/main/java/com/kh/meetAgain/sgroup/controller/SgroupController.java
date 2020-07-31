@@ -3,7 +3,6 @@ package com.kh.meetAgain.sgroup.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,14 +29,15 @@ public class SgroupController {
 	SgroupService sgroupService;
 
 	// 모입 생성 페이지로 이동
-	@RequestMapping("sgroup/create.do")
+	@RequestMapping("/sgroup/create.do")
 	public String create() {
 		return "sgroup/create";
 	}
 	
-	@RequestMapping("sgroup/sgroupCreateEnd.do")
+	@RequestMapping("/sgroup/sgroupCreateEnd.do")
 	public String sgroupCreateEnd(Sgroup sgroup,  Model model, HttpSession session,
-	         @RequestParam(value="sgroupImg", required = false) MultipartFile[] sgroupImg) {
+	         @RequestParam(value="sgroupImg", required = false) MultipartFile[] sgroupImg,
+	         @RequestParam String userId) {
 
 		System.out.println("sgroup : " + sgroup);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
@@ -85,8 +85,6 @@ public class SgroupController {
 	   		
 
 	}
-	
-	
 	// 소모임 전체 리스트 출력
 	@RequestMapping("sgroup/group.do")
 	public String group(Model model) {
@@ -98,32 +96,41 @@ public class SgroupController {
 		return "sgroup/group";
 	}
 
-	@RequestMapping("sgroup/groupAlbum.do")
+	// 소모임 한개 출력
+	@RequestMapping("sgroup/groupInfo.do")
+	public String groupInfo(@RequestParam String gId, Model model) {
+		
+		Sgroup sr = sgroupService.selectOneSgroup(gId);
+		
+		System.out.println("sr1111 : " + sr);
+	
+		model.addAttribute("sgroup", sr);
+
+		return "sgroup/groupInfo";
+	}
+	
+	@RequestMapping("/sgroup/groupAlbum.do")
 	public String groupAlbum() {
 		return "sgroup/groupAlbum";
 	}
 
-	@RequestMapping("sgroup/groupCalendar.do")
+	@RequestMapping("/sgroup/groupCalendar.do")
 	public String groupCalendar() {
 		return "sgroup/groupCalendar";
 	}
 
-	@RequestMapping("sgroup/groupInfo.do")
-	public String groupInfo() {
-		return "sgroup/groupInfo";
-	}
 
-	@RequestMapping("sgroup/groupMap.do")
+	@RequestMapping("/sgroup/groupMap.do")
 	public String groupMap() {
 		return "sgroup/groupMap";
 	}
 
-	@RequestMapping("sgroup/memberList.do")
+	@RequestMapping("/sgroup/memberList.do")
 	public String memberList() {
 		return "sgroup/memberList";
 	}
 
-	@RequestMapping("sgroup/groupBoard.do")
+  @RequestMapping("sgroup/groupBoard.do")
 	public String groupBoard(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
 			Model model) {
 		// 한 페이지 당 게시글 수

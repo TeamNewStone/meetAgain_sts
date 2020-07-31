@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.kh.meetAgain.sgroup.model.dao.SgroupDAO;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
-import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
@@ -61,17 +60,15 @@ public class SgroupServiceImpl implements SgroupService {
 		System.out.println("service : " + Gboard);
 		return sgroupDAO.updategBoard(Gboard);
 	}
-	
-	@Override
-	public int deletegBoard(int gbId) {
-		int result = sgroupDAO.deletegBoard(gbId);
-		
-		if(result > SGROUP_SERVICE_ERROR) result = SGROUP_SERVICE_COMPLETE;
-		else throw new SgroupException("게시글 삭제 실패!");
-		System.out.println("service.delete : "+gbId);
-		return result;
-	}
 
+	/*
+	 * @Override public int deletegBoard(int gbId) { int result =
+	 * sgroupDAO.deletegBoard(gbId);
+	 * 
+	 * if(result > SGROUP_SERVICE_ERROR) result = SGROUP_SERVICE_COMPLETE; else
+	 * throw new SgroupException("게시글 삭제 실패!");
+	 * System.out.println("service.delete : "+gbId); return result; }
+	 */
 	@Override
 	public int updateReadCount(int bId) {
 		return sgroupDAO.updateReadCount(bId);
