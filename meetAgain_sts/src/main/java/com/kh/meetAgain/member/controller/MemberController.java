@@ -144,11 +144,18 @@ public class MemberController {
 	public Map<String,Object> selectOne(HttpServletRequest request) {
 		String userId = request.getParameter("id");
 
-		Map<String, Object> map = new HashMap<String,Object>(); 
-		boolean isNew = memberService.selectOne(userId)==null ? true : false;
+		Map<String, Object> map = new HashMap<String,Object>();
+		Member m = memberService.selectOne(userId);
+		boolean isNew =true;
 		
+		if(m==null) {
+			isNew = true;
+		}else {
+			isNew=false;
+			map.put("wdYN",m.getWd_Yn());
+		}
+
 		map.put("isNew", isNew);
-		
 		return map;
 	}
 	
@@ -209,6 +216,7 @@ public class MemberController {
 	public String memberOut(@ModelAttribute("member") Member m, Model model) {
 		String msg = "";
 		String loc = "/";
+		
 		int result = memberService.memberOut(m);
 		
 		if(result>0) {
