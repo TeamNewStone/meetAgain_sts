@@ -84,4 +84,3 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.insert("calendarMapper.insertSchedule", calendar);
 	}
 }
-

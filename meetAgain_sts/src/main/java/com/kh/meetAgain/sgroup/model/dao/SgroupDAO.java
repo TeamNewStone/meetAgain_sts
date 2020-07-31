@@ -13,7 +13,6 @@ public interface SgroupDAO {
 	List<Sgroup> selectSgroupList();
 	
 	Sgroup selectOneSgroup(String gId);
-
 // -------------------------------------------------
 	
 	List<Map<String, String>> selectgBoardList(int cPage, int numPerPage);

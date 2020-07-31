@@ -84,5 +84,4 @@ public class SgroupServiceImpl implements SgroupService {
 	public int addCalendar(Calendar calendar) {		
 		return sgroupDAO.addCalendar(calendar);
 	}
-
 }
