@@ -20,7 +20,7 @@
 	<insert id="insertBoard" parameterType="Board">
 		INSERT INTO BOARD
 		VALUES
-		(SEQ_BID.NEXTVAL, 'admin', 0, #{bTitle}, #{bContent}, DEFAULT, DEFAULT, 'N')
+		(SEQ_BID.NEXTVAL, 'meetAgainAdmin', 0, #{bTitle}, #{bContent}, DEFAULT, DEFAULT, 'N')
 		<selectKey keyProperty="bId" resultType="_int" order="AFTER"> 
 		      SELECT SEQ_BID.CURRVAL FROM DUAL 
 		</selectKey>

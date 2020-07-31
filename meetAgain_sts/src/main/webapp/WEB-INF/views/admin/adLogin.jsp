@@ -34,7 +34,7 @@
 * { font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif'; }
 </style>
 </head>
-<body class="documentation language-html">
+<body class="documentation language-html" onload="idFocus();">
 
 <nav class="navbar navbar-expand-md navbar-dark bg-primary" style="z-index:200;">
         <a class="navbar-brand"
@@ -57,12 +57,22 @@
 				<div class="mb-7" style="line-height: 2em;">
 					<br /> <br /> <br /> <br /> <br />
 					<p style="font-size: 50px; font-weight: bold;">Login</p>
-					<p class="lead" style="font-size: 13px; color: #a9a9a9;">로그인
-						하시면 더욱 다양한 '다시만나'의 서비스를 즐기실 수 있습니다.</p>
+					<p class="lead" style="font-size: 13px; color: #a9a9a9;">관리자 로그인 페이지입니다.</p>
 					<hr />
 				</div>
-				<form>
-					아이디 : <input type="text" class="form-control" />
+				<form action="${pageContext.request.contextPath}/admin/adminLogin.do">
+					<div class="form-group">
+					<input type="text" class="form-control" id="adminId" name="adminId" placeholder="입력정보1"/>
+					</div>
+					<div class="form-group">
+					<input type="password" class="form-control" id="adminBrithday" name="adminBirthday" placeholder="입력정보2"/>
+					</div>
+					<div class="form-group">
+					<input type="password" class="form-control" id="adminEmail" name="adminEmail" placeholder="입력정보3"/>
+					</div>
+					<div class="form-group">
+					<button type="submit" class="btn btn-block btn-secondary">로그인</button>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -75,7 +85,11 @@
 
 
 
-
+<script>
+function idFocus(){
+	$('#adminId').focus();
+}
+</script>
 
 
 

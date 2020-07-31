@@ -19,6 +19,7 @@
 						<label>제목 : &nbsp;</label> <input type="text" class="form-control" name="bTitle" id="bTitle" style="width:400px; display:inline"/>
 					</div>
 				</div>
+				<br />
 				<div class="read-bt">
 				
 					 <textarea id="bContent" name="bContent" cols="135" rows="15" style="resize:none;"></textarea> 

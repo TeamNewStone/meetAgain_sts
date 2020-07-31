@@ -72,6 +72,9 @@
 		SELECT COUNT(*) FROM MEMBER WHERE USERID=#{adminId} AND BIRTHDAY=#{adminBirthday} AND EMAIL=#{adminEmail}
 	</select>
 
+	<select id="selectOneAdmin" parameterType="hashmap" resultType="Member">
+		SELECT * FROM MEMBER WHERE USERID=#{adminId} AND BIRTHDAY=#{adminBirthday} AND EMAIL=#{adminEmail}
+	</select>
 
 	<update id="memberOut" parameterType="Member" statementType="CALLABLE">
 		{CALL DEL_USERINFO(#{userId})}
