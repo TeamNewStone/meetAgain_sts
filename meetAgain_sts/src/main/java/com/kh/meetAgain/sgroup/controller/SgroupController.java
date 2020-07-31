@@ -85,8 +85,14 @@ public class SgroupController {
 	   		
 
 	}
-	@RequestMapping("/sgroup/group.do")
-	public String group() {
+	// 소모임 전체 리스트 출력
+	@RequestMapping("sgroup/group.do")
+	public String group(Model model) {
+		
+		List<Sgroup> list = sgroupService.selectSgroupList();
+		
+		model.addAttribute("list", list);
+		
 		return "sgroup/group";
 	}
 
