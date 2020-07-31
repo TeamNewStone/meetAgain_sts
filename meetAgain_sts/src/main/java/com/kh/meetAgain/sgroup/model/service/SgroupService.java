@@ -36,4 +36,3 @@ public interface SgroupService {
 	int addCalendar(Calendar calendar);
 	
 }
-
