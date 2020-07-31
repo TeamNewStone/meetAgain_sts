@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.meetAgain.admin.model.dao.AdminDAO;
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.member.model.vo.Member;
 
@@ -33,6 +34,21 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int selectNoticeTotalContents() {
 		return adminDAO.selectNoticeTotalContents();
+	}
+
+	@Override
+	public List<Map<String, String>> selectBoardList(int cPage, int numPerPage) {
+		return adminDAO.selectBoardList(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectBoardTotalContents() {
+		return adminDAO.selectBoardTotalContents();
+	}
+
+	@Override
+	public Report selectOneBoard(int rcId) {
+		return adminDAO.selectOneBoard(rcId);
 	}
 
 }

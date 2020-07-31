@@ -27,6 +27,7 @@
 		 <typeAlias type="com.kh.meetAgain.member.model.vo.Category" alias="Category"/>
 		 <typeAlias type="com.kh.meetAgain.myPage.model.vo.Follow" alias="Follow"/>
 		 <typeAlias type="com.kh.meetAgain.sgroup.model.vo.Calendar" alias="Calendar"/>
+		 <typeAlias type="com.kh.meetAgain.admin.model.vo.Report" alias="Report"/>
 	</typeAliases>	
 	
 	<!-- 문자열과 배열을 치환해주는 객체 -->
