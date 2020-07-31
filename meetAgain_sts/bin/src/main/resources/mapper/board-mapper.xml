@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardMapper">
+
+	<select id="selectBoardList" resultType="Board">
+		SELECT BID, NICKNAME, BTYPE, BTITLE, BCONTENT, BRATE, BDATE, BDEL FROM BOARD
+		JOIN MEMBER USING(USERID) ORDER BY BID DESC
+	</select>
+
+	<select id="selectBoardTotalContent" resultType="_int">
+		SELECT COUNT(*) FROM BOARD
+	</select>
+
+	<select id="selectOneBoard" parameterType="_int" resultType="Board">
+		SELECT * FROM BOARD WHERE BID=#{bId}
+	</select>
+
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO BOARD
+		VALUES
+		(SEQ_BID.NEXTVAL, 'admin', 0, #{bTitle}, #{bContent}, DEFAULT, DEFAULT, 'N')
+		<selectKey keyProperty="bId" resultType="_int" order="AFTER"> 
+		      SELECT SEQ_BID.CURRVAL FROM DUAL 
+		</selectKey>
+	</insert>
+
+	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD SET BTITLE = #{bTitle}, BCONTENT=#{bContent} WHERE BID=#{bId}
+	</update>
+
+	<update id="updateReadCount" parameterType="_int">
+		UPDATE BOARD SET BRATE = BRATE+1 WHERE BID=#{bId}
+	</update>
+
+</mapper>
