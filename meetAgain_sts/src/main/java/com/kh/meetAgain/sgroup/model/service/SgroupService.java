@@ -29,7 +29,7 @@ public interface SgroupService {
 
 	int updategBoard(Gboard Gboard);
 	
-	// int deletegBoard(int gbId);
+	int deletegBoard(int gbId);
 
 	int updateReadCount(int bId);
 	
