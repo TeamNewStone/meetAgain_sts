@@ -86,7 +86,21 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne("memberMapper.checkNnDuplicate2", map);
 	}
 	@Override public int memberOut(Member m) {
-		 sqlSession.delete("memberMapper.delUserInfo",m); return
-		  sqlSession.update("memberMapper.memberOut",m); }
+		HashMap<String,Object> hmap = new HashMap<String, Object>();
+		String uid = m.getUserId();
+		
+		hmap.put("userId", uid);
+		sqlSession.update("memberMapper.memberOut",hmap);
+		int i = (Integer)hmap.get("result");
+		
+	//	System.out.println("memberOut 결과 : "+i);
+		
+		sqlSession.delete("memberMapper.delUserInfo",hmap);
+		int j = (Integer)hmap.get("result");
+		
+	//	System.out.println("delinfo 결과 : "+j);
+		
+		 return  i+j;
+		}
 
 }
