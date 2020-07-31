@@ -21,5 +21,8 @@ public interface MemberService {
 	
 	int insertMember(Member m);
 
+	int memberOut(Member m); 
+
 	int checkNnDuplicate2(Map<String, String> map);
+
 }

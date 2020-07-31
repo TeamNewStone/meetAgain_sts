@@ -16,8 +16,8 @@ public interface SgroupService {
 	Sgroup selectOneSgroup(String gId);
 
 // -----------------------------------------------------------
-	static int BOARD_SERVICE_ERROR = 0;
-	static int BOARD_SERVICE_COMPLETE = 1;
+	static int SGROUP_SERVICE_ERROR = 0;
+	static int SGROUP_SERVICE_COMPLETE = 1;
 	
 	List<Map<String, String>> selectgBoardList(int cPage, int numPerPage);
 
@@ -28,6 +28,8 @@ public interface SgroupService {
 	int insertgBoard(Gboard Gboard);
 
 	int updategBoard(Gboard Gboard);
+	
+	// int deletegBoard(int gbId);
 
 	int updateReadCount(int bId);
 	

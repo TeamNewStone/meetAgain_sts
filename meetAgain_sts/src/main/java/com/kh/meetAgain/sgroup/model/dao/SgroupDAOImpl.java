@@ -1,17 +1,13 @@
 package com.kh.meetAgain.sgroup.model.dao;
 
 import java.util.List;
-
 import java.util.Map;
-
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
-
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @Repository("sgroupDAO")
@@ -39,7 +35,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Override
 	public List<Sgroup> selectSgroupList() {
-		return sqlSession.selectList("sgroupMapper.selectListSgroup");
+		return sqlSession.selectList("sgroupMapper.selectSgroupList");
 	}
 
 	@Override
@@ -74,9 +70,13 @@ public class SgroupDAOImpl implements SgroupDAO {
 	
 	@Override
 	public int addCalendar(Calendar calendar) {
-		System.out.println("DAO: "+calendar);
 		return sqlSession.insert("calendarMapper.insertSchedule", calendar);
 	}
-	
-}
+  
+  @Override
+	public int deletegBoard(int gbId) {
+		System.out.println("deleteDAO : "+gbId);
+		return sqlSession.delete("sgroupMapper.deletegBoard", gbId);
+	}
 
+}
