@@ -8,6 +8,10 @@
 		<result property="cateId" column="CATE_ID" />
 		<result property="limitGroup" column="LIMITGROUP" typeHandler="Str2ArrayHandler"/>
 	</resultMap>
+	<resultMap type="CateInfo" id="cateInfoMap">
+		<id property="userId" column="userId" />
+		<result property="cateId" column="CATE_ID" typeHandler="Str2ArrayHandler"/>
+	</resultMap>
 	
 	<insert id="insertSgroup" parameterType="Sgroup">
 	INSERT ALL INTO SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE, MAXNUM, CHARGE, GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE, LIMITGROUP)
@@ -38,6 +42,13 @@
 		WHERE GID = #{gId}
 	</select>
 
+	<select id="selectCateInfo" parameterType="string" resultMap="cateInfoMap">
+		SELECT C.CATE_ID, G.*, C.USERID FROM CATEINFO C
+      JOIN SGROUP G ON(C.CATE_ID=G.CATE_ID) 
+      WHERE USERID = #{userId} AND G.GID IN(
+      SELECT GID FROM JOING WHERE USERID != #{userId})
+	</select>
+	
 	<resultMap type="Gboard" id="gboardMap">
 		<result property="gbId" column="GBID" />
 		<result property="gbTitle" column="GBTITLE" />

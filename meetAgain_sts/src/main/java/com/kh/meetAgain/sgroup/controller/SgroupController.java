@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,22 +13,31 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.common.util.Utils;
+import com.kh.meetAgain.member.model.service.MemberService;
+import com.kh.meetAgain.member.model.vo.CateInfo;
+import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
-
+@SessionAttributes(value= {"member"})
 @Controller
 public class SgroupController {
 
 	@Autowired
 	SgroupService sgroupService;
 
+	@Autowired
+	MemberService memberService;
+	
 	// 모입 생성 페이지로 이동
 	@RequestMapping("/sgroup/create.do")
 	public String create() {
@@ -87,12 +97,21 @@ public class SgroupController {
 	}
 	// 소모임 전체 리스트 출력
 	@RequestMapping("sgroup/group.do")
-	public String group(Model model) {
+	public String group(@ModelAttribute("member") Member m, Model model) {
 		
 		List<Sgroup> list = sgroupService.selectSgroupList();
 		
-		model.addAttribute("list", list);
+		List<CateInfo> cateInfo = sgroupService.selectCateInfo(m.getUserId());
 		
+
+		model.addAttribute("list", list);
+		model.addAttribute("cateInfo", cateInfo);
+		
+		System.out.println("CateInfo : " + cateInfo);
+		
+		
+		System.out.println("list : " + list.getClass().getName());
+		System.out.println("자바 타입 확인 : " + cateInfo.getClass().getName());
 		return "sgroup/group";
 	}
 

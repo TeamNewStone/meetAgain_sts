@@ -3,24 +3,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <c:import url="/WEB-INF/views/common/header.jsp" />
 <div class="container">
 	<div class="intro">
 		<div class="col-12">
 			<div class="content">
 				<div style="border-bottom:1px solid black">
-					<p style="font-size:1.2em">모임 상세보기</p>
+					<p style="font-size:1.2em">모임 생성하기</p>
 				</div>
-				<div style="width: 50%; margin: 0 auto;">
-
-				<svg width="1em" height="4em" viewBox="0 0 16 16" class="bi bi-card-image" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-left:50px">
+				<div style="margin-left: 5%;">
+				<svg width="1em" height="4em" viewBox="0 0 16 16" class="bi bi-card-image" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 				  <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
 				  <path d="M10.648 7.646a.5.5 0 0 1 .577-.093L15.002 9.5V13h-14v-1l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71z"/>
 				  <path fill-rule="evenodd" d="M4.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
 				</svg>
 				<span style="font-size: smaller;">모임 대표 이미지</span>
-				<c:if test="${sgroup.getGImg() ne null}">
+				
+				
+			<div class="row">
+
+				<div class="sgroupPicture" id="imgArea" style="display:inline; margin-top:-15px;width:400px; height:350px;" >
+					<c:if test="${sgroup.getGImg() ne null}">
 					<img src="${pageContext.request.contextPath}/resources/upload/groupImg/${sgroup.getGImg()}" style="width:400px; height:300px; display:block; margin-left:50px" id="sampleImg">
 				</c:if>
 				<c:if test="${sgroup.getGImg() eq null}">
@@ -31,51 +34,50 @@
 						<img src="${pageContext.request.contextPath}/resources/img/fav01.png" style="width:400px; height:300px; display:block; margin-left:50px" id="sampleImg">
 					</c:if>
 				</c:if>
-				
-				
-				<table>
-					<tr>
-						<th>모임 타이틀</th>
-						<td >${sgroup.getGTitle() }</td>
-					</tr>
-				
-				</table>
-				
-				
-				
-				<div class="form-group">
-				<p> 모임 타이틀 </p>
-				<label>${sgroup.GTitle}</label>
-				</div>
+				</div> 
 
-				<div class="form-group">
-				<p> * 모임 장소 </p>
-				<label>${sgroup.GPlace}</label>
+			<div style="display : inline; margin-left:10%">
+			
+			
+			 <div class="form-group">
+				  		<c:if test="${sgroup.getCateId() eq 'C01' }">
+					       	<button type="button" class="btn btn-secondary btn-pill">운동</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C02' }">
+					       	<button type="button" class="btn btn-secondary btn-pill">친목</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C03' }">
+					       	<button type="button" class="btn btn-secondary btn-pill">공부</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C04' }">
+					       	<button type="button" class="btn btn-secondary btn-pill">운동</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C05' }">
+					       	<button type="button" class="btn btn-secondary btn-pill">문화생활</button>			        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C06' }">
+					       <button type="button" class="btn btn-secondary btn-pill">여행</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C07' }">
+					       	<button type="button" class="btn btn-secondary btn-pill">봉사</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C08' }">
+					       	<button type="button" class="btn btn-secondary btn-pill">기타</button>			        
+				        </c:if>
 				</div>
+				
+				
+				
+			<p>모임 타이틀</p>
+			<div class="form-group">
+			  <p>${sgroup.getGTitle()}</p>
+			</div>
 				
 				<div class="form-group">
 				<p style="margin-bottom:-1px"> * 모임 장소 선택 </p>
-				<input type="text" class="form-control2" id="zipCode1" name="zipCode"
-				       placeholder="우편번호" style="width: 150px;" required readonly >
-				<button type="button" class="btn btn-secondary mb-2" onclick="addrSearch1();">검색</button>
-				<input type="text" class="form-control" id="gPlace"
-					   name="gPlace" placeholder="상세주소" required>
+				<p>${sgroup.getGPlace() }</p>
 				</div>
-				
-				<div class="form-group">
-				<span> * 모임 카테고리 : </span>
-				  <select class="custom-select" id="cateId" name="cateId" style="display:inline">
-				    <option selected>--카테고리--</option>
-				    <option value="C01">운동</option>
-				    <option value="C02">친목</option>
-				    <option value="C03">공부</option>
-				    <option value="C04">취미생활</option>
-				    <option value="C05">문화생활</option>
-				    <option value="C06">여행</option>
-				    <option value="C07">봉사</option>
-				    <option value="C08">기타</option>
-				  </select>
-				</div>
+			
 				
 				<div class="form-group">
 				<span> 기간  </span>
@@ -208,6 +210,7 @@
 									
 				});
 
+			
 			</script>
 				<p>모임 연령대</p>
 				<div class="form-group" style="margin-top:-20px">
@@ -264,7 +267,6 @@
 			</div>
 		</div>
 	</div>
-
-
-
+</div>
+</div>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

@@ -2,9 +2,11 @@ package com.kh.meetAgain.sgroup.model.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.kh.meetAgain.sgroup.model.vo.Sgroup;
+import com.kh.meetAgain.member.model.vo.CateInfo;
+import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
+import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 public interface SgroupDAO {
 
@@ -14,6 +16,7 @@ public interface SgroupDAO {
 	
 	Sgroup selectOneSgroup(String gId);
 
+	List<CateInfo> selectCateInfo(String userId);
 // -------------------------------------------------
 	
 	List<Map<String, String>> selectgBoardList(int cPage, int numPerPage);

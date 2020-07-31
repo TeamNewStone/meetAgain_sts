@@ -6,6 +6,9 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.kh.meetAgain.member.model.vo.CateInfo;
+import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
@@ -21,6 +24,21 @@ public class SgroupDAOImpl implements SgroupDAO {
 		
 		return sqlSession.insert("sgroupMapper.insertSgroup", sgroup);
 	}
+	@Override
+	public List<Sgroup> selectSgroupList() {
+		return sqlSession.selectList("sgroupMapper.selectListSgroup");
+	}
+	
+	@Override
+	public Sgroup selectOneSgroup(String gId) {
+		return sqlSession.selectOne("sgroupMapper.selectOneSgroup", gId);
+	}
+	
+	@Override
+	public List<CateInfo> selectCateInfo(String userId) {
+		return sqlSession.selectList("sgroupMapper.selectCateInfo", userId);
+	}
+	
 // -----------------------------------------------------------------------
 	@Override
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
@@ -33,15 +51,6 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return list;
 	}
 
-	@Override
-	public List<Sgroup> selectSgroupList() {
-		return sqlSession.selectList("sgroupMapper.selectSgroupList");
-	}
-
-	@Override
-	public Sgroup selectOneSgroup(String gId) {
-		return sqlSession.selectOne("sgroupMapper.selectOneSgroup", gId);
-	}
 
 	public int selectgBoardTotalContents() {
 		return sqlSession.selectOne("sgroupMapper.selectgBoardTotalContent");
@@ -78,5 +87,6 @@ public class SgroupDAOImpl implements SgroupDAO {
 		System.out.println("deleteDAO : "+gbId);
 		return sqlSession.delete("sgroupMapper.deletegBoard", gbId);
 	}
+
 
 }

@@ -1,5 +1,7 @@
 package com.kh.meetAgain.member.model.vo;
 
+import java.util.Arrays;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,4 +16,5 @@ public class CateInfo extends UserTMI {
 	private String userId;
 	private String[] cateId;
 	private String cate_id; /* DBMS와 연결할 가상 변수 */
+	
 }
