@@ -4,6 +4,7 @@ import java.util.List;
 
 import java.util.Map;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
+import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
@@ -14,6 +15,8 @@ public interface SgroupService {
 	List<Sgroup> selectSgroupList();
 	
 	Sgroup selectOneSgroup(String gId);
+	
+	List<CateInfo> selectCateInfo(String userId);
 
 // -----------------------------------------------------------
 	static int SGROUP_SERVICE_ERROR = 0;
@@ -34,5 +37,7 @@ public interface SgroupService {
 	int updateReadCount(int bId);
 	
 	int addCalendar(Calendar calendar);
+
+
 	
 }

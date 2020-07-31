@@ -7,14 +7,13 @@
 
 <section style="border-bottom: 1px solid #e0e0e0;">
 <div class="container">
-<input type="hidden" value="${member.userId }" />
+<input type="hidden" name="uid" value="${member.userId }" />
 <input type="hidden" id="address1" value="${member.address1 }" />
 <c:if test="${ !empty member.address2 && member.address3}">
 	<input type="hidden" id="address2" value="${member.address2}" />
 	<input type="hidden" id="address3" value="${member.address3}" />
 </c:if>
-
-
+<div id="map"></div>
 
 	<br>
 		<div class="row">
@@ -154,13 +153,135 @@
 			<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">소모임 생성하기!</button>
 			</div>
 		</div>
-		<div class="row">
+
+ 	<div class="row">
 			<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
-		</div>
-		<div class="rows">
-		</div>
-		</div>
+		</div> 
+ <c:forEach items="${CateInfo}" var="ca">
+      <c:forEach items="${list}" var="sg">       
+   <c:if test="${fn:length(ca) != 0}" >
+   	<c:forEach items="${ca.cateId }" var="cateId">
+   		
+   	<c:if test="${cateId eq sg.getCateId() }">   
+      <div class="row">
+              <div class="col-md-4 cardOne" style="max-width: 500px;">
+                <div class="component">
+                  <div class="card" id="${ sg.getGId()}" style="cursor:pointer;">
+                    <input type="hidden" value="${ sg.getGId()}" />
+                    <div class="card-header">
+                    <c:if test="${sg.getGImg() eq null}">
+                    <c:if test="${sg.getGType() eq 'S'}">
+                      <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height:200px;">
+                      </c:if>
+                      <c:if test="${sg.getGType() eq 'L'}">
+                      <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav01.png" style="height:200px;">
+                      </c:if>
+                      </c:if>
+                      <c:if test="${sg.getGImg() ne null}">
+                      <img class="card-img" src="${ pageContext.request.contextPath }/resources/upload/groupImg/${sg.getGImg()}" style="height:200px;">
+                      </c:if>
+                    </div>
+                    <div class="card-body">
+                    
+                    <input type="hidden" id="gPlace" value="${sg.getGPlace() }" />
+                    <c:if test="${sg.getGType() eq 'S' }">
+                         <span class="badge badge-primary mb-2">단기</span>                 
+                    </c:if>
+                    <c:if test="${sg.getGType() eq 'L' }">
+                         <span class="badge badge-primary mb-2">장기</span>                 
+                    </c:if>
+                    
+                    
+                    <c:if test="${sg.getCateId() eq 'C01' }">
+                         <span class="badge badge-secondary mb-2">운동</span>                 
+                    </c:if>
+                    <c:if test="${sg.getCateId() eq 'C02' }">
+                         <span class="badge badge-secondary mb-2">친목</span>                 
+                    </c:if>
+                    <c:if test="${sg.getCateId() eq 'C03' }">
+                         <span class="badge badge-secondary mb-2">공부</span>                 
+                    </c:if>
+                    <c:if test="${sg.getCateId() eq 'C04' }">
+                         <span class="badge badge-secondary mb-2">취미생활</span>                 
+                    </c:if>
+                    <c:if test="${sg.getCateId() eq 'C05' }">
+                         <span class="badge badge-secondary mb-2">문화생활</span>                 
+                    </c:if>
+                    <c:if test="${sg.getCateId() eq 'C06' }">
+                         <span class="badge badge-secondary mb-2">여행</span>                 
+                    </c:if>
+                    <c:if test="${sg.getCateId() eq 'C07' }">
+                         <span class="badge badge-secondary mb-2">봉사</span>                 
+                    </c:if>
+                    <c:if test="${sg.getCateId() eq 'C08' }">
+                         <span class="badge badge-secondary mb-2">기타</span>                 
+                    </c:if>
+                    
+                      <c:if test="${sg.getLimitGroup()[0] eq 'M'}">
+                       <span class="badge badge-danger">남자만</span>
+                    </c:if>
+                    <c:if test="${sg.getLimitGroup()[0] eq 'F'}">
+                       <span class="badge badge-danger">여자만</span>
+                    </c:if>
+                    <c:if test="${sg.getLimitGroup()[0] eq 'A'}">
+                       <span class="badge badge-success">성별무관</span>
+                    </c:if>
+                     
+                    <c:if test="${fn:length(sg.getLimitGroup()) eq 6 or fn:length(sg.getLimitGroup()) eq 1 }">
+                       <span class="badge badge-success">나이 무관</span>
+                       
+                    </c:if>
+                    
+                    <c:if test="${fn:length(sg.getLimitGroup()) lt 6}">
+                       <c:if test="${ fn:length(sg.getLimitGroup()) ne 1}">
+                          <span class="badge badge-danger">나이 제한</span>
+                       </c:if>
+                    </c:if>
+
+                     
+                     
+                     
+                      <h4 class="card-title mt-2">${sg.getGTitle()}</h4>
+                      <p class="card-text">
+                      <c:choose>
+                      <c:when test="${fn:length(sg.getGIntro()) gt 11}">
+                      <c:out value="${fn:substring(sg.getGIntro(),0,15)}..."></c:out>
+                      </c:when>
+                      <c:otherwise>
+                      ${sg.getGIntro()}
+                      </c:otherwise>
+                      </c:choose>
+                      </p>
+                    </div>
+   
+                  </div>
+                </div>
+                
+            <br /><br /><br />
+              </div>
+   </div>
+   </c:if>
+   	</c:forEach>
+            </c:if>
+            </c:forEach> 
+            </c:forEach> 
+		
+	
+</div>
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<br> <br> <br>
 <div class="container">
 	<div class="row">
@@ -184,7 +305,7 @@
 				        </div>
 				        <div class="card-body">
 				        
-				        <input type="hidden" value="${sg.getGPlace() }" />
+				        <input type="hidden" id="gPlace" value="${sg.getGPlace() }" />
 				        <c:if test="${sg.getGType() eq 'S' }">
 					       	<span class="badge badge-primary mb-2">단기</span>			        
 				        </c:if>
@@ -278,6 +399,11 @@
 		});
 	});
 	
+	
+	$(function(){
+		$('.card')
+	});
 </script>
+
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />

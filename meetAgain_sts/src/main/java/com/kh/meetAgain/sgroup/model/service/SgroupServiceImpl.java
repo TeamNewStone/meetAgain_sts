@@ -1,5 +1,6 @@
 package com.kh.meetAgain.sgroup.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.Map;
@@ -7,6 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.meetAgain.member.model.vo.CateInfo;
+import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.dao.SgroupDAO;
 import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
@@ -32,6 +35,13 @@ public class SgroupServiceImpl implements SgroupService {
 	@Override
 	public Sgroup selectOneSgroup(String gId) {
 		return sgroupDAO.selectOneSgroup(gId);
+	}
+
+
+	@Override
+	public List<CateInfo> selectCateInfo(String userId) {
+		
+		return sgroupDAO.selectCateInfo(userId);
 	}
 
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
@@ -84,4 +94,5 @@ public class SgroupServiceImpl implements SgroupService {
 	public int addCalendar(Calendar calendar) {
 		return sgroupDAO.addCalendar(calendar);
 	}
+
 }
