@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.dao.SgroupDAO;
+import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
@@ -20,7 +21,7 @@ public class SgroupServiceImpl implements SgroupService {
 
 	@Autowired
 	SgroupDAO sgroupDAO;
-	
+
 	@Override
 	public int insertSgroup(Sgroup sgroup) {
 		return sgroupDAO.insertSgroup(sgroup);
@@ -35,6 +36,7 @@ public class SgroupServiceImpl implements SgroupService {
 	public Sgroup selectOneSgroup(String gId) {
 		return sgroupDAO.selectOneSgroup(gId);
 	}
+
 
 	@Override
 	public List<CateInfo> selectCateInfo(String userId) {
@@ -69,26 +71,28 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.updategBoard(Gboard);
 	}
 
-	/*
-	 * @Override public int deletegBoard(int gbId) { int result =
-	 * sgroupDAO.deletegBoard(gbId);
-	 * 
-	 * if(result > SGROUP_SERVICE_ERROR) result = SGROUP_SERVICE_COMPLETE; else
-	 * throw new SgroupException("게시글 삭제 실패!");
-	 * System.out.println("service.delete : "+gbId); return result; }
-	 */
+	@Override
+	public int deletegBoard(int gbId) {
+		int result = sgroupDAO.deletegBoard(gbId);
+
+		if (result > SGROUP_SERVICE_ERROR)
+			result = SGROUP_SERVICE_COMPLETE;
+		else
+			throw new SgroupException("게시글 삭제 실패!");
+		System.out.println("service.delete : " + gbId);
+		return result;
+	}
+
 	@Override
 	public int updateReadCount(int bId) {
 		return sgroupDAO.updateReadCount(bId);
 	}
 
-	
 // -----------------------------------------------------------
-	
+
 	@Override
-	public int addCalendar(Calendar calendar) {		
+	public int addCalendar(Calendar calendar) {
 		return sgroupDAO.addCalendar(calendar);
 	}
-
 
 }

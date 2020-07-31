@@ -23,17 +23,17 @@ public class Member implements Serializable{
 	private String address3;
 	private String nickName;
 	private Date birthday;
-	private char gender;
+	private String gender;
 	private String email;
 	private String phone;
 	private int mLevel;
 	private Date enrollDate;
 	private Date wdDate;
-	private char wdYn;
-	private char outYn;
-	private int warnCnt;
-	private char stopYna;
-	private Date stopTime;
+	private String wd_Yn;
+	private String out_Yn;
+	private int warn_Cnt;
+	private String stop_Yna;
+	private Date stop_Time;
 	
 	
 }

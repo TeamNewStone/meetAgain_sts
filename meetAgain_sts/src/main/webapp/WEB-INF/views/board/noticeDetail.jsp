@@ -4,7 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:if test="${member.userId eq 'meetAgainAdmin' }">
+<c:import url="/WEB-INF/views/common/adminHeader.jsp" />
+</c:if>
+<c:if test="${member.userId ne 'meetAgainAdmin' }">
 <c:import url="/WEB-INF/views/common/header.jsp" />
+</c:if>
 <br />
 <br />
 <br />
@@ -38,13 +43,20 @@
 	<br />
 	<div id="noticeBtn">
 			<!-- 수정하기 버튼은 admin만 보이게! -->
+	<c:if test="${member.userId eq 'meetAgainAdmin' }">
 			<button type="button" class="btn btn-outline-secondary" onclick="goUpdate();">수정하기</button>
+	</c:if>
 			<button type="button" class="btn btn-secondary" onclick="goNotice();">돌아가기</button>
 	</div>
 </div>
 <script>
 	function goNotice(){
-		location.href="${ pageContext.request.contextPath }/board/notice.do"
+		var userId = '${member.userId}';
+		if(userId=="meetAgainAdmin"){
+			location.href="${ pageContext.request.contextPath }/admin/adNoticeManage.do";
+		}else{
+			location.href="${ pageContext.request.contextPath }/board/notice.do";	
+		}
 	}
 	function goUpdate(){
 		var bId = ${board.BId};
@@ -57,4 +69,9 @@
 <br />
 <br />
 <br /><br /><br />
+<c:if test="${member.userId eq 'meetAgainAdmin' }">
+<c:import url="/WEB-INF/views/common/adminFooter.jsp" />
+</c:if>
+<c:if test="${member.userId ne 'meetAgainAdmin' }">
 <c:import url="/WEB-INF/views/common/footer.jsp" />
+</c:if>

@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/WEB-INF/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/adminHeader.jsp" />
 <br />
 <br />
 <br />
@@ -20,6 +20,7 @@
 						<label>제목 : &nbsp;</label> <input type="text" class="form-control" id="bTitle" name="bTitle" style="width:400px; display:inline" value="${board.BTitle }"/>
 					</div>
 				</div>
+				<br />
 				<div class="read-bt">
 					<textarea id="bContent" name="bContent" cols="135" rows="15" style="resize:none;">${board.BContent}</textarea>
 					
@@ -57,11 +58,15 @@
 					bTitle:$('#bTitle').val(),
 					bContent:$('#bContent')
 				}, success:function(data){
-					if(data == 1) alert('가나다');
-					else alert('라마바');
+					if(data == 1) alert('수정을 완료하였습니다.');
+					else alert('수정에 실패하였습니다. 다시 시도해 주세요.');
 				}
 			});
 		});
+		
+		function goNotice(){
+			location.href="${pageContext.request.contextPath}/admin/adNoticeManage.do";
+		}
 	</script>
 	
 <!-- 	<script>
@@ -70,4 +75,4 @@
 	
 	</script> -->
 	
-<c:import url="/WEB-INF/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/common/adminFooter.jsp" />

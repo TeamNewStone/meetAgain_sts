@@ -16,7 +16,9 @@ public interface SgroupDAO {
 	
 	Sgroup selectOneSgroup(String gId);
 
+
 	List<CateInfo> selectCateInfo(String userId);
+
 // -------------------------------------------------
 	
 	List<Map<String, String>> selectgBoardList(int cPage, int numPerPage);
@@ -31,7 +33,7 @@ public interface SgroupDAO {
 
 	int updateReadCount(int bId);
 
-//	int deletegBoard(int gbId);
+	int deletegBoard(int gbId);
 
 	int addCalendar(Calendar calendar);
 

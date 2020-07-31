@@ -24,6 +24,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 		
 		return sqlSession.insert("sgroupMapper.insertSgroup", sgroup);
 	}
+
 	@Override
 	public List<Sgroup> selectSgroupList() {
 		return sqlSession.selectList("sgroupMapper.selectListSgroup");
@@ -40,6 +41,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 	
 // -----------------------------------------------------------------------
+
 	@Override
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
 		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
@@ -69,7 +71,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Override
 	public int updategBoard(Gboard Gboard) {
-		return sqlSession.update("sgroupMapper.updateBoard", Gboard);
+		return sqlSession.update("sgroupMapper.updategBoard", Gboard);
 	}
 
 	@Override
@@ -81,6 +83,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int addCalendar(Calendar calendar) {
 		return sqlSession.insert("calendarMapper.insertSchedule", calendar);
 	}
+
   
   @Override
 	public int deletegBoard(int gbId) {

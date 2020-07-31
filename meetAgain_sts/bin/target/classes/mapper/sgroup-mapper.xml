@@ -6,37 +6,49 @@
 	<resultMap type="Sgroup" id="sgroupMap">
 		<id property="gId" column="GID" />
 		<result property="cateId" column="CATE_ID" />
-		<result property="limitGroup" column="LIMITGROUP" typeHandler="Str2ArrayHandler"/>
+		<result property="limitGroup" column="LIMITGROUP"
+			typeHandler="Str2ArrayHandler" />
 	</resultMap>
-	
+
 	<insert id="insertSgroup" parameterType="Sgroup">
-	INSERT ALL INTO SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE, MAXNUM, CHARGE, GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE, LIMITGROUP)
-	VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro}, DEFAULT, #{maxNum}, #{charge}, #{gFee}, #{gPlace}, 
-	#{gType}, #{durate}, DEFAULT, #{gPwd}, #{joinType}, #{limitGroup, typeHandler=Str2ArrayHandler})
-	
-	 INTO JOING(USERID, GID, ISCPT, ISREADY, ISOUT, ISLEAVE) 
-	 VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 
-	 
-	 <choose>
-	 	<when test="joinType.equals('C')">
-	 		2,
-	 	</when>
-	 	<otherwise>
-	 		1,
-	 	</otherwise>
-	 </choose>
-	 DEFAULT, DEFAULT)
-	SELECT * FROM DUAL
+		INSERT ALL INTO SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE,
+		MAXNUM, CHARGE, GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE,
+		LIMITGROUP)
+		VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg},
+		#{gIntro}, DEFAULT, #{maxNum},
+		#{charge}, #{gFee}, #{gPlace},
+		#{gType},
+		#{durate}, DEFAULT, #{gPwd}, #{joinType}, #{limitGroup,
+		typeHandler=Str2ArrayHandler})
+
+		INTO JOING(USERID, GID, ISCPT, ISREADY,
+		ISOUT, ISLEAVE)
+		VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y',
+
+		<choose>
+			<when test="joinType.equals('C')">
+				2,
+			</when>
+			<otherwise>
+				1,
+			</otherwise>
+		</choose>
+		DEFAULT, DEFAULT)
+		SELECT * FROM DUAL
 	</insert>
+
+
+	<!-- <select id="selectListSgroup" resultMap="sgroupMap"> SELECT * FROM 
+		SGROUP </select> <select id="selectOneSgroup" parameterType="_string" resultMap="sgroupMap"> 
+		SELECT * FROM SGROUP WHERE GID = #{gId} </select> -->
 
 	<select id="selectListSgroup" resultMap="sgroupMap">
 		SELECT * FROM SGROUP
 	</select>
-	
-	<select id="selectOneSgroup" parameterType="string" resultMap="sgroupMap">
-		SELECT * FROM SGROUP
-		WHERE GID = #{gId}
-	</select>
+
+	<!-- <select id="selectOneSgroup" parameterType="_string" resultMap="sgroupMap"> 
+		SELECT * FROM SGROUP WHERE GID = #{gId} </select> -->
+
 
 	<resultMap type="Gboard" id="gboardMap">
 		<result property="gbId" column="GBID" />

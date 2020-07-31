@@ -4,7 +4,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
 
-	<resultMap id = 'updateOutMember' type="hashmap"></resultMap>
 	<select id="checkNnDuplicate" parameterType="hashmap"
 		statementType="CALLABLE">
 		{ CALL NN_DUP_CHK(
@@ -72,13 +71,22 @@
 		SELECT COUNT(*) FROM MEMBER WHERE USERID=#{adminId} AND BIRTHDAY=#{adminBirthday} AND EMAIL=#{adminEmail}
 	</select>
 
+	<select id="selectOneAdmin" parameterType="hashmap" resultType="Member">
+		SELECT * FROM MEMBER WHERE USERID=#{adminId} AND BIRTHDAY=#{adminBirthday} AND EMAIL=#{adminEmail}
+	</select>
 
-	<update id="memberOut" parameterType="Member" statementType="CALLABLE">
-		{CALL DEL_USERINFO(#{userId})}
+	<update id="memberOut" parameterType="hashmap" statementType="CALLABLE">
+	{ CALL DEL_USERINFO(
+		#{userId, mode=IN, jdbcType=VARCHAR},
+		#{result, mode=OUT, jdbcType=NUMERIC, javaType=integer} )
+		}
 	</update>
 
-	<delete id="delUserInfo" parameterType="Member">
-		{CALL DEL_USER(#{userId})}
+	<delete id="delUserInfo" parameterType="hashmap" statementType="CALLABLE">
+	{ CALL DEL_USER(
+		#{userId, mode=IN, jdbcType=VARCHAR},
+		#{result, mode=OUT, jdbcType=NUMERIC, javaType=integer} )
+		}
 	</delete>
 
 </mapper>

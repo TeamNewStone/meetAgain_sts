@@ -89,8 +89,18 @@
 													if(data.isNew == true){
 														alert("존재하지 않는 아이디입니다. 회원가입 페이지로 이동합니다.");
 														$('#userform').submit();														
-													} else {
-														$('#loginform').submit();
+													} else {				
+														
+										//				console.log(data);
+										//				alert("로그인 확인 : "+data.wdYN == "Y");
+														
+														if(data.wdYN == "Y"){
+															alert("탈퇴한 지 3개월이 지나지 않아 재가입이 불가능합니다.");
+															location.href='${ pageContext.request.contextPath }';
+														}
+														else {
+															$('#loginform').submit();
+														}
 													}
 												},
 												error : function(){

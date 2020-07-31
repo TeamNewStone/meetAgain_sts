@@ -90,10 +90,7 @@
 		</button>
         <div class="collapse navbar-collapse mr-auto" id="navbarNavDropdown-3">
 	        <ul class="navbar-nav ml-auto" id="navbar">
-
-				<li class="nav-item text-white"><a class="nav-link" href="#">비밀번호 변경</a></li>
-
-				<li class="nav-item text-white"><a class="nav-link" href="#">로그아웃</a></li>
+				<li class="nav-item text-white"><a class="nav-link" href="${ pageContext.request.contextPath }/admin/logout.do">로그아웃</a></li>
 			</ul>
           </div>
     </nav> 
