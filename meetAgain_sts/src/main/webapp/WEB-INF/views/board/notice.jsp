@@ -39,10 +39,10 @@
 
 			</div>
 		</div>
-		<!-- 작성하기 버튼은 admin만 보이게! -->
-		<div id="noticeBtn">
+ 		<!-- 작성하기 버튼은 admin만 보이게! -->
+		<!-- <div id="noticeBtn">
 			<button type="button" class="btn btn-outline-secondary" onclick="noticeInsert();">작성하기</button>
-		</div>
+		</div>  -->
 	</div>
 </div>
 				<c:out value="${pageBar}" escapeXml="false"/>		
