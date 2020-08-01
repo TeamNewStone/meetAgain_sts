@@ -57,7 +57,7 @@ $(function(){
 			$(this).parent().css({"background":"white"});
 		
 		}).click(function(){
-			location.href="/meetAgain/views/admin/adCommentDetail.jsp";
+			location.href="${pageContext.request.contextPath}/admin/adCommentDetail.do";
 			//console.log($(this).parent().children().eq(0).text());
 		
 			//var nno = $(this).parent().children().eq(0).text();
