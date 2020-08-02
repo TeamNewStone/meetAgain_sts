@@ -27,6 +27,7 @@ import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 @SessionAttributes(value= {"member"})
 @Controller
@@ -102,16 +103,12 @@ public class SgroupController {
 		List<Sgroup> list = sgroupService.selectSgroupList();
 		
 		List<CateInfo> cateInfo = sgroupService.selectCateInfo(m.getUserId());
-		
 
 		model.addAttribute("list", list);
 		model.addAttribute("cateInfo", cateInfo);
+
+		System.out.println("cateInfo : " + cateInfo);
 		
-		System.out.println("CateInfo : " + cateInfo);
-		
-		
-		System.out.println("list : " + list.getClass().getName());
-		System.out.println("자바 타입 확인 : " + cateInfo.getClass().getName());
 		return "sgroup/group";
 	}
 
@@ -121,13 +118,19 @@ public class SgroupController {
 		
 		Sgroup sr = sgroupService.selectOneSgroup(gId);
 		
-		System.out.println("sr1111 : " + sr);
-	
+		List<Joing> joing = sgroupService.selectJoing(gId);
+		
 		model.addAttribute("sgroup", sr);
-
+		model.addAttribute("joing", joing);
+		
+		System.out.println("Joing : " + joing);
 		return "sgroup/groupInfo";
 	}
 	
+	@RequestMapping("/sgroup/groupDetail.do")
+	public String groupDetail() {
+		return "sgroup/groupDetail";
+	}
 	
 	@RequestMapping("/sgroup/groupAlbum.do")
 	public String groupAlbum() {

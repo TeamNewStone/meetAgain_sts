@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.meetAgain.member.model.vo.CateInfo;
-import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.dao.SgroupDAO;
 import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 
 @Service("sgroupService")
 public class SgroupServiceImpl implements SgroupService {
@@ -37,11 +37,14 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.selectOneSgroup(gId);
 	}
 
-
 	@Override
 	public List<CateInfo> selectCateInfo(String userId) {
-		
 		return sgroupDAO.selectCateInfo(userId);
+	}
+
+	@Override
+	public List<Joing> selectJoing(String gId) {
+		return sgroupDAO.selectJoing(gId);
 	}
 
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
@@ -94,5 +97,7 @@ public class SgroupServiceImpl implements SgroupService {
 	public int addCalendar(Calendar calendar) {
 		return sgroupDAO.addCalendar(calendar);
 	}
+
+	
 
 }

@@ -44,7 +44,7 @@
 			<div class="form-group">
 			  <input type="text" class="form-control" id="gTitle" name="gTitle" placeholder="모임의 타이틀을 작성해주세요." required style="margin-top:-15px">
 			</div>
-
+		
 				<div class="form-group">
 				<span> * 지역 선택 : </span>
 				  <select class="custom-select" id="address1" style="display:inline" required>
@@ -61,7 +61,7 @@
 				<p style="margin-bottom:-1px"> * 모임 장소 선택 </p>
 				<input type="text" class="form-control2" id="zipCode1" name="zipCode"
 				       placeholder="우편번호" style="width: 150px;" required readonly >
-				<button type="button" class="btn btn-secondary mb-2" onclick="addrSearch1();">검색</button>
+				<button type="button" class="btn btn-secondary mb-2" style="background:#132742; border : #132742;" onclick="addrSearch1();">검색</button>
 				<input type="text" class="form-control" id="gPlace"
 					   name="gPlace" placeholder="상세주소" required>
 				</div>
@@ -207,9 +207,8 @@
 							userY = userAdr.getLat();
 					    }
 					});
-					
-					test33(X, Y, userX, userY);
-									
+				
+					test33(X, Y, userX, userY);									
 				});
 
 			
@@ -262,7 +261,7 @@
 				    <textarea class="form-control" id="exampleFormControlTextarea1" name="gIntro" rows="5" placeholder="자유롭게 모임 소개글을 작성해주세요~!" required></textarea>
 				  </div>
 				<div style="width: 400px; text-align: center;">
-					<button type="submit" class="btn btn-secondary">작성완료</button>
+					<button type="submit" class="btn btn-secondary" style="background:#132742; border:#132742;">작성완료</button>
 				</div>
 				</div>
 			</div>
