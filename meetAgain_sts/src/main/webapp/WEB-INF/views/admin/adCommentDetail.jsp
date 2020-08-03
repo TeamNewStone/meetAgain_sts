@@ -45,7 +45,6 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 <tr>
 	<td colspan="4">
 		<button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#handleModal">처리하기</button> &nbsp;
-		<button type="button" class="btn btn-outline-secondary">게시글로 이동</button>
 	</td>
 </tr>
 </table>
@@ -63,7 +62,7 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
       <div class="modal-body">
         <form action="${pageContext.request.contextPath }/admin/reportUpdate.do">
         <input type="hidden" id="rcId" name="rcId" value="${report.rcId }" />
-        <input type="hidden" id="cId" name="cId" value="${report.cId }" />
+        <input type="hidden" id="cId" name="cId" value="${report.CId }" />
         <div>
         <p style="color:#a3a3a3; font-size:15px">댓글 처리</p>
         <div class="custom-control custom-checkbox my-2">

@@ -49,7 +49,7 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 <tr>
 	<td colspan="4">
 		<button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#handleModal">처리하기</button> &nbsp;
-		<button type="button" class="btn btn-outline-secondary">게시글로 이동</button>
+		<button type="button" class="btn btn-outline-secondary" onclick="goBoard();">게시글로 이동</button>
 	</td>
 </tr>
 </table>
@@ -134,6 +134,11 @@ $(function(){
 		}
 	})
 });
+
+/* function goBoard(){
+	var gbId = $('#gbId').val();
+	location.href='${pageContext.request.contextPath}/sgroup/groupBoardDetail.do?gbId='+gbId;
+} */
 
 </script>
 
