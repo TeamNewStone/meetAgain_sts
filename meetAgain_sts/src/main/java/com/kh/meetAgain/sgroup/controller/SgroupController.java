@@ -151,6 +151,7 @@ public class SgroupController {
 	
 	@RequestMapping("/sgroup/groupDetail.do")
 	public String groupDetail() {
+		
 		return "sgroup/groupDetail";
 	}
 	
