@@ -51,6 +51,7 @@ public class SgroupController {
 	         @RequestParam String userId) {
 
 		System.out.println("sgroup : " + sgroup);
+		System.out.println("userIdtest : " + userId);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
 
 	      File dir = new File(saveDir);
@@ -103,12 +104,15 @@ public class SgroupController {
 		List<Sgroup> list = sgroupService.selectSgroupList();
 		
 		List<CateInfo> cateInfo = sgroupService.selectCateInfo(m.getUserId());
-
+		
+		List<Joing> joUser = sgroupService.selectJoingUser(m.getUserId());
+		
 		model.addAttribute("list", list);
 		model.addAttribute("cateInfo", cateInfo);
-
-		System.out.println("cateInfo : " + cateInfo);
+		model.addAttribute("joUser", joUser);
 		
+		System.out.println("cateInfo : " + cateInfo);
+		System.out.println("joing : " + joUser);
 		return "sgroup/group";
 	}
 
@@ -123,8 +127,26 @@ public class SgroupController {
 		model.addAttribute("sgroup", sr);
 		model.addAttribute("joing", joing);
 		
-		System.out.println("Joing : " + joing);
 		return "sgroup/groupInfo";
+	}
+	
+	@RequestMapping("/sgroup/groupJoin.do")
+	public String groupJoin(Joing joing, Model model) {
+		
+		int result = sgroupService.insertGroupJoin(joing);
+
+		System.out.println("result : " + result);
+
+		 String loc = "/sgroup/group.do"; 
+		 String msg = "";
+		 
+		 if(result > 0) msg = "모임 가입 성공!"; 
+		 else msg = "모임 가입 실패!";
+		  
+		  model.addAttribute("loc", loc); 
+		  model.addAttribute("msg", msg);
+
+		return "common/msg";
 	}
 	
 	@RequestMapping("/sgroup/groupDetail.do")

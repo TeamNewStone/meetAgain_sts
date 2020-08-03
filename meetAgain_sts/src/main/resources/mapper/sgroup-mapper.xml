@@ -15,17 +15,7 @@
 	#{gType}, #{durate}, DEFAULT, #{gPwd}, #{joinType}, #{limitGroup, typeHandler=Str2ArrayHandler})
 	
 	 INTO JOING(USERID, GID, ISCPT, ISREADY, ISOUT, ISLEAVE) 
-	 VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 
-	 
-	 <choose>
-	 	<when test="joinType.equals('C')">
-	 		2,
-	 	</when>
-	 	<otherwise>
-	 		1,
-	 	</otherwise>
-	 </choose>
-	 DEFAULT, DEFAULT)
+	 VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 1, DEFAULT, DEFAULT)
 	SELECT * FROM DUAL
 	</insert>
 
@@ -49,6 +39,25 @@
 		SELECT * FROM JOING
 		WHERE GID = #{gId}
 	</select>
+	
+	<select id="selectJoingUser" parameterType="string" resultType="Joing">
+		SELECT * FROM JOING
+		WHERE USERID = #{userId}
+	</select>
+	
+	<insert id="insertGroupJoin" parameterType="Joing">
+		INSERT INTO JOING VALUES(#{userId}, #{gId}, 'N',  
+		<choose>
+		 	<when test='joinType=="C"'>
+		 		2,
+		 	</when>
+		 	<otherwise>
+		 		1,
+		 	</otherwise>
+	    </choose>
+	 DEFAULT, DEFAULT)
+	</insert>
+	
 	<resultMap type="Gboard" id="gboardMap">
 		<result property="gbId" column="GBID" />
 		<result property="gbTitle" column="GBTITLE" />

@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/common/header.jsp" />
 <div class="container">
+<form action="${pageContext.request.contextPath}/sgroup/groupJoin.do">
+<input type="hidden" name="userId" value="${member.getUserId() }"/>
+<input type="hidden" name="gId" value="${sgroup.getGId() }"/>
 	<div class="intro">
 		<div class="col-12">
 			<div class="content">
@@ -120,7 +124,10 @@
 
 				<div class="form-group">
 				<label style="margin-bottom:-1px">나이 제한</label>
-				<c:if test="${fn:contains(sgroup.getLimitGroup(), '20대')}">
+				<c:if test="">
+                	<span class="badge badge-pill badge-success">10대</span>
+                </c:if>
+                <c:if test="Arrays.asList(${sgroup.getLimitGroup()}).contains('20대')">
                 	<span class="badge badge-pill badge-success">20대</span>
                 </c:if>
 				</div>
@@ -139,9 +146,11 @@
 				<label style="margin-bottom:-1px">모임 승인제</label>
 				<c:if test="${sgroup.getJoinType() eq 'C' }">
 				<p>모임장의 승인이 있어야 가입 가능합니다.</p>
+				<input type="hidden" name="joinType" value="C" />
 				</c:if>
 				<c:if test="${sgroup.getJoinType() eq 'F' }">
 				<p>자유롭게 가입이 가능합니다.</p>
+				<input type="hidden" name="joinType" value="F" />
 				</c:if>
 				</div>
 				
@@ -151,7 +160,7 @@
 				</div>
 				
 				<div style="width: 400px; text-align: center;">
-					<button type="submit" class="btn btn-secondary" style="background:#132742; border:#132742;">가입하기</button>
+					<button type="submit" class="btn btn-secondary" style="background:#132742; border:#132742;" onclick="groupConfirm();">가입하기</button>
 				</div>
 				</div>
 			</div>
@@ -159,5 +168,19 @@
 		</div>
 	</div>
 </div>
+</form>
 </div>
+<script>
+function groupConfirm(){
+	var checkResult = window.confirm('모임에 가입하시겠습니까?');
+	
+	var str ="";
+	
+	if(checkResult == true) {
+	    str ="모임 가입 완료!";
+	} else {
+	    str ="취소합니다.";
+	}
+}
+</script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

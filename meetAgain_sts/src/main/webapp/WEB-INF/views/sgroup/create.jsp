@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
 
@@ -216,7 +217,7 @@
 				<p>모임 연령대</p>
 				<div class="form-group" style="margin-top:-20px">
 				  <div class="custom-control custom-checkbox my-2 ageGroup">
-				    <input type="checkbox" class="custom-control-input" id="customCheck1" name="limitGroup" value="10대">
+				    <input type="checkbox" class="custom-control-input" id="customCheck1" name="limitGroup" value="10대" >
 				    <label class="custom-control-label" for="customCheck1">10대</label>
 				  </div>
 				  <div class="custom-control custom-checkbox my-2 ageGroup">

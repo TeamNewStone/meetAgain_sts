@@ -47,6 +47,17 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.selectJoing(gId);
 	}
 
+	@Override
+	public List<Joing> selectJoingUser(String userId) {
+		return sgroupDAO.selectJoingUser(userId);
+	}
+	
+	@Override
+	public int insertGroupJoin(Joing joing) {
+		return sgroupDAO.insertGroupJoin(joing);
+	}
+	
+	@Override
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
 
 		return sgroupDAO.selectgBoardList(cPage, numPerPage);
@@ -97,6 +108,9 @@ public class SgroupServiceImpl implements SgroupService {
 	public int addCalendar(Calendar calendar) {
 		return sgroupDAO.addCalendar(calendar);
 	}
+
+
+
 
 	
 
