@@ -93,11 +93,17 @@ body {
 					</br>
 					<div>
 						<span class="badge badge-pill badge-danger" style="font-size: 1.3em;">7/17</span>정기모임 <br /> <br />
-						<span class="badge badge-pill badge-success" style="font-size: 1.3em;">7/23</span>일반모임
+						<span class="badge badge-pill badge-success" style="font-size: 1.3em;">7/23</span>일반모임 <br>
 						
-						<span id="allList">리스트</span>
-						
-							<c:forEach items="${sclist}" var="sc" varStatus="scIndex">
+							<c:forEach items="${sclist}" var="normalList" varStatus="scIndex">
+							
+								<c:set var = "string1">${normalList.gtime}</c:set>
+								<c:set var = "string2" value = "${fn:split(string1, ' ')}" />
+							<%-- <span style="font-weight: bold;">${normalList.ginfo}<br>일정시간 : </span> --%>
+								<li class="list-group-item" id="test5">${normalList.ginfo} 시간 : ${string2}</li>
+								
+								
+							</c:forEach>
 					</div>
 				</div>
 			</tr>
@@ -252,7 +258,7 @@ body {
 			    alert('일정 위치 x, y: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
 			    alert('View: ' + info.view.type); */			    			    
 			   
-			    var result = confirm(info.event.title + '의 ' + ' 일정을 삭제하시겠습니까 ??');
+			    var result = confirm('해당 "' + info.event.title + '" 일정을 삭제하시겠습니까 ??');
 			    	if(result){
 			    		return null;
 			    	} else {			    		
@@ -287,91 +293,13 @@ body {
 	</c:forEach>
 	
 	var ime = "${realtime}";
-	console.log(ime);
+	var result = ime.substring(10, 19);
+	console.log(result);
+	$('#test5'), ime.html() == "ttttttttttttttttt";
+	
 	
 </script>
 
-<!-- 
-
-<script>
-var editTitle = $('#title').val();
-var editStart = $('#start').val();
-var editEnd = $('#end').val();
-
-	var addEvent = function () {
-			
-		var tseData = [ {
-			
-			title : editTitle,
-			start : editStart,
-			end : editEnd
-
-		} ];
-
-		console.log(tseData);
-
-	} 
-
-
-</script>
-
-<script>
-/**
- * test
- */
-
- document.addEventListener('DOMContentLoaded', function() {
-		var calendarEl = document.getElementById('calendar');
-		var today = new Date();
-
-		var calendar = new FullCalendar.Calendar(calendarEl, {
-			headerToolbar : { // 달력 헤더
-				left : 'prev,next',
-				center : 'title',
-				right : 'today dayGridMonth timeGridWeek timeGridDay listMonth'
-			},
-			
-			initialDate : today, //현재날짜로 초기화
-			navLinks : true, // can click day/week names to navigate views
-			editable : true,
-			dayMaxEvents : true, // allow "more" link when too many events
-			locale : 'ko', // 한글
-			
-			// 이벤트 예
-			events : [ {			
-			   title : 'default',
-			   start : "2019-01-01",
-			   end : "2019-01-01"				
-			}, {
-				title : '일반모임',
-				start : '2020-07-23',
-				end : '2020-07-23'
-			}, {
-				title : '정기모임',
-				start : '2020-07-17'
-			}, {
-				title : 'Long Event',
-				start : '2020-06-07',
-				end : '2020-06-10'
-			}, {
-				id: 'a',
-				title: '30일 이벤트',
-				start: '2020-07-30'
-			} ]	
-
-		});
-		
-		// 출력
-		calendar.render();
-
-		// 배열 이벤트 데이터 불러오기
-		var tse = calendar.getEvents('a');
-		console.log(tse);
-
-	});    
-	
-</script>
- -->
  
  
  
