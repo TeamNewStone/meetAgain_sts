@@ -1,4 +1,4 @@
-package com.kh.meetAgain.sgroup.model.vo;
+package com.kh.meetAgain.myPage.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;

@@ -461,8 +461,9 @@
           <span aria-hidden="true">&times;</span>
         </button></div>
       </div>
+      <form action="reviewInsert.do">
       <div class="modal-body">
-    <form action="reviewInsert.do">
+    
       <p id="star_grade">
       별점 :  
       <div class="rating">
@@ -497,13 +498,13 @@
 		
         <br />
 
-</form>
+
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-success">Submit</button>
+        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Submit</button>
       </div>
-        
+      </form>  
 
 </div>
 </div>
