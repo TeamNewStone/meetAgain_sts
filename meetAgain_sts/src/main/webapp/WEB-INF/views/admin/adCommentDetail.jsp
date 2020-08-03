@@ -13,7 +13,7 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 
 <div class="component">
 <table class="table" style="text-align:center;margin:auto; width:130%;">
-
+<input type="hidden" id="rcId" name="rcId" value="${report.rcId }" />
 <tr>
 	<th>모임명</th>
 	<td>${report.gbTitle}</td>
@@ -61,24 +61,25 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
         </button>
       </div>
       <div class="modal-body">
-        <form action="#">
+        <form action="${pageContext.request.contextPath }/admin/reportUpdate.do">
+        <input type="hidden" id="rcId" name="rcId" value="${report.rcId }" />
+        <input type="hidden" id="cId" name="cId" value="${report.cId }" />
         <div>
         <p style="color:#a3a3a3; font-size:15px">댓글 처리</p>
         <div class="custom-control custom-checkbox my-2">
-		<input type="checkbox" class="custom-control-input" id="customCheck1" checked>
+		<input type="checkbox" class="custom-control-input" id="customCheck1" name="doDelete" checked>
 		<label class="custom-control-label" for="customCheck1">삭제 여부</label>
 		&nbsp;&nbsp;&nbsp;
 
         </div>
 		
 <div class="form-group">
-  <select class="custom-select">
-    <option selected>Open this select menu</option>
-    <option value="1">스팸 / 광고</option>
-    <option value="2">폭력적 또는 혐오스러운 콘텐츠</option>
-    <option value="3">증오 또는 학대하는 콘텐츠</option>
-    <option value="4">성적인 콘텐츠</option>
-    <option value="5">기타</option>
+  <select class="custom-select" name="rcInfo">
+    <option value="스팸 / 광고" selected>스팸 / 광고</option>
+    <option value="폭력적 또는 혐오스러운 콘텐츠">폭력적 또는 혐오스러운 콘텐츠</option>
+    <option value="증오 또는 학대하는 콘텐">증오 또는 학대하는 콘텐츠</option>
+    <option value="성적인 콘텐츠">성적인 콘텐츠</option>
+    <option value="기타">기타</option>
   </select>
 </div>
 
@@ -87,24 +88,35 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
         <br />
         <div>
         <p style="color:#a3a3a3; font-size:15px">회원 처리</p>
-        <p style="font-size:15px; font-weight:bold;">피신고자 (경고 3회)</p>
+        <p style="font-size:15px; font-weight:bold;">${report.tnickName} (경고 ${report.warn_cnt}회)</p>
 <div class="form-group">
   <select class="custom-select" style="width:">
-    <option selected>Open this select menu</option>
-    <option value="1">경고</option>
+    <option value="1" selected>경고</option>
   </select>
 </div>
         </div>
               <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-info">Reject</button>
-        <button type="button" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-info" onclick="reject();">Reject</button>
+        <button type="submit" class="btn btn-success">Submit</button>
       </div>
 </form>
 </div>
 </div>
 </div></div>
 
+<script>
 
+function reject(){
+	$.ajax({
+		url : '${pageContext.request.contextPath}/admin/reportReject.do',
+		data : {rcId : $('#rcId').val()},
+		success : function(data){
+			
+		}
+	});
+}
+
+</script>
 
 <c:import url="/WEB-INF/views/common/adminFooter.jsp"/>

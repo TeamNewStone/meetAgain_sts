@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.sgroup.model.vo.GbComment;
+import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 @Repository("adminDAO")
 public class AdminDAOImpl implements AdminDAO {
@@ -70,6 +72,31 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public Report selectOneComment(int rcId) {
 		return sqlSession.selectOne("adminMapper.selectOneComment", rcId);
+	}
+
+	@Override
+	public int reportReject(Report report) {
+		return sqlSession.update("adminMapper.reportReject", report);
+	}
+
+	@Override
+	public int reportUpdate(Report report) {
+		return sqlSession.update("adminMapper.reportUpdate", report);
+	}
+
+	@Override
+	public int memberWarnUpdate(Member member) {
+		return sqlSession.update("adminMapper.memberWarnUpdate", member);
+	}
+
+	@Override
+	public int gbDelUpdate(Gboard gboard) {
+		return sqlSession.update("adminMapper.gbDelUpdate", gboard);
+	}
+
+	@Override
+	public int gcDelUpdate(GbComment gbComment) {
+		return sqlSession.update("adminMapper.gcDelUpdate", gbComment);
 	}
 
 }
