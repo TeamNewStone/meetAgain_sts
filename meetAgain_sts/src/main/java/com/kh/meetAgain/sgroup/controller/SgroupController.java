@@ -29,7 +29,7 @@ import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
-@SessionAttributes(value= {"member"})
+@SessionAttributes(value= {"member", "gid"})
 @Controller
 public class SgroupController {
 
@@ -264,6 +264,18 @@ public class SgroupController {
 		
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		System.out.println("deleteController : "+model);
+		return "common/msg";
+	}
+	
+	@RequestMapping("sgroup/gotoGroup.do")
+	public String gotoGroup(@RequestParam String gid, Model model) {
+				
+		String loc = "/sgroup/groupBoard.do?gid="+gid;
+		String msg = "";
+		
+		model.addAttribute("gid",gid);
+		model.addAttribute("loc", loc);
+		
 		return "common/msg";
 	}
 }
