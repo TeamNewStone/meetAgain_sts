@@ -32,39 +32,48 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 </tr>
 </thead>
 <tbody>
-<c:forEach var="i" begin="1" end="3">
-<tr>
-	<td>${ i }</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
+<c:if test="${!empty list}">
+<c:forEach items="${list }" var="r">
+<tr id="${r.rcId }">
+	<input type="hidden" id="rcId" value="${r.rcId }" />
+	<td>${ r.rcId }</td>
+	<td>${ r.GTitle }</td>
+	<td>${ r.gbTitle }</td>
+	<td>${ r.rcInfo }</td>
+	<td>${ r.nickName }</td>
+	<input type="hidden" id="stmt" value="${r.stmt }" />
+	<td>${ r.stmt }</td>
 </tr>
 </c:forEach>
+</c:if>
+<c:if test="${empty list}">
+<tr>
+	<td colspan="6">신고 내역이 없습니다.</td>
+</tr>
+</c:if>
 </tbody>
 </table>
 </div>
-
+<c:out value="${pageBar}" escapeXml="false"/>
 <script>
 $(function(){
-		
-		$(".table td").mouseenter(function(){
-			$(this).parent().css({"background":"#cedced", "cursor":"pointer"});
+		$("tr[id]").mouseenter(function(){
+			if($(this).children().eq(6).val() == 'N'){
+				
+			$(this).css({"background":"#cedced", "cursor":"pointer"});
+			}
 		
 		}).mouseout(function(){
 			
-			$(this).parent().css({"background":"white"});
-		
+			$(this).css({"background":"white"});
+			
 		}).click(function(){
-			location.href="/meetAgain/views/admin/adBoardDetail.jsp";
-			//console.log($(this).parent().children().eq(0).text());
-		
-			//var nno = $(this).parent().children().eq(0).text();
-			
-			
-			<%-- location.href="<%=request.getContextPath()%>/selectOne.no?nno=" + nno; --%>
+			if($(this).children().eq(6).val() == 'N'){
+			var rcId = $('#rcId').val();
+			location.href="${pageContext.request.contextPath}/admin/adBoardDetail.do?rcId="+rcId;
+			}
 		});
+		
 	});
 
 

@@ -18,6 +18,7 @@ import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.service.MyPageService;
+import com.kh.meetAgain.myPage.model.vo.Review;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @SessionAttributes(value= {"member"})
@@ -54,6 +55,8 @@ public class MyPageController {
 		group = mpSvc.getMyGroup(userId);
 		mgroup = mpSvc.getCreateGroup(userId);	
 		
+		System.out.println(group);
+		System.out.println(mgroup);
 		
 		/*======================작성한 게시글 데이터 가져오기======================*/
 		// 한 페이지 당 게시글 수 
@@ -173,4 +176,13 @@ public class MyPageController {
 		return "common/msg";
 	}	
 
+	@RequestMapping("myPage/reviewInsert.do")
+	public String InsertReview(@RequestParam("rating") int rating, Review review, Model model) {
+		System.out.println(review);
+		System.out.println("rating : "+rating);
+		
+		//int result = sgroupService.insertReview(review);
+		
+		return "";
+	}
 }

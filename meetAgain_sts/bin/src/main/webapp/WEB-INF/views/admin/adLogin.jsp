@@ -32,21 +32,9 @@
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/admin.css">
 <style>
 * { font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif'; }
-.form-control2{
-    font-weight: 400;
-    height: 2.375rem;
-    border: 1px solid #787878;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    font-size: .9rem;
-    border-radius: .25rem;
-    padding: .5rem 1rem;
-    -webkit-box-shadow: none;
-    box-shadow: none
-}
 </style>
 </head>
-<body class="documentation language-html" onload="focusId();">
+<body class="documentation language-html" onload="idFocus();">
 
 <nav class="navbar navbar-expand-md navbar-dark bg-primary" style="z-index:200;">
         <a class="navbar-brand"
@@ -72,12 +60,15 @@
 					<p class="lead" style="font-size: 13px; color: #a9a9a9;">관리자 로그인 페이지입니다.</p>
 					<hr />
 				</div>
-				<form>
+				<form action="${pageContext.request.contextPath}/admin/adminLogin.do">
 					<div class="form-group">
-					<input type="text" class="form-control" name="adminId" id="adminId" placeholder="아이디"/>
+					<input type="text" class="form-control" id="adminId" name="adminId" placeholder="입력정보1"/>
 					</div>
 					<div class="form-group">
-					<input type="text" class="form-control" name="adminPwd" id="adminPwd" placeholder="비밀번호"/>
+					<input type="password" class="form-control" id="adminBrithday" name="adminBirthday" placeholder="입력정보2"/>
+					</div>
+					<div class="form-group">
+					<input type="password" class="form-control" id="adminEmail" name="adminEmail" placeholder="입력정보3"/>
 					</div>
 					<div class="form-group">
 					<button type="submit" class="btn btn-block btn-secondary">로그인</button>
@@ -90,15 +81,15 @@
 
 
 
-<script type="text/javascript">
-function focusId(){
+
+
+
+
+<script>
+function idFocus(){
 	$('#adminId').focus();
 }
 </script>
-
-
-
-
 
 
 

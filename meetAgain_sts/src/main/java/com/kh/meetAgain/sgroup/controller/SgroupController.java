@@ -12,23 +12,32 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.meetAgain.board.model.vo.Board;
-import com.kh.meetAgain.common.util.Utils;
-import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
+import com.kh.meetAgain.common.util.Utils;
+import com.kh.meetAgain.member.model.service.MemberService;
+import com.kh.meetAgain.member.model.vo.CateInfo;
+import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
-
+@SessionAttributes(value= {"member", "gid"})
 @Controller
 public class SgroupController {
 
 	@Autowired
 	SgroupService sgroupService;
 
+  @Autowired
+	MemberService memberService;
+  
 	// 모입 생성 페이지로 이동
 	@RequestMapping("/sgroup/create.do")
 	public String create() {
@@ -41,6 +50,7 @@ public class SgroupController {
 	         @RequestParam String userId) {
 
 		System.out.println("sgroup : " + sgroup);
+		System.out.println("userIdtest : " + userId);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
 
 	      File dir = new File(saveDir);
@@ -88,12 +98,20 @@ public class SgroupController {
 	}
 	// 소모임 전체 리스트 출력
 	@RequestMapping("sgroup/group.do")
-	public String group(Model model) {
+	public String group(@ModelAttribute("member") Member m, Model model) {
 		
 		List<Sgroup> list = sgroupService.selectSgroupList();
 		
-		model.addAttribute("list", list);
+		List<CateInfo> cateInfo = sgroupService.selectCateInfo(m.getUserId());
 		
+		List<Joing> joUser = sgroupService.selectJoingUser(m.getUserId());
+		
+		model.addAttribute("list", list);
+		model.addAttribute("cateInfo", cateInfo);
+		model.addAttribute("joUser", joUser);
+		
+		System.out.println("cateInfo : " + cateInfo);
+		System.out.println("joing : " + joUser);
 		return "sgroup/group";
 	}
 
@@ -103,23 +121,44 @@ public class SgroupController {
 		
 		Sgroup sr = sgroupService.selectOneSgroup(gId);
 		
-		System.out.println("sr1111 : " + sr);
-	
+		List<Joing> joing = sgroupService.selectJoing(gId);
+		
 		model.addAttribute("sgroup", sr);
-
+		model.addAttribute("joing", joing);
+		
 		return "sgroup/groupInfo";
+	}
+	
+	@RequestMapping("/sgroup/groupJoin.do")
+	public String groupJoin(Joing joing, Model model) {
+		
+		int result = sgroupService.insertGroupJoin(joing);
+
+		System.out.println("result : " + result);
+
+		 String loc = "/sgroup/group.do"; 
+		 String msg = "";
+		 
+		 if(result > 0) msg = "모임 가입 성공!"; 
+		 else msg = "모임 가입 실패!";
+		  
+		  model.addAttribute("loc", loc); 
+		  model.addAttribute("msg", msg);
+
+		return "common/msg";
+	}
+
+	
+	@RequestMapping("/sgroup/groupDetail.do")
+	public String groupDetail() {
+		
+		return "sgroup/groupDetail";
 	}
 	
 	@RequestMapping("/sgroup/groupAlbum.do")
 	public String groupAlbum() {
 		return "sgroup/groupAlbum";
 	}
-
-	@RequestMapping("/sgroup/groupCalendar.do")
-	public String groupCalendar() {
-		return "sgroup/groupCalendar";
-	}
-
 
 	@RequestMapping("/sgroup/groupMap.do")
 	public String groupMap() {
@@ -245,7 +284,10 @@ public class SgroupController {
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		System.out.println("deleteController : "+model);
 		return "common/msg";
-	}@RequestMapping("sgroup/insertComment.do")
+
+	}
+  
+  @RequestMapping("sgroup/insertComment.do")
 	public String insertComment(GB_comment GB_comment, int gbId, Model model) {
 
 		int result = sgroupService.insertComment(GB_comment);
@@ -265,6 +307,7 @@ public class SgroupController {
 		return "common/msg";
 
 	}
+  
 	@RequestMapping("sgroup/selectGboardComment.do")
 	public String listComment(Model model) {
 		
@@ -275,4 +318,22 @@ public class SgroupController {
 		 */
 		return "sgroup/groupBoardDetail.do";
 	}
+
+
+
+	
+	@RequestMapping("sgroup/gotoGroup.do")
+	public String gotoGroup(@RequestParam String gid, Model model) {
+				
+		String loc = "/sgroup/groupBoard.do?gid="+gid;
+		String msg = "";
+		
+		model.addAttribute("gid",gid);
+		model.addAttribute("loc", loc);
+		
+		return "common/msg";
+	}
+	
+	
 }
+

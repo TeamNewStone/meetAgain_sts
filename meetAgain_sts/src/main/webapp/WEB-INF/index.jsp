@@ -242,69 +242,7 @@
 </div>
 
 
-<!-- 리뷰 작성 the modal // 마이페이지 화면구현 다 되면 마이페이지로 옮길 코드입니다 -->
-<div class="modal fade" id="exReviewInsert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-      <div style="float:left;">
-        <h4 class="modal-title" id="exampleModalLabel">352_프로그래밍
-        <span class="badge badge-success mb-2">Study</span><br />
-        
-        </h4>
-        <h6 style="font-weight:normal;color:#9c9c9c;">2020/02/19 ~ 2020/08/10</h6>
-        </div>
-        <div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button></div>
-      </div>
-      <div class="modal-body">
-      <p id="star_grade">
-      별점 :  
-      <div class="rating">
-                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
-                <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점" checked>
-                <label for="rating1"></label>
-                <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio" title="2점" checked>
-                <label for="rating2"></label>
-                <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio" title="3점" checked>
-                <label for="rating3"></label>
-                <input type="checkbox" name="rating" id="rating4" value="4" class="rate_radio" title="4점">
-                <label for="rating4"></label>
-                <input type="checkbox" name="rating" id="rating5" value="5" class="rate_radio" title="5점">
-                <label for="rating5"></label>
-            </div> 
 
-	   </p>
-        <form action="#">
-        <div class="card-header">
-        <div class="input-group">
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="inputGroupFile02" name="upFile">
-    <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
-  </div>
-</div>
-        </div>
-        <div class="card-body custom-control custom-checkbox my-2">
-		<textarea class="form-control" rows="5" style="resize:none;" ></textarea>
-
-        </div>
-
-		
-        <br />
-
-</form>
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-success">Submit</button>
-      </div>
-        
-
-</div>
-</div>
-</div>
 
 
 

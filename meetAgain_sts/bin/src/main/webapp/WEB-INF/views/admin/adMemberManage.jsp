@@ -68,7 +68,7 @@ $(function(){
 			$(this).parent().css({"background":"white"});
 		
 		}).click(function(){
-			location.href="${ pageContext.request.contextPath }/views/admin/adMemberDetail.jsp";
+			location.href="${ pageContext.request.contextPath }/admin/adMemberDetail.do";
 			//console.log($(this).parent().children().eq(0).text());
 		
 			//var nno = $(this).parent().children().eq(0).text();

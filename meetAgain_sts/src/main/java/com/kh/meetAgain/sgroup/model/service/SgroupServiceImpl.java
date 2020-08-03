@@ -1,5 +1,6 @@
 package com.kh.meetAgain.sgroup.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.Map;
@@ -7,12 +8,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.dao.SgroupDAO;
 import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 
 @Service("sgroupService")
 public class SgroupServiceImpl implements SgroupService {
@@ -35,6 +38,27 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.selectOneSgroup(gId);
 	}
 
+	@Override
+	public List<CateInfo> selectCateInfo(String userId) {
+		return sgroupDAO.selectCateInfo(userId);
+	}
+
+	@Override
+	public List<Joing> selectJoing(String gId) {
+		return sgroupDAO.selectJoing(gId);
+	}
+
+	@Override
+	public List<Joing> selectJoingUser(String userId) {
+		return sgroupDAO.selectJoingUser(userId);
+	}
+	
+	@Override
+	public int insertGroupJoin(Joing joing) {
+		return sgroupDAO.insertGroupJoin(joing);
+	}
+	
+	@Override
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
 
 		return sgroupDAO.selectgBoardList(cPage, numPerPage);
@@ -79,12 +103,11 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.updateReadCount(bId);
 	}
 
-// -----------------------------------------------------------
-
 	@Override
 	public int addCalendar(Calendar calendar) {
 		return sgroupDAO.addCalendar(calendar);
 	}
+
 	@Override
 	public int insertComment(GB_comment gB_comment) {
 		return sgroupDAO.insertComment(gB_comment);
@@ -94,4 +117,12 @@ public class SgroupServiceImpl implements SgroupService {
 	public List<GB_comment> selectCommentList(int gbId) {
 		return sgroupDAO.selectCommentList(gbId);
 	}
+
+
+	@Override
+	public List<Calendar> loadList() {
+		return sgroupDAO.loadList();
+	}
+
+
 }

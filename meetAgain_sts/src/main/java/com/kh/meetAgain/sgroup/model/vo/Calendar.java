@@ -14,8 +14,9 @@ public class Calendar {
 	
 	private String gid;
 	private Date gdate;
+	private Date gdateEnd;
 	private String ginfo;
-	private String gtimeStr; // 시간
+	// private String gtimeStr; // 시간
 	private Timestamp gtime;	
 	private String isctn;
 

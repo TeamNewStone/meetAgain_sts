@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/WEB-INF/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/adminHeader.jsp" />
 <br />
 <br />
 <br />
@@ -19,6 +19,7 @@
 						<label>제목 : &nbsp;</label> <input type="text" class="form-control" name="bTitle" id="bTitle" style="width:400px; display:inline"/>
 					</div>
 				</div>
+				<br />
 				<div class="read-bt">
 				
 					 <textarea id="bContent" name="bContent" cols="135" rows="15" style="resize:none;"></textarea> 
@@ -65,4 +66,4 @@ $('#nInsertForm').submit(function(){
 	
 
 	
-<c:import url="/WEB-INF/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/common/adminFooter.jsp" />
