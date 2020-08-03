@@ -3,13 +3,20 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="calendarMapper">
+
+	<!-- <resultMap type="Calendar" id="">
+		<id></id>
+		<result> </result>
+		<result> </result>		
+	</resultMap> -->	
 	
 	<insert id="insertSchedule" parameterType="Calendar">
-		INSERT INTO CALENDAR VALUES(#{gid}, #{gdate}, #{ginfo}, #{gtime}, DEFAULT)
+		INSERT INTO CALENDAR VALUES(#{gid}, #{gdate}, #{gdateEnd}, #{ginfo}, #{gtime}, DEFAULT)
 	</insert>
 	
-	<select id="selectCalendar" resultType="Calendar">
-		SELECT C.*, TO_CHAR(GTIME, 'HH24:MI') "GTIMESTR" FROM CALENDAR C
+	<select id="loadList" resultType="Calendar">
+		<!-- SELECT C.*, SUBSTR((TO_CHAR(GTIME, 'HH:MI'), 1, 11) FROM CALENDAR C -->
+		SELECT GID, GDATE, GDATEEND + 1 "GDATEEND", GINFO, GTIME, ISCTN FROM CALENDAR
 	</select>
 	
 </mapper>

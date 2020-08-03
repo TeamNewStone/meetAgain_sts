@@ -99,6 +99,14 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int addCalendar(Calendar calendar) {
 		return sqlSession.insert("calendarMapper.insertSchedule", calendar);
 	}
+	
+	@Override
+	public List<Calendar> loadList() {		
+		System.out.println("DAO실행");
+		System.out.println(sqlSession.selectList("calendarMapper.loadList"));
+		
+		return sqlSession.selectList("calendarMapper.loadList");
+	}
 
   
   @Override

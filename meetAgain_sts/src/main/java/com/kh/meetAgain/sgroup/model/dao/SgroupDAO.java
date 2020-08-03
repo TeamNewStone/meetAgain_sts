@@ -43,6 +43,6 @@ public interface SgroupDAO {
 
 	int addCalendar(Calendar calendar);
 
-	
+	List<Calendar> loadList();
 
 }

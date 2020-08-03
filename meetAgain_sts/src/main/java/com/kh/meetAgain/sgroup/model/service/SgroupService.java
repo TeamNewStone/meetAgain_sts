@@ -44,7 +44,7 @@ public interface SgroupService {
 	
 	int addCalendar(Calendar calendar);
 
-
+	List<Calendar> loadList();
 
 	
 }
