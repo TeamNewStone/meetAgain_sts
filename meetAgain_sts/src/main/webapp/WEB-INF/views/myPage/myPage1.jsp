@@ -136,7 +136,7 @@
 				<c:forEach items="${mygroup}" var="mg">
 					<div class="col-md-4" style="max-width: 500px;">
 						<div class="component">
-							<div class="card">
+							<div class="card" id = "${mg.getGId()}">
 								<div class="card-header">
 									<c:if test="${mg.getGImg() eq null}">
 										<c:if test="${mg.getGType() eq 'S'}">
@@ -253,7 +253,7 @@
 
 					<div class="col-md-4" style="max-width: 500px;">
 						<div class="component">
-							<div class="card">
+							<div class="card" id = "${cg.getGId()}">
 								<div class="card-header">
 									<c:if test="${cg.getGImg() eq null}">
 										<c:if test="${cg.getGType() eq 'S'}">
@@ -444,6 +444,13 @@
 <script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script>
 
 <script>
+$(function(){
+	$(".card").on("click",function(){
+		var gId = $(this).attr("id");
+		console.log("gId="+gId);
+		location.href = "${pageContext.request.contextPath}/sgroup/gotoGroup.do?gid="+gId;
+	});
+	
 	function accountEdit() {
 		location.href = "myPage2.do";
 	}
@@ -494,7 +501,7 @@
 		var muserId = ${member.userId};
 		location.href="${pageContext.request.contextPath}/myPage/follow.do?uid="+userId+"&muserId="+muserId;
 	}
-	
+});
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
