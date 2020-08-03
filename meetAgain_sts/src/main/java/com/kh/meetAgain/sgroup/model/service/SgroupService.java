@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
+import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 public interface SgroupService {
@@ -34,5 +35,9 @@ public interface SgroupService {
 	int updateReadCount(int bId);
 	
 	int addCalendar(Calendar calendar);
+
+	List<GB_comment> selectCommentList();
+
+	int insertComment(GB_comment gB_comment);
 	
 }

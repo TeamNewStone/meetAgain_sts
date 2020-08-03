@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
+import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
@@ -181,11 +182,11 @@ public class SgroupController {
 
 		int result = sgroupService.insertgBoard(Gboard);
 
-		String loc = "/sgroup/groupBoardDetail.do";
+		String loc = "sgroup/groupBoardDetail.do";
 		String msg = "";
 		if (result > 0) {
 			msg = "게시글 등록 성공!";
-			loc = "/sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
+			loc = "sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
 
 		} else {
 			msg = "게시글 등록 실패!";
@@ -201,7 +202,6 @@ public class SgroupController {
 	@RequestMapping("sgroup/groupBoardUpdate.do")
 	public String noticeUpdate(@RequestParam int gbId, Model model) {
 		model.addAttribute("Gboard", sgroupService.SelectOnegBoard(gbId));
-		System.out.println("updateController : " + model);
 		return "sgroup/groupBoardUpdateForm";
 	}
 	
@@ -209,7 +209,7 @@ public class SgroupController {
 	public String gbUpdate(Gboard Gboard, Model model) {
 		int result = sgroupService.updategBoard(Gboard);
 		
-		String loc = "/sgroup/groupBoard.do";
+		String loc = "sgroup/groupBoard.do";
 		String msg = "";
 		
 		if(result > 0) {
@@ -229,7 +229,7 @@ public class SgroupController {
 	public String groupBoardDelete(@RequestParam int gbId, HttpSession session, Model model) {
 		int result = sgroupService.deletegBoard(gbId);
 		
-		String loc = "/sgroup/groupBoard.do";
+		String loc = "sgroup/groupBoard.do";
 		String msg = "";
 		
 		if(result > 0) {
@@ -242,5 +242,33 @@ public class SgroupController {
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		System.out.println("deleteController : "+model);
 		return "common/msg";
+	}@RequestMapping("sgroup/insertComment.do")
+	public String insertComment(GB_comment GB_comment, int gbId, Model model) {
+
+		int result = sgroupService.insertComment(GB_comment);
+
+		String loc = "sgroup/insertComment.do";
+		String msg = "";
+		if (result > 0) {
+			msg = "댓글 등록 성공!";
+			loc = "sgroup/groupBoardDetail.do?gbId=" + gbId;
+
+		} else {
+			msg = "댓글 등록 실패!";
+		}
+
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+
+		return "common/msg";
+
+	}
+	@RequestMapping("sgroup/selectGboardComment.do")
+	public String listComment(Model model) {
+		
+		List<GB_comment> list = sgroupService.selectCommentList();
+		
+		model.addAttribute("list", list);
+		
+		return "sgroup/groupBoardDetail.do";
 	}
 }

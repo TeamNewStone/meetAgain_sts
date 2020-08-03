@@ -11,6 +11,7 @@ import com.kh.meetAgain.sgroup.model.dao.SgroupDAO;
 import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
+import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 @Service("sgroupService")
@@ -83,5 +84,14 @@ public class SgroupServiceImpl implements SgroupService {
 	@Override
 	public int addCalendar(Calendar calendar) {
 		return sgroupDAO.addCalendar(calendar);
+	}
+	@Override
+	public int insertComment(GB_comment gB_comment) {
+		return sgroupDAO.insertComment(gB_comment);
+	}
+
+	@Override
+	public List<GB_comment> selectCommentList() {
+		return sgroupDAO.selectCommentList();
 	}
 }

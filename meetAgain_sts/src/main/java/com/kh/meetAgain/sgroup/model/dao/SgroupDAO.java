@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
+import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 public interface SgroupDAO {
@@ -30,5 +31,9 @@ public interface SgroupDAO {
 	int deletegBoard(int gbId);
 
 	int addCalendar(Calendar calendar);
+
+	List<GB_comment> selectCommentList();
+
+	int insertComment(GB_comment gB_comment);
 
 }
