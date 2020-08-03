@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="servCenterMapper">
+<select id="selectReportList" resultType="Report">
+	SELECT RCTIME, M.NICKNAME "tnickName", RCINFO, STMT FROM REPORT R
+	JOIN MEMBER M ON(M.USERID = R.TARGETID)
+	JOIN MEMBER M2 ON(M2.USERID = R.USERID) WHERE M2.USERID=#{userId} ORDER BY RCTIME, STMT
+</select>
+<select id="selectReportTotalContents" resultType="_int">
+	SELECT COUNT(*) FROM REPORT WHERE USERID=#{userId}
+</select>
+</mapper>

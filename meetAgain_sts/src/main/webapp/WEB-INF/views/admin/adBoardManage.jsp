@@ -54,7 +54,7 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 </tbody>
 </table>
 </div>
-
+<c:out value="${pageBar}" escapeXml="false"/>
 <script>
 $(function(){
 		$("tr[id]").mouseenter(function(){
