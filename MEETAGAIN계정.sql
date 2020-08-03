@@ -472,6 +472,6 @@ BEGIN
 END;
 /
 
-
+ALTER TABLE CALENDAR ADD(GDATEEND DATE NOT NULL);
 
 commit;                  
