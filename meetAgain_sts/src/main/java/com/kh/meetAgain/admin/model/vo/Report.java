@@ -27,5 +27,5 @@ public class Report extends GbComment implements Serializable {
 	private int gbId;
 	private Date rcTime;
 	private String tnickName;
-	
+	private int warn_cnt;
 }

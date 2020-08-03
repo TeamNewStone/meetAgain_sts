@@ -10,6 +10,8 @@ import com.kh.meetAgain.admin.model.dao.AdminDAO;
 import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.sgroup.model.vo.GbComment;
+import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService {
@@ -64,6 +66,32 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Report selectOneComment(int rcId) {
 		return adminDAO.selectOneComment(rcId);
+	}
+
+	@Override
+	public int reportReject(Report report) {
+		return adminDAO.reportReject(report);
+	}
+
+	@Override
+	public int reportUpdate(Report report, Member member) {
+		int result = adminDAO.reportUpdate(report);
+		int result2 = adminDAO.memberWarnUpdate(member);
+		if(result != 0 && result2 != 0) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+
+	@Override
+	public int gbDelUpdate(Gboard gboard) {
+		return adminDAO.gbDelUpdate(gboard);
+	}
+
+	@Override
+	public int gcDelUpdate(GbComment gbComment) {
+		return adminDAO.gcDelUpdate(gbComment);
 	}
 
 }

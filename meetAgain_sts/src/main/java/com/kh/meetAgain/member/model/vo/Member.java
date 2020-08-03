@@ -34,6 +34,6 @@ public class Member implements Serializable{
 	private int warn_Cnt;
 	private String stop_Yna;
 	private Date stop_Time;
-	
+	private int rcId;
 	
 }

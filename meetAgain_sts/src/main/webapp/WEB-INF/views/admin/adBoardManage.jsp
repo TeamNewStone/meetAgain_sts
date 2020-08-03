@@ -34,13 +34,14 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 <tbody>
 <c:if test="${!empty list}">
 <c:forEach items="${list }" var="r">
-<tr>
+<tr id="${r.rcId }">
 	<input type="hidden" id="rcId" value="${r.rcId }" />
 	<td>${ r.rcId }</td>
 	<td>${ r.GTitle }</td>
 	<td>${ r.gbTitle }</td>
 	<td>${ r.rcInfo }</td>
 	<td>${ r.nickName }</td>
+	<input type="hidden" id="stmt" value="${r.stmt }" />
 	<td>${ r.stmt }</td>
 </tr>
 </c:forEach>
@@ -56,19 +57,23 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 
 <script>
 $(function(){
-		
-		$(".table td").mouseenter(function(){
-			$(this).parent().css({"background":"#cedced", "cursor":"pointer"});
+		$("tr[id]").mouseenter(function(){
+			if($(this).children().eq(6).val() == 'N'){
+				
+			$(this).css({"background":"#cedced", "cursor":"pointer"});
+			}
 		
 		}).mouseout(function(){
 			
-			$(this).parent().css({"background":"white"});
-		
+			$(this).css({"background":"white"});
+			
 		}).click(function(){
+			if($(this).children().eq(6).val() == 'N'){
 			var rcId = $('#rcId').val();
 			location.href="${pageContext.request.contextPath}/admin/adBoardDetail.do?rcId="+rcId;
-
+			}
 		});
+		
 	});
 
 

@@ -17,6 +17,8 @@ import com.kh.meetAgain.admin.model.service.AdminService;
 import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.sgroup.model.vo.GbComment;
+import com.kh.meetAgain.sgroup.model.vo.Gboard;
 @SessionAttributes(value= {"member"})
 @Controller
 public class AdminController {
@@ -170,6 +172,65 @@ public class AdminController {
 			status.setComplete();
 		
 		return "admin/adLogin";
+	}
+	@RequestMapping("/admin/reportReject.do")
+	public String reportReject(Report report, Model model) {
+		int result = adminService.reportReject(report);
+		String msg = "";
+		String loc = "/";
+		if(result > 0) {
+			msg="신고 처리를 완료하였습니다.";
+			if(report.getCId()>0) {
+				loc= "/admin/adCommentManage.do";
+			}else {
+				loc= "/admin/adBoardManage.do";
+			}
+		}else {
+			msg = "신고 처리에 실패하였습니다 .다시 시도해주세요.";
+			if(report.getCId()>0) {
+				loc= "/admin/adCommentManage.do";
+			}else {
+				loc= "/admin/adBoardManage.do";
+			}
+			
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("loc", loc);
+		return "common/msg";
+		
+	}
+	@RequestMapping("/admin/reportUpdate.do")
+	public String reportUdpate(@RequestParam String doDelete,GbComment gbComment,
+			Gboard gboard, Member member, Report report, Model model) {
+		int result = adminService.reportUpdate(report, member);
+		int result2 = 0;
+		System.out.println(doDelete);
+		if(report.getCId()>0 && doDelete.equals("on")) {
+			result2 = adminService.gcDelUpdate(gbComment);
+		}else if(doDelete.equals("on")) {
+			result2 = adminService.gbDelUpdate(gboard);
+		}
+		String msg = "";
+		String loc = "/";
+		if(result > 0 && result2 > 0) {
+			msg="신고 처리를 완료하였습니다.";
+			if(report.getCId()>0) {
+				loc= "/admin/adCommentManage.do";
+			}else {
+				loc= "/admin/adBoardManage.do";
+			}
+		}else {
+			msg = "신고 처리에 실패하였습니다 .다시 시도해주세요.";
+			if(report.getCId()>0) {
+				loc= "/admin/adCommentManage.do";
+			}else {
+				loc= "/admin/adBoardManage.do";
+			}
+			
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("loc", loc);
+		return "common/msg";
 	}
 
 }
