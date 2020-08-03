@@ -7,6 +7,7 @@ import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 
 public interface SgroupService {
 
@@ -17,6 +18,8 @@ public interface SgroupService {
 	Sgroup selectOneSgroup(String gId);
 	
 	List<CateInfo> selectCateInfo(String userId);
+	
+	List<Joing> selectJoing(String userId);
 
 // -----------------------------------------------------------
 	static int SGROUP_SERVICE_ERROR = 0;
@@ -37,6 +40,7 @@ public interface SgroupService {
 	int updateReadCount(int bId);
 	
 	int addCalendar(Calendar calendar);
+
 
 
 	

@@ -6,6 +6,7 @@ import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 public interface SgroupDAO {
@@ -19,6 +20,7 @@ public interface SgroupDAO {
 
 	List<CateInfo> selectCateInfo(String userId);
 
+	List<Joing> selectJoing(String userId);
 // -------------------------------------------------
 	
 	List<Map<String, String>> selectgBoardList(int cPage, int numPerPage);
@@ -36,5 +38,7 @@ public interface SgroupDAO {
 	int deletegBoard(int gbId);
 
 	int addCalendar(Calendar calendar);
+
+	
 
 }

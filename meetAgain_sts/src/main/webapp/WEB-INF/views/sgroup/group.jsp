@@ -14,7 +14,6 @@
 	<input type="hidden" id="address3" value="${member.address3}" />
 </c:if>
 <div id="map"></div>
-
 	<br>
 		<div class="row">
 			<div class="col-lg-3 col-md-3">
@@ -157,13 +156,13 @@
  	<div class="row">
 			<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
 		</div> 
- <c:forEach items="${CateInfo}" var="ca">
-      <c:forEach items="${list}" var="sg">       
-   <c:if test="${fn:length(ca) != 0}" >
-   	<c:forEach items="${ca.cateId }" var="cateId">
-   		
-   	<c:if test="${cateId eq sg.getCateId() }">   
-      <div class="row">
+<div class="row">
+<c:if test="${empty cateInfo}">
+	<p style="margin-left:20px"> 설정한 관심 카테고리가 없습니다. 마이페이지에서 관심 카테고리를 등록해주세요! </p>
+</c:if>
+<c:forEach items="${cateInfo}" var="ca">
+<c:forEach items="${list}" var="sg">
+<c:if test="${ca.getGId() eq sg.getGId()}">   
               <div class="col-md-4 cardOne" style="max-width: 500px;">
                 <div class="component">
                   <div class="card" id="${ sg.getGId()}" style="cursor:pointer;">
@@ -237,10 +236,10 @@
                           <span class="badge badge-danger">나이 제한</span>
                        </c:if>
                     </c:if>
-
-                     
-                     
-                     
+					
+					<c:if test="${!empty sg.getGPwd() }">
+					<span class="badge badge-danger">비공개</span>
+					</c:if>
                       <h4 class="card-title mt-2">${sg.getGTitle()}</h4>
                       <p class="card-text">
                       <c:choose>
@@ -259,29 +258,15 @@
                 
             <br /><br /><br />
               </div>
-   </div>
-   </c:if>
+      </c:if>        
    	</c:forEach>
-            </c:if>
-            </c:forEach> 
-            </c:forEach> 
+   	</c:forEach>
+   </div>
+
 		
 	
 </div>
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<br> <br> <br>
 <div class="container">
 	<div class="row">
@@ -360,7 +345,9 @@
      						</c:if>
      					</c:if>
 
-     					 
+     					 <c:if test="${!empty sg.getGPwd() }">
+						<span class="badge badge-danger">비공개</span>
+						</c:if>
      					 
      					 
 				          <h4 class="card-title mt-2">${sg.getGTitle()}</h4>

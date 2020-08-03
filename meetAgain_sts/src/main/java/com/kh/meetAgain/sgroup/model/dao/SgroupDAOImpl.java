@@ -11,6 +11,7 @@ import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @Repository("sgroupDAO")
@@ -40,6 +41,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.selectList("sgroupMapper.selectCateInfo", userId);
 	}
 	
+	
+	@Override
+	public List<Joing> selectJoing(String gId) {
+		return sqlSession.selectList("sgroupMapper.selectJoing", gId);
+	}
 // -----------------------------------------------------------------------
 
 	@Override
@@ -90,6 +96,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 		System.out.println("deleteDAO : "+gbId);
 		return sqlSession.delete("sgroupMapper.deletegBoard", gbId);
 	}
+
 
 
 }

@@ -47,12 +47,12 @@
 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="+ gbId;
 	}
 </script>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

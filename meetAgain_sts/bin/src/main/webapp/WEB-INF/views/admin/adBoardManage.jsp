@@ -32,16 +32,23 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 </tr>
 </thead>
 <tbody>
-<c:forEach var="i" begin="1" end="3">
+<c:if test="${!empty list}">
+<c:forEach items="${list }" var="r">
 <tr>
-	<td>${ i }</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
+	<td>${ r.rcId }</td>
+	<td>${ r.GTitle }</td>
+	<td>${ r.gbTitle }</td>
+	<td>${ r.rcInfo }</td>
+	<td>${ r.userId }</td>
+	<td>${ r.stmt }</td>
 </tr>
 </c:forEach>
+</c:if>
+<c:if test="${empty list}">
+<tr>
+	<td colspan="6">신고 내역이 없습니다.</td>
+</tr>
+</c:if>
 </tbody>
 </table>
 </div>
@@ -57,10 +64,11 @@ $(function(){
 			$(this).parent().css({"background":"white"});
 		
 		}).click(function(){
-			location.href="/meetAgain/views/admin/adBoardDetail.jsp";
+			var rcId = '${r.rcId}'
+			location.href="${pageContext.request.contextPath}/admin/adBoardDetail.do?rcId="+rcId;
 			//console.log($(this).parent().children().eq(0).text());
 		
-			//var nno = $(this).parent().children().eq(0).text();
+			/* // var nno = $(this).parent().children().eq(0).text(); */
 			
 			
 			<%-- location.href="<%=request.getContextPath()%>/selectOne.no?nno=" + nno; --%>
