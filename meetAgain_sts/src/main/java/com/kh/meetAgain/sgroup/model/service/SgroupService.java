@@ -19,8 +19,11 @@ public interface SgroupService {
 	
 	List<CateInfo> selectCateInfo(String userId);
 	
-	List<Joing> selectJoing(String userId);
+	List<Joing> selectJoing(String gId);
+	
+	List<Joing> selectJoingUser(String userId);
 
+	int insertGroupJoin(Joing joing);
 // -----------------------------------------------------------
 	static int SGROUP_SERVICE_ERROR = 0;
 	static int SGROUP_SERVICE_COMPLETE = 1;

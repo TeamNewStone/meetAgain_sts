@@ -15,4 +15,5 @@ public class Joing {
 	private int isReady;
 	private String isOut;
 	private String isLeave;
+	private String joinType;
 }

@@ -2,13 +2,13 @@ package com.kh.meetAgain.sgroup.model.dao;
 
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.meetAgain.member.model.vo.CateInfo;
-import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Joing;
@@ -45,6 +45,16 @@ public class SgroupDAOImpl implements SgroupDAO {
 	@Override
 	public List<Joing> selectJoing(String gId) {
 		return sqlSession.selectList("sgroupMapper.selectJoing", gId);
+	}
+	
+	@Override
+	public List<Joing> selectJoingUser(String userId) {
+		return sqlSession.selectList("sgroupMapper.selectJoingUser", userId);
+	}
+	
+	@Override
+	public int insertGroupJoin(Joing joing) {
+		return sqlSession.insert("sgroupMapper.insertGroupJoin", joing);
 	}
 // -----------------------------------------------------------------------
 
@@ -96,6 +106,10 @@ public class SgroupDAOImpl implements SgroupDAO {
 		System.out.println("deleteDAO : "+gbId);
 		return sqlSession.delete("sgroupMapper.deletegBoard", gbId);
 	}
+
+
+
+
 
 
 

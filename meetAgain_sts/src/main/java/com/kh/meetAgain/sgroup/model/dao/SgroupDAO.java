@@ -20,7 +20,11 @@ public interface SgroupDAO {
 
 	List<CateInfo> selectCateInfo(String userId);
 
-	List<Joing> selectJoing(String userId);
+	List<Joing> selectJoing(String gId);
+	
+	List<Joing> selectJoingUser(String userId);
+	
+	int insertGroupJoin(Joing joing);
 // -------------------------------------------------
 	
 	List<Map<String, String>> selectgBoardList(int cPage, int numPerPage);
