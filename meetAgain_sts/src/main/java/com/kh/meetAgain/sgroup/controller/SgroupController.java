@@ -300,4 +300,10 @@ public class SgroupController {
 		
 		return "common/msg";
 	}
+	
+	@RequestMapping("sgroup/reviewInsert.do")
+	public String InsertReview() {
+		
+		return "";
+	}
 }
