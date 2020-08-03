@@ -25,13 +25,13 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 	<th>모임명</th>
 	<td>${report.GTitle}</td>
 	<th>작성자</th>
-	<td>${report.targetId}</td>
+	<td>${report.tnickName}</td>
 </tr>
 <tr>
 	<th>신고사유</th>
 	<td>${report.rcInfo}</td>
 	<th>신고자</th>
-	<td>${report.userId}</td>
+	<td>${report.nickName}</td>
 </tr>
 <tr>
 	<th>게시글 제목</th>

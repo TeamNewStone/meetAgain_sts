@@ -35,11 +35,12 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 <c:if test="${!empty list}">
 <c:forEach items="${list }" var="r">
 <tr>
+	<input type="hidden" id="rcId" value="${r.rcId }" />
 	<td>${ r.rcId }</td>
 	<td>${ r.GTitle }</td>
 	<td>${ r.gbTitle }</td>
 	<td>${ r.rcInfo }</td>
-	<td>${ r.userId }</td>
+	<td>${ r.nickName }</td>
 	<td>${ r.stmt }</td>
 </tr>
 </c:forEach>
@@ -64,14 +65,9 @@ $(function(){
 			$(this).parent().css({"background":"white"});
 		
 		}).click(function(){
-			var rcId = '${r.rcId}'
+			var rcId = $('#rcId').val();
 			location.href="${pageContext.request.contextPath}/admin/adBoardDetail.do?rcId="+rcId;
-			//console.log($(this).parent().children().eq(0).text());
-		
-			/* // var nno = $(this).parent().children().eq(0).text(); */
-			
-			
-			<%-- location.href="<%=request.getContextPath()%>/selectOne.no?nno=" + nno; --%>
+
 		});
 	});
 
