@@ -136,7 +136,12 @@
 				<c:forEach items="${mygroup}" var="mg">
 					<div class="col-md-4" style="max-width: 500px;">
 						<div class="component">
+						<c:if test="${mg.getIsFin() eq 'Y'}">
+							<div class="card-fin" id = "${mg.getGId()}">
+							</c:if>
+							<c:if test="${mg.getIsFin() ne 'Y'}">
 							<div class="card" id = "${mg.getGId()}">
+							</c:if>
 								<div class="card-header">
 									<c:if test="${mg.getGImg() eq null}">
 										<c:if test="${mg.getGType() eq 'S'}">
@@ -228,7 +233,9 @@
 								</div>
 								<c:if test="${mg.getIsFin() eq 'Y'}">
 									<div class="card-footer">
-										<a href="#a" class="btn btn-outline-dark">리뷰 작성</a>
+										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark" 
+										data-title="${mg.getGTitle()}" data-cate="${mg.getCateId()}" 
+										data-sdate="${mg.getCreateDate()}" data-edate="${mg.getDurate()}">리뷰 작성</button>
 									</div>
 								</c:if>
 							</div>
@@ -253,7 +260,12 @@
 
 					<div class="col-md-4" style="max-width: 500px;">
 						<div class="component">
+							<c:if test="${cg.getIsFin() eq 'Y'}">
+							<div class="card-fin" id = "${cg.getGId()}">
+							</c:if>
+							<c:if test="${cg.getIsFin() ne 'Y'}">
 							<div class="card" id = "${cg.getGId()}">
+							</c:if>
 								<div class="card-header">
 									<c:if test="${cg.getGImg() eq null}">
 										<c:if test="${cg.getGType() eq 'S'}">
@@ -267,7 +279,7 @@
 									</c:if>
 									<c:if test="${cg.getGImg() ne null}">
 										<img class="card-img"
-											src="${ pageContext.request.contextPath }/resources/upload/groupImg/${mg.getGImg()}"
+											src="${ pageContext.request.contextPath }/resources/upload/groupImg/${cg.getGImg()}"
 											style="height: 200px;">
 									</c:if>
 								</div>
@@ -346,7 +358,10 @@
 								</div>
 								<c:if test="${cg.getIsFin() eq 'Y'}">
 									<div class="card-footer">
-										<a href="#a" class="btn btn-outline-dark">리뷰 작성</a>
+										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark" 
+										data-title="${cg.getGTitle()}" data-cate="${cg.getCateId()}" 
+										data-sdate="${cg.getCreateDate()}" data-edate="${cg.getDurate()}">리뷰 작성</button>
+										
 									</div>
 								</c:if>
 							</div>
@@ -429,7 +444,70 @@
 		</div>
 
 	</div>
+<!-- 리뷰 작성 the modal // 마이페이지 화면구현 다 되면 마이페이지로 옮길 코드입니다 -->
+<div class="modal fade" id="reviewInsert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <div style="float:left;">
+        <h4 class="modal-title" id="exampleModalLabel">
+        <span class = "titleSpace"></span>
+        <span class="badge badge-success mb-2" id = "modal-cate">Study</span><br />
+        </h4>
+        <h6 class = "modal-date" style="font-weight:normal;color:#9c9c9c;"></h6>
+        </div>
+        <div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button></div>
+      </div>
+      <div class="modal-body">
+    <form action="reviewInsert.do">
+      <p id="star_grade">
+      별점 :  
+      <div class="rating">
+                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
+                <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점" checked>
+                <label for="rating1"></label>
+                <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio" title="2점" checked>
+                <label for="rating2"></label>
+                <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio" title="3점" checked>
+                <label for="rating3"></label>
+                <input type="checkbox" name="rating" id="rating4" value="4" class="rate_radio" title="4점">
+                <label for="rating4"></label>
+                <input type="checkbox" name="rating" id="rating5" value="5" class="rate_radio" title="5점">
+                <label for="rating5"></label>
+            </div> 
 
+	   </p>
+        
+        <div class="card-header">
+        <div class="input-group">
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="inputGroupFile02" name="upFile">
+    <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+  </div>
+</div>
+        </div>
+        <div class="card-body custom-control custom-checkbox my-2">
+		<textarea class="form-control" rows="5" style="resize:none;" ></textarea>
+
+        </div>
+
+		
+        <br />
+
+</form>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success">Submit</button>
+      </div>
+        
+
+</div>
+</div>
+</div>
 </div>
 
 <!-- 마이페이지 메인 끝 -->
@@ -446,11 +524,38 @@
 <script>
 $(function(){
 	$(".card").on("click",function(){
+		
 		var gId = $(this).attr("id");
 		console.log("gId="+gId);
 		location.href = "${pageContext.request.contextPath}/sgroup/gotoGroup.do?gid="+gId;
+	}).mouseenter(function(){
+		$(this).css({
+			"cursor" : "pointer"
+		});
 	});
 	
+	$(".btn-outline-dark").click(function(){
+		var gtitle = $(this).data('title');
+		var sdate = $(this).data('sdate');
+		var edate = $(this).data('edate');
+		var cate = $(this).data('cate');
+		console.log(cate);
+		
+		var category;
+		switch(cate){
+		case 'C01' : category="운동";
+		case 'C02' : category="친목";
+		case 'C03' : category="공부";
+		case 'C04' : category="취미생활";
+		case 'C05' : category="문화생활";
+		case 'C06' : category="여행";
+		case 'C07' : category="봉사";
+		case 'C08' : category="기타";
+		}
+		$(".modal-date").html(sdate+" ~ "+edate);
+		$(".titleSpace").html(gtitle);
+		$("#modal-cate").html(category);
+	});
 	function accountEdit() {
 		location.href = "myPage2.do";
 	}
@@ -501,6 +606,32 @@ $(function(){
 		var muserId = ${member.userId};
 		location.href="${pageContext.request.contextPath}/myPage/follow.do?uid="+userId+"&muserId="+muserId;
 	}
+});
+//별점 마킹 모듈 프로토타입으로 생성
+function Rating(){};
+Rating.prototype.rate = 0;
+Rating.prototype.setRate = function(newrate){
+  //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
+  this.rate = newrate;
+  let items = document.querySelectorAll('.rate_radio');
+  items.forEach(function(item, idx){
+      if(idx < newrate){
+          item.checked = true;
+      }else{
+          item.checked = false;
+      }
+  });
+}
+let rating = new Rating();//별점 인스턴스 생성
+
+document.addEventListener('DOMContentLoaded', function(){
+    //별점선택 이벤트 리스너
+    document.querySelector('.rating').addEventListener('click',function(e){
+        let elem = e.target;
+        if(elem.classList.contains('rate_radio')){
+            rating.setRate(parseInt(elem.value));
+        }
+    })
 });
 </script>
 
