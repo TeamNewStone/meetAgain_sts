@@ -99,19 +99,19 @@
 		GBID = #{gbId}
 	</delete>
 
-<!-- 	<insert id="insertComment" parameterType="GB_comment"> -->
-<!-- 		INSERT INTO -->
-<!-- 		GB_COMMNET -->
-<!-- 		VALUES(SEQ_CID.NEXTVAL, #{gbId}, #{userId}, DEFAULT, ?, , ?, ?, ?) -->
-<!-- 	</insert> -->
+<!-- 	<insert id="insertComment" parameterType="GB_comment">
+		INSERT INTO
+		GB_COMMNET
+		VALUES(SEQ_CID.NEXTVAL, #{gbId}, #{userId}, DEFAULT, ?, , ?, ?, ?)
+	</insert> -->
 
-<!-- 	<select id="selectCommentList" parameterType="_int"> -->
-<!-- 		SELECT C.*, (SELECT -->
-<!-- 		FROM MEMBER) "NICKNAME" -->
-<!-- 		FROM GB_comment C -->
-<!-- 		WHERE GBID = ? -->
-<!-- 		START WITH -->
-<!-- 		CLEVEL = 1 -->
-<!-- 		CONNECT BY PRIOR CID = CREF -->
-<!-- 	</select> -->
+<select id="selectCommentList" parameterType="_int" resultType="GB_comment">
+		SELECT C.*, (SELECT USERID
+		FROM MEMBER M WHERE C.USERID=M.USERID)
+		FROM GB_comment C
+		WHERE GBID = #{gbId}
+		START WITH
+		CLEVEL = 1
+		CONNECT BY PRIOR CID = CREF
+	</select>
 </mapper>

@@ -22,5 +22,5 @@ public class GB_comment extends Gboard implements Serializable {
 	private int cRef;
 	private int cLevel;
 	private int cRec;
-	private boolean cDel;
+	private String cDel;
 }

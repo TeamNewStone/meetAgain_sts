@@ -80,8 +80,8 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.delete("sgroupMapper.deletegBoard", gbId);
 	}
 	@Override
-	public List<GB_comment> selectCommentList() {
-		return sqlSession.selectList("sgroupMapper.selectCommentList");
+	public List<GB_comment> selectCommentList(int gbId) {
+		return sqlSession.selectList("sgroupMapper.selectCommentList", gbId);
 	}
 
 	@Override

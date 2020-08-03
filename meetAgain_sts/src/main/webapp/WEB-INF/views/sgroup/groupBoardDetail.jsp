@@ -9,9 +9,10 @@
 <%
 	Member m = (Member) session.getAttribute("Member");
 Gboard gb = (Gboard) request.getAttribute("Gboard");
-ArrayList<GB_comment> clist = (ArrayList<GB_comment>) request.getAttribute("clist");
+/* ArrayList<GB_comment> list = (ArrayList<GB_comment>) request.getAttribute("list"); */
 %>
 <c:import url="/WEB-INF/views/common/header.jsp" />
+
 <br>
 <br>
 <br>
@@ -35,65 +36,63 @@ ArrayList<GB_comment> clist = (ArrayList<GB_comment>) request.getAttribute("clis
 								type="hidden" name="gbId" value="${gb.gbId}" /> <input
 								type="hidden" name="cRef" value="1" /><input type="hidden"
 								name="cLevel" value="1" />
-
 							<table align="center">
 								<tr>
-									<td>댓글 작성</td>
 									<td><textArea rows="3" cols="80" id="replyContent"
 											name="replyContent"></textArea></td>
-									<td><button type="submit" id="addReply">댓글 등록</button></td>
+									<td><button type="submit"
+											class="btn btn-outline-secondary" id="group-boardbtn">댓글
+											등록</button></td>
 								</tr>
 							</table>
 						</form>
 					</div>
 					<div id="replySelectArea">
 						<!-- 게시글의 댓글 목록 구현부 -->
-						<c:forEach var="gbc" items="${ clist }">
-							<c:if test="${ clist.size() ne 0 }">
-								<%-- 댓글 목록이 있다면 --%>
+						<c:forEach var="gbc" items="${ list }">
+							<c:if test="${ list.size() ne 0 }">
 								<table id="replySelectTable"
-									style="margin-left : ${(gbc.cLevel - 1) * 15}px;
-	      	 		width : ${800 - ((gbc.cLevel - 1) * 15)}px;"
-									class="replyList${gbc.cLevel}">
+									class="replyList${gbc.getCLevel()} ">
+									<%-- 									style="margin-left : (${gbc.getCLevel()} - 1) * 15}px; --%>
 									<tr>
 										<td rowspan="2"></td>
-										<td><b>${gbc.cwriter}</b></td>
-										<td>${gbc.cdate}</td>
+										<td><b> <%-- ${gbc.CWriter} --%>
+										</b></td>
+										<td>${gbc.getCDate()}</td>
 										<td align="center"><c:if
-												test="${ member.userId eq gbc.userid }">
-												<input type="hidden" name="cId" value="${gbc.cId}" />
-
+												test="${ member.userId eq gbc.getUserId() }">
+												<input type="hidden" name="cId" value="${gbc.getCId()}" />
 												<button type="button" class="updateBtn"
 													onclick="updateReply(this);">수정하기</button>
-
 												<button type="button" class="updateConfirm"
 													onclick="updateConfirm(this);" style="display: none;">수정완료</button> &nbsp;&nbsp;
-							
 						<button type="button" class="deleteBtn"
 													onclick="deleteReply(this);">삭제하기</button>
 											</c:if> <c:if
-												test="${ member.userId ne gbc.userId and gbc.cLevel lt 3}">
-												<input type="hidden" name="writer" value="${member.nickName}" />
-												<input type="hidden" name="cRef" value="${gbc.cId}" />
-												<input type="hidden" name="cLevel" value="${gbc.cLevel}" />
-												<button type="button" class="insertBtn"
-													onclick="reComment(this);">댓글 달기</button>&nbsp;&nbsp;
-						<button type="button" class="insertConfirm"
+												test="${ member.userId ne gbc.getUserId() and gbc.getCLevel() lt 3}">
+												<input type="hidden" name="writer"
+													value="${member.nickName}" />
+												<input type="hidden" name="cRef" value="${gbc.getCId()}" />
+												<input type="hidden" name="cLevel"
+													value="${gbc.getCLevel()}" />
+												<button type="button" class="insertConfirm"
 													onclick="reConfirm(this);" style="display: none;">댓글
 													추가 완료</button>
-											</c:if> <c:if test="${ gbc.cLevel eq 3 }">
+											</c:if> <c:if test="${ gbc.getCLevel() eq 3 }">
 												<span> 마지막 레벨입니다.</span>
 											</c:if></td>
 									</tr>
-									<tr class="comment replyList${ gbc.cLevel}">
-										<td colspan="3" style="background: transparent;"><textarea
-												class="reply-content" cols="105" rows="3"
-												readonly="readonly">${ gbc.cContent}</textarea></td>
+									<tr class="comment replyList${ gbc.getCLevel()}">
+										<td colspan="3"
+											style="background: transparent; taxt-align: center;"><textarea
+												class="form-control" cols="85" rows="3" readonly="readonly">${ gbc.getCContent()}</textarea>
+											<button type="button" class="btn btn-outline-secondary"
+												onclick="reComment(this);">댓글 달기</button></td>
 									</tr>
 								</table>
 							</c:if>
-							<c:if test="${ clist.size() eq 0 }">
-								<%-- 댓글 목록이 없다면 --%>
+							<c:if test="${ list.size() eq 0 }">
+								댓글 목록이 없다면
 								<p>
 									현재 등록된 댓글의 내용이 없습니다. <br> 첫 댓글의 주인공이 되어 보세요!
 								</p>
@@ -187,25 +186,25 @@ ArrayList<GB_comment> clist = (ArrayList<GB_comment>) request.getAttribute("clis
 		console.log(cRef + " : " + cLevel);
 		
 		// 게시글 번호 가져오기
-		var gbId = '<%=gb.getGbId()%>';
-		
+		var gbId = '<%=gb.getGbId()%>
+	';
+
 		var parent = $(obj).parent().parent();
 		var grandparent = parent.parent();
 		var siblingsTR = grandparent.siblings().last();
-		
+
 		var content = siblingsTR.find('textarea').val();
-		
-		
-		location.href="${ pageContext.request.contextPath}/sgroup/insertComment.do"
-		           + '?getUserId=' + getUserId
-	 + '&replyContent=' + cContent
+
+		location.href = "${ pageContext.request.contextPath}/sgroup/insertComment.do"
+				+ '?getUserId='
+				+ getUserId
+				+ '&replyContent='
+				+ cContent
 				+ '&gbId=' + gbId + '&cRef=' + cRef + '&cLevel=' + cLevel;
 	}
 </script>
 <script>
-
-console.log("${list}");
-
+	console.log("${list}");
 </script>
 <br>
 <br>

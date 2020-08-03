@@ -91,7 +91,7 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
-	public List<GB_comment> selectCommentList() {
-		return sgroupDAO.selectCommentList();
+	public List<GB_comment> selectCommentList(int gbId) {
+		return sgroupDAO.selectCommentList(gbId);
 	}
 }

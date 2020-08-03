@@ -161,11 +161,14 @@ public class SgroupController {
 	public String groupDetail(@RequestParam int gbId, Model model) {
 
 		Gboard gb = sgroupService.SelectOnegBoard(gbId);
-
+		List<GB_comment> list = sgroupService.selectCommentList(gbId);
+		
 		int gbRate = sgroupService.updateReadCount(gbId);
 		model.addAttribute("gbRate", gbRate);
+		model.addAttribute("list", list);
 
 		model.addAttribute("Gboard", gb);
+		System.out.println("list : " + list);
 
 		return "sgroup/groupBoardDetail";
 	}
@@ -265,10 +268,11 @@ public class SgroupController {
 	@RequestMapping("sgroup/selectGboardComment.do")
 	public String listComment(Model model) {
 		
-		List<GB_comment> list = sgroupService.selectCommentList();
-		
-		model.addAttribute("list", list);
-		
+		/*
+		 * List<GB_comment> list = sgroupService.selectCommentList();
+		 * 
+		 * model.addAttribute("list", list);
+		 */
 		return "sgroup/groupBoardDetail.do";
 	}
 }

@@ -36,7 +36,7 @@ public interface SgroupService {
 	
 	int addCalendar(Calendar calendar);
 
-	List<GB_comment> selectCommentList();
+	List<GB_comment> selectCommentList(int gbId);
 
 	int insertComment(GB_comment gB_comment);
 	
