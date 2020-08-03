@@ -157,12 +157,6 @@ public class SgroupController {
 		return "sgroup/groupAlbum";
 	}
 
-	@RequestMapping("/sgroup/groupCalendar.do")
-	public String groupCalendar() {
-		return "sgroup/groupCalendar";
-	}
-
-
 	@RequestMapping("/sgroup/groupMap.do")
 	public String groupMap() {
 		return "sgroup/groupMap";
