@@ -55,6 +55,7 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 </table>
 </div>
 </div>
+<c:out value="${pageBar}" escapeXml="false"/>
 <script>
 $(function(){
 		
