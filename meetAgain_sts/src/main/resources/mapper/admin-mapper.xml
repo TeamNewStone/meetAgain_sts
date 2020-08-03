@@ -14,4 +14,18 @@
 <select id="selectOneBoard" parameterType="_int" resultType="Report">
 	SELECT * FROM REPORT WHERE RCID=#{rcId}
 </select>
+<select id="selectCommentList" resultType="Report">
+	SELECT RCID, CCONTENT, M.NICKNAME "tnickName", RCINFO, M2.NICKNAME, STMT FROM REPORT R
+	JOIN MEMBER M ON(R.TARGETID=M.USERID) JOIN MEMBER M2 ON(R.USERID=M2.USERID)
+	JOIN GB_COMMENT USING(CID) WHERE RCTYPE=2 ORDER BY STMT, RCID
+</select>
+<select id="selectCommentTotalContent" resultType="_int">
+	SELECT COUNT(*) FROM REPORT WHERE RCTYPE=2
+</select>
+<select id="selectOneComment" parameterType="_int" resultType="Report">
+	SELECT GBTITLE, M.NICKNAME "tnickName", RCINFO, M2.NICKNAME, R.RCCONTENT, GC.CCONTENT
+	FROM REPORT R JOIN MEMBER M ON(R.TARGETID=M.USERID)
+	JOIN MEMBER M2 ON(R.USERID=M2.USERID) JOIN GB_COMMENT GC USING(CID)
+	JOIN GBOARD G ON(R.GBID = G.GBID) JOIN SGROUP S ON(G.GID=S.GID) WHERE RCID=#{rcId}
+</select>
 </mapper>

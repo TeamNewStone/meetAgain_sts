@@ -56,4 +56,20 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.selectOne("adminMapper.selectOneBoard", rcId);
 	}
 
+	@Override
+	public List<Map<String, String>> selectCommentList(int cPage, int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("adminMapper.selectCommentList", null, rows);
+	}
+
+	@Override
+	public int selectCommentTotalContents() {
+		return sqlSession.selectOne("adminMapper.selectCommentTotalContent");
+	}
+
+	@Override
+	public Report selectOneComment(int rcId) {
+		return sqlSession.selectOne("adminMapper.selectOneComment", rcId);
+	}
+
 }
