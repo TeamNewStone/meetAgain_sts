@@ -177,7 +177,8 @@ public class MyPageController {
 	}	
 
 	@RequestMapping("myPage/reviewInsert.do")
-	public String InsertReview(@RequestParam int rating, Review review, Model model) {
+	public String InsertReview(@RequestParam("rating") int rating, Review review, Model model) {
+		System.out.println(review);
 		System.out.println("rating : "+rating);
 		
 		//int result = sgroupService.insertReview(review);
