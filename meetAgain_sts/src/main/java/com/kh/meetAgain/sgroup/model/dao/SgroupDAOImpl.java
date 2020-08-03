@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
+import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
@@ -19,10 +20,10 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Autowired
 	SqlSessionTemplate sqlSession;
-	
+
 	@Override
 	public int insertSgroup(Sgroup sgroup) {
-		
+
 		return sqlSession.insert("sgroupMapper.insertSgroup", sgroup);
 	}
 
@@ -56,16 +57,15 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int insertGroupJoin(Joing joing) {
 		return sqlSession.insert("sgroupMapper.insertGroupJoin", joing);
 	}
-// -----------------------------------------------------------------------
 
 	@Override
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
-		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		RowBounds rows = new RowBounds((cPage - 1) * numPerPage, numPerPage);
 		List<Map<String, String>> list = sqlSession.selectList("sgroupMapper.selectgBoardList", null, rows);
-		
-		System.out.println("cPage : "+cPage);
-		System.out.println("numPerPage : "+numPerPage);
-		System.out.println("list 출력 : " +list);
+
+		System.out.println("cPage : " + cPage);
+		System.out.println("numPerPage : " + numPerPage);
+		System.out.println("list 출력 : " + list);
 		return list;
 	}
 
@@ -93,8 +93,8 @@ public class SgroupDAOImpl implements SgroupDAO {
 	@Override
 	public int updateReadCount(int gbId) {
 		return sqlSession.update("sgroupMapper.updateReadCount", gbId);
-	}	
-	
+	}
+
 	@Override
 	public int addCalendar(Calendar calendar) {
 		return sqlSession.insert("calendarMapper.insertSchedule", calendar);
@@ -108,17 +108,21 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.selectList("calendarMapper.loadList");
 	}
 
-  
-  @Override
+	@Override
 	public int deletegBoard(int gbId) {
-		System.out.println("deleteDAO : "+gbId);
+		System.out.println("deleteDAO : " + gbId);
 		return sqlSession.delete("sgroupMapper.deletegBoard", gbId);
+	}
+	@Override
+	public List<GB_comment> selectCommentList(int gbId) {
+		return sqlSession.selectList("sgroupMapper.selectCommentList", gbId);
+	}
+
+	@Override
+	public int insertComment(GB_comment gB_comment) {
+		return sqlSession.insert("sgroupMapper.insertComment");
 	}
 
 
-
-
-
-
-
 }
+

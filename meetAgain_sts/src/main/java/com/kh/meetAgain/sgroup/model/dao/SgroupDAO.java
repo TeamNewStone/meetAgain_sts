@@ -5,6 +5,7 @@ import java.util.Map;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
+import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
@@ -25,11 +26,10 @@ public interface SgroupDAO {
 	List<Joing> selectJoingUser(String userId);
 	
 	int insertGroupJoin(Joing joing);
-// -------------------------------------------------
-	
+  
 	List<Map<String, String>> selectgBoardList(int cPage, int numPerPage);
 
-	   int selectgBoardTotalContents();
+	 int selectgBoardTotalContents();
 
 	Gboard selectOnegBoard(int bId);
 
@@ -43,6 +43,11 @@ public interface SgroupDAO {
 
 	int addCalendar(Calendar calendar);
 
+	List<GB_comment> selectCommentList(int gbId);
+
+	int insertComment(GB_comment gB_comment);
+
 	List<Calendar> loadList();
+
 
 }
