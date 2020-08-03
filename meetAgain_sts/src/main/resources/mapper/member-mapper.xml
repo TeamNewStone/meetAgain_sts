@@ -12,7 +12,7 @@
 		}
 	</select>
 
-	<update id="mUpdate" parameterType="string">
+	<update id="mUpdate" parameterType="Member">
 		UPDATE MEMBER SET
 		ADDRESS1=#{address1}, ADDRESS2=#{address2}, ADDRESS3=#{address3}, NICKNAME=#{nickName},
 		PHONE=#{phone}

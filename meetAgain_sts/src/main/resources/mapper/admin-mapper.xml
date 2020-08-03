@@ -13,7 +13,7 @@
 	SELECT COUNT(*) FROM REPORT WHERE RCTYPE=1
 </select>
 <select id="selectOneBoard" parameterType="_int" resultType="Report">
-	SELECT GTITLE, M.NICKNAME "tnickName", R.RCINFO, M2.NICKNAME, GBTITLE, R.RCCONTENT
+	SELECT GTITLE, M.NICKNAME "tnickName", M.WARN_CNT, R.RCINFO, M2.NICKNAME, GBTITLE, R.RCCONTENT, RCID, GBID
 	FROM REPORT R JOIN MEMBER M ON(R.TARGETID=M.USERID)
 	JOIN MEMBER M2 ON(R.USERID=M2.USERID) JOIN GBOARD USING(GBID) 
 	JOIN SGROUP USING(GID) WHERE RCID=#{rcId}
@@ -27,9 +27,25 @@
 	SELECT COUNT(*) FROM REPORT WHERE RCTYPE=2
 </select>
 <select id="selectOneComment" parameterType="_int" resultType="Report">
-	SELECT GBTITLE, M.NICKNAME "tnickName", RCINFO, M2.NICKNAME, R.RCCONTENT, GC.CCONTENT
+	SELECT GBTITLE, M.NICKNAME "tnickName", M.WARN_CNT, RCINFO, M2.NICKNAME, R.RCCONTENT, GC.CCONTENT, RCID, CID
 	FROM REPORT R JOIN MEMBER M ON(R.TARGETID=M.USERID)
 	JOIN MEMBER M2 ON(R.USERID=M2.USERID) JOIN GB_COMMENT GC USING(CID)
 	JOIN GBOARD G ON(R.GBID = G.GBID) JOIN SGROUP S ON(G.GID=S.GID) WHERE RCID=#{rcId}
 </select>
+<update id="reportReject" parameterType="Report">
+	UPDATE REPORT SET STMT='Y' WHERE RCID=#{rcId}
+</update>
+<update id="reportUpdate" parameterType="Report">
+	UPDATE REPORT SET RCINFO=#{rcInfo}, STMT='Y' WHERE RCID=#{rcId}
+</update>
+<update id="memberWarnUpdate" parameterType="Member">
+	UPDATE MEMBER SET WARN_CNT = WARN_CNT + 1 WHERE NICKNAME=(SELECT NICKNAME FROM REPORT R
+	JOIN MEMBER M ON(R.TARGETID = M.USERID) WHERE RCID=#{rcId})
+</update>
+<update id="gbDelUpdate" parameterType="Gboard">
+	UPDATE GBOARD SET GBDEL='Y' WHERE GBID=#{gbId}
+</update>
+<update id="gcDelUpdate" parameterType="GbComment">
+	UPDATE GB_COMMENT SET CDEL='Y' WHERE CID=#{cId}
+</update>
 </mapper>

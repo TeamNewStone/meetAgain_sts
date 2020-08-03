@@ -6,6 +6,8 @@ import java.util.Map;
 import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.sgroup.model.vo.GbComment;
+import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 public interface AdminDAO {
 
@@ -28,5 +30,15 @@ public interface AdminDAO {
 	int selectCommentTotalContents();
 
 	Report selectOneComment(int rcId);
+
+	int reportReject(Report report);
+
+	int reportUpdate(Report report);
+
+	int memberWarnUpdate(Member member);
+
+	int gbDelUpdate(Gboard gboard);
+
+	int gcDelUpdate(GbComment gbComment);
 	
 }
