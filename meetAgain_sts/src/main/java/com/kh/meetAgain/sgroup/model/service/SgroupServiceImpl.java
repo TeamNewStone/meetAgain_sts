@@ -109,9 +109,9 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.addCalendar(calendar);
 	}
 
-
-
-
-	
+	@Override
+	public List<Calendar> loadList() {
+		return sgroupDAO.loadList();
+	}
 
 }
