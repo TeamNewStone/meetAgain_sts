@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,12 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
-import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Joing;
@@ -301,9 +298,5 @@ public class SgroupController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("sgroup/reviewInsert.do")
-	public String InsertReview() {
-		
-		return "";
-	}
+	
 }
