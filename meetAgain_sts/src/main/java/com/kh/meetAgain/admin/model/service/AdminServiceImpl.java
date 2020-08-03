@@ -51,4 +51,19 @@ public class AdminServiceImpl implements AdminService {
 		return adminDAO.selectOneBoard(rcId);
 	}
 
+	@Override
+	public List<Map<String, String>> selectCommentList(int cPage, int numPerPage) {
+		return adminDAO.selectCommentList(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectCommentTotalContents() {
+		return adminDAO.selectCommentTotalContents();
+	}
+
+	@Override
+	public Report selectOneComment(int rcId) {
+		return adminDAO.selectOneComment(rcId);
+	}
+
 }

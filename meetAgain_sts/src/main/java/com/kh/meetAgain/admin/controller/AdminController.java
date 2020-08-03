@@ -74,7 +74,7 @@ public class AdminController {
 			int totalContents = adminService.selectBoardTotalContents();
 			
 			// 3. 패아자 HTML 생성
-			String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "notice.do");
+			String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "adBoardManage.do");
 			
 			model.addAttribute("list", list);
 			
@@ -84,11 +84,35 @@ public class AdminController {
 		return "admin/adBoardManage";
 	}
 	@RequestMapping("/admin/adCommentDetail.do")
-	public String adCommentDetail() {
+	public String adCommentDetail(@RequestParam int rcId, Model model) {
+		Report r = adminService.selectOneComment(rcId);
+		model.addAttribute("report", r);
 		return "admin/adCommentDetail";
 	}
 	@RequestMapping("/admin/adCommentManage.do")
-	public String adCommentManage() {
+	public String adCommentManage(@RequestParam(value="cPage", required=false, defaultValue="1")
+	int cPage, Model model
+	) {
+	// 한 페이지 당 게시글 수 
+	int numPerPage = 10; // limit 역할
+	
+	// 1. 현재 페이지 게시글 목록 가져오기
+	// 실제 데이터베이스의 데이터에서
+	// 머릿글 : 키(key) , 실제 값 : 값(value) => 여러 개니까 List에 담기
+	List<Map<String, String>> list
+		= adminService.selectCommentList(cPage, numPerPage);
+	
+	// 2. 페이지 계산을 위한 총 페이지 개수
+	int totalContents = adminService.selectCommentTotalContents();
+	
+	// 3. 패아자 HTML 생성
+	String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "adCommentManage.do");
+	
+	model.addAttribute("list", list);
+	
+	model.addAttribute("totalContents", totalContents);
+	model.addAttribute("numPerPage", numPerPage);
+	model.addAttribute("pageBar", pageBar);
 		return "admin/adCommentManage";
 	}
 	@RequestMapping("/admin/adGroupManage1.do")
@@ -128,7 +152,7 @@ public class AdminController {
 	int totalContents = adminService.selectNoticeTotalContents();
 	
 	// 3. 패아자 HTML 생성
-	String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "notice.do");
+	String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "adNoticeManage.do");
 	
 	model.addAttribute("list", list);
 	

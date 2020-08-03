@@ -23,5 +23,10 @@ public interface AdminDAO {
 
 	Report selectOneBoard(int rcId);
 
+	List<Map<String, String>> selectCommentList(int cPage, int numPerPage);
 
+	int selectCommentTotalContents();
+
+	Report selectOneComment(int rcId);
+	
 }
