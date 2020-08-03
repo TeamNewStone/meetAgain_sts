@@ -232,11 +232,14 @@
 									</p>
 								</div>
 								<c:if test="${mg.getIsFin() eq 'Y'}">
+								<c:if test="${owner.userId eq member.userId}">
 									<div class="card-footer">
 										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark" 
-										data-title="${mg.getGTitle()}" data-cate="${mg.getCateId()}" 
+										data-title="${mg.getGTitle()}" data-cate="${mg.getCateId()}" data-id="${mg.getGId() }"
 										data-sdate="${mg.getCreateDate()}" data-edate="${mg.getDurate()}">리뷰 작성</button>
+										
 									</div>
+									</c:if>
 								</c:if>
 							</div>
 						</div>
@@ -357,12 +360,14 @@
 									</p>
 								</div>
 								<c:if test="${cg.getIsFin() eq 'Y'}">
+								<c:if test="${owner.userId eq member.userId}">
 									<div class="card-footer">
 										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark" 
-										data-title="${cg.getGTitle()}" data-cate="${cg.getCateId()}" 
+										data-title="${cg.getGTitle()}" data-cate="${cg.getCateId()}"  data-id="${cg.getGId() }"
 										data-sdate="${cg.getCreateDate()}" data-edate="${cg.getDurate()}">리뷰 작성</button>
 										
 									</div>
+									</c:if>
 								</c:if>
 							</div>
 						</div>
@@ -468,11 +473,11 @@
       별점 :  
       <div class="rating">
                 <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
-                <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점" checked>
+                <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점">
                 <label for="rating1"></label>
-                <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio" title="2점" checked>
+                <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio" title="2점" >
                 <label for="rating2"></label>
-                <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio" title="3점" checked>
+                <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio" title="3점" >
                 <label for="rating3"></label>
                 <input type="checkbox" name="rating" id="rating4" value="4" class="rate_radio" title="4점">
                 <label for="rating4"></label>
@@ -484,14 +489,16 @@
         
         <div class="card-header">
         <div class="input-group">
+        <input type="hidden" name="userId" value="${member.userId }" />
+        <input type="hidden" name="gId" id="modal-gid" />
   <div class="custom-file">
-    <input type="file" class="custom-file-input" id="inputGroupFile02" name="upFile">
+    <input type="file" class="custom-file-input" id="inputGroupFile02" name="rvImage">
     <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
   </div>
 </div>
         </div>
         <div class="card-body custom-control custom-checkbox my-2">
-		<textarea class="form-control" rows="5" style="resize:none;" ></textarea>
+		<textarea class="form-control" name = "rvContent" rows="5" style="resize:none;" ></textarea>
 
         </div>
 
@@ -540,22 +547,23 @@ $(function(){
 		var sdate = $(this).data('sdate');
 		var edate = $(this).data('edate');
 		var cate = $(this).data('cate');
-		console.log(cate);
+		var gid = $(this).data('id');
+		var category ;
 		
-		var category;
-		switch(cate){
-		case 'C01' : category="운동";
-		case 'C02' : category="친목";
-		case 'C03' : category="공부";
-		case 'C04' : category="취미생활";
-		case 'C05' : category="문화생활";
-		case 'C06' : category="여행";
-		case 'C07' : category="봉사";
-		case 'C08' : category="기타";
-		}
+		if(cate=="C01") category="운동";
+		else if(cate=="C02") category="친목";
+		else if(cate=="C03") category="공부";
+		else if(cate=="C04") category="취미생활";
+		else if(cate=="C05") category="문화생활";
+		else if(cate=="C06") category="여행";
+		else if(cate=="C07") category="봉사";
+		else if(cate=="C08") category="기타";
+	
+
 		$(".modal-date").html(sdate+" ~ "+edate);
 		$(".titleSpace").html(gtitle);
 		$("#modal-cate").html(category);
+		$("#modal-gid").val(gid);
 	});
 	function accountEdit() {
 		location.href = "myPage2.do";
