@@ -234,7 +234,7 @@
 								<c:if test="${mg.getIsFin() eq 'Y'}">
 								<c:if test="${owner.userId eq member.userId}">
 									<div class="card-footer">
-										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark" 
+										<button data-toggle="modal" class="btn btn-outline-dark" id="rvBtn"
 										data-title="${mg.getGTitle()}" data-cate="${mg.getCateId()}" data-id="${mg.getGId() }"
 										data-sdate="${mg.getCreateDate()}" data-edate="${mg.getDurate()}">리뷰 작성</button>
 										
@@ -362,7 +362,7 @@
 								<c:if test="${cg.getIsFin() eq 'Y'}">
 								<c:if test="${owner.userId eq member.userId}">
 									<div class="card-footer">
-										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark" 
+										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark"								id = "rvBtn" 
 										data-title="${cg.getGTitle()}" data-cate="${cg.getCateId()}"  data-id="${cg.getGId() }"
 										data-sdate="${cg.getCreateDate()}" data-edate="${cg.getDurate()}">리뷰 작성</button>
 										
@@ -542,7 +542,56 @@ $(function(){
 		});
 	});
 	
-	$(".btn-outline-dark").click(function(){
+
+	
+	$("#rvBtn").click(function(){
+		
+		var gid = $(this).data('id');
+		var userid = ${member.userId};
+		var gtitle = $(this).data('title');
+		var sdate = $(this).data('sdate');
+		var edate = $(this).data('edate');
+		var cate = $(this).data('cate');
+		var category ;
+		var checkresult;
+		
+		if(cate=="C01") category="운동";
+		else if(cate=="C02") category="친목";
+		else if(cate=="C03") category="공부";
+		else if(cate=="C04") category="취미생활";
+		else if(cate=="C05") category="문화생활";
+		else if(cate=="C06") category="여행";
+		else if(cate=="C07") category="봉사";
+		else if(cate=="C08") category="기타";
+		
+		$.ajax({
+			url : 'checkReview.do',
+			data : {
+				userid : userid,
+				gid : gid
+			},
+			success : function(data){
+				if(data.result==true){
+					alert("이미 리뷰를 작성하셨습니다.");
+				}
+				else {
+					$(".modal-date").html(sdate+" ~ "+edate);
+					$(".titleSpace").html(gtitle);
+					$("#modal-cate").html(category);
+					$("#modal-gid").val(gid);
+					
+					$("#reviewInsert").show();
+				}
+			},
+			error : function(){
+				alert("에러발생");
+			}
+		});
+		
+	
+	}); 
+	
+/* 	$(".btn-outline-dark").click(function(){
 		var gtitle = $(this).data('title');
 		var sdate = $(this).data('sdate');
 		var edate = $(this).data('edate');
@@ -564,7 +613,7 @@ $(function(){
 		$(".titleSpace").html(gtitle);
 		$("#modal-cate").html(category);
 		$("#modal-gid").val(gid);
-	});
+	}); */
 	function accountEdit() {
 		location.href = "myPage2.do";
 	}

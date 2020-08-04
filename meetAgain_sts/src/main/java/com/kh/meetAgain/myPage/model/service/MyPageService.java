@@ -34,5 +34,7 @@ public interface MyPageService {
 
 	int deleteFollow(Map<String, String> map);
 
-	int insertReview(Review review);	
+	int insertReview(Review review);
+
+	Review selectReview(String userId, String gId);	
 }

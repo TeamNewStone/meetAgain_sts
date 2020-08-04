@@ -63,4 +63,8 @@
 	<insert id="insertReview" parameterType="Review">
 		INSERT INTO REVIEW VALUES(SEQ_RVID.NEXTVAL, #{userId}, #{gId}, #{rvContent}, #{rvImage}, #{rvStar}, 0)
 	</insert>
+	
+	<select id="selectReview" parameterType="hashmap" resultType="Review">
+		SELECT * FROM REVIEW WHERE USERID= #{userid} AND GID= #{gid}
+	</select>
 </mapper>

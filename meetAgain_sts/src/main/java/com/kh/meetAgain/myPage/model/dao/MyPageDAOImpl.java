@@ -1,5 +1,6 @@
 package com.kh.meetAgain.myPage.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,5 +89,15 @@ public class MyPageDAOImpl implements MyPageDAO {
 	@Override
 	public int insertReview(Review review) {
 		return sqlSession.insert("myPageMapper.insertReview", review);
+	}
+
+	@Override
+	public Review insertReview(String userId, String gId) {
+		Map<String,String> hmap = new HashMap<String,String>();
+		
+		hmap.put("userid", userId);
+		hmap.put("gid", gId);
+		
+		return sqlSession.selectOne("myPageMapper.selectReview",hmap);
 	}
 }
