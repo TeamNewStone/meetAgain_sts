@@ -35,6 +35,9 @@
 		INSERT INTO CATEINFO VALUES(#{userId}, #{cateId})
 
 	</insert>
+	<delete id="mCateDelete" parameterType="string">
+		DELETE FROM CATEINFO WHERE USERID=#{userId}
+	</delete>
 
 	<select id="selectOneTMI" parameterType="string"
 		resultType="UserTMI">
@@ -88,5 +91,9 @@
 		#{result, mode=OUT, jdbcType=NUMERIC, javaType=integer} )
 		}
 	</delete>
+	
+	<update id="imgUpdate" parameterType="userTMI">
+		UPDATE USERTMI SET USERIMG=#{userImg}
+	</update>
 
 </mapper>

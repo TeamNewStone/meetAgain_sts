@@ -125,7 +125,9 @@ public class MyPageController {
 	 */
 	
 	@RequestMapping("myPage/myPage2.do")
-	public String myPage2() {
+	public String myPage2(@ModelAttribute("member") Member m,Model model) {
+		Member m1 = mpSvc.selectMember(m.getUserId());
+		model.addAttribute("member", m1);
 		return "myPage/myPage2";
 	}
 	@RequestMapping("myPage/myPageOther.do")

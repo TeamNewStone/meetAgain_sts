@@ -29,4 +29,8 @@ public interface MemberDAO {
 
 	int checkNnDuplicate2(Map<String, String> map);
 
+	int mCateDelete(String userId);
+
+	int imgUpdate(UserTMI userTMI);
+
 }

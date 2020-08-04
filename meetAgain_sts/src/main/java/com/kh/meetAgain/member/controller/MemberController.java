@@ -1,9 +1,13 @@
 package com.kh.meetAgain.member.controller;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.meetAgain.member.model.service.MemberService;
@@ -123,12 +128,46 @@ public class MemberController {
 		return map;
 	}	
 	@RequestMapping("member/mUpdate.do")
-	public String mUpdate(Member member, Model model) {
+	@ResponseBody
+	public String mUpdate( UserTMI userTMI,
+			Member member, Model model, HttpSession session,
+	         @RequestParam(value="userImg1", required = false) MultipartFile[] userImg1) {
+		
 		int result = memberService.mUpdate(member);
+		System.out.println("되라될되로다 : "+userImg1);
 		String loc="/";
 		String msg="";
-		
-		if(result > 0) {
+		System.out.println(member.getUserImg());
+		String saveDir = session.getServletContext().getRealPath("/resources/upload/userImg");
+
+	      File dir = new File(saveDir);
+	      if(dir.exists() == false) dir.mkdirs();
+	      
+	      for(MultipartFile f : userImg1) {
+	         if(!f.isEmpty()) {
+	        	 
+	            String originName = f.getOriginalFilename();
+	            String ext = originName.substring(originName.lastIndexOf(".")+1);
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+	            
+	            int rndNum = (int)(Math.random() * 1000+1000);
+	            
+	            String renamedName = sdf.format(new java.util.Date()) + "_" + rndNum + "." + ext;
+
+	            try {
+	               f.transferTo(new File(saveDir + "/" + renamedName));
+	            } catch (IllegalStateException | IOException e) {
+	               e.printStackTrace();
+	            }
+	            
+	            userTMI.setUserImg(renamedName);
+
+	         }
+	      }
+	      
+	    int result2 = memberService.imgUpdate(userTMI);
+	    
+		if(result > 0 && result2 > 0) {
 			msg = "정보 수정이 완료되었습니다";
 		}else {
 			msg = "정보 수정 중 오류가 발생하였습니다. 다시 시도해주세요.";
@@ -137,7 +176,7 @@ public class MemberController {
 		model.addAttribute("loc", loc);
 		model.addAttribute("msg", msg);
 		
-		return "common/msg";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/member/selectOne.do")
@@ -187,7 +226,14 @@ public class MemberController {
 		
 		System.out.println("MemberController test3 : "+userTMI);
 		System.out.println(userTMI.getUserId()); 
-		int result = memberService.mTMIUpdate(userTMI, cateInfo);
+		System.out.println(cateInfo);
+		int result = 0;
+		if(cateInfo.getCateId()!=null) {
+			result = memberService.mTMIUpdate(userTMI, cateInfo);			
+		}else {
+			result = memberService.mTMIUpdate2(userTMI);
+			result = memberService.mCateDelete(userTMI.getUserId());
+		}
 		 
 		String loc="/";
 		String msg="";

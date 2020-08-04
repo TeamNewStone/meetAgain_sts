@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.dao.MyPageDAO;
 import com.kh.meetAgain.myPage.model.vo.Review;
@@ -89,6 +90,11 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public Review selectReview(String userId, String gId) {
 		return mpDAO.insertReview(userId, gId);
+	}
+
+	@Override
+	public Member selectMember(String userId) {
+		return mpDAO.selectMember(userId);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.vo.Review;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
@@ -99,5 +100,10 @@ public class MyPageDAOImpl implements MyPageDAO {
 		hmap.put("gid", gId);
 		
 		return sqlSession.selectOne("myPageMapper.selectReview",hmap);
+	}
+
+	@Override
+	public Member selectMember(String userId) {
+		return sqlSession.selectOne("myPageMapper.selectMember", userId);
 	}
 }

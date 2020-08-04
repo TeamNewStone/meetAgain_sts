@@ -67,4 +67,8 @@
 	<select id="selectReview" parameterType="hashmap" resultType="Review">
 		SELECT * FROM REVIEW WHERE USERID= #{userid} AND GID= #{gid}
 	</select>
+	
+	<select id="selectMember" parameterType="string" resultType="Member">
+		SELECT * FROM MEMBER JOIN USERTMI USING(USERID) WHERE USERID=#{userId}
+	</select>
 </mapper>

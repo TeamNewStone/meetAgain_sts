@@ -3,6 +3,7 @@ package com.kh.meetAgain.myPage.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.vo.Review;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
@@ -38,4 +39,6 @@ public interface MyPageDAO {
 	int insertReview(Review review);
 
 	Review insertReview(String userId, String gId);
+
+	Member selectMember(String userId);
 }

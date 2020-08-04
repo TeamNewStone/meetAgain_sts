@@ -35,5 +35,6 @@ public class Member implements Serializable{
 	private String stop_Yna;
 	private Date stop_Time;
 	private int rcId;
+	private String userImg;
 	
 }
