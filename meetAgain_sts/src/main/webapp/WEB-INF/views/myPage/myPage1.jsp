@@ -234,7 +234,7 @@
 								<c:if test="${mg.getIsFin() eq 'Y'}">
 								<c:if test="${owner.userId eq member.userId}">
 									<div class="card-footer">
-										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark" 
+										<button class="btn btn-outline-dark" id="rvBtn"
 										data-title="${mg.getGTitle()}" data-cate="${mg.getCateId()}" data-id="${mg.getGId() }"
 										data-sdate="${mg.getCreateDate()}" data-edate="${mg.getDurate()}">리뷰 작성</button>
 										
@@ -362,7 +362,7 @@
 								<c:if test="${cg.getIsFin() eq 'Y'}">
 								<c:if test="${owner.userId eq member.userId}">
 									<div class="card-footer">
-										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark" 
+										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark"								id = "rvBtn" 
 										data-title="${cg.getGTitle()}" data-cate="${cg.getCateId()}"  data-id="${cg.getGId() }"
 										data-sdate="${cg.getCreateDate()}" data-edate="${cg.getDurate()}">리뷰 작성</button>
 										
@@ -466,7 +466,7 @@
           <span aria-hidden="true">&times;</span>
         </button></div>
       </div>
-      <form action="reviewInsert.do">
+      <form action="reviewInsert.do" method="post" enctype="multipart/form-data" onsubmit="return validate(this);" >
       <div class="modal-body">
     
       <p id="star_grade">
@@ -492,7 +492,7 @@
         <input type="hidden" name="userId" value="${member.userId }" />
         <input type="hidden" name="gId" id="modal-gid" />
   <div class="custom-file">
-    <input type="file" class="custom-file-input" id="inputGroupFile02" name="rvImage">
+    <input type="file" class="custom-file-input" id="inputGroupFile02" name="reviewImage">
     <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
   </div>
 </div>
@@ -520,14 +520,19 @@
 
 <!-- 마이페이지 메인 끝 -->
 
+
+
+
+
+
 <!-- 마인펭이지 메인 스크립트작성 -->
 <!--   jQuery first, then Popper.js, then Bootstrap JS -->
-<script
+<%-- <script
 	src="${ pageContext.request.contextPath }/resources/vendor/popper/popper.min.js"></script>
 <script
 	src="${ pageContext.request.contextPath }/resources/vendor/bootstrap/bootstrap.min.js"></script>
 <!-- lazy javascript -->
-<script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script>
+<script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script> --%>
 
 <script>
 $(function(){
@@ -542,7 +547,58 @@ $(function(){
 		});
 	});
 	
-	$(".btn-outline-dark").click(function(){
+
+	
+	$("#rvBtn").click(function(){
+		
+		var gid = $(this).data('id');
+		var userid = ${member.userId};
+		var gtitle = $(this).data('title');
+		var sdate = $(this).data('sdate');
+		var edate = $(this).data('edate');
+		var cate = $(this).data('cate');
+		var category ;
+		var checkresult;
+
+		
+		if(cate=="C01") category="운동";
+		else if(cate=="C02") category="친목";
+		else if(cate=="C03") category="공부";
+		else if(cate=="C04") category="취미생활";
+		else if(cate=="C05") category="문화생활";
+		else if(cate=="C06") category="여행";
+		else if(cate=="C07") category="봉사";
+		else if(cate=="C08") category="기타";
+		
+		$.ajax({
+			url : 'checkReview.do',
+			data : {
+				userid : userid,
+				gid : gid
+			},
+			success : function(data){
+				if(data.result==true){
+					alert("이미 리뷰를 작성하셨습니다.");
+				}
+				else {
+					console.log("else문으로 들어옴");
+					$(".modal-date").html(sdate+" ~ "+edate);
+					$(".titleSpace").html(gtitle);
+					$("#modal-cate").html(category);
+					$("#modal-gid").val(gid);
+					
+					$("#reviewInsert").modal();
+				}
+			},
+			error : function(){
+				alert("에러발생");
+			}
+		});
+		
+	
+	}); 
+	
+/* 	$(".btn-outline-dark").click(function(){
 		var gtitle = $(this).data('title');
 		var sdate = $(this).data('sdate');
 		var edate = $(this).data('edate');
@@ -564,7 +620,7 @@ $(function(){
 		$(".titleSpace").html(gtitle);
 		$("#modal-cate").html(category);
 		$("#modal-gid").val(gid);
-	});
+	}); */
 	function accountEdit() {
 		location.href = "myPage2.do";
 	}

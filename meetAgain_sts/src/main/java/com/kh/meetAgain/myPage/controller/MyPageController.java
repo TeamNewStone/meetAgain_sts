@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -184,14 +185,16 @@ public class MyPageController {
 		return "common/msg";
 	}	
 
-	@RequestMapping(value="myPage/reviewInsert.do", method=RequestMethod.POST)
+	@RequestMapping(value="myPage/reviewInsert.do")
 	public String InsertReview (@RequestParam(value="reviewImage", required = false) MultipartFile[] reviewImage, 
 			HttpSession session, Review review, Model model) {
 		
-		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
+		String saveDir = session.getServletContext().getRealPath("/resources/upload/reviewImg");
 		File dir = new File(saveDir);
-	      
+	      System.out.println("이미지확인~"+reviewImage);
 	      System.out.println("폴더가 있나요? " + dir.exists());
+	      
+	      if(dir.exists() == false) dir.mkdirs();
 	      
 	      for(MultipartFile f : reviewImage) {
 		         if(!f.isEmpty()) {
@@ -231,5 +234,23 @@ public class MyPageController {
 		model.addAttribute("loc", loc);
 		
 		return "common/msg";
+	}
+	
+	@RequestMapping("myPage/checkReview.do")
+	@ResponseBody
+	public Map<String,Object> checkReview(@RequestParam("userid") String userid, @RequestParam("gid") String gid) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		Review rv = mpSvc.selectReview(userid, gid);
+		System.out.println("rv확인 : "+rv);
+		
+		boolean rvCount = true;
+		if(rv==null) rvCount = false;
+		else rvCount = true;
+		
+		map.put("result", rvCount);
+		System.out.println("result 확인 ; "+map);
+		
+		return map;
 	}
 }

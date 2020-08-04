@@ -125,6 +125,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Override
 	public int insertComment(GB_comment gB_comment) {
+		System.out.println("insert GB : "+ gB_comment);
 		return sqlSession.insert("sgroupMapper.insertComment");
 	}
 

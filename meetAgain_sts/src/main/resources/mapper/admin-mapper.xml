@@ -48,4 +48,41 @@
 <update id="gcDelUpdate" parameterType="GB_comment">
 	UPDATE GB_COMMENT SET CDEL='Y' WHERE CID=#{cId}
 </update>
+<update id="memberStopUpdate" parameterType="Member">
+	UPDATE MEMBER SET STOP_YNA='Y' WHERE NICKNAME=#{tnickName}
+</update>
+<update id="memberOutUpdate" parameterType="Member">
+	UPDATE MEMBER SET OUT_YN='Y' WHERE NICKNAME=#{tnickName}
+</update>
+<select id="selectMemberList" resultType="Member">
+	SELECT * FROM MEMBER
+</select>
+<select id="selectMemberTotalContents" resultType="_int">
+	SELECT COUNT(*) FROM MEMBER
+</select>
+<select id="selectOneMember" parameterType="string" resultType="Member">
+	SELECT * FROM MEMBER WHERE USERID=#{userId}
+</select>
+<select id="selectMemberOrderList" parameterType="hashmap" resultType="Member">
+	SELECT * FROM MEMBER 
+	<if test="orderBy == 'userName'">
+	ORDER BY USERNAME
+	</if>
+	<if test="orderBy == 'enrollDate'">
+	ORDER BY ENROLLDATE
+	</if>
+	<if test="orderBy == 'mLevel'">
+	ORDER BY MLEVEL
+	</if>
+	<if test="orderBy == 'warn_Cnt'">
+	ORDER BY WARN_CNT
+	</if>
+	<if test="howOrder == 'asc'">
+	ASC
+	</if>
+	<if test="howOrder == 'desc'">
+	DESC
+	</if>
+	
+</select>
 </mapper>

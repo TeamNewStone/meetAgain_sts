@@ -36,4 +36,6 @@ public interface MyPageDAO {
 	int deleteFollow(Map<String, String> map);	
 	
 	int insertReview(Review review);
+
+	Review insertReview(String userId, String gId);
 }
