@@ -4,7 +4,6 @@ package com.kh.meetAgain.sgroup.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,19 +12,25 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.common.util.Utils;
+import com.kh.meetAgain.member.model.vo.CateInfo;
+import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
-@SessionAttributes(value= {"sgroup"})
+
+@SessionAttributes(value= {"member"})
+
 @Controller
 public class SgroupController {
 
@@ -91,47 +96,69 @@ public class SgroupController {
 	}
 
 	// 소모임 전체 리스트 출력
-	@RequestMapping("sgroup/group.do")
-	public String group(Model model) {
 
+	public String group(@ModelAttribute("member") Member m, Model model) {
+		
 		List<Sgroup> list = sgroupService.selectSgroupList();
-
+		List<CateInfo> cateInfo = sgroupService.selectCateInfo(m.getUserId());
+		List<Joing> joUser = sgroupService.selectJoingUser(m.getUserId());
+		int groupCount = sgroupService.selectGroupCount(m.getUserId());
+		
 		model.addAttribute("list", list);
+		model.addAttribute("cateInfo", cateInfo);
+		model.addAttribute("joUser", joUser);
+		model.addAttribute("groupCount", groupCount);
+
+		System.out.println("groupCount(group.do) : " + groupCount);
+		System.out.println("cateInfo : " + cateInfo);
 
 		return "sgroup/group";
 	}
 
 	// 소모임 한개 출력
-	@RequestMapping("sgroup/groupInfo.do")
-	public String groupInfo(@RequestParam String gId, Model model) {
 
+	public String groupInfo(@ModelAttribute("member") Member m, @RequestParam String gId, Model model) {
+		
 		Sgroup sr = sgroupService.selectOneSgroup(gId);
 
-		System.out.println("sr1111 : " + sr);
+		List<Joing> joing = sgroupService.selectJoing(gId);
+		
+		int groupCount = sgroupService.selectGroupCount(m.getUserId());
 
 		model.addAttribute("sgroup", sr);
-
+		model.addAttribute("joing", joing);
+		model.addAttribute("groupCount", groupCount);
+		System.out.println("groupCount : " + groupCount);
+		
 		return "sgroup/groupInfo";
 	}
 
 	@RequestMapping("/sgroup/groupAlbum.do")
-	public String groupAlbum() {
+	public String groupAlbum(@RequestParam String gid, Model model) {
+		model.addAttribute("gid", gid);
 		return "sgroup/groupAlbum";
 	}
 
 	@RequestMapping("/sgroup/groupMap.do")
-	public String groupMap() {
+	public String groupMap(@RequestParam String gid, Model model) {
+		model.addAttribute("gid", gid);
 		return "sgroup/groupMap";
 	}
 
+
 	@RequestMapping("/sgroup/memberList.do")
-	public String memberList() {
+	public String memberList(@RequestParam String gid, Model model) {
+		List<Joing> joing = sgroupService.selectJoing(gid);
+		
+		model.addAttribute("joing", joing);
 		return "sgroup/memberList";
 	}
+
 
 	@RequestMapping("/sgroup/groupBoard.do")
 	public String groupBoard(@RequestParam("gId") String gId,
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, Model model) {
+
 		// 한 페이지 당 게시글 수
 		int numPerPage = 10; // limit 역할
 
@@ -158,9 +185,13 @@ public class SgroupController {
 		model.addAttribute("totalContents", totalContents);
 		model.addAttribute("numPerPage", numPerPage);
 		model.addAttribute("pageBar", pageBar);
+
 		
 		System.out.println("list : " + list);
 		System.out.println("Controller gId : " + gId);
+
+		model.addAttribute("gid", gid);
+
 		return "/sgroup/groupBoard";
 
 	}
@@ -327,5 +358,13 @@ public class SgroupController {
 		return "common/msg";
 	}
 	
+
+	@RequestMapping("/sgroup/groupDetail.do")
+	public String groupDetail(@RequestParam String gid, Model model) {
+		Sgroup s = sgroupService.selectOneSgroup(gid);
+		model.addAttribute("sgroup", s);
+		model.addAttribute("gid", gid);
+		return "sgroup/groupDetail";
+	}
 
 }

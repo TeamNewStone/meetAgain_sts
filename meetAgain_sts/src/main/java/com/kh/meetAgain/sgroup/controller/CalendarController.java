@@ -1,29 +1,30 @@
 package com.kh.meetAgain.sgroup.controller;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 
 @Controller
-
+@SessionAttributes(value= {"gid", "member"})
 public class CalendarController {
 	
 	@Autowired
 	SgroupService sgroupService;	
-	
+	 
 	@RequestMapping("sgroup/addCalendar.do")
 	public String addCalendar(
-				// @RequestParam String gid,
+				@RequestParam String gid,
 				@RequestParam String gdate,
 				@RequestParam String gdateEnd,
 				@RequestParam String ginfo,
@@ -32,7 +33,8 @@ public class CalendarController {
 
 		System.out.println(gtime); // 12:01
 		//***************gid임의지정
-		String gid = "1";		
+		//String gid = "1";		
+		
 		
 		Date date = Date.valueOf(gdate);
 		Date date2 = Date.valueOf(gdateEnd);
@@ -41,18 +43,18 @@ public class CalendarController {
 		
 		Timestamp time = Timestamp.valueOf(date.toString() + " " + hour + ":" + min + ":00"); // 20: + 14 + :00
 				
-		System.out.println(min);
-		
+		System.out.println(hour);
+		System.out.println(min);		
 		System.out.println(time);
 
-		Calendar cal = new Calendar(null, date, date2, ginfo, time, isctn);
+		Calendar cal = new Calendar(gid, date, date2, ginfo, time, isctn);
 		
-		cal.setGid(gid);
+		//cal.setGid(gid);
 		int result = sgroupService.addCalendar(cal);	
 						
 		String addMsg = "";
 
-		if (result >0) {
+		if (result > 0) {
 			addMsg = "일정 생성됨";
 			System.out.println("일정 생성됨");
 		} else {
@@ -65,7 +67,7 @@ public class CalendarController {
 	
 	@RequestMapping("sgroup/groupCalendar.do")
 	public String loadList(Model model) {
-		
+		 
 		// 일정 조회
 		List<Calendar> list = new ArrayList<Calendar>(); 
 
@@ -81,3 +83,4 @@ public class CalendarController {
 	}
 	 
 }
+

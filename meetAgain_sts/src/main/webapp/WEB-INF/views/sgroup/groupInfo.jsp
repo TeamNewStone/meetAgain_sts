@@ -155,11 +155,19 @@
 				
 				<div class="form-group">
 				<label style="margin-bottom:-1px">모임 소개</label>
-				<p>${sgroup.getGIntro()}</p>
+				<p style="white-space: pre;">${sgroup.getGIntro()}</p>
 				</div>
 				
 				<div style="width: 400px; text-align: center;">
-					<button type="submit" class="btn btn-secondary" style="background:#132742; border:#132742;" onclick="groupConfirm();">가입하기</button>
+					<button type="submit" id="joinGroupBtn" class="btn btn-secondary" style="background:#132742; border:#132742;" onclick="groupConfirm();">가입하기</button>
+					<c:if test="${groupCount >= 5 and member.getMLevel()==0}">
+						<script>
+							$(function(){
+								$('#joinGroupBtn').attr('disabled', true);
+							});
+						</script>
+					</c:if>
+				
 				</div>
 				</div>
 			</div>

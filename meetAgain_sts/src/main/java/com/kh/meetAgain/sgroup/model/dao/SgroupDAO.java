@@ -26,6 +26,8 @@ public interface SgroupDAO {
 	List<Joing> selectJoingUser(String userId);
 	
 	int insertGroupJoin(Joing joing);
+	
+	int selectGroupCount(String userId);
   
 	List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage);
 

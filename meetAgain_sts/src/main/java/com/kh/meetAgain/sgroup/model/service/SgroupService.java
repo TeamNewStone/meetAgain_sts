@@ -24,12 +24,16 @@ public interface SgroupService {
 	List<CateInfo> selectCateInfo(String userId);
 	
 	List<Joing> selectJoing(String gId);
-	
-	List<Joing> selectJoingUser(String userId);
 
+	List<Joing> selectJoingUser(String userId);
+	
 	int insertGroupJoin(Joing joing);
 	
+
 	List<Map<String, String>> selectgBoardList(String gId, int numPerPage, int cPage);
+
+	int selectGroupCount(String userId);
+	
 
  int selectgBoardTotalContents();
 

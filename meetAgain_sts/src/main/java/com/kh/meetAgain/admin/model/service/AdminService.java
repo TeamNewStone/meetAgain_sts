@@ -45,5 +45,13 @@ public interface AdminService {
 	Member selectOneMember(String userId);
 
 	List<Map<String, String>> selectMemberOrderList(int cPage, int numPerPage, Map<String, String> map);
+
+	List<Map<String, String>> selectGroupList1(int cPage, int numPerPage);
+
+	int selectGroupTotalContents1();
+
+	List<Map<String, String>> selectGroupList2(int cPage, int numPerPage);
+
+	int selectGroupTotalContents2();
 	
 }
