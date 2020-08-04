@@ -28,6 +28,10 @@
 		 <typeAlias type="com.kh.meetAgain.myPage.model.vo.Follow" alias="Follow"/>
 		 <typeAlias type="com.kh.meetAgain.sgroup.model.vo.Calendar" alias="Calendar"/>
 		 <typeAlias type="com.kh.meetAgain.sgroup.model.vo.GB_comment" alias="GB_comment"/>
+		 <typeAlias type="com.kh.meetAgain.admin.model.vo.Report" alias="Report"/>
+		 <typeAlias type="com.kh.meetAgain.sgroup.model.vo.Joing" alias="Joing" />
+		 <typeAlias type="com.kh.meetAgain.myPage.model.vo.Review" alias="Review" />
+
 	</typeAliases>	
 	
 	<!-- 문자열과 배열을 치환해주는 객체 -->

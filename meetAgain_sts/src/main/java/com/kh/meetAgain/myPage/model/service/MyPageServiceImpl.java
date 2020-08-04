@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.dao.MyPageDAO;
+import com.kh.meetAgain.myPage.model.vo.Review;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @Service("mpSvc")
@@ -78,6 +79,11 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public int deleteFollow(Map<String, String> map) {
 		return mpDAO.deleteFollow(map);
+	}
+
+	@Override
+	public int insertReview(Review review) {
+		return mpDAO.insertReview(review);
 	}
 
 }

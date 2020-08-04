@@ -1,23 +1,32 @@
 package com.kh.meetAgain.myPage.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.service.MyPageService;
+import com.kh.meetAgain.myPage.model.vo.Review;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @SessionAttributes(value= {"member"})
@@ -54,6 +63,8 @@ public class MyPageController {
 		group = mpSvc.getMyGroup(userId);
 		mgroup = mpSvc.getCreateGroup(userId);	
 		
+		System.out.println(group);
+		System.out.println(mgroup);
 		
 		/*======================작성한 게시글 데이터 가져오기======================*/
 		// 한 페이지 당 게시글 수 
@@ -173,4 +184,52 @@ public class MyPageController {
 		return "common/msg";
 	}	
 
+	@RequestMapping(value="myPage/reviewInsert.do", method=RequestMethod.POST)
+	public String InsertReview (@RequestParam(value="reviewImage", required = false) MultipartFile[] reviewImage, 
+			HttpSession session, Review review, Model model) {
+		
+		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
+		File dir = new File(saveDir);
+	      
+	      System.out.println("폴더가 있나요? " + dir.exists());
+	      
+	      for(MultipartFile f : reviewImage) {
+		         if(!f.isEmpty()) {
+		        	 
+		            String originName = f.getOriginalFilename();
+		            String ext = originName.substring(originName.lastIndexOf(".")+1);
+		            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		            
+		            int rndNum = (int)(Math.random() * 1000);
+		            
+		            String renamedName = sdf.format(new Date()) + "_" + rndNum + "." + ext;
+
+		            try {
+		               f.transferTo(new File(saveDir + "/" + renamedName));
+		            } catch (IllegalStateException | IOException e) {
+		               e.printStackTrace();
+		            }
+		            
+		            review.setRvImage(renamedName);
+
+		         }
+		      }
+		
+		      
+		System.out.println(review);
+		
+		int result = mpSvc.insertReview(review);
+		String msg = "";
+		String loc = "/myPage/myPage1.do?uid="+review.getUserId();
+		if(result>0) {
+			msg = "리뷰가 정상적으로 등록되었습니다!";
+		}else {
+			msg = "리뷰 생성 중 에러 발생!";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("loc", loc);
+		
+		return "common/msg";
+	}
 }

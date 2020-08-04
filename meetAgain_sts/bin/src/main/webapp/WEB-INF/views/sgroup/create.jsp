@@ -209,11 +209,9 @@
 					});
 					
 					test33(X, Y, userX, userY);
-					
-				
+									
 				});
-				
-				
+
 			
 			</script>
 				<p>모임 연령대</p>

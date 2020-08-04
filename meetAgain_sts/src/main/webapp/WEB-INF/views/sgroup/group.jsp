@@ -3,24 +3,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
 <section style="border-bottom: 1px solid #e0e0e0;">
 <div class="container">
-<input type="hidden" value="${member.userId }" />
+<br /><br />
+<input type="hidden" name="uid" value="${member.userId }" />
 <input type="hidden" id="address1" value="${member.address1 }" />
 <c:if test="${ !empty member.address2 && member.address3}">
 	<input type="hidden" id="address2" value="${member.address2}" />
 	<input type="hidden" id="address3" value="${member.address3}" />
 </c:if>
-
-
-
-	<br>
 		<div class="row">
 			<div class="col-lg-3 col-md-3">
 				<p>
-					<a href="">${fn:substring(member.address1,3,7)}</a> 의 소모임 리스트를 보고 계십니다.
+					<a href="">${fn:substring(member.address1,3,7)}</a> 주변의 소모임 리스트를 보고 계십니다.
 				</p>
 				<div class="dropdown">
 					<button class="btn btn-secondary dropdown-toggle" type="button"
@@ -154,20 +152,45 @@
 			<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">소모임 생성하기!</button>
 			</div>
 		</div>
-		<div class="row">
+
+ 	<div class="row">
 			<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
-		</div>
-		<div class="rows">
-		</div>
-		</div>
+	</div> 
+	<div class="row" id="testtest">
+<c:forEach items="${joUser}" var="jo"> 
+<c:forEach items="${list}" var="sg">
+
+	<c:if test="${jo.getGId() eq sg.getGId() }">
+	
+				<script>
+				
+				$(function(){
+					$('#${sg.getGId()}').clone(true).appendTo($('#testtest'));
+               			
+				});
+				</script> 
+	</c:if>
+</c:forEach>
+</c:forEach>
+						
+
+
+
+		<c:if test="${empty cateInfo}">
+			<p style="margin-left:20px"> 설정한 관심 카테고리가 없습니다. 마이페이지에서 관심 카테고리를 등록해주세요! </p>
+		</c:if>
+	</div>
+</div>
+
 </section>
-	<br> <br> <br>
+<br> <br> <br>
+
 <div class="container">
 	<div class="row">
 		<c:forEach items="${list}" var="sg"> 		
-				  <div class="col-md-4 cardOne" style="max-width: 500px;">
+				  <div class="col-md-4 cardOne" id="${ sg.getGId()}" style="max-width: 500px;">
 				    <div class="component">
-				      <div class="card" id="${ sg.getGId()}" style="cursor:pointer;">
+				      <div class="card" style="cursor:pointer;">
 				 <%--        <input type="hidden" value="${ sg.getGId()}" /> --%>
 				        <div class="card-header">
 				        <c:if test="${sg.getGImg() eq null}">
@@ -184,7 +207,7 @@
 				        </div>
 				        <div class="card-body">
 				        
-				        <input type="hidden" value="${sg.getGPlace() }" />
+				        <input type="hidden" id="gPlace" value="${sg.getGPlace() }" />
 				        <c:if test="${sg.getGType() eq 'S' }">
 					       	<span class="badge badge-primary mb-2">단기</span>			        
 				        </c:if>
@@ -239,7 +262,9 @@
      						</c:if>
      					</c:if>
 
-     					 
+     					 <c:if test="${!empty sg.getGPwd() }">
+						<span class="badge badge-danger">비공개</span>
+						</c:if>
      					 
      					 
 				          <h4 class="card-title mt-2">${sg.getGTitle()}</h4>
@@ -271,13 +296,26 @@
 	});
 	
 	$(function(){
-		$(".card[id]").on("click",function(){
+		$(".cardOne[id]").on("click",function(){
 			var gId = $(this).attr("id");
+			var result = new Array();
 			console.log("gId="+gId);
-			location.href = "${pageContext.request.contextPath}/sgroup/groupInfo.do?gId="+gId;
+			
+			<c:forEach items="${joUser}" var="jo">
+			var json = new Object();
+			json.joGId = ${jo.getGId()};
+			result.push(json);
+			</c:forEach>
+
+			if(JSON.stringify(result).indexOf(gId) < 0){
+				location.href = "${pageContext.request.contextPath}/sgroup/groupInfo.do?gId="+gId;
+			} else {
+				location.href = "${pageContext.request.contextPath}/sgroup/gotoGroup.do?gid="+gId;
+			}
 		});
 	});
 	
 </script>
+
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />

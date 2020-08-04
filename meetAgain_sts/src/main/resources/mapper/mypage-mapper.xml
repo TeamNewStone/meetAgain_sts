@@ -4,6 +4,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="myPageMapper">
 
+<resultMap type="Sgroup" id="sgroupMap">
+		<id property="gId" column="GID" />
+		<result property="cateId" column="CATE_ID" />
+		<result property="limitGroup" column="LIMITGROUP" typeHandler="Str2ArrayHandler"/>
+	</resultMap>
+	
 	<select id="selectMyBoardList" resultType="Gboard">
 		SELECT GBID, GTITLE, GID, GBTITLE, GBRATE, GBDATE, GBDEL FROM GBOARD 
 		JOIN SGROUP USING(GID) WHERE USERID=#{userId} AND GBDEL='N' ORDER BY GBDATE DESC
@@ -34,11 +40,11 @@
 		SELECT M.NICKNAME, M.USERID FROM FOLLOW JOIN MEMBER M ON(FOLLOWIN = M.USERID) WHERE FOLLOWER=#{userId}
 	</select>
 	
-	<select id="getMyGroup" resultType="Sgroup">
+	<select id="getMyGroup" resultMap="sgroupMap">
 		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId}
 	</select>
 	
-	<select id="getCreateGroup" resultType="Sgroup">
+	<select id="getCreateGroup"  resultMap="sgroupMap">
 		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId} AND ISCPT='Y'
 	</select>
 	
@@ -53,4 +59,8 @@
 	<delete id="deleteFollow" parameterType="hashmap">
 		DELETE FROM FOLLOW WHERE FOLLOWER=#{muserId} AND FOLLOWIN=#{userId}
 	</delete>
+	
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO REVIEW VALUES(SEQ_RVID.NEXTVAL, #{userId}, #{gId}, #{rvContent}, #{rvImage}, #{rvStar}, 0)
+	</insert>
 </mapper>

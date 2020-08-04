@@ -2530,24 +2530,34 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
     transition: transform 800ms cubic-bezier(0.165, 0.84, 0.44, 1)
 }
-
+.card-fin {
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
+    transition: transform 800ms cubic-bezier(0.165, 0.84, 0.44, 1)
+}
 .card .card-header,
-.card .card-footer {
+.card .card-footer,
+.card-fin .card-header,
+.card-fin .card-footer {
     background-color: transparent;
     border: none;
     padding: 1rem;
     border-radius: 0rem
 }
 
-.card .card-body {
+.card .card-body, 
+.card-fin .card-body{
     padding: 1rem
 }
 
-.card .card-img {
+.card .card-img,
+.card-fin .card-img {
     border-radius: 0
 }
 
-.card:not(.no-hover):hover {
+.card:not(.no-hover):hover,
+.card-fin:not(.no-hover):hover {
     box-shadow: 0 0 2rem rgba(0, 0, 0, 0.19);
     transform: scale(1.03)
 }

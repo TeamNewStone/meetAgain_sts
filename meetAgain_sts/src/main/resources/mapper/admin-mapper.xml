@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminMapper">
+
+<select id="selectBoardList" resultType="Report">
+	SELECT R.RCID, GTITLE, GBTITLE, R.RCINFO, M.NICKNAME, R.STMT FROM REPORT R
+	JOIN MEMBER M ON(R.USERID=M.USERID)	JOIN GBOARD USING(GBID) 
+	JOIN SGROUP USING(GID) WHERE RCTYPE=1 ORDER BY STMT, RCID
+</select>
+<select id="selectBoardTotalContent" resultType="_int">
+	SELECT COUNT(*) FROM REPORT WHERE RCTYPE=1
+</select>
+<select id="selectOneBoard" parameterType="_int" resultType="Report">
+	SELECT GTITLE, M.NICKNAME "tnickName", M.WARN_CNT, R.RCINFO, M2.NICKNAME, GBTITLE, R.RCCONTENT, RCID, GBID
+	FROM REPORT R JOIN MEMBER M ON(R.TARGETID=M.USERID)
+	JOIN MEMBER M2 ON(R.USERID=M2.USERID) JOIN GBOARD USING(GBID) 
+	JOIN SGROUP USING(GID) WHERE RCID=#{rcId}
+</select>
+<select id="selectCommentList" resultType="Report">
+	SELECT RCID, CCONTENT, M.NICKNAME "tnickName", RCINFO, M2.NICKNAME, STMT FROM REPORT R
+	JOIN MEMBER M ON(R.TARGETID=M.USERID) JOIN MEMBER M2 ON(R.USERID=M2.USERID)
+	JOIN GB_COMMENT USING(CID) WHERE RCTYPE=2 ORDER BY STMT, RCID
+</select>
+<select id="selectCommentTotalContent" resultType="_int">
+	SELECT COUNT(*) FROM REPORT WHERE RCTYPE=2
+</select>
+<select id="selectOneComment" parameterType="_int" resultType="Report">
+	SELECT GBTITLE, M.NICKNAME "tnickName", M.WARN_CNT, RCINFO, M2.NICKNAME, R.RCCONTENT, GC.CCONTENT, RCID, CID
+	FROM REPORT R JOIN MEMBER M ON(R.TARGETID=M.USERID)
+	JOIN MEMBER M2 ON(R.USERID=M2.USERID) JOIN GB_COMMENT GC USING(CID)
+	JOIN GBOARD G ON(R.GBID = G.GBID) JOIN SGROUP S ON(G.GID=S.GID) WHERE RCID=#{rcId}
+</select>
+<update id="reportReject" parameterType="Report">
+	UPDATE REPORT SET STMT='Y' WHERE RCID=#{rcId}
+</update>
+<update id="reportUpdate" parameterType="Report">
+	UPDATE REPORT SET RCINFO=#{rcInfo}, STMT='Y' WHERE RCID=#{rcId}
+</update>
+<update id="memberWarnUpdate" parameterType="Member">
+	UPDATE MEMBER SET WARN_CNT = WARN_CNT + 1 WHERE NICKNAME=(SELECT NICKNAME FROM REPORT R
+	JOIN MEMBER M ON(R.TARGETID = M.USERID) WHERE RCID=#{rcId})
+</update>
+<update id="gbDelUpdate" parameterType="Gboard">
+	UPDATE GBOARD SET GBDEL='Y' WHERE GBID=#{gbId}
+</update>
+<update id="gcDelUpdate" parameterType="GB_comment">
+	UPDATE GB_COMMENT SET CDEL='Y' WHERE CID=#{cId}
+</update>
+<update id="memberStopUpdate" parameterType="Member">
+	UPDATE MEMBER SET STOP_YNA='Y' WHERE NICKNAME=#{tnickName}
+</update>
+<update id="memberOutUpdate" parameterType="Member">
+	UPDATE MEMBER SET OUT_YN='Y' WHERE NICKNAME=#{tnickName}
+</update>
+<select id="selectMemberList" resultType="Member">
+	SELECT * FROM MEMBER
+</select>
+<select id="selectMemberTotalContents" resultType="_int">
+	SELECT COUNT(*) FROM MEMBER
+</select>
+<select id="selectOneMember" parameterType="string" resultType="Member">
+	SELECT * FROM MEMBER WHERE USERID=#{userId}
+</select>
+<select id="selectMemberOrderList" parameterType="hashmap" resultType="Member">
+	SELECT * FROM MEMBER 
+	<if test="orderBy == 'userName'">
+	ORDER BY USERNAME
+	</if>
+	<if test="orderBy == 'enrollDate'">
+	ORDER BY ENROLLDATE
+	</if>
+	<if test="orderBy == 'mLevel'">
+	ORDER BY MLEVEL
+	</if>
+	<if test="orderBy == 'warn_Cnt'">
+	ORDER BY WARN_CNT
+	</if>
+	<if test="howOrder == 'asc'">
+	ASC
+	</if>
+	<if test="howOrder == 'desc'">
+	DESC
+	</if>
+	
+</select>
+</mapper>

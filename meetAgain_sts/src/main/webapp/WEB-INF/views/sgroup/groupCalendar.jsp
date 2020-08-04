@@ -1,86 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="com.kh.meetAgain.sgroup.model.vo.Calendar"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%
+	Calendar cal = (Calendar)session.getAttribute("sclist");
+%>
+<%-- <%if ( cal == null ) { %>
+<script>
+		alert('불러오기 완료');
+</script>
+<% } else { %>
+	<script>
+		alert('불러오기 실패');
+	</script>
+<% } %> --%>
 
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
+<link href='${ pageContext.request.contextPath }/resources/css/main.css' rel='stylesheet' type='text/css'>
 <script src="${ pageContext.request.contextPath }/resources/js/main.js"></script>
-<script src="${ pageContext.request.contextPath }/resources/css/main.css"></script>
 <script src="${ pageContext.request.contextPath }/resources/js/locales/ko.js"></script>
+<script src="${ pageContext.request.contextPath }/resources/js/title_ko.js"></script>
+<%-- <script src="${ pageContext.request.contextPath }/resources/js/addEvent.js"></script> --%>
+<%-- <script src="${ pageContext.request.contextPath }/resources/js/test.js"></script> --%>
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate var="year" value="${now}" pattern="yyyy.MM.dd" />
 
-<script>
 
-	document.addEventListener('DOMContentLoaded', function() {
-		var calendarEl = document.getElementById('calendar');
-		var today = new Date();
-
-		var calendar = new FullCalendar.Calendar(calendarEl, {
-			headerToolbar : {
-				left : 'prev,next',
-				center : 'title',
-				right : 'today dayGridMonth timeGridWeek timeGridDay listMonth'
-			},
-			
-			initialDate : today, //현재날짜로 초기화
-			navLinks : true, // can click day/week names to navigate views
-			editable : true,
-			dayMaxEvents : true, // allow "more" link when too many events
-			locale : 'ko',
-			
-			events : [ {
-				title : 'Long Event',
-				start : '2020-06-07',
-				end : '2020-06-10'
-			}, {
-				groupId : 999,
-				title : 'Repeating Event',
-				start : '2020-06-09T16:00:00'
-			}, {
-				groupId : 999,
-				title : 'Repeating Event',
-				start : '2020-06-16T16:00:00'
-			}, {
-				title : 'Conference',
-				start : '2020-06-11',
-				end : '2020-06-13'
-			}, {
-				title : '일반모임',
-				start : '2020-07-23',
-				end : '2020-07-23'
-			}, {
-				title : '정기모임',
-				start : '2020-07-17'
-			} 
-			
-		<%-- 	<% 
-		  	  for (int i = 0; i < list.size(); i++) {
-		  	  	ScheduleDTO dto = (ScheduleDTO)list.get(i);
-		%>	
-		  	  {
-		  	   title : '<%= dto.getSubject() %>',
-		  	   start : '<%= dto.getStartDate() %>',
-		  	   end : '<%= dto.getEndDate() %>'
-		  	   },
-		<%
-			}
-		%>
-				{
-				   title : 'default',
-				   start : "2019-01-01",
-				   end : "2019-01-01"
-				  } --%>			
-			
-			]
-			
-		});
-
-		calendar.render();
-		
-	});
-    
-</script>
 
 <style>
 body {
@@ -104,9 +51,14 @@ body {
     border-radius: 3px;
     width: 157px;
 }
+#tx{
+	padding-right: 50px;
+}
 </style>
+
+<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
+
 <div class="container" style="overflow: hidden; height: auto;">
-	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
 
 	<div id="infoArea" class="col-lg-4" style="float: left;">
 		<table style="text-align: center; width: 100%;">
@@ -129,9 +81,9 @@ body {
 					&nbsp;&nbsp;&nbsp;
 					<button data-toggle="modal" data-target="#exampleModal" style="border: 0; outline: 0; background: white;">
 						<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-					 	 <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
-					 	 <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
-					 	 <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+						 <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+						 <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+						 <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
 						</svg>
 					</button>
 				</div>
@@ -140,68 +92,101 @@ body {
 				<div>
 					</br>
 					<div>
-						<span class="badge badge-pill badge-danger"
-							style="font-size: 1.3em;"> 7/17</span> 정기모임 <br /> <br /> <span
-							class="badge badge-pill badge-success" style="font-size: 1.3em;">
-							7/23</span> 일반모임
+						<span class="badge badge-pill badge-danger" style="font-size: 1.3em;">7/17</span>정기모임 <br /> <br />
+						<span class="badge badge-pill badge-success" style="font-size: 1.3em;">7/23</span>일반모임 <br>
+						
+							<c:forEach items="${sclist}" var="normalList" varStatus="scIndex">
+							
+								<c:set var = "string1">${normalList.gtime}</c:set>
+								<c:set var = "string2" value = "${fn:split(string1, ' ')}" />
+							<%-- <span style="font-weight: bold;">${normalList.ginfo}<br>일정시간 : </span> --%>
+								<li class="list-group-item" id="test5">${normalList.ginfo} 시간 : ${string2}</li>
+								
+								
+							</c:forEach>
 					</div>
 				</div>
 			</tr>
 		</table>
 	</div>
-	
-	<!-- <div class="navigation d-flex justify-content-center">
-		<ul>
-			<li class="nav-item">
-				<a href="#">ㄹㄹ</a>
-			</li>
-		</ul>
-	</div> -->
 
 	<!------------------ modal 영역 ---------------------------->
 	
+	<!-- <input type="text" id="rst" value="${sc.gtime}, ${statusindex.index}, ${sc.gdate}"/> -->
+	<!-- <input type="text" name="rst2" id="rst2"> -->
+<%-- 	
+	<c:set var="realDate" value="${sc.gdate}"/>
+	<c:set var="realTime" value="${sc.gtime}"/>
+	<c:set var="realCutTime" value="${fn:substring(realTime, 0, 10)}"/> --%>
+<%-- 	<span>${realTime}</span><br>
+	<span>${realCutTime}</span><br> --%>	
+	
+	<button type="submit" class="btn btn-primary" id="addCal">아 왜안되지</button>
+
+	<script>
+		// var str = $('#rst').val();
+		// console.log(str.substr(10));
+
+		/* var str2 = $('${realTime}').val();	
+		console.log(str2.substr(0, 10)); */
+	</script>
+	
+
+		
 	<form method="POST" action="addCalendar.do">
 	
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">모임 일정 추가</h5>
-				</div>
-				<div class="modal-body">
-						<table style="width: 100%; padding: 10px;">
-							<tr>
-								<td>일정 날짜</td>
-								<td><input type="date" name="gdate" id="" class="form-control"  /></td>
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="exampleModalLabel" style="text-align: center;">모임 일정 추가</h4>
+						<h6>오늘날짜 : ${year}</h6>
+						
+					</div>
+					<div class="modal-body">
+
+						<table id="my_table_1" data-toggle="table" data-sort-stable="true">
+							<thead>
+							<tr>								
+								<hr>
 							</tr>
-							<tr>
-								<td>약속 시간</td>
-								<td><input type="time" name="gtime" id="time" class="form-control"  /></td>
-							</tr>
-							<tr>
-								<td colspan="2">일정 설명</td>
-							</tr>
-							<tr>
-								<td colspan="2"><input type="text" name="ginfo"
-									class="form-control" /></td>
-							</tr>
+							</thead>							
+						   <tbody>
+								<tr>
+									<td id="tx">일정 시작 날짜</td>
+									<td><input type="date" name="gdate" id="gdate" class="form-control" /></td>
+								</tr>
+								<tr>
+									<td id="tx">일정 끝 날짜</td>
+									<td><input type="date" name="gdateEnd" id="gdateEnd" class="form-control" /></td>
+								</tr>
+								<tr>
+									<td id="tx">일정 설명</td>
+									<td><input type="text" name="ginfo" id="title" class="form-control"  /></td>
+								</tr>
+								<tr>
+									<td id="tx">약속 시간</td>
+									<td><input type="time" name="gtime" id="gtime" class="form-control"  /></td>
+								</tr>
+								<tr>
+									<td id="tx">정기 모임</td>
+									<td><input type="checkbox" name="isctn" id="isctn" /></td>
+								</tr>	
+	
+								</tbody>
 						</table>
-						<div class="custom-control custom-checkbox my-2">
-							<input type="checkbox" class="custom-control-input"
-								id="customCheck2" name="isctn" value="Y" > 
-								<label class="custom-control-label" for="customCheck2">
-								정기 모임일 시 체크</label>
-						</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-light"
-						data-dismiss="modal">닫기</button>
-					<button type="submit" class="btn btn-primary">일정 등록</button>
+
+					</div>	
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-light" data-dismiss="modal">닫기</button>
+						<button type="submit" class="btn btn-primary" id="addCal">일정 등록</button>
+					</div>
+
 				</div>
 			</div>
 		</div>
-	</div>
 	
 	</form>
 
@@ -212,163 +197,112 @@ body {
 		<br />
 	</div>
 	<br /> <br />
+	
 </div>
 
 <script>
-	
-	$(function(){
-	$('.fc-prev-button').on('click',function(){
-	
-		var test1 = $('.fc-toolbar-title').html();
-		console.log(test1);
-		var test2 = test1.split(' ');
-		console.log(test2);
-
-		for (var i in test2){
-			// console.log(test2[i]);
-			// if(test2[0] === 'September'){
-			// 	console.log('9월의 일정');
-			// }
-
-			switch (test2[1]) {
-				case '1월':
-					// console.log('1월의 일정');
-					$('#scheduleList').html('<div><h2>1월의 일정</h2></div>');
-					break;
-				case '2월':
-					$('#scheduleList').html('<div><h2>2월의 일정</h2></div>');
-					break;
-				case '3월':
-					$('#scheduleList').html('<div><h2>3월의 일정</h2></div>');
-					break;
-				case '4월':
-					$('#scheduleList').html('<div><h2>4월의 일정</h2></div>');
-					break;
-				case '5월':
-					$('#scheduleList').html('<div><h2>5월의 일정</h2></div>');
-					break;
-				case '6월':
-					$('#scheduleList').html('<div><h2>6월의 일정</h2></div>');
-					break;
-				case '7월':
-					$('#scheduleList').html('<div><h2>7월의 일정</h2></div>');
-					break;
-				case '8월':
-					$('#scheduleList').html('<div><h2>8월의 일정</h2></div>');
-					break;
-				case '9월':
-					$('#scheduleList').html('<div><h2>9월의 일정</h2></div>');
-					break;
-				case '10월':
-					$('#scheduleList').html('<div><h2>10월의 일정</h2></div>');
-					break;
-				case '11월':
-					$('#scheduleList').html('<div><h2>11월의 일정</h2></div>');
-					break;
-				case '12월':
-					$('#scheduleList').html('<div><h2>12월의 일정</h2></div>');
-					break;
-
-				default:
-					break;
-			}
-
-		}
-		
-	});
-	
-	$('.fc-next-button').on('click',function(){
-		
-		var test1 = $('.fc-toolbar-title').html();
-		// console.log(test1);
-		var test2 = test1.split(' ');
-		// console.log(test2);
-
-		for (var i in test2){
-			// console.log(test2[i]);
-			// if(test2[0] === 'September'){
-			// 	console.log('9월의 일정');
-			// }
-
-			switch (test2[1]) {
-				case '1월':
-					$('#scheduleList').html('<div><h2>1월의 일정</h2></div>');
-					break;
-				case '2월':
-					$('#scheduleList').html('<div><h2>2월의 일정</h2></div>');
-					break;
-				case '3월':
-					$('#scheduleList').html('<div><h2>3월의 일정</h2></div>');
-					break;
-				case '4월':
-					$('#scheduleList').html('<div><h2>4월의 일정</h2></div>');
-					break;
-				case '5월':
-					$('#scheduleList').html('<div><h2>5월의 일정</h2></div>');
-					break;
-				case '6월':
-					$('#scheduleList').html('<div><h2>6월의 일정</h2></div>');
-					break;
-				case '7월':
-					$('#scheduleList').html('<div><h2>7월의 일정</h2></div>');
-					break;
-				case '8월':
-					$('#scheduleList').html('<div><h2>8월의 일정</h2></div>');
-					break;
-				case '9월':
-					$('#scheduleList').html('<div><h2>9월의 일정</h2></div>');
-					break;
-				case '10월':
-					$('#scheduleList').html('<div><h2>10월의 일정</h2></div>');
-					break;
-				case '11월':
-					$('#scheduleList').html('<div><h2>11월의 일정</h2></div>');
-					break;
-				case '12월':
-					$('#scheduleList').html('<div><h2>12월의 일정</h2></div>');
-					break;
-
-				default:
-					break;
-			}
-			
-		}
-
-	});
-
-	});
-
-	document.getElementById('myScore').addEventListener('click',
-	function() {
+	document.getElementById('myScore').addEventListener('click', function() {
 		calendar.next();
-		console.log(gtime);
-		console.log('${tagTwo}');
-	});
-	
+	});	
 	function increaseScore() {
 		score1++;
 		document.getElementById("myScore").innerHTML = score1;
-		console.log(gtime);
-		console.log('${tagTwo}');
-	}
-	
-	function _addSc() {
-		console.log(gtime);
-		console.log('${tagTwo}');
+	}	
+	function addCal() {
 		location.href="${ pageContext.request.contextPath }/sgroup/addCalendar.do";
 	}
+</script>
+<script>
+
+	document.addEventListener('DOMContentLoaded', function() {
+		var calendarEl = document.getElementById('calendar');
+		var today = new Date();
 	
-	$('#time').on('change', function() {
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			headerToolbar : { // 달력 헤더
+				left : 'prev,next',
+				center : 'title',
+				right : 'today dayGridMonth timeGridWeek timeGridDay listMonth'
+			},
+			
+			initialDate : today, //현재날짜로 초기화
+			navLinks : true, // can click day/week names to navigate views
+			editable : true,
+			dayMaxEvents : true, // allow "more" link when too many events
+			locale : 'ko', // 한글
+			 
+			events : [
+			   {
+				 id : "5",
+				 title: "1fault",
+				 start : "2020-08-15",
+				 end : "2020-08-17"				 
+			   },
+			   <c:forEach items="${sclist}" var="sc" varStatus="scIndex">
+			   {
+			   // id : "${sc.gid}",
+			   title : "${sc.ginfo}",
+			   start : "${sc.gdate}",
+			   end : "${sc.gdateEnd}"
+			   }<c:if test="${!scIndex.last}">,</c:if>			   
+			   </c:forEach>
+			],
+			
+			eventClick: function(info) {
+				
+				var realTitle = title;
+				
+				console.log(realTitle);
+				
+			    /* alert('Event: ' + info.event.title);
+			    alert('일정 위치 x, y: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+			    alert('View: ' + info.view.type); */			    			    
+			   
+			    var result = confirm('해당 "' + info.event.title + '" 일정을 삭제하시겠습니까 ??');
+			    	if(result){
+			    		return null;
+			    	} else {			    		
+			    		return false;
+			    	}
+			    
+			    // change the border color just for fun
+			    info.el.style.borderColor = 'red';
+			    
+			  }
+	
+		});
 		
-		var result = $('#time').toISOString().slice(10, 19).replace('T', '').replace(/:/gi, '');
+		// 출력
+		calendar.render();
+	
+		// 배열 이벤트 데이터 불러오기		
+		console.log(calendar.getEvents(5));
 		
-		console.log(result);
+				
 		
-		return result;
 		
 	});
-	
 
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
+<script type="text/javascript">
+	
+	<c:forEach items="${sclist}" var="sc1" varStatus="scIndex">
+	<c:set var="realtime" value='${sc1.gtime}' />
+	</c:forEach>
+	
+	var ime = "${realtime}";
+	var result = ime.substring(10, 19);
+	console.log(result);
+	$('#test5'), ime.html() == "ttttttttttttttttt";
+	
+	
+</script>
+
+ 
+ 
+ 
+ 
+ 
+ 

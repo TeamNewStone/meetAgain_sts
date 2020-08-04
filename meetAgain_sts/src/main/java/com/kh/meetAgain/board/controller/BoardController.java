@@ -53,8 +53,10 @@ public class BoardController {
 	public String noticeDetail(@RequestParam int bId, Model model) {
 		
 		Board b = boardService.SelectOneBoard(bId);
-		
-		int bRate = boardService.updateReadCount(bId); 
+		int bRate = 0;
+		if(!(b.getUserId()=="meetAgainAdmin")) {
+			bRate = boardService.updateReadCount(bId); 			
+		}
 		model.addAttribute("bRate",bRate);
 
 		

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.meetAgain.member.model.vo.UserTMI;
+import com.kh.meetAgain.myPage.model.vo.Review;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 public interface MyPageDAO {
@@ -33,4 +34,6 @@ public interface MyPageDAO {
 	int insertFollow(Map<String, String> map);
 
 	int deleteFollow(Map<String, String> map);	
+	
+	int insertReview(Review review);
 }

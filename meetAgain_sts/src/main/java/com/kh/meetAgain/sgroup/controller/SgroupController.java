@@ -1,3 +1,4 @@
+
 package com.kh.meetAgain.sgroup.controller;
 
 import java.io.File;
@@ -277,5 +278,20 @@ public class SgroupController {
 		 * model.addAttribute("list", list);
 		 */
 		return "/sgroup/groupBoardDetail.do";
+
+	@RequestMapping("sgroup/gotoGroup.do")
+	public String gotoGroup(@RequestParam String gid, Model model) {
+				
+		String loc = "/sgroup/groupBoard.do?gid="+gid;
+		String msg = "";
+		
+		model.addAttribute("gid",gid);
+		model.addAttribute("loc", loc);
+		
+		return "common/msg";
 	}
+	
+	
 }
+
+

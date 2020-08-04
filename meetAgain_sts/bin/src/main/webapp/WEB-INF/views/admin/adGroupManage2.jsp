@@ -10,10 +10,10 @@
 		<div class="col-10 content">
 			<br>
 			<button type="button" class="btn btn-outline-secondary btn-pill"
-				onclick="location.href='/meetAgain/views/admin/adGroupManage1.jsp'">진행
+				onclick="location.href='${pageContext.request.contextPath}/admin/adGroupManage1.do'">진행
 				중인 모임</button>
 			<button type="button" class="btn btn-secondary btn-pill"
-				onclick="location.href='/meetAgain/views/admin/adGroupManage2.jsp'">종료
+				onclick="location.href='${pageContext.request.contextPath}/admin/adGroupManage2.do'">종료
 				된 모임</button>
 			<br>
 			<div class="rows">

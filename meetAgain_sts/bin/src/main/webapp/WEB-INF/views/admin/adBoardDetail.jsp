@@ -23,26 +23,26 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
 
 <tr>
 	<th>모임명</th>
-	<td>test</td>
+	<td>${report.GTitle}</td>
 	<th>작성자</th>
-	<td>user01</td>
+	<td>${report.targetId}</td>
 </tr>
 <tr>
 	<th>신고사유</th>
-	<td>비방글</td>
+	<td>${report.rcInfo}</td>
 	<th>신고자</th>
-	<td>user02</td>
+	<td>${report.userId}</td>
 </tr>
 <tr>
 	<th>게시글 제목</th>
-	<td colspan="3">testTitle</td>
+	<td colspan="3">${report.gbTitle}</td>
 </tr>
 <tr>
 	<th colspan="4">신고 상세 사유</th>
 </tr>
 <tr>
 	<td colspan="4">
-	<textarea name="" id="" cols="200" rows="10" readonly style="resize:none;"></textarea>	
+	<textarea name="" id="" cols="200" rows="10" readonly style="resize:none;">${report.rcContent}</textarea>	
 	</td>
 </tr>
 <tr>
