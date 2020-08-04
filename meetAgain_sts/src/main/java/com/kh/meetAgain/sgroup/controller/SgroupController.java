@@ -116,11 +116,6 @@ public class SgroupController {
 		return "sgroup/groupAlbum";
 	}
 
-	@RequestMapping("/sgroup/groupCalendar.do")
-	public String groupCalendar() {
-		return "sgroup/groupCalendar";
-	}
-
 
 	@RequestMapping("/sgroup/groupMap.do")
 	public String groupMap() {
@@ -278,7 +273,8 @@ public class SgroupController {
 		 * model.addAttribute("list", list);
 		 */
 		return "/sgroup/groupBoardDetail.do";
-
+	}
+	
 	@RequestMapping("sgroup/gotoGroup.do")
 	public String gotoGroup(@RequestParam String gid, Model model) {
 				
