@@ -320,7 +320,7 @@ function validate(){
 	
 }
 
-	$('#imgArea').on('click', function() {
+	$('#mimgBtn').on('click', function() {
 		$('#groupImgBtn').click();
 	});
 	

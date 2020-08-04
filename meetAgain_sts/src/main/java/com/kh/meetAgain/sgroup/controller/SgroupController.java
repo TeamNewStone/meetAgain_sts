@@ -144,7 +144,10 @@ public class SgroupController {
 
 
 	@RequestMapping("/sgroup/memberList.do")
-	public String memberList() {
+	public String memberList(@RequestParam String gid, Model model) {
+		List<Joing> joing = sgroupService.selectJoing(gid);
+		
+		model.addAttribute("joing", joing);
 		return "sgroup/memberList";
 	}
 

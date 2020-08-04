@@ -13,11 +13,21 @@
 				<div class="component">
 					<div class="card">
 						<div class="card-header">
-							<img class="card-img" src="/meetAgain/resources/img/dog-3.jpg"
-								alt="dog">
+
+						<c:if test="${sgroup.getGImg() eq null}">
+				        <c:if test="${sgroup.getGType() eq 'S'}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height:200px;">
+				          </c:if>
+				          <c:if test="${sgroup.getGType() eq 'L'}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav01.png" style="height:200px;">
+				          </c:if>
+				          </c:if>
+				          <c:if test="${sgroup.getGImg() ne null}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/upload/groupImg/${sgroup.getGImg()}" style="height:200px;">
+				          </c:if>
 						</div>
 						<div class="card-body">
-							<p class="card-text">이 부분에 모임 설명을 씁니다</p>
+							<p class="card-text">${sgroup.getGIntro() }</p>
 						</div>
 						<div class="card-footer" style="text-align: right;">
 							<!-- 이거 수정버튼임 -->
@@ -47,7 +57,7 @@
 					</colgroup>
 					<tr>
 						<td><h5>설립일</h5></td>
-						<td><h5>yyyy.mm.dd</h5></td>
+						<td><h5>${sgroup.getCreateDate() }</h5></td>
 						<td style="text-align: right;"><span> <span
 								class="badge badge-pill badge-primary">정기</span> <span
 								class="badge badge-pill badge-info">6개월</span> <span
@@ -166,7 +176,7 @@
 	}
 
 	function clickMemList() {
-		location.href = '${ pageContext.request.contextPath }/sgroup/memberList.do';
+		location.href = '${ pageContext.request.contextPath }/sgroup/memberList.do?gid='+${gid};
 	}
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
