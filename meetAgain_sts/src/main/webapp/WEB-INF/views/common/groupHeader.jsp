@@ -14,7 +14,7 @@
 	</div>
 
 	<div id="gname" style="float: left; padding: 10px;">		
-		<button class="btn bg-transparent" onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupDetail.do?gid='+${gid}"><h4>소모임 이름</h4></button>
+		<button class="btn bg-transparent" onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupDetail.do?gid='+${gid}"><h4>${sgroup.getGTitle() }</h4></button>
 	</div>
 	<div id="btnMenu" style="margin-left: auto;">
 <!-- 

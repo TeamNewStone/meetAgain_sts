@@ -22,6 +22,7 @@
 
 	<select id="selectListSgroup" resultMap="sgroupMap">
 		SELECT * FROM SGROUP
+		ORDER BY DURATE DESC
 	</select>
 
 	<select id="selectOneSgroup" parameterType="string"
