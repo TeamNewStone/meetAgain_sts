@@ -129,8 +129,29 @@ public class AdminDAOImpl implements AdminDAO {
 		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		 List<Map<String, String>> result =sqlSession.selectList("adminMapper.selectMemberOrderList", map, rows);
 		 System.out.println(result);
-		 System.out.println(map);
 		return result;
+	}
+
+	@Override
+	public List<Map<String, String>> selectGroupList1(int cPage, int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("adminMapper.selectGroupList1", null, rows);
+	}
+
+	@Override
+	public int selectGroupTotalContents1() {
+		return sqlSession.selectOne("adminMapper.selectGroupTotalContents1");
+	}
+
+	@Override
+	public List<Map<String, String>> selectGroupList2(int cPage, int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("adminMapper.selectGroupList2", null, rows);
+	}
+
+	@Override
+	public int selectGroupTotalContents2() {
+		return sqlSession.selectOne("adminMapper.selectGroupTotalContents2");
 	}
 
 }

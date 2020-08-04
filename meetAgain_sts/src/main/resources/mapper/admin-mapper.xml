@@ -83,6 +83,17 @@
 	<if test="howOrder == 'desc'">
 	DESC
 	</if>
-	
+</select>
+<select id="selectGroupList1" resultType="Sgroup">
+	SELECT * FROM SGROUP WHERE ISFIN='N'ORDER BY CREATEDATE DESC
+</select>
+<select id="selectGroupTotalContents1" resultType="_int">
+	SELECT COUNT(*) FROM SGROUP WHERE ISFIN='N'
+</select>
+<select id="selectGroupList2" resultType="Sgroup">
+	SELECT * FROM SGROUP WHERE ISFIN='Y' ORDER BY DURATE DESC
+</select>
+<select id="selectGroupTotalContents2" resultType="_int">
+	SELECT COUNT(*) FROM SGROUP WHERE ISFIN='Y'
 </select>
 </mapper>
