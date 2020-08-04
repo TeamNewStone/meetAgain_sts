@@ -30,7 +30,6 @@
 		 <typeAlias type="com.kh.meetAgain.sgroup.model.vo.GB_comment" alias="GB_comment"/>
 		 <typeAlias type="com.kh.meetAgain.admin.model.vo.Report" alias="Report"/>
 		 <typeAlias type="com.kh.meetAgain.sgroup.model.vo.Joing" alias="Joing" />
-		 <typeAlias type="com.kh.meetAgain.sgroup.model.vo.GbComment" alias="GbComment" />
 
 	</typeAliases>	
 	

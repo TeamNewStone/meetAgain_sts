@@ -8,9 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.meetAgain.admin.model.dao.AdminDAO;
 import com.kh.meetAgain.admin.model.vo.Report;
-import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.member.model.vo.Member;
-import com.kh.meetAgain.sgroup.model.vo.GbComment;
+import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 @Service("adminService")
@@ -90,7 +89,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int gcDelUpdate(GbComment gbComment) {
+	public int gcDelUpdate(GB_comment gbComment) {
 		return adminDAO.gcDelUpdate(gbComment);
 	}
 
