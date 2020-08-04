@@ -86,4 +86,9 @@ public class MyPageServiceImpl implements MyPageService {
 		return mpDAO.insertReview(review);
 	}
 
+	@Override
+	public Review selectReview(String userId, String gId) {
+		return mpDAO.insertReview(userId, gId);
+	}
+
 }
