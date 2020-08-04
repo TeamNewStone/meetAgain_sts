@@ -59,4 +59,8 @@
 	<delete id="deleteFollow" parameterType="hashmap">
 		DELETE FROM FOLLOW WHERE FOLLOWER=#{muserId} AND FOLLOWIN=#{userId}
 	</delete>
+	
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO REVIEW VALUES(SEQ_RVID.NEXTVAL, #{userId}, #{gId}, #{rvContent}, #{rvImage}, #{rvStar}, 0)
+	</insert>
 </mapper>

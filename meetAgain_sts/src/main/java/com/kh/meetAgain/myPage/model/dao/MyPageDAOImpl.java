@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.meetAgain.member.model.vo.UserTMI;
+import com.kh.meetAgain.myPage.model.vo.Review;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @Repository("mpDAO")
@@ -82,5 +83,10 @@ public class MyPageDAOImpl implements MyPageDAO {
 	@Override
 	public int deleteFollow(Map<String, String> map) {
 		return sqlSession.delete("myPageMapper.deleteFollow", map);
+	}
+
+	@Override
+	public int insertReview(Review review) {
+		return sqlSession.insert("myPageMapper.insertReview", review);
 	}
 }
