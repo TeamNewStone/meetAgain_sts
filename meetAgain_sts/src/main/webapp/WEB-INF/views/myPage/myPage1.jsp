@@ -234,7 +234,7 @@
 								<c:if test="${mg.getIsFin() eq 'Y'}">
 								<c:if test="${owner.userId eq member.userId}">
 									<div class="card-footer">
-										<button data-toggle="modal" class="btn btn-outline-dark" id="rvBtn"
+										<button class="btn btn-outline-dark" id="rvBtn"
 										data-title="${mg.getGTitle()}" data-cate="${mg.getCateId()}" data-id="${mg.getGId() }"
 										data-sdate="${mg.getCreateDate()}" data-edate="${mg.getDurate()}">리뷰 작성</button>
 										
@@ -466,7 +466,7 @@
           <span aria-hidden="true">&times;</span>
         </button></div>
       </div>
-      <form action="reviewInsert.do">
+      <form action="reviewInsert.do" method="post" enctype="multipart/form-data" onsubmit="return validate(this);" >
       <div class="modal-body">
     
       <p id="star_grade">
@@ -492,7 +492,7 @@
         <input type="hidden" name="userId" value="${member.userId }" />
         <input type="hidden" name="gId" id="modal-gid" />
   <div class="custom-file">
-    <input type="file" class="custom-file-input" id="inputGroupFile02" name="rvImage">
+    <input type="file" class="custom-file-input" id="inputGroupFile02" name="reviewImage">
     <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
   </div>
 </div>
@@ -520,14 +520,19 @@
 
 <!-- 마이페이지 메인 끝 -->
 
+
+
+
+
+
 <!-- 마인펭이지 메인 스크립트작성 -->
 <!--   jQuery first, then Popper.js, then Bootstrap JS -->
-<script
+<%-- <script
 	src="${ pageContext.request.contextPath }/resources/vendor/popper/popper.min.js"></script>
 <script
 	src="${ pageContext.request.contextPath }/resources/vendor/bootstrap/bootstrap.min.js"></script>
 <!-- lazy javascript -->
-<script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script>
+<script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script> --%>
 
 <script>
 $(function(){
@@ -554,6 +559,7 @@ $(function(){
 		var cate = $(this).data('cate');
 		var category ;
 		var checkresult;
+
 		
 		if(cate=="C01") category="운동";
 		else if(cate=="C02") category="친목";
@@ -575,12 +581,13 @@ $(function(){
 					alert("이미 리뷰를 작성하셨습니다.");
 				}
 				else {
+					console.log("else문으로 들어옴");
 					$(".modal-date").html(sdate+" ~ "+edate);
 					$(".titleSpace").html(gtitle);
 					$("#modal-cate").html(category);
 					$("#modal-gid").val(gid);
 					
-					$("#reviewInsert").show();
+					$("#reviewInsert").modal();
 				}
 			},
 			error : function(){
