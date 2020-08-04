@@ -29,7 +29,7 @@ import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 
-@SessionAttributes(value= {"member"})
+@SessionAttributes(value= {"member", "gid"})
 
 @Controller
 public class SgroupController {
@@ -96,7 +96,7 @@ public class SgroupController {
 	}
 
 	// 소모임 전체 리스트 출력
-
+	@RequestMapping("/sgroup/group.do")
 	public String group(@ModelAttribute("member") Member m, Model model) {
 		
 		List<Sgroup> list = sgroupService.selectSgroupList();
@@ -156,7 +156,7 @@ public class SgroupController {
 
 
 	@RequestMapping("/sgroup/groupBoard.do")
-	public String groupBoard(@RequestParam("gId") String gId,
+	public String groupBoard(@RequestParam("gid") String gId,
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, Model model) {
 
 		// 한 페이지 당 게시글 수
@@ -190,16 +190,10 @@ public class SgroupController {
 		System.out.println("list : " + list);
 		System.out.println("Controller gId : " + gId);
 
-		model.addAttribute("gid", gid);
+		model.addAttribute("gid", gId);
 
 		return "/sgroup/groupBoard";
 
-	}
-
-	@RequestMapping("/sgroup/groupDetail.do")
-	public String groupDetail() {
-
-		return "sgroup/groupDetail";
 	}
 
 	@RequestMapping("/sgroup/groupBoardDetail.do")
