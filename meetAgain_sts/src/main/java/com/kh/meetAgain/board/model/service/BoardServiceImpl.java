@@ -51,4 +51,24 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.selectReviewList();
 	}
 
+	@Override
+	public int selectRvHelpList(Map<String, Object> map) {
+		return boardDAO.selectRvHelpList(map);
+	}
+
+	@Override
+	public int plusRvHelp(Map<String, Object> map) {
+		return boardDAO.plusRvHelp(map);
+	}
+
+	@Override
+	public int minusRvHelp(Map<String, Object> map) {
+		return boardDAO.minusRvHelp(map);
+	}
+
+	@Override
+	public int udpateRvLike(int rvid) {
+		return boardDAO.updateRvLike(rvid);
+	}
+
 }

@@ -58,7 +58,7 @@
 						    <!-- 20자까지 보여주기 -->
 						  </div>
 						  <div class="card-footer">
-								<button type="button" id="rvBtn" class="btn btn-outline-secondary" 
+								<button type="button" id="rvBtn" class="btn btn-outline-secondary" data-rid="${rv.getRvId() }"
 								data-title="${rv.getGTitle()}" data-cate="${rv.getCateId()}" data-star="${rv.getRvStar()}"
 								data-content="${rv.getRvContent() }" data-img = "${rv.getRvImage() }"
 								data-sdate="${rv.getCreateDate()}" data-edate="${rv.getDurate()}" data-like="${rv.getRvLike() }"
@@ -104,15 +104,13 @@
         <div class="card-body custom-control custom-checkbox my-2">
 		<textarea class="form-control" rows="5" style="resize:none;" readonly >
 	</textarea>
-
         </div>
-
-		
-        <br />
-
+		   <br />
 </form>
         </div>
               <div class="modal-footer">
+              <input type="hidden" id="userId" value="${member.userId }" />
+              <input type="hidden" name="rvId"  id="reviewId"/>
         <p style="font-size:15px;">이 리뷰가 도움이 되셨나요?
         <button type="button" class="btn btn-outline-danger btn-icon btn-sm" id="likeBtn"><i class="fas fa-heart"></i></button>
         <span id="heartrate" >30</span>
@@ -126,13 +124,7 @@
 </div>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 <script>
 $(function(){
 
@@ -146,7 +138,9 @@ $(function(){
 		var content = $(this).data('content');
 		var star = $(this).data('star');
 		var img = $(this).data('img');
+		var id = $(this).data('rid');
 		var starcount;
+	
 		
 		
 		if(cate=="C01") category="운동";
@@ -165,24 +159,47 @@ $(function(){
 		else if(star==5) starcount = "별점 : ★★★★★";
 		else starcount = "별점 : ";
 		
-		$(".star-grade").html(starcount);
+		$("#star_grade").html(starcount);
 		$("#modal-date").html(sdate+" ~ "+edate);
 		$("#modal-title").html(gtitle);
 		$("#modal-cate").html(category);
 		$(".form-control").val(content);
 		$("#heartrate").html(like);
+		$("#reviewId").val(id);
 		
 		if(img!='') $(".modal-img").attr('src','${ pageContext.request.contextPath }/resources/upload/reviewImg/'+img);
 		else $(".modal-img").attr('src','/meetAgain/resources/img/fav01.png');
+	
 		
-					
 		$("#handleModal").modal();
 	
 	}); 
 	
 	$("#likeBtn").click(function(){
-		console.log("클릭확인!");
 		
+		var rvid = $("#reviewId").val();
+		var userid;
+		
+		if($("#userId").val()!='') {
+			userid = $("#userId").val();
+			
+			$.ajax({
+				url : "helpRv.do",
+				data : {
+					rvid : rvid,
+					userid : userid
+				},
+				success : function(data){
+					if(data.result==false)
+					alert("에러 발생!");
+				},
+				error : function(){
+					alert("에러 발생");
+				}
+			});		
+		}
+		
+		console.log("userid:"+userid+"/rvid:"+rvid);
 	});
 });
 
