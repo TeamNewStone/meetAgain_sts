@@ -1,6 +1,7 @@
 package com.kh.meetAgain.board.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.meetAgain.board.model.service.BoardService;
 import com.kh.meetAgain.board.model.vo.Board;
@@ -124,9 +126,35 @@ public class BoardController {
 		List<Review> rvlist = new ArrayList<Review>();
 		
 		rvlist = boardService.selectReviewList();
-		System.out.println(rvlist);
 		model.addAttribute("rvlist", rvlist);
 		return "board/review";
 	}
 	
+	@RequestMapping("board/helpRv.do")
+	@ResponseBody
+	public Map<String, Object> helpRv(
+			@RequestParam("userid") String userid, @RequestParam("rvid") int rvid) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("userid",userid);
+		map.put("rvid", rvid);
+		
+		int check = boardService.selectRvHelpList(map);
+		int result = 0;
+		int fin=0;
+		if(check==0) {
+			result = boardService.plusRvHelp(map);
+		}else {
+			result = boardService.minusRvHelp(map);
+		}
+		
+		if(result>0) {
+			fin = boardService.udpateRvLike(rvid);
+		}
+		boolean rs = (fin>0)? true : false;
+		
+		map.put("result",rs);
+		
+		return map;
+	}
 }

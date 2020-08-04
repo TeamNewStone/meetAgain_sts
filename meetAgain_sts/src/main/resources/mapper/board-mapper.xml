@@ -41,4 +41,20 @@
 	<select id="boardMapper.selectReviewList" resultMap="ReviewMap">
 		SELECT R.*, G.GTITLE, G.CATE_ID, G.CREATEDATE, G.DURATE FROM REVIEW R JOIN SGROUP G ON(R.GID=G.GID)
 	</select>
+	
+	<select id="selectRvHelpList" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*) FROM RVHELP WHERE USERID=#{userid} AND RVID=#{rvid}
+	</select>
+	
+	<insert id="plusRvHelp" parameterType="hashmap">
+		INSERT INTO RVHELP VALUES(#{rvid}, #{userid})
+	</insert>
+	
+	<delete id="minusRvHelp" parameterType="hashmap">
+		DELETE FROM RVHELP WHERE RVID=#{rvid} AND USERID=#{userid}
+	</delete>
+	
+	<update id="updateRvLike" parameterType="_int">
+		UPDATE REVIEW SET RVLIKE = (SELECT COUNT(*) FROM RVHELP WHERE RVID=#{rvid}) WHERE RVID=#{rvid}
+	</update>
 </mapper>

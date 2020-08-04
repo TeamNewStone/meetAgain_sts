@@ -24,4 +24,12 @@ public interface BoardService {
 	int updateReadCount(int bId);
 
 	List<Review> selectReviewList();
+
+	int selectRvHelpList(Map<String, Object> map);
+
+	int plusRvHelp(Map<String, Object> map);
+
+	int minusRvHelp(Map<String, Object> map);
+
+	int udpateRvLike(int rvid);
 }
