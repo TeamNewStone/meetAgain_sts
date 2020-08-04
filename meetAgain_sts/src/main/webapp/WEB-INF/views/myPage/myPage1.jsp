@@ -363,8 +363,8 @@
 								<c:if test="${cg.getIsFin() eq 'Y'}">
 								<c:if test="${owner.userId eq member.userId}">
 									<div class="card-footer">
-										<button data-toggle="modal" data-target="#reviewInsert" class="btn btn-outline-dark"								id = "rvBtn" 
-										data-title="${cg.getGTitle()}" data-cate="${cg.getCateId()}"  data-id="${cg.getGId() }"
+										<button class="btn btn-outline-dark" id="rvBtn2"
+										data-title="${cg.getGTitle()}" data-cate="${cg.getCateId()}" data-id="${cg.getGId() }"
 										data-sdate="${cg.getCreateDate()}" data-edate="${cg.getDurate()}">리뷰 작성</button>
 										
 									</div>
@@ -493,6 +493,7 @@
         <div class="input-group">
         <input type="hidden" name="userId" value="${member.userId }" />
         <input type="hidden" name="gId" id="modal-gid" />
+        <input type="hidden" name="rvStar" id="modal-star" />
   <div class="custom-file">
     <input type="file" class="custom-file-input" id="inputGroupFile02" name="reviewImage">
     <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
@@ -501,12 +502,9 @@
         </div>
         <div class="card-body custom-control custom-checkbox my-2">
 		<textarea class="form-control" name = "rvContent" rows="5" style="resize:none;" ></textarea>
-
         </div>
 
-		
         <br />
-
 
         </div>
         <div class="modal-footer">
@@ -551,8 +549,8 @@ $(function(){
 	
 
 	
-	$("#rvBtn").click(function(){
-		
+	$("#rvBtn, #rvBtn2").click(function(){
+		console.log("클릭함!");
 		var gid = $(this).data('id');
 		var userid = ${member.userId};
 		var gtitle = $(this).data('title');
@@ -560,8 +558,6 @@ $(function(){
 		var edate = $(this).data('edate');
 		var cate = $(this).data('cate');
 		var category ;
-		var checkresult;
-
 		
 		if(cate=="C01") category="운동";
 		else if(cate=="C02") category="친목";
@@ -687,7 +683,9 @@ Rating.prototype.setRate = function(newrate){
       }else{
           item.checked = false;
       }
+      
   });
+  $("#modal-star").val(newrate);
 }
 let rating = new Rating();//별점 인스턴스 생성
 
