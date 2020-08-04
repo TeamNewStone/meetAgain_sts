@@ -22,7 +22,7 @@ public class CalendarController {
 	
 	@Autowired
 	SgroupService sgroupService;	
-	 
+	
 	@RequestMapping("sgroup/addCalendar.do")
 	public String addCalendar(
 				@RequestParam("gid") String gid,

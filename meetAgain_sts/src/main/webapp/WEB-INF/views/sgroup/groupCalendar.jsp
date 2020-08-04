@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:import url="/WEB-INF/views/common/header.jsp" />
+
 <%
 	Calendar cal = (Calendar)session.getAttribute("sclist");
 %>
@@ -18,8 +20,6 @@
 	</script>
 <% } %>
 
-<c:import url="/WEB-INF/views/common/header.jsp" />
-
 <link href='${ pageContext.request.contextPath }/resources/css/main.css' rel='stylesheet' type='text/css'>
 <script src="${ pageContext.request.contextPath }/resources/js/main.js"></script>
 <script src="${ pageContext.request.contextPath }/resources/js/locales/ko.js"></script>
@@ -27,36 +27,8 @@
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate var="year" value="${now}" pattern="yyyy.MM.dd" />
 
-<style>
-body {
-	padding: 0;
-	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-	font-size: 14px;
-}
-
-#calendar {
-	max-width: 1100px;
-	margin: 0 auto;
-}
-.add-button {
-    position: absolute;
-    top: 1px;
-    right: 230px;
-    background: #2C3E50;
-    border: 0;
-    color: white;
-    height: 35px;
-    border-radius: 3px;
-    width: 157px;
-}
-#tx{
-	padding-right: 50px;
-}
-</style>
-
-<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
-
 	<div class="container" style="overflow: hidden; height: auto;">
+		<c:import url="/WEB-INF/views/common/groupHeader.jsp" />		
 
 		<div class="row">
 		
@@ -72,13 +44,13 @@ body {
 					</c:forEach>					
 				<br><span>정기모임</span>
 							
-				<span style="float: left;" >일반모임</span><br>
+				<!-- <span style="float: left;" >일반모임</span><br>
 				<div id="_normalScheduleList"></div>
 				<br /><br />
 				
 				<span style="float: left;">정기모임</span><br>						
 				<div id="_meetScheduleList">
-				</div>		
+				</div>	 -->	
 			</div>
 			
 			<div class="col-8">
@@ -208,8 +180,7 @@ body {
 	</script>
 
 	<script>
-
-		<c:forEach items="${sclist}" var="scNormal" varStatus="scIndex3">
+		/* <c:forEach items="${sclist}" var="scNormal" varStatus="scIndex3">
 		<c:set var="realtime" value='${scNormal.gtime}' />	
 		
 			var ime = "${realtime}";
@@ -227,7 +198,7 @@ body {
 							'<br>시간 : ' + result + '</span><br>';
 							<c:if test="${!scIndex3.last}">;</c:if>
 										
-		</c:forEach>		
+		</c:forEach>	 */	
 	</script>
 	
 	<script>
