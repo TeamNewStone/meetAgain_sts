@@ -286,8 +286,7 @@ public class SgroupController {
 		
 		return "common/msg";
 	}
-	
-	
+
 }
 
 
