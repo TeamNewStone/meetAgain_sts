@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // 전체 매개변수 받는 생성자 자동 생성 어노테이션
 public class Calendar implements Serializable {
 	
-	private static final long serialVersionUID = 999999L;
+	private static final long serialVersionUID = 9991999L;
 	private String gid;
 	private Date gdate;
 	private Date gdateEnd;

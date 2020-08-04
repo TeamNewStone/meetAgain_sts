@@ -118,11 +118,36 @@ public class AdminController {
 		return "admin/adCommentManage";
 	}
 	@RequestMapping("/admin/adGroupManage1.do")
-	public String adGroupManage1() {
+	public String adGroupManage1(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
+		int numPerPage = 12;
+		
+		List<Map<String, String>> list = adminService.selectGroupList1(cPage, numPerPage);
+		
+		int totalContents = adminService.selectGroupTotalContents1();
+		
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "adGroupManage1.do");
+		
+		model.addAttribute("list", list);
+		model.addAttribute("totalContents", totalContents);
+		model.addAttribute("numPerPage", numPerPage);
+		model.addAttribute("pageBar", pageBar);
+		
 		return "admin/adGroupManage1";
 	}
 	@RequestMapping("/admin/adGroupManage2.do")
-	public String adGroupManage2() {
+	public String adGroupManage2(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
+		int numPerPage = 12;
+		
+		List<Map<String, String>> list = adminService.selectGroupList2(cPage, numPerPage);
+		
+		int totalContents = adminService.selectGroupTotalContents2();
+		
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "adGroupManage2.do");
+		
+		model.addAttribute("list", list);
+		model.addAttribute("totalContents", totalContents);
+		model.addAttribute("numPerPage", numPerPage);
+		model.addAttribute("pageBar", pageBar);
 		return "admin/adGroupManage2";
 	}
 	@RequestMapping("/admin/adMain.do")

@@ -131,14 +131,17 @@ public class SgroupController {
 	}
 	
 	@RequestMapping("/sgroup/groupAlbum.do")
-	public String groupAlbum() {
+	public String groupAlbum(@RequestParam String gid, Model model) {
+		model.addAttribute("gid", gid);
 		return "sgroup/groupAlbum";
 	}
 
 	@RequestMapping("/sgroup/groupMap.do")
-	public String groupMap() {
+	public String groupMap(@RequestParam String gid, Model model) {
+		model.addAttribute("gid", gid);
 		return "sgroup/groupMap";
 	}
+
 
 	@RequestMapping("/sgroup/memberList.do")
 	public String memberList() {
@@ -147,7 +150,7 @@ public class SgroupController {
 
   @RequestMapping("/sgroup/groupBoard.do")
 	public String groupBoard(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
-			Model model) {
+			@RequestParam String gid,Model model) {
 		// 한 페이지 당 게시글 수
 		int numPerPage = 10; // limit 역할
 
@@ -167,12 +170,13 @@ public class SgroupController {
 		model.addAttribute("totalContents", totalContents);
 		model.addAttribute("numPerPage", numPerPage);
 		model.addAttribute("pageBar", pageBar);
+		model.addAttribute("gid", gid);
 		return "/sgroup/groupBoard";
 
 	}
 
 	@RequestMapping("/sgroup/groupBoardDetail.do")
-	public String groupDetail(@RequestParam int gbId, Model model) {
+	public String groupBoardDetail(@RequestParam int gbId, Model model) {
 
 		Gboard gb = sgroupService.SelectOnegBoard(gbId);
 		List<GB_comment> list = sgroupService.selectCommentList(gbId);
@@ -304,6 +308,14 @@ public class SgroupController {
 		model.addAttribute("loc", loc);
 		
 		return "common/msg";
+	}
+
+	@RequestMapping("/sgroup/groupDetail.do")
+	public String groupDetail(@RequestParam String gid, Model model) {
+		Sgroup s = sgroupService.selectOneSgroup(gid);
+		model.addAttribute("sgroup", s);
+		model.addAttribute("gid", gid);
+		return "sgroup/groupDetail";
 	}
 
 }
