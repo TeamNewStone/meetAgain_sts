@@ -10,17 +10,19 @@
         
           <h2>회원 관리</h2>
 <span>
-  <select class="custom-select" style="display:inline; width:10%;">
-    <option selected>이름</option>
-    <option value="1">가입일자</option>
-    <option value="2">회원등급</option>
-    <option value="3">경고횟수</option>
+<form action="adMemberManageOrder.do">
+  <select class="custom-select" style="display:inline; width:10%;" id="orderBy" name="orderBy">
+    <option value="userName" selected>이름</option>
+    <option value="enrollDate">가입일자</option>
+    <option value="mLevel">회원등급</option>
+    <option value="warn_Cnt">경고횟수</option>
   </select>
-    <select class="custom-select" style="display:inline; width:10%;">
-    <option selected>오름차순</option>
-    <option value="1">내림차순</option>
+    <select class="custom-select" style="display:inline; width:10%;" id="howOrder" name="howOrder">
+    <option value="asc" selected>오름차순</option>
+    <option value="desc">내림차순</option>
   </select>
-  <button id="mSearch" style="border:0px;background-color:white;" onclick="search();"><img src="${ pageContext.request.contextPath }/resources/img/search.png" alt="search"></button>
+  <button type="submit" id="mSearch" style="border:0px;background-color:white;" onclick="search();"><img src="${ pageContext.request.contextPath }/resources/img/search.png" alt="search"></button>
+</form>
 </span>
 <div class="component">
 <table class="table" style="text-align:center;margin:auto; width:100%;">
@@ -43,43 +45,54 @@
 </tr>
 </thead>
 <tbody>
-<c:forEach var="i" begin="1" end="3">
-<tr>
-	<td>test ${ i }</td>
-	<td>M</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
-	<td>test ${ i }</td>
+<c:if test="${!empty list}">
+<c:forEach items="${list }" var="m">
+<tr id="${m.userId }">
+	<td>${ m.userName }</td>
+	<td>${ m.gender }</td>
+	<td>${ m.birthday }</td>
+	<td>${ m.enrollDate }</td>
+	<c:if test="${ m.MLevel == 0 }">
+	<td>일반 등급</td>
+	</c:if>
+	<c:if test="${ m.MLevel == 1 }">
+	<td>프리미엄 등급</td>
+	</c:if>
+	<td>${ m.warn_Cnt }</td>
 </tr>
 </c:forEach>
+</c:if>
+<c:if test="${empty list }">
+<tr>
+	<td colspan="6">아직 다시만나 이용자가 없습니다.</td>
+</tr>
+</c:if>
 </tbody>
 </table>
 </div>
+<c:out value="${pageBar}" escapeXml="false"/>
 </div>
 <script>
 $(function(){
 		
-		$(".table td").mouseenter(function(){
-			$(this).parent().css({"background":"#cedced", "cursor":"pointer"});
+		$("tr[id]").mouseenter(function(){
+			$(this).css({"background":"#cedced", "cursor":"pointer"});
 		
 		}).mouseout(function(){
 			
-			$(this).parent().css({"background":"white"});
+			$(this).css({"background":"white"});
 		
 		}).click(function(){
-			location.href="${ pageContext.request.contextPath }/admin/adMemberDetail.do";
-			//console.log($(this).parent().children().eq(0).text());
-		
-			//var nno = $(this).parent().children().eq(0).text();
-			
-			
-			<%-- location.href="<%=request.getContextPath()%>/selectOne.no?nno=" + nno; --%>
+			var userId=$(this).attr("id");
+			location.href="${ pageContext.request.contextPath }/admin/adMemberDetail.do?userId="+userId;
+
 		});
 	});
 
 function search(){
 	// 정렬
+	/* location.href="${pageContext.request.contextPath}/admin/adMemberManageOrder.do"; */
+	
 }
 </script>
 

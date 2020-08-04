@@ -93,6 +93,7 @@ $('.nav-item').addClass('canSee').removeClass('cantSee');
         <div>
         <p style="color:#a3a3a3; font-size:15px">회원 처리</p>
         <p style="font-size:15px; font-weight:bold;">${report.tnickName} (경고 ${report.warn_cnt }회)</p>
+        <input type="hidden" name="warn_cnt" value=" ${report.warn_cnt }" />
 <div class="form-group">
   <select class="custom-select">
     <option value="1" selected>경고</option>
