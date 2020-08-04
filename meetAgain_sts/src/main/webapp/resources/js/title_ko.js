@@ -6,10 +6,10 @@
 		$('.fc-prev-button').on('click',function(){
 		
 			var test1 = $('.fc-toolbar-title').html();
-			console.log(test1);
+			//console.log(test1);
 			var test2 = test1.split(' ');
-			console.log(test2);
-
+			//console.log(test2);
+ 
 			for (var i in test2){
 				// console.log(test2[i]);
 				// if(test2[0] === 'September'){

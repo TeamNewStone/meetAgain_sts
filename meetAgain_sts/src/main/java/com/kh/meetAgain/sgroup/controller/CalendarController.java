@@ -20,10 +20,10 @@ public class CalendarController {
 	
 	@Autowired
 	SgroupService sgroupService;	
-	
+	 
 	@RequestMapping("sgroup/addCalendar.do")
 	public String addCalendar(
-				// @RequestParam String gid,
+				@RequestParam("gid") String gid,
 				@RequestParam String gdate,
 				@RequestParam String gdateEnd,
 				@RequestParam String ginfo,
@@ -32,7 +32,7 @@ public class CalendarController {
 
 		System.out.println(gtime); // 12:01
 		//***************gid임의지정
-		String gid = "1";		
+		//String gid = "1";		
 		
 		Date date = Date.valueOf(gdate);
 		Date date2 = Date.valueOf(gdateEnd);
@@ -41,18 +41,18 @@ public class CalendarController {
 		
 		Timestamp time = Timestamp.valueOf(date.toString() + " " + hour + ":" + min + ":00"); // 20: + 14 + :00
 				
-		System.out.println(min);
-		
+		System.out.println(hour);
+		System.out.println(min);		
 		System.out.println(time);
 
 		Calendar cal = new Calendar(null, date, date2, ginfo, time, isctn);
 		
-		cal.setGid(gid);
+		//cal.setGid(gid);
 		int result = sgroupService.addCalendar(cal);	
 						
 		String addMsg = "";
 
-		if (result >0) {
+		if (result > 0) {
 			addMsg = "일정 생성됨";
 			System.out.println("일정 생성됨");
 		} else {
