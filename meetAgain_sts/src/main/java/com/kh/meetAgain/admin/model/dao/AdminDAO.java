@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.meetAgain.admin.model.vo.Report;
-import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.member.model.vo.Member;
-import com.kh.meetAgain.sgroup.model.vo.GbComment;
+import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 public interface AdminDAO {
@@ -39,6 +38,6 @@ public interface AdminDAO {
 
 	int gbDelUpdate(Gboard gboard);
 
-	int gcDelUpdate(GbComment gbComment);
+	int gcDelUpdate(GB_comment gbComment);
 	
 }

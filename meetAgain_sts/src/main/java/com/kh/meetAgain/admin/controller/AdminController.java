@@ -17,7 +17,7 @@ import com.kh.meetAgain.admin.model.service.AdminService;
 import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.member.model.vo.Member;
-import com.kh.meetAgain.sgroup.model.vo.GbComment;
+import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 @SessionAttributes(value= {"member"})
 @Controller
@@ -200,7 +200,7 @@ public class AdminController {
 		
 	}
 	@RequestMapping("/admin/reportUpdate.do")
-	public String reportUdpate(@RequestParam String doDelete,GbComment gbComment,
+	public String reportUdpate(@RequestParam String doDelete,GB_comment gbComment,
 			Gboard gboard, Member member, Report report, Model model) {
 		int result = adminService.reportUpdate(report, member);
 		int result2 = 0;

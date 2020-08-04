@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.meetAgain.admin.model.vo.Report;
-import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.member.model.vo.Member;
-import com.kh.meetAgain.sgroup.model.vo.GbComment;
+import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 
 @Repository("adminDAO")
@@ -95,7 +94,7 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public int gcDelUpdate(GbComment gbComment) {
+	public int gcDelUpdate(GB_comment gbComment) {
 		return sqlSession.update("adminMapper.gcDelUpdate", gbComment);
 	}
 

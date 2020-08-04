@@ -45,7 +45,7 @@
 <update id="gbDelUpdate" parameterType="Gboard">
 	UPDATE GBOARD SET GBDEL='Y' WHERE GBID=#{gbId}
 </update>
-<update id="gcDelUpdate" parameterType="GbComment">
+<update id="gcDelUpdate" parameterType="GB_comment">
 	UPDATE GB_COMMENT SET CDEL='Y' WHERE CID=#{cId}
 </update>
 </mapper>
