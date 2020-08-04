@@ -129,12 +129,26 @@ public class AdminController {
 	public String adMain() {
 		return "admin/adMain";
 	}
-	@RequestMapping("/admin/adMemeberDetail.do")
-	public String adMemberDetail() {
+	@RequestMapping("/admin/adMemberDetail.do")
+	public String adMemberDetail(@RequestParam String userId, Model model) {
+		Member m = adminService.selectOneMember(userId);
+		model.addAttribute("member", m);
 		return "admin/adMemberDetail";
 	}
 	@RequestMapping("/admin/adMemberManage.do")
-	public String adMemberManage() {
+	public String adMemberManage(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
+		int numPerPage = 10;
+		
+		List<Map<String, String>> list = adminService.selectMemberList(cPage, numPerPage);
+		
+		int totalContents = adminService.selectMemberTotalContents();
+		
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "adMemberManage.do");
+		
+		model.addAttribute("list", list);
+		model.addAttribute("totalContents", totalContents);
+		model.addAttribute("numPerPage", numPerPage);
+		model.addAttribute("pageBar", pageBar);
 		return "admin/adMemberManage";
 	}
 	@RequestMapping("/admin/adNoticeManage.do")
@@ -200,9 +214,9 @@ public class AdminController {
 		
 	}
 	@RequestMapping("/admin/reportUpdate.do")
-	public String reportUdpate(@RequestParam String doDelete,GB_comment gbComment,
+	public String reportUdpate(@RequestParam int warn_cnt, @RequestParam String doDelete,GB_comment gbComment,
 			Gboard gboard, Member member, Report report, Model model) {
-		int result = adminService.reportUpdate(report, member);
+		int result = adminService.reportUpdate(report, member, warn_cnt);
 		int result2 = 0;
 		System.out.println(doDelete);
 		if(report.getCId()>0 && doDelete.equals("on")) {
@@ -210,6 +224,8 @@ public class AdminController {
 		}else if(doDelete.equals("on")) {
 			result2 = adminService.gbDelUpdate(gboard);
 		}
+		System.out.println(report.getWarn_cnt());
+		System.out.println(member.getWarn_Cnt());
 		String msg = "";
 		String loc = "/";
 		if(result > 0 && result2 > 0) {
@@ -231,6 +247,25 @@ public class AdminController {
 		model.addAttribute("msg", msg);
 		model.addAttribute("loc", loc);
 		return "common/msg";
+	}
+	@RequestMapping("admin/adMemberManageOrder.do")
+	public String adMemberManageOrder(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage,
+			@RequestParam String orderBy,@RequestParam String howOrder,Member member, Model model) {
+		int numPerPage = 10;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("orderBy", orderBy);
+		map.put("howOrder", howOrder);
+		List<Map<String, String>> list = adminService.selectMemberOrderList(cPage, numPerPage, map);
+		
+		int totalContents = adminService.selectMemberTotalContents();
+		
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "adMemberManage.do");
+		
+		model.addAttribute("list", list);
+		model.addAttribute("totalContents", totalContents);
+		model.addAttribute("numPerPage", numPerPage);
+		model.addAttribute("pageBar", pageBar);
+		return "admin/adMemberManage";
 	}
 
 }

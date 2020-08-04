@@ -73,9 +73,17 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int reportUpdate(Report report, Member member) {
+	public int reportUpdate(Report report, Member member, int warn_cnt) {
+		System.out.println(warn_cnt);
 		int result = adminDAO.reportUpdate(report);
 		int result2 = adminDAO.memberWarnUpdate(member);
+		int result3 = 0, result4 = 0;
+		if(warn_cnt % 3 == 2) {
+			result3 = adminDAO.memberStopUpdate(member);
+		}
+		if(warn_cnt == 9) {
+			result4 = adminDAO.memberOutUpdate(member);
+		}
 		if(result != 0 && result2 != 0) {
 			return 1;
 		}else {
@@ -92,5 +100,27 @@ public class AdminServiceImpl implements AdminService {
 	public int gcDelUpdate(GB_comment gbComment) {
 		return adminDAO.gcDelUpdate(gbComment);
 	}
+
+	@Override
+	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
+		return adminDAO.selectMemberList(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectMemberTotalContents() {
+		return adminDAO.selectMemberTotalContents();
+	}
+
+	@Override
+	public Member selectOneMember(String userId) {
+		return adminDAO.selectOneMember(userId);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMemberOrderList(int cPage, int numPerPage, Map<String, String> map) {
+		return adminDAO.selectMemberOrderList(cPage, numPerPage, map);
+		
+	}
+
 
 }

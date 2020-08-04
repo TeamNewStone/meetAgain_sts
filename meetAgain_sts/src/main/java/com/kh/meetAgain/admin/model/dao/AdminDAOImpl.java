@@ -98,4 +98,39 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.update("adminMapper.gcDelUpdate", gbComment);
 	}
 
+	@Override
+	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("adminMapper.selectMemberList", null, rows);
+	}
+
+	@Override
+	public int selectMemberTotalContents() {
+		return sqlSession.selectOne("adminMapper.selectMemberTotalContents");
+	}
+
+	@Override
+	public int memberStopUpdate(Member member) {
+		return sqlSession.update("adminMapper.memberStopUpdate", member);
+	}
+
+	@Override
+	public int memberOutUpdate(Member member) {
+		return sqlSession.update("adminMapper.memberOutUpdate", member);
+	}
+
+	@Override
+	public Member selectOneMember(String userId) {
+		return sqlSession.selectOne("adminMapper.selectOneMember", userId);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMemberOrderList(int cPage, int numPerPage, Map<String, String> map) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		 List<Map<String, String>> result =sqlSession.selectList("adminMapper.selectMemberOrderList", map, rows);
+		 System.out.println(result);
+		 System.out.println(map);
+		return result;
+	}
+
 }

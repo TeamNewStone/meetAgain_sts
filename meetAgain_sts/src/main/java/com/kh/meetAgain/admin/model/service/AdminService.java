@@ -32,10 +32,18 @@ public interface AdminService {
 
 	int reportReject(Report report);
 
-	int reportUpdate(Report report, Member member);
+	int reportUpdate(Report report, Member member, int warn_cnt);
 
 	int gbDelUpdate(Gboard gboard);
 
 	int gcDelUpdate(GB_comment gbComment);
+
+	List<Map<String, String>> selectMemberList(int cPage, int numPerPage);
+
+	int selectMemberTotalContents();
+
+	Member selectOneMember(String userId);
+
+	List<Map<String, String>> selectMemberOrderList(int cPage, int numPerPage, Map<String, String> map);
 	
 }
