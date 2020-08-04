@@ -69,8 +69,9 @@
 	<select id="selectgBoardList" resultType="Gboard">
 		SELECT GBID, NICKNAME,
 		GBTITLE, GBRATE, GBDATE
-		FROM GBOARD JOIN MEMBER USING(USERID) WHERE GBDEL='N' ORDER BY 
-		GBID DESC 
+		FROM GBOARD JOIN MEMBER USING(USERID) WHERE
+		GBDEL='N' ORDER BY
+		GBID DESC
 	</select>
 
 	<select id="selectgBoardTotalContent" resultType="_int">
@@ -99,15 +100,17 @@
 		GBID = #{gbId}
 	</delete>
 
-<!-- 	<insert id="insertComment" parameterType="GB_comment">
+	<insert id="insertComment" parameterType="GB_comment">
 		INSERT INTO
 		GB_COMMNET
-		VALUES(SEQ_CID.NEXTVAL, #{gbId}, #{userId}, DEFAULT, ?, , ?, ?, ?)
-	</insert> -->
+		VALUES(SEQ_CID.NEXTVAL, #{gbId}, #{userId}, DEFAULT, #{cContent},#{cRef}, #{cLevel}, #{cRec}, #{cDel})
+	</insert>
 
-<select id="selectCommentList" parameterType="_int" resultType="GB_comment">
+	<select id="selectCommentList" parameterType="_int"
+		resultType="GB_comment">
 		SELECT C.*, (SELECT USERID
-		FROM MEMBER M WHERE C.USERID=M.USERID)
+		FROM MEMBER M WHERE
+		C.USERID=M.USERID)
 		FROM GB_comment C
 		WHERE GBID = #{gbId}
 		START WITH

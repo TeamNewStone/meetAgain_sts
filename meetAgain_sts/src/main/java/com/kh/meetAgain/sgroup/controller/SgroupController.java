@@ -3,7 +3,7 @@ package com.kh.meetAgain.sgroup.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +58,7 @@ public class SgroupController {
 	            
 	            int rndNum = (int)(Math.random() * 1000);
 	            
-	            String renamedName = sdf.format(new Date()) + "_" + rndNum + "." + ext;
+	            String renamedName = sdf.format(new java.util.Date()) + "_" + rndNum + "." + ext;
 
 	            try {
 	               f.transferTo(new File(saveDir + "/" + renamedName));
@@ -131,7 +131,7 @@ public class SgroupController {
 		return "sgroup/memberList";
 	}
 
-  @RequestMapping("sgroup/groupBoard.do")
+  @RequestMapping("/sgroup/groupBoard.do")
 	public String groupBoard(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
 			Model model) {
 		// 한 페이지 당 게시글 수
@@ -153,11 +153,11 @@ public class SgroupController {
 		model.addAttribute("totalContents", totalContents);
 		model.addAttribute("numPerPage", numPerPage);
 		model.addAttribute("pageBar", pageBar);
-		return "sgroup/groupBoard";
+		return "/sgroup/groupBoard";
 
 	}
 
-	@RequestMapping("sgroup/groupBoardDetail.do")
+	@RequestMapping("/sgroup/groupBoardDetail.do")
 	public String groupDetail(@RequestParam int gbId, Model model) {
 
 		Gboard gb = sgroupService.SelectOnegBoard(gbId);
@@ -170,26 +170,26 @@ public class SgroupController {
 		model.addAttribute("Gboard", gb);
 		System.out.println("list : " + list);
 
-		return "sgroup/groupBoardDetail";
+		return "/sgroup/groupBoardDetail";
 	}
 
 	@RequestMapping("sgroup/gboardInsert.do")
 	public String gboardInsert() {
 
-		return "sgroup/gboardInsert";
+		return "/sgroup/gboardInsert";
 		
 	}
 
-	@RequestMapping("sgroup/gbInsert.do")
+	@RequestMapping("/sgroup/gbInsert.do")
 	public String gbInsert(Gboard Gboard, Model model) {
 
 		int result = sgroupService.insertgBoard(Gboard);
 
-		String loc = "sgroup/groupBoardDetail.do";
+		String loc = "/sgroup/groupBoardDetail.do";
 		String msg = "";
 		if (result > 0) {
 			msg = "게시글 등록 성공!";
-			loc = "sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
+			loc = "/sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
 
 		} else {
 			msg = "게시글 등록 실패!";
@@ -205,10 +205,10 @@ public class SgroupController {
 	@RequestMapping("sgroup/groupBoardUpdate.do")
 	public String noticeUpdate(@RequestParam int gbId, Model model) {
 		model.addAttribute("Gboard", sgroupService.SelectOnegBoard(gbId));
-		return "sgroup/groupBoardUpdateForm";
+		return "/sgroup/groupBoardUpdateForm";
 	}
 	
-	@RequestMapping("sgroup/gbUpdate.do")
+	@RequestMapping("/sgroup/gbUpdate.do")
 	public String gbUpdate(Gboard Gboard, Model model) {
 		int result = sgroupService.updategBoard(Gboard);
 		
@@ -228,7 +228,7 @@ public class SgroupController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("sgroup/groupBoardDelete.do")
+	@RequestMapping("/sgroup/groupBoardDelete.do")
 	public String groupBoardDelete(@RequestParam int gbId, HttpSession session, Model model) {
 		int result = sgroupService.deletegBoard(gbId);
 		
@@ -245,16 +245,19 @@ public class SgroupController {
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		System.out.println("deleteController : "+model);
 		return "common/msg";
-	}@RequestMapping("sgroup/insertComment.do")
-	public String insertComment(GB_comment GB_comment, int gbId, Model model) {
-
+	}@RequestMapping("/sgroup/insertComment.do")
+	public String insertComment(
+			@RequestParam("gbId") int gbId,
+			GB_comment GB_comment, Model model) {
+		
+		GB_comment.setGbId(gbId);
 		int result = sgroupService.insertComment(GB_comment);
 
-		String loc = "sgroup/insertComment.do";
+		String loc = "/sgroup/insertComment.do";
 		String msg = "";
 		if (result > 0) {
 			msg = "댓글 등록 성공!";
-			loc = "sgroup/groupBoardDetail.do?gbId=" + gbId;
+			loc = "/sgroup/groupBoardDetail.do?gbId=" + gbId;
 
 		} else {
 			msg = "댓글 등록 실패!";
@@ -265,7 +268,7 @@ public class SgroupController {
 		return "common/msg";
 
 	}
-	@RequestMapping("sgroup/selectGboardComment.do")
+	@RequestMapping("/sgroup/selectGboardComment.do")
 	public String listComment(Model model) {
 		
 		/*
@@ -273,6 +276,6 @@ public class SgroupController {
 		 * 
 		 * model.addAttribute("list", list);
 		 */
-		return "sgroup/groupBoardDetail.do";
+		return "/sgroup/groupBoardDetail.do";
 	}
 }
