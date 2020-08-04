@@ -146,11 +146,11 @@
 									<c:if test="${mg.getGImg() eq null}">
 										<c:if test="${mg.getGType() eq 'S'}">
 											<img class="card-img"
-												src="${ pageContext.request.contextPath }/resources/img/fav02.png">
+												src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height: 200px;">
 										</c:if>
 										<c:if test="${mg.getGType() eq 'L'}">
 											<img class="card-img"
-												src="${ pageContext.request.contextPath }/resources/img/fav01.png">
+												src="${ pageContext.request.contextPath }/resources/img/fav01.png" style="height: 200px;">
 										</c:if>
 									</c:if>
 									<c:if test="${mg.getGImg() ne null}">
@@ -243,6 +243,7 @@
 								</c:if>
 							</div>
 						</div>
+						<br /><br />
 					</div>
 				</c:forEach>
 				<%-- </c:forEach> --%>
@@ -273,11 +274,11 @@
 									<c:if test="${cg.getGImg() eq null}">
 										<c:if test="${cg.getGType() eq 'S'}">
 											<img class="card-img"
-												src="${ pageContext.request.contextPath }/resources/img/fav02.png">
+												src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height: 200px;">
 										</c:if>
 										<c:if test="${cg.getGType() eq 'L'}">
 											<img class="card-img"
-												src="${ pageContext.request.contextPath }/resources/img/fav01.png">
+												src="${ pageContext.request.contextPath }/resources/img/fav01.png" style="height: 200px;">
 										</c:if>
 									</c:if>
 									<c:if test="${cg.getGImg() ne null}">
@@ -371,6 +372,7 @@
 								</c:if>
 							</div>
 						</div>
+						<br /><br />
 					</div>
 				</c:forEach>
 
