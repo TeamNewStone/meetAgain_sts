@@ -68,7 +68,7 @@ body {
 				<span>일반모임</span><br>
 					<c:forEach items="${sclist}" var="normalList" varStatus="scIndex">
 						<li class="list-group-item" id="test5">모임명 : ${normalList.ginfo}<br>
-						일정 : ${normalList.gdate}<br>시간 : ${fn:substring(normalList.gtime, 10, 16)}</li>
+						일정 : ${normalList.gdate} ~ ${normalList.gdateEnd}<br>시간 : ${fn:substring(normalList.gtime, 10, 16)}</li>
 					</c:forEach>					
 				<br><span>정기모임</span>
 							
@@ -171,7 +171,8 @@ body {
 				   title : "${sc.ginfo}",
 				   start : "${sc.gdate}",
 				   end : "${sc.gdateEnd}"
-				   }<c:if test="${!scIndex2.last}">,</c:if>			   
+				   }
+				   <c:if test="${!scIndex2.last}">,</c:if>			   
 				   </c:forEach>
 				],
 				

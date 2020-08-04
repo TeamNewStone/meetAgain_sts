@@ -10,10 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 
+@SessionAttributes(value= {"board"})
 @Controller
 
 public class CalendarController {
@@ -34,6 +36,7 @@ public class CalendarController {
 		//***************gid임의지정
 		//String gid = "1";		
 		
+		
 		Date date = Date.valueOf(gdate);
 		Date date2 = Date.valueOf(gdateEnd);
 		int hour = Integer.parseInt(gtime.substring(0, 2));
@@ -45,7 +48,7 @@ public class CalendarController {
 		System.out.println(min);		
 		System.out.println(time);
 
-		Calendar cal = new Calendar(null, date, date2, ginfo, time, isctn);
+		Calendar cal = new Calendar(gid, date, date2, ginfo, time, isctn);
 		
 		//cal.setGid(gid);
 		int result = sgroupService.addCalendar(cal);	
