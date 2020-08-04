@@ -11,13 +11,23 @@
 	</resultMap>
 
 	<insert id="insertSgroup" parameterType="Sgroup">
-	INSERT ALL INTO SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE, MAXNUM, CHARGE, GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE, LIMITGROUP)
-	VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro}, DEFAULT, #{maxNum}, #{charge}, #{gFee}, #{gPlace}, 
-	#{gType}, #{durate}, DEFAULT, #{gPwd}, #{joinType}, #{limitGroup, typeHandler=Str2ArrayHandler})
-	
-	 INTO JOING(USERID, GID, ISCPT, ISREADY, ISOUT, ISLEAVE) 
-	 VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 1, DEFAULT, DEFAULT)
-	SELECT * FROM DUAL
+		INSERT ALL INTO
+		SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE,
+		MAXNUM, CHARGE,
+		GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE,
+		LIMITGROUP)
+		VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro},
+		DEFAULT, #{maxNum},
+		#{charge}, #{gFee}, #{gPlace},
+		#{gType}, #{durate},
+		DEFAULT, #{gPwd}, #{joinType}, #{limitGroup,
+		typeHandler=Str2ArrayHandler})
+
+		INTO JOING(USERID, GID, ISCPT, ISREADY,
+		ISOUT, ISLEAVE)
+		VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 1, DEFAULT,
+		DEFAULT)
+		SELECT * FROM DUAL
 	</insert>
 
 	<select id="selectListSgroup" resultMap="sgroupMap">
@@ -30,36 +40,41 @@
 		WHERE GID = #{gId}
 	</select>
 
-	<select  id="selectCateInfo" parameterType="string" resultType="CateInfo">
-	  SELECT  C.CATE_ID, G.* FROM CATEINFO C
-      JOIN SGROUP G ON(C.CATE_ID=G.CATE_ID) 
-      WHERE C.USERID = #{userId} AND G.GID IN(
-      SELECT J.GID FROM JOING J WHERE J.USERID != #{userId})
+	<select id="selectCateInfo" parameterType="string"
+		resultType="CateInfo">
+		SELECT C.CATE_ID, G.* FROM CATEINFO C
+		JOIN SGROUP G
+		ON(C.CATE_ID=G.CATE_ID)
+		WHERE C.USERID = #{userId} AND G.GID IN(
+		SELECT
+		J.GID FROM JOING J WHERE J.USERID != #{userId})
 	</select>
-	
-	<select id="selectJoing" parameterType="string" resultType="Joing">
+
+	<select id="selectJoing" parameterType="string"
+		resultType="Joing">
 		SELECT * FROM JOING
 		WHERE GID = #{gId}
 	</select>
-	
-	<select id="selectJoingUser" parameterType="string" resultType="Joing">
+
+	<select id="selectJoingUser" parameterType="string"
+		resultType="Joing">
 		SELECT * FROM JOING
 		WHERE USERID = #{userId}
 	</select>
-	
+
 	<insert id="insertGroupJoin" parameterType="Joing">
-		INSERT INTO JOING VALUES(#{userId}, #{gId}, 'N',  
+		INSERT INTO JOING VALUES(#{userId}, #{gId}, 'N',
 		<choose>
-		 	<when test='joinType=="C"'>
-		 		2,
-		 	</when>
-		 	<otherwise>
-		 		1,
-		 	</otherwise>
-	    </choose>
-	 DEFAULT, DEFAULT)
+			<when test='joinType=="C"'>
+				2,
+			</when>
+			<otherwise>
+				1,
+			</otherwise>
+		</choose>
+		DEFAULT, DEFAULT)
 	</insert>
-	
+
 	<resultMap type="Gboard" id="gboardMap">
 		<result property="gbId" column="GBID" />
 		<result property="gbTitle" column="GBTITLE" />
@@ -69,7 +84,8 @@
 	<insert id="insertgBoard">
 		INSERT INTO GBOARD
 		VALUES
-		(SEQ_GBID.NEXTVAL, '1', '1', #{gbTitle},
+		(SEQ_GBID.NEXTVAL, #{gId}, #{userId},
+		#{gbTitle},
 		#{gbContent}, DEFAULT, DEFAULT, DEFAULT,
 		DEFAULT, DEFAULT)
 		<!-- 전달한 board객체의 boardNo 프로퍼티에 결과값을 담는다. -->
@@ -82,7 +98,10 @@
 	<select id="selectgBoardList" resultType="Gboard">
 		SELECT GBID, NICKNAME,
 		GBTITLE, GBRATE, GBDATE
-		FROM GBOARD JOIN MEMBER USING(USERID) WHERE
+		FROM GBOARD JOIN MEMBER
+		USING(USERID) WHERE
+		GID =
+		#{gId} AND
 		GBDEL='N' ORDER BY
 		GBID DESC
 	</select>
@@ -115,8 +134,9 @@
 
 	<insert id="insertComment" parameterType="GB_comment">
 		INSERT INTO
-		GB_COMMNET
-		VALUES(SEQ_CID.NEXTVAL, #{gbId}, #{userId}, DEFAULT, #{cContent},#{cRef}, #{cLevel}, #{cRec}, #{cDel})
+		GB_COMMENT
+		VALUES(SEQ_CID.NEXTVAL, #{gbId}, #{userId}, DEFAULT, #{cContent},
+		#{cRef}, #{cLevel}, #{cRec}, #{cDel})
 	</insert>
 
 	<select id="selectCommentList" parameterType="_int"
@@ -130,4 +150,9 @@
 		CLEVEL = 1
 		CONNECT BY PRIOR CID = CREF
 	</select>
+
+	<update id="updateComment" parameterType="_int">
+		UPDATE BOARD_COMMENT SET CCONTENT = #{cContent}
+		WHERE CID = #{cId}
+	</update>
 </mapper>

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
@@ -59,12 +60,13 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 
 	@Override
-	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
+	public List<Map<String, String>> selectgBoardList(String gId ,int cPage, int numPerPage) {
 		RowBounds rows = new RowBounds((cPage - 1) * numPerPage, numPerPage);
-		List<Map<String, String>> list = sqlSession.selectList("sgroupMapper.selectgBoardList", null, rows);
+		List<Map<String, String>> list = sqlSession.selectList("sgroupMapper.selectgBoardList", gId, rows);
 
 		System.out.println("cPage : " + cPage);
 		System.out.println("numPerPage : " + numPerPage);
+		System.out.println("DAO gId : " + gId);
 		System.out.println("list 출력 : " + list);
 		return list;
 	}
@@ -120,10 +122,15 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 	@Override
 	public int insertComment(GB_comment gB_comment) {
-		System.out.println("insert GB : "+ gB_comment);
-		return sqlSession.insert("sgroupMapper.insertComment");
+		System.out.println("DAO insertGB : "+ gB_comment);
+		return sqlSession.insert("sgroupMapper.insertComment", gB_comment);
 	}
 
-
+	@Override
+	public int commentUpdate(int cId) {
+		return sqlSession.update("sgroupMapper.updateComment", cId);
+	}
+	
+	
 }
 

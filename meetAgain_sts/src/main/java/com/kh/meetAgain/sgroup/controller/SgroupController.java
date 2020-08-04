@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.meetAgain.board.model.vo.Board;
@@ -24,6 +25,7 @@ import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
+@SessionAttributes(value= {"sgroup"})
 @Controller
 public class SgroupController {
 
@@ -35,82 +37,83 @@ public class SgroupController {
 	public String create() {
 		return "sgroup/create";
 	}
-	
+
 	@RequestMapping("/sgroup/sgroupCreateEnd.do")
-	public String sgroupCreateEnd(Sgroup sgroup,  Model model, HttpSession session,
-	         @RequestParam(value="sgroupImg", required = false) MultipartFile[] sgroupImg,
-	         @RequestParam String userId) {
+	public String sgroupCreateEnd(Sgroup sgroup, Model model, HttpSession session,
+			@RequestParam(value = "sgroupImg", required = false) MultipartFile[] sgroupImg,
+			@RequestParam String userId) {
 
 		System.out.println("sgroup : " + sgroup);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
 
-	      File dir = new File(saveDir);
-	      
-	      System.out.println("폴더가 있나요? " + dir.exists());
-	      
-	      if(dir.exists() == false) dir.mkdirs();
-	      
-	      for(MultipartFile f : sgroupImg) {
-	         if(!f.isEmpty()) {
-	        	 
-	            String originName = f.getOriginalFilename();
-	            String ext = originName.substring(originName.lastIndexOf(".")+1);
-	            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-	            
-	            int rndNum = (int)(Math.random() * 1000);
-	            
-	            String renamedName = sdf.format(new java.util.Date()) + "_" + rndNum + "." + ext;
+		File dir = new File(saveDir);
 
-	            try {
-	               f.transferTo(new File(saveDir + "/" + renamedName));
-	            } catch (IllegalStateException | IOException e) {
-	               e.printStackTrace();
-	            }
-	            
-	            sgroup.setGImg(renamedName);
+		System.out.println("폴더가 있나요? " + dir.exists());
 
-	         }
-	      }
-	
-	      	int result = sgroupService.insertSgroup(sgroup);
-	   		String msg = "";
-	   		
-	   		if (result >0) {
-	   			msg = "모임 생성 완료";
-	   			System.out.println("모임생성완료");
-	   		} else {
-	   			msg = "모임 생성 실패";
-	   			System.out.println("모임생성완료");
-	   		}
-	   		
-	   		return "redirect:/sgroup/group.do";
-	   		
+		if (dir.exists() == false)
+			dir.mkdirs();
+
+		for (MultipartFile f : sgroupImg) {
+			if (!f.isEmpty()) {
+
+				String originName = f.getOriginalFilename();
+				String ext = originName.substring(originName.lastIndexOf(".") + 1);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+
+				int rndNum = (int) (Math.random() * 1000);
+
+				String renamedName = sdf.format(new java.util.Date()) + "_" + rndNum + "." + ext;
+
+				try {
+					f.transferTo(new File(saveDir + "/" + renamedName));
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+
+				sgroup.setGImg(renamedName);
+
+			}
+		}
+
+		int result = sgroupService.insertSgroup(sgroup);
+		String msg = "";
+
+		if (result > 0) {
+			msg = "모임 생성 완료";
+			System.out.println("모임생성완료");
+		} else {
+			msg = "모임 생성 실패";
+			System.out.println("모임생성완료");
+		}
+
+		return "redirect:/sgroup/group.do";
 
 	}
+
 	// 소모임 전체 리스트 출력
 	@RequestMapping("sgroup/group.do")
 	public String group(Model model) {
-		
+
 		List<Sgroup> list = sgroupService.selectSgroupList();
-		
+
 		model.addAttribute("list", list);
-		
+
 		return "sgroup/group";
 	}
 
 	// 소모임 한개 출력
 	@RequestMapping("sgroup/groupInfo.do")
 	public String groupInfo(@RequestParam String gId, Model model) {
-		
+
 		Sgroup sr = sgroupService.selectOneSgroup(gId);
-		
+
 		System.out.println("sr1111 : " + sr);
-	
+
 		model.addAttribute("sgroup", sr);
 
 		return "sgroup/groupInfo";
 	}
-	
+
 	@RequestMapping("/sgroup/groupAlbum.do")
 	public String groupAlbum() {
 		return "sgroup/groupAlbum";
@@ -126,16 +129,16 @@ public class SgroupController {
 		return "sgroup/memberList";
 	}
 
-  @RequestMapping("/sgroup/groupBoard.do")
-	public String groupBoard(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
-			Model model) {
+	@RequestMapping("/sgroup/groupBoard.do")
+	public String groupBoard(@RequestParam("gId") String gId,
+			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, Model model) {
 		// 한 페이지 당 게시글 수
 		int numPerPage = 10; // limit 역할
 
 		// 1. 현재 페이지 게시글 목록 가져오기
 		// 실제 데이터베이스의 데이터에서
 		// 머릿글 : 키(key) , 실제 값 : 값(value) => 여러 개니까 List에 담기
-		List<Map<String, String>> list = sgroupService.selectgBoardList(cPage, numPerPage);
+		List<Map<String, String>> list = sgroupService.selectgBoardList(gId, cPage, numPerPage);
 
 		// 2. 페이지 계산을 위한 총 페이지 개수
 		int totalContents = sgroupService.selectgBoardTotalContents();
@@ -143,21 +146,37 @@ public class SgroupController {
 		// 3. 패아자 HTML 생성
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "groupBoard.do");
 
-		model.addAttribute("list", list);
 
+		String loc = "/sgroup/groupBoard.do";
+		String msg = "";
+		
+			loc = "/sgroup/groupBoard.do?gId=" + gId;
+
+		
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		model.addAttribute("list", list);
 		model.addAttribute("totalContents", totalContents);
 		model.addAttribute("numPerPage", numPerPage);
 		model.addAttribute("pageBar", pageBar);
+		
+		System.out.println("list : " + list);
+		System.out.println("Controller gId : " + gId);
 		return "/sgroup/groupBoard";
 
 	}
 
+	@RequestMapping("/sgroup/groupDetail.do")
+	public String groupDetail() {
+
+		return "sgroup/groupDetail";
+	}
+
 	@RequestMapping("/sgroup/groupBoardDetail.do")
-	public String groupDetail(@RequestParam int gbId, Model model) {
+	public String groupBoardDetail(@RequestParam int gbId, Model model) {
 
 		Gboard gb = sgroupService.SelectOnegBoard(gbId);
 		List<GB_comment> list = sgroupService.selectCommentList(gbId);
-		
+
 		int gbRate = sgroupService.updateReadCount(gbId);
 		model.addAttribute("gbRate", gbRate);
 		model.addAttribute("list", list);
@@ -172,7 +191,7 @@ public class SgroupController {
 	public String gboardInsert() {
 
 		return "/sgroup/gboardInsert";
-		
+
 	}
 
 	@RequestMapping("/sgroup/gbInsert.do")
@@ -196,55 +215,81 @@ public class SgroupController {
 		return "common/msg";
 
 	}
-	
+
 	@RequestMapping("sgroup/groupBoardUpdate.do")
 	public String noticeUpdate(@RequestParam int gbId, Model model) {
 		model.addAttribute("Gboard", sgroupService.SelectOnegBoard(gbId));
 		return "/sgroup/groupBoardUpdateForm";
 	}
-	
+
 	@RequestMapping("/sgroup/gbUpdate.do")
 	public String gbUpdate(Gboard Gboard, Model model) {
 		int result = sgroupService.updategBoard(Gboard);
-		
+
 		String loc = "sgroup/groupBoard.do";
 		String msg = "";
-		
-		if(result > 0) {
+
+		if (result > 0) {
 			msg = "게시글 수정이 완료되었습니다";
-			loc = "/sgroup/groupBoardDetail.do?gbId="+Gboard.getGbId();
+			loc = "/sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
 		} else {
 			msg = "게시글 수정 실패. 다시 시도해주세요";
 		}
-		
+
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		System.out.println("updateController : " + Gboard);
-		
+
 		return "common/msg";
 	}
-	
+
 	@RequestMapping("/sgroup/groupBoardDelete.do")
 	public String groupBoardDelete(@RequestParam int gbId, HttpSession session, Model model) {
 		int result = sgroupService.deletegBoard(gbId);
-		
+
 		String loc = "sgroup/groupBoard.do";
 		String msg = "";
-		
-		if(result > 0) {
+
+		if (result > 0) {
 			msg = "게시글 삭제 성공!";
-			
+
 		} else {
 			msg = "게시글 삭제 실패!";
 		}
-		
+
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
-		System.out.println("deleteController : "+model);
+		System.out.println("deleteController : " + model);
 		return "common/msg";
-	}@RequestMapping("/sgroup/insertComment.do")
-	public String insertComment(
-			@RequestParam("gbId") int gbId,
-			GB_comment GB_comment, Model model) {
-		
+	}
+
+	
+
+	@RequestMapping("/sgroup/selectGboardComment.do")
+	public String listComment(Model model) {
+
+		/*
+		 * List<GB_comment> list = sgroupService.selectCommentList();
+		 * 
+		 * model.addAttribute("list", list);
+		 */
+		return "/sgroup/groupBoardDetail.do";
+
+	}
+
+	@RequestMapping("sgroup/gotoGroup.do")
+	public String gotoGroup(@RequestParam String gid, Model model) {
+
+		String loc = "/sgroup/groupBoard.do?gid=" + gid;
+		String msg = "";
+
+		model.addAttribute("gid", gid);
+		model.addAttribute("loc", loc);
+
+		return "common/msg";
+	}
+	
+	@RequestMapping("/sgroup/insertComment.do")
+	public String insertComment(@RequestParam("gbId") int gbId, GB_comment GB_comment, Model model) {
+
 		GB_comment.setGbId(gbId);
 		int result = sgroupService.insertComment(GB_comment);
 
@@ -259,34 +304,28 @@ public class SgroupController {
 		}
 
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
-
+		System.out.println("controller GB" + GB_comment);
 		return "common/msg";
 
 	}
-	@RequestMapping("/sgroup/selectGboardComment.do")
-	public String listComment(Model model) {
-		
-		/*
-		 * List<GB_comment> list = sgroupService.selectCommentList();
-		 * 
-		 * model.addAttribute("list", list);
-		 */
-		return "/sgroup/groupBoardDetail.do";
-
+	@RequestMapping("/sgroup/commentUpdate.do")
+	public String commentUpdate(@RequestParam int cId, Model model) {
+		model.addAttribute("GB_comment", sgroupService.commentUpdate(cId));
+		return "/sgroup/insertComment.do";
 	}
 
-	@RequestMapping("sgroup/gotoGroup.do")
-	public String gotoGroup(@RequestParam String gid, Model model) {
-				
-		String loc = "/sgroup/groupBoard.do?gid="+gid;
+	@RequestMapping("/sgroup/cUpdate.do")
+	public String cUpdate(Gboard Gboard, Model model) {
+		int result = sgroupService.updategBoard(Gboard);
+
+		String loc = "/sgroup/insertComment.do";
 		String msg = "";
-		
-		model.addAttribute("gid",gid);
-		model.addAttribute("loc", loc);
-		
+
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		System.out.println("update Controller : " + Gboard);
+
 		return "common/msg";
 	}
+	
 
 }
-
-

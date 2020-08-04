@@ -6,11 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page
 	import="java.util.*, com.kh.meetAgain.sgroup.model.vo.*, com.kh.meetAgain.member.model.vo.*"%>
-<%
-	Member m = (Member) session.getAttribute("Member");
-Gboard gb = (Gboard) request.getAttribute("Gboard");
-/* ArrayList<GB_comment> list = (ArrayList<GB_comment>) request.getAttribute("list"); */
-%>
+
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
 <br>
@@ -30,16 +26,18 @@ Gboard gb = (Gboard) request.getAttribute("Gboard");
 				</div>
 				<div class="replyArea">
 					<div class="replyWriteArea">
-						<form action="${pageContext.request.contextPath }/sgroup/insertComment.do" method="post"> 
-							<input type="hidden" name="gbId" value="${Gboard.gbId}" /> 
-							<input type="hidden" name="cRef" value="1" /> <input
-								type="hidden" name="cLevel" value="1" /> <input
-								type="hidden" name="cRec" value="0" /> <input
-								type="hidden" name="cDel" value="N" />
+						<form
+							action="${pageContext.request.contextPath }/sgroup/insertComment.do"
+							method="post">
+							<input type="hidden" name="userId" value="${member.userId}" /> <input
+								type="hidden" name="gbId" value="${Gboard.gbId}" /> <input
+								type="hidden" name="cRef" value="1" /> <input type="hidden"
+								name="cLevel" value="1" /> <input type="hidden" name="cRec"
+								value="0" /> <input type="hidden" name="cDel" value="N" />
 							<table>
 								<tr>
-									<td><textArea rows="3" cols="80" id="replyContent"
-											name="replyContent" style="resize: none;"></textArea></td>
+									<td><textArea rows="3" cols="80" id="cContent"
+											name="cContent" style="resize: none;"></textArea></td>
 									<td>
 										<button type="submit" class="btn btn-outline-secondary"
 											id="group-boardbtn">댓글 등록</button>
@@ -71,8 +69,7 @@ Gboard gb = (Gboard) request.getAttribute("Gboard");
 													onclick="updateConfirm(this);" style="display: none;">수정완료</button> &nbsp;&nbsp;
 												<button type="button" class="deleteBtn"
 													onclick="deleteReply(this);">삭제하기</button>
-											</c:if>
-											<c:if
+											</c:if> <c:if
 												test="${ member.userId ne gbc.getUserId() and gbc.getCLevel() lt 3}">
 												<input type="hidden" name="writer"
 													value="${member.nickName}" />
@@ -118,47 +115,57 @@ Gboard gb = (Gboard) request.getAttribute("Gboard");
 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoard.do"
 	}
 	function goUpdate() {
-		var gbId = ${Gboard.gbId};
-		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardUpdate.do?gbId="+ gbId;
+		var gbId = $
+		{
+			Gboard.gbId
+		}
+		;
+		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardUpdate.do?gbId="
+				+ gbId;
 	}
 	function goDelete() {
-		var gbId = ${Gboard.gbId};
-		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="+ gbId;
+		var gbId = $
+		{
+			Gboard.gbId
+		}
+		;
+		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="
+				+ gbId;
 	}
-	
+
 	function updateReply(obj) {
 		// 현재 위치와 가장 근접한 textarea 접근하기
-		$(obj).parent().parent().parent().next().find('textarea')
-		.removeAttr('readonly');
-		
+		$(obj).parent().parent().next().find('textarea').removeAttr(
+				'readonly');
+
 		// 수정 완료 버튼을 화면 보이게 하기
-		$(obj).siblings('.updateConfirm').css('display','inline');
-		
+		$(obj).siblings('.updateConfirm').css('display', 'inline');
+
 		// 수정하기 버튼 숨기기
 		$(obj).css('display', 'none');
 	}
-	
+
 	function updateConfirm(obj) {
 		// 댓글의 내용 가져오기
-		var content
-		  = $(obj).parent().parent().parent().next().find('textarea').val();
-		
+		var content = $(obj).parent().parent().parent().next().find('textarea')
+				.val();
+
 		// 댓글의 번호 가져오기
 		var cId = $(obj).siblings('input').val();
-		
+
 		// 게시글 번호 가져오기
-		var gbId = '<%=gb.getGbId()%>';
-		
-		location.href="${ pageContext.request.contextPath}/sgroup/updateComment.do?"
-				 +"cId="+cId+"&gbId="+gbId+"&cContent="+cContent;
+		var gbId = "${Gboard.gbId}";
+
+		location.href = "${ pageContext.request.contextPath}/sgroup/commentUpdate.do?"
+				+ "cId=" + cId + "&gbId=" + gbId + "&cContent=" + cContent;
 	}
-	
+
 	function deleteReply(obj) {
 		// 댓글의 번호 가져오기
 		var cId = $(obj).siblings('input').val();
-		
+
 		// 게시글 번호 가져오기
-		var gbId = '<%=gb.getGbId()%>;
+		var gbId = "${Gboard.gbId}";
 
 		location.href = "${ pageContext.request.contextPath}/sgroup/deleteComment.do"
 				+ "?cId=" + cId + "&gbId=" + gbId;
@@ -191,9 +198,7 @@ Gboard gb = (Gboard) request.getAttribute("Gboard");
 		console.log(cRef + " : " + cLevel);
 
 		// 게시글 번호 가져오기
-		var gbId =
-<%=gb.getGbId()%>
-	;
+		var gbId = "${Gboard.gbId}";;
 		var parent = $(obj).parent().parent();
 		var grandparent = parent.parent();
 		var siblingsTR = grandparent.siblings().last();

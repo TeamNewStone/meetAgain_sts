@@ -59,9 +59,9 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 	
 	@Override
-	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
-
-		return sgroupDAO.selectgBoardList(cPage, numPerPage);
+	public List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage) {
+		System.out.println("Service gId : " + gId);
+		return sgroupDAO.selectgBoardList(gId, cPage, numPerPage);
 	}
 
 	@Override
@@ -110,6 +110,7 @@ public class SgroupServiceImpl implements SgroupService {
 
 	@Override
 	public int insertComment(GB_comment gB_comment) {
+		System.out.println("Service : " + gB_comment);
 		return sgroupDAO.insertComment(gB_comment);
 	}
 
@@ -122,6 +123,11 @@ public class SgroupServiceImpl implements SgroupService {
 	@Override
 	public List<Calendar> loadList() {
 		return sgroupDAO.loadList();
+	}
+
+	@Override
+	public Object commentUpdate(int cId) {
+		return sgroupDAO.commentUpdate(cId);
 	}
 
 
