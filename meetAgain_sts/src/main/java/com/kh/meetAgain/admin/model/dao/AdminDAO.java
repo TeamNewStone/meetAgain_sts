@@ -39,5 +39,17 @@ public interface AdminDAO {
 	int gbDelUpdate(Gboard gboard);
 
 	int gcDelUpdate(GB_comment gbComment);
+
+	List<Map<String, String>> selectMemberList(int cPage, int numPerPage);
+
+	int selectMemberTotalContents();
+
+	int memberStopUpdate(Member member);
+
+	int memberOutUpdate(Member member);
+
+	Member selectOneMember(String userId);
+
+	List<Map<String, String>> selectMemberOrderList(int cPage, int numPerPage, Map<String, String> map);
 	
 }
