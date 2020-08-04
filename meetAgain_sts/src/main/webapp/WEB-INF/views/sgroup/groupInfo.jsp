@@ -155,7 +155,7 @@
 				
 				<div class="form-group">
 				<label style="margin-bottom:-1px">모임 소개</label>
-				<p>${sgroup.getGIntro()}</p>
+				<p style="white-space: pre;">${sgroup.getGIntro()}</p>
 				</div>
 				
 				<div style="width: 400px; text-align: center;">
