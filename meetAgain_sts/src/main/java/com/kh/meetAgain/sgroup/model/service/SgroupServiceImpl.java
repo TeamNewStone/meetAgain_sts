@@ -59,6 +59,12 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 	
 	@Override
+	public int selectGroupCount(String userId) {
+		return sgroupDAO.selectGroupCount(userId);
+	}
+	
+	
+	@Override
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
 
 		return sgroupDAO.selectgBoardList(cPage, numPerPage);
@@ -124,5 +130,6 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.loadList();
 	}
 
+	
 
 }

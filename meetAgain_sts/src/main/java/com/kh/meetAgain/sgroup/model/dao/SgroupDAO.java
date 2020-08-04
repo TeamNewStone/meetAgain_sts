@@ -26,6 +26,8 @@ public interface SgroupDAO {
 	List<Joing> selectJoingUser(String userId);
 	
 	int insertGroupJoin(Joing joing);
+	
+	int selectGroupCount(String userId);
   
 	List<Map<String, String>> selectgBoardList(int cPage, int numPerPage);
 
@@ -48,6 +50,7 @@ public interface SgroupDAO {
 	int insertComment(GB_comment gB_comment);
 
 	List<Calendar> loadList();
+
 
 
 }

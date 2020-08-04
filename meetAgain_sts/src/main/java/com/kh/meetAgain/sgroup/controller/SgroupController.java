@@ -101,30 +101,34 @@ public class SgroupController {
 	public String group(@ModelAttribute("member") Member m, Model model) {
 		
 		List<Sgroup> list = sgroupService.selectSgroupList();
-		
 		List<CateInfo> cateInfo = sgroupService.selectCateInfo(m.getUserId());
-		
 		List<Joing> joUser = sgroupService.selectJoingUser(m.getUserId());
+		int groupCount = sgroupService.selectGroupCount(m.getUserId());
 		
 		model.addAttribute("list", list);
 		model.addAttribute("cateInfo", cateInfo);
 		model.addAttribute("joUser", joUser);
+		model.addAttribute("groupCount", groupCount);
 		
+		System.out.println("groupCount(group.do) : " + groupCount);
 		System.out.println("cateInfo : " + cateInfo);
-		System.out.println("joing : " + joUser);
 		return "sgroup/group";
 	}
 
 	// 소모임 한개 출력
 	@RequestMapping("sgroup/groupInfo.do")
-	public String groupInfo(@RequestParam String gId, Model model) {
+	public String groupInfo(@ModelAttribute("member") Member m, @RequestParam String gId, Model model) {
 		
 		Sgroup sr = sgroupService.selectOneSgroup(gId);
 		
 		List<Joing> joing = sgroupService.selectJoing(gId);
 		
+		int groupCount = sgroupService.selectGroupCount(m.getUserId());
+		
 		model.addAttribute("sgroup", sr);
 		model.addAttribute("joing", joing);
+		model.addAttribute("groupCount", groupCount);
+		System.out.println("groupCount : " + groupCount);
 		
 		return "sgroup/groupInfo";
 	}
