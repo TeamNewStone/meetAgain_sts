@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.meetAgain.board.model.dao.BoardDAO;
 import com.kh.meetAgain.board.model.vo.Board;
+import com.kh.meetAgain.myPage.model.vo.Review;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -43,6 +44,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int updateReadCount(int bId) {
 		return boardDAO.updateReadCount(bId);
+	}
+
+	@Override
+	public List<Review> selectReviewList() {
+		return boardDAO.selectReviewList();
 	}
 
 }

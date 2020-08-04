@@ -1,9 +1,8 @@
 package com.kh.meetAgain.board.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.meetAgain.board.model.service.BoardService;
 import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.common.util.Utils;
+import com.kh.meetAgain.myPage.model.vo.Review;
 
 
 @Controller
@@ -120,8 +120,12 @@ public class BoardController {
 	}
 	
 	@RequestMapping("board/review.do")
-	public String review() {
+	public String review(Model model) {
+		List<Review> rvlist = new ArrayList<Review>();
 		
+		rvlist = boardService.selectReviewList();
+		System.out.println(rvlist);
+		model.addAttribute("rvlist", rvlist);
 		return "board/review";
 	}
 	

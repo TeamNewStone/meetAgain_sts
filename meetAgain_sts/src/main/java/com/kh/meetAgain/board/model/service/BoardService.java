@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.meetAgain.board.model.vo.Board;
+import com.kh.meetAgain.myPage.model.vo.Review;
 
 public interface BoardService {
 
@@ -21,4 +22,6 @@ public interface BoardService {
 	int updateBoard(Board board);
 
 	int updateReadCount(int bId);
+
+	List<Review> selectReviewList();
 }

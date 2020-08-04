@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.meetAgain.board.model.vo.Board;
+import com.kh.meetAgain.myPage.model.vo.Review;
 @Repository("boardDAO")
 public class BoardDAOImpl implements BoardDAO {
 	
@@ -45,6 +46,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int updateReadCount(int bId) {
 		return sqlSession.update("boardMapper.updateReadCount", bId);
+	}
+
+	@Override
+	public List<Review> selectReviewList() {
+		return sqlSession.selectList("boardMapper.selectReviewList");
 	}	
 
 }
