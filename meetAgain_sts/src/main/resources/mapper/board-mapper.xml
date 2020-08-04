@@ -4,6 +4,10 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardMapper">
 
+	<resultMap type="Review" id="ReviewMap">
+		<result property="cateId" column="CATE_ID" />
+	</resultMap>
+
 	<select id="selectBoardList" resultType="Board">
 		SELECT BID, NICKNAME, BTYPE, BTITLE, BCONTENT, BRATE, BDATE, BDEL FROM BOARD
 		JOIN MEMBER USING(USERID) ORDER BY BID DESC
@@ -34,4 +38,7 @@
 		UPDATE BOARD SET BRATE = BRATE+1 WHERE BID=#{bId}
 	</update>
 
+	<select id="boardMapper.selectReviewList" resultMap="ReviewMap">
+		SELECT R.*, G.GTITLE, G.CATE_ID, G.CREATEDATE, G.DURATE FROM REVIEW R JOIN SGROUP G ON(R.GID=G.GID)
+	</select>
 </mapper>
