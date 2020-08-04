@@ -185,14 +185,16 @@ public class MyPageController {
 		return "common/msg";
 	}	
 
-	@RequestMapping(value="myPage/reviewInsert.do", method=RequestMethod.POST)
+	@RequestMapping(value="myPage/reviewInsert.do")
 	public String InsertReview (@RequestParam(value="reviewImage", required = false) MultipartFile[] reviewImage, 
 			HttpSession session, Review review, Model model) {
 		
-		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
+		String saveDir = session.getServletContext().getRealPath("/resources/upload/reviewImg");
 		File dir = new File(saveDir);
-	      
+	      System.out.println("이미지확인~"+reviewImage);
 	      System.out.println("폴더가 있나요? " + dir.exists());
+	      
+	      if(dir.exists() == false) dir.mkdirs();
 	      
 	      for(MultipartFile f : reviewImage) {
 		         if(!f.isEmpty()) {
