@@ -57,6 +57,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int insertGroupJoin(Joing joing) {
 		return sqlSession.insert("sgroupMapper.insertGroupJoin", joing);
 	}
+	
+	@Override
+	public int selectGroupCount(String userId) {
+		return sqlSession.selectOne("sgroupMapper.selectGroupCount", userId);
+	}
 
 	@Override
 	public List<Map<String, String>> selectgBoardList(int cPage, int numPerPage) {
@@ -124,6 +129,6 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.insert("sgroupMapper.insertComment");
 	}
 
-
+		
 }
 
