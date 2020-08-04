@@ -1,9 +1,9 @@
 package com.kh.meetAgain.sgroup.controller;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,17 +15,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 
-@SessionAttributes(value= {"board"})
 @Controller
-
+@SessionAttributes(value= {"gid", "member"})
 public class CalendarController {
 	
 	@Autowired
 	SgroupService sgroupService;	
-	
+	 
 	@RequestMapping("sgroup/addCalendar.do")
 	public String addCalendar(
-				@RequestParam("gid") String gid,
+				@RequestParam String gid,
 				@RequestParam String gdate,
 				@RequestParam String gdateEnd,
 				@RequestParam String ginfo,
@@ -68,7 +67,7 @@ public class CalendarController {
 	
 	@RequestMapping("sgroup/groupCalendar.do")
 	public String loadList(Model model) {
-		
+		 
 		// 일정 조회
 		List<Calendar> list = new ArrayList<Calendar>(); 
 
@@ -84,3 +83,4 @@ public class CalendarController {
 	}
 	 
 }
+
