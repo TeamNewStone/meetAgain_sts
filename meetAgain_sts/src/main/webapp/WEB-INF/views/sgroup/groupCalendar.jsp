@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="com.kh.meetAgain.sgroup.model.vo.Calendar"%>
+	pageEncoding="UTF-8" import="com.kh.meetAgain.sgroup.model.vo.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/common/header.jsp" />
-
-<%
+<%-- <%
 	Calendar cal = (Calendar)session.getAttribute("sclist");
 %>
 <%if ( cal == null ) { %>
@@ -18,7 +17,7 @@
 		//alert('불러오기 실패');
 		console.debug(cal);
 	</script>
-<% } %>
+<% } %> --%>
 
 <link href='${ pageContext.request.contextPath }/resources/css/main.css' rel='stylesheet' type='text/css'>
 <script src="${ pageContext.request.contextPath }/resources/js/main.js"></script>
@@ -39,8 +38,9 @@
 				
 				<span>일반모임</span><br>
 					<c:forEach items="${sclist}" var="normalList" varStatus="scIndex">
-						<li class="list-group-item" id="test5">모임명 : ${normalList.ginfo}<br>
-						일정 : ${normalList.gdate} ~ ${normalList.gdateEnd}<br>시간 : ${fn:substring(normalList.gtime, 10, 16)}</li>
+					<c:set var = "calTime" value="${normalList.getGTime()}"/>
+						<li class="list-group-item" id="test5">모임명 : ${normalList.getGInfo()}<br>
+						일정 : ${normalList.getGDate()} ~ ${normalList.getGDateEnd()}<br>시간 : ${fn:substring(calTime, 10, 16)}</li>
 					</c:forEach>					
 				<br><span>정기모임</span>
 							
@@ -73,28 +73,29 @@
 					<div class="modal-body">						
 						<!-- 소모임id -->
 						<form method="POST" action="addCalendar.do">
-							<input type="hidden" name="gid" value="${gid}" />							
+																				
+						 <input type="hidden" name="gId" value="${gid}" /> 
 							<table id="my_table_1" data-toggle="table" data-sort-stable="true">													
 							   <tbody>
 									<tr>
 										<td id="tx">일정 시작 날짜</td>
-										<td><input type="date" name="gdate" id="gdate" class="form-control" /></td>
+										<td><input type="date" name="gDate" class="form-control" /></td>
 									</tr>
 									<tr>
 										<td id="tx">일정 끝 날짜</td>
-										<td><input type="date" name="gdateEnd" id="gdateEnd" class="form-control" /></td>
+										<td><input type="date" name="gDateEnd" class="form-control" /></td>
 									</tr>
 									<tr>
 										<td id="tx">일정 설명</td>
-										<td><input type="text" name="ginfo" id="title" class="form-control"  /></td>
+										<td><input type="text" name="gInfo" class="form-control"  /></td>
 									</tr>
 									<tr>
 										<td id="tx">약속 시간</td>
-										<td><input type="time" name="gtime" id="gtime" class="form-control"  /></td>
+										<td><input type="time" name="gTime" class="form-control"  /></td>
 									</tr>
 									<tr>
 										<td id="tx">정기 모임</td>
-										<td><input type="checkbox" name="isctn" id="isctn" /></td>
+										<td><input type="checkbox" name="isCtn" /></td>
 									</tr>		
 								</tbody>
 							</table>								
@@ -139,10 +140,10 @@
 				   }, */
 				   <c:forEach items="${sclist}" var="sc" varStatus="scIndex2">
 				   {
-				   // id : "${sc.gid}",
-				   title : "${sc.ginfo}",
-				   start : "${sc.gdate}",
-				   end : "${sc.gdateEnd}"
+				   id : "${sc.getGId()}",
+				   title : "${sc.getGInfo()}",
+				   start : "${sc.getGDate()}",
+				   end : "${sc.getGDateEnd()}"
 				   }
 				   <c:if test="${!scIndex2.last}">,</c:if>			   
 				   </c:forEach>
@@ -160,6 +161,11 @@
 				   
 					var result = confirm('해당 "' + info.event.title + '" 일정을 삭제하시겠습니까 ??');
 						if(result){
+							
+							/* $.ajax{
+								url: deleteCalendar.do
+							} */
+							
 							return null;
 						} else {		    		
 							return false;
@@ -179,9 +185,9 @@
 
 	</script>
 
-	<script>
+		<script>
 		/* <c:forEach items="${sclist}" var="scNormal" varStatus="scIndex3">
-		<c:set var="realtime" value='${scNormal.gtime}' />	
+		<c:set var="realtime" value='${scNormal.gTime}' />	
 		
 			var ime = "${realtime}";
 			var result = ime.substring(10, 16);
@@ -194,7 +200,7 @@
 			
 				schedulaDiv1.innerHTML +=
 					'<span class="badge badge-pill badge-success" style="font-size: 15px;">모임명 : ' + 
-						'${scNormal.ginfo}' + '<br>일정 : ' + '${scNormal.gdate}' + 
+						'${scNormal.gInfo}' + '<br>일정 : ' + '${scNormal.gDate}' + 
 							'<br>시간 : ' + result + '</span><br>';
 							<c:if test="${!scIndex3.last}">;</c:if>
 										

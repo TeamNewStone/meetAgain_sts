@@ -14,11 +14,13 @@ import lombok.NoArgsConstructor;
 public class Calendar implements Serializable {
 	
 	private static final long serialVersionUID = 9991999L;
-	private String gid;
-	private Date gdate;
-	private Date gdateEnd;
-	private String ginfo;
-	private Timestamp gtime;	
-	private String isctn;
+	
+	private String cdId;
+	private String gId;
+	private Date gDate;
+	private Date gDateEnd;
+	private String gInfo;
+	private Timestamp gTime;	
+	private String isCtn;
 	
 }

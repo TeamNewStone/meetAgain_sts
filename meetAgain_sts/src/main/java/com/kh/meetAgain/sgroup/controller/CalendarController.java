@@ -16,7 +16,7 @@ import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 
 @Controller
-@SessionAttributes(value= {"gid", "member"})
+@SessionAttributes(value= {"member", "gid"})
 public class CalendarController {
 	
 	@Autowired
@@ -24,32 +24,41 @@ public class CalendarController {
 	 
 	@RequestMapping("sgroup/addCalendar.do")
 	public String addCalendar(
-				@RequestParam String gid,
-				@RequestParam String gdate,
-				@RequestParam String gdateEnd,
-				@RequestParam String ginfo,
-				@RequestParam String gtime,
-				@RequestParam(required = false, defaultValue = "N") String isctn) {
+				@RequestParam("gId") String gId,
+				@RequestParam("gDate") String gDate,
+				@RequestParam("gDateEnd") String gDateEnd,
+				@RequestParam("gInfo") String gInfo,
+				@RequestParam("gTime") String gTime,
+				@RequestParam(value="isCtn", required = false, defaultValue = "N") String isCtn) {
 
-		System.out.println(gtime); // 12:01
+		System.out.println(gTime); // 12:01
 		//***************gid임의지정
 		//String gid = "1";		
 		
 		
-		Date date = Date.valueOf(gdate);
-		Date date2 = Date.valueOf(gdateEnd);
-		int hour = Integer.parseInt(gtime.substring(0, 2));
-		int min = Integer.parseInt(gtime.substring(3));
+		Date date = Date.valueOf(gDate);
+		Date date2 = Date.valueOf(gDateEnd);
+		int hour = Integer.parseInt(gTime.substring(0, 2));
+		int min = Integer.parseInt(gTime.substring(3));
 		
 		Timestamp time = Timestamp.valueOf(date.toString() + " " + hour + ":" + min + ":00"); // 20: + 14 + :00
 				
-		System.out.println(hour);
-		System.out.println(min);		
-		System.out.println(time);
+//		System.out.println(hour);
+//		System.out.println(min);		
+//		System.out.println(time);
 
-		Calendar cal = new Calendar(gid, date, date2, ginfo, time, isctn);
+		Calendar cal = new Calendar();
 		
-		//cal.setGid(gid);
+		cal.setGId(gId);
+		cal.setGDate(date);
+		cal.setGDateEnd(date2);
+		cal.setGInfo(gInfo);
+		cal.setGTime(time);
+		cal.setIsCtn(isCtn);
+			
+		System.out.println("insert 확인" + cal);
+		
+		//cal.setGId(gId);
 		int result = sgroupService.addCalendar(cal);	
 						
 		String addMsg = "";
@@ -66,8 +75,8 @@ public class CalendarController {
 	}
 	
 	@RequestMapping("sgroup/groupCalendar.do")
-	public String loadList(Model model) {
-		 
+	public String loadList(@RequestParam String gid, Model model) {
+		
 		// 일정 조회
 		List<Calendar> list = new ArrayList<Calendar>(); 
 
@@ -77,6 +86,7 @@ public class CalendarController {
 		System.out.println("controller");
 
 		model.addAttribute("sclist", list);
+		model.addAttribute("gid", gid);
 		
 		return "sgroup/groupCalendar";	
 
