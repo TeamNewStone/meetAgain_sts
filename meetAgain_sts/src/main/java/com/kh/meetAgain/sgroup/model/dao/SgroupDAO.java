@@ -30,7 +30,7 @@ public interface SgroupDAO {
 	int selectGroupCount(String userId);
 	
 	int groupLeave(Map<String, String> map);
-  
+ 
 	List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage);
 
 	 int selectgBoardTotalContents();
@@ -54,6 +54,10 @@ public interface SgroupDAO {
 	int commentUpdate(int cId);
 
 	List<Calendar> loadList();
+
+	int commentUpdate(GB_comment gB_comment);
+
+	int commentDelete(int cId);
 
 	int deleteCalendar(String cdId);
 

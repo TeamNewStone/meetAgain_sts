@@ -72,7 +72,6 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.selectGroupCount(userId);
 	}
 
-
 	@Override
 	public int selectgBoardTotalContents() {
 		return sgroupDAO.selectgBoardTotalContents();
@@ -136,8 +135,15 @@ public class SgroupServiceImpl implements SgroupService {
 
 
 	@Override
-	public Object commentUpdate(int cId) {
-		return sgroupDAO.commentUpdate(cId);
+	public int commentUpdate(GB_comment gB_comment) {
+		System.out.println("Service : " + gB_comment);
+		return sgroupDAO.commentUpdate(gB_comment);
+	}
+
+	@Override
+	public int commentDelete(int cId) {
+		
+		return sgroupDAO.commentDelete(cId);
 	}
 
 	

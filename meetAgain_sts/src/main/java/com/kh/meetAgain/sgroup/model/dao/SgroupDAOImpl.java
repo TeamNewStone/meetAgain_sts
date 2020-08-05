@@ -138,10 +138,9 @@ public class SgroupDAOImpl implements SgroupDAO {
 
 
 	@Override
-	public int commentUpdate(int cId) {
-		return sqlSession.update("sgroupMapper.updateComment", cId);
+	public int commentDelete(int cId) {
+		return sqlSession.delete("sgroupMapper.deleteComment", cId);
 	}
-
 
 
 	@Override
