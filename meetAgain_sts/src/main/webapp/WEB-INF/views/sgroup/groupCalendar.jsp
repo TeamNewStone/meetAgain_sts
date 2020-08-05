@@ -38,19 +38,29 @@
 				
 				<span>일반모임</span><br>
 					<c:forEach items="${sclist}" var="normalList" varStatus="scIndex">
-					<c:set var = "calTime" value="${normalList.getGTime()}"/>
-						<li class="list-group-item" id="test5">모임명 : ${normalList.getGInfo()}<br>
-						일정 : ${normalList.getGDate()} ~ ${normalList.getGDateEnd()}<br>시간 : ${fn:substring(calTime, 10, 16)}</li>
+						<c:set var = "calTime" value="${normalList.getGTime()}"/>
+						<c:set var="genCtn" value="${normalList.getIsCtn()}" />
+							<c:if test="${genCtn eq 'N'}">
+							<li class="list-group-item">
+							모임명 : ${normalList.getGInfo()}<br>
+							일정 : ${normalList.getGDate()} ~ ${normalList.getGDateEnd()}<br>
+							시간 : ${fn:substring(calTime, 10, 16)}	<br>
+							</li>											
+							</c:if>
 					</c:forEach>					
 				<br><span>정기모임</span>
-							
-				<!-- <span style="float: left;" >일반모임</span><br>
-				<div id="_normalScheduleList"></div>
-				<br /><br />
-				
-				<span style="float: left;">정기모임</span><br>						
-				<div id="_meetScheduleList">
-				</div>	 -->	
+					<c:forEach items="${sclist}" var="normalList" varStatus="scIndex">
+						<c:set var = "calTime" value="${normalList.getGTime()}"/>
+						<c:set var="genCtn" value="${normalList.getIsCtn()}" />
+							<c:if test="${genCtn eq 'Y'}">
+							<li class="list-group-item">
+							모임명 : ${normalList.getGInfo()}<br>
+							일정 : ${normalList.getGDate()} ~ ${normalList.getGDateEnd()}<br>
+							시간 : ${fn:substring(calTime, 10, 16)}	<br>
+							</li>											
+							</c:if>
+					</c:forEach>
+					
 			</div>
 			
 			<div class="col-8">
@@ -95,10 +105,11 @@
 									</tr>
 									<tr>
 										<td id="tx">정기 모임</td>
-										<td><input type="checkbox" name="isCtn" /></td>
+										<td><input type="checkbox" id="isCtnChk" /></td>
 									</tr>		
 								</tbody>
 							</table>								
+						<input type="hidden" name="isCtn" id="_Y" value="N" />											
 						<div class="modal-footer">
 							<button type="button" class="btn btn-light" data-dismiss="modal">닫기</button>
 							<button type="submit" class="btn btn-primary" id="addCal">일정 등록</button>
@@ -140,10 +151,10 @@
 				   }, */
 				   <c:forEach items="${sclist}" var="sc" varStatus="scIndex2">
 				   {
-				   id : "${sc.getCdId()}",
-				   title : "${sc.getGInfo()}",
-				   start : "${sc.getGDate()}",
-				   end : "${sc.getGDateEnd()}"
+					id : "${sc.getCdId()}",
+					title : "${sc.getGInfo()}",
+					start : "${sc.getGDate()}",
+					end : "${sc.getGDateEnd()}"
 				   }
 				   <c:if test="${!scIndex2.last}">,</c:if>		   
 				   </c:forEach>
@@ -161,7 +172,7 @@
 						$.ajax({
 					       url: '${pageContext.request.contextPath}/sgroup/deleteCalendar.do',
 					       data: {
-					    	   cdId : cdId 
+					    	   cdId : cdId
 					       },
 					       type: "POST",
 					       success: function () {
@@ -188,13 +199,26 @@
 			// console.log(calendar.getEvents(5));
 			
 		});
-
+		
 	</script>	
 
 	<script>
 		function addCal() {			
 			location.href="${ pageContext.request.contextPath }/sgroup/addCalendar.do";
 		}
+
+		$('#isCtnChk').change( function() {
+			if ( $('#isCtnChk').is(':checked')) {
+				console.log('체크값 : ' + $(this).val());
+				$('#_Y').val('Y');
+				console.log($('#_Y').val());
+			} else {
+				console.log('체크값? : ' + $(this).val());
+				$('#_Y').val('N');	
+				console.log($('#_Y').val());				
+			}
+		});
+			
 	</script>
 	
 <c:import url="/WEB-INF/views/common/footer.jsp" />
