@@ -57,6 +57,6 @@ public interface SgroupService {
 
 	List<Calendar> loadList();
 
-
+	int deleteCalendar(String cdId);
 	
 }

@@ -19,4 +19,8 @@
 		SELECT CDID, GID, GDATE, GDATEEND + 1 "GDATEEND", GINFO, GTIME, ISCTN FROM CALENDAR
 	</select>
 	
+	<delete id="deleteCalendar" parameterType="string">
+		DELETE FROM CALENDAR WHERE CDID = #{cdId}
+	</delete>
+	
 </mapper>
