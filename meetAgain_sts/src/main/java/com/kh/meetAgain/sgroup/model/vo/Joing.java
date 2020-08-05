@@ -24,7 +24,5 @@ public class Joing extends Member {
 	private String isOut;
 	private String isLeave;
 	private String joinType;
-	/*
-	 * private Date birthday; private String gender; private String nickName;
-	 */
+
 }
