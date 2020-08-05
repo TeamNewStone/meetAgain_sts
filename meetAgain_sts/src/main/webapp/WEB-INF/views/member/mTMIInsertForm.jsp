@@ -25,8 +25,19 @@
 					  
 					  
 						  <div class="form-group" style="text-align:center;">
-						  <img src="/meetAgain/resources/img/usericon.png" id="sampleImg" alt="usericon" class="img-fluid rounded-circle" style="width : 120px;">
-						  <br />
+						<c:if test="${UserTMI.userImg eq null }">
+							<img
+								src="${ pageContext.request.contextPath }/resources/img/usericon.png"
+								alt="usericon"
+								class="img-fluid rounded-circle" id="sampleImg" style="width: 180px;">
+						</c:if>
+						<c:if test="${UserTMI.userImg ne null }">
+							<img
+								src="${ pageContext.request.contextPath }/resources/img/${member.userImg}"
+								alt="Raised circle image"
+								class="img-fluid rounded-circle" id="sampleImg" style="width: 180px;">
+						</c:if>
+						<br />
 						  <button type="button" id="mimgBtn">사진 첨부</button>
 								<input type="file" name="userImg" id="profileImgBtn" style="display: none;"
 								onchange="loadImg(this);" />

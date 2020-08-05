@@ -103,4 +103,14 @@ public class MemberDAOImpl implements MemberDAO {
 		 return  i+j;
 		}
 
+	@Override
+	public int mCateDelete(String userId) {
+		return sqlSession.delete("memberMapper.mCateDelete", userId);
+	}
+
+	@Override
+	public int imgUpdate(UserTMI userTMI) {
+		return sqlSession.update("memberMapper.imgUpdate", userTMI);
+	}
+
 }
