@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +25,8 @@ import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
+import com.kh.meetAgain.myPage.model.service.MyPageService;
+import com.kh.meetAgain.myPage.model.service.MyPageServiceImpl;
 
 @SessionAttributes(value= {"member"})
 @Controller
@@ -163,10 +164,14 @@ public class MemberController {
 
 	         }
 	      }
-	      
-	    int result2 = memberService.imgUpdate(userTMI);
+	    Map<String, String> map = new HashMap<String, String>();
+	    map.put("userImg", userTMI.getUserImg());
+	    map.put("userId", member.getUserId());
+	    
+	    int result2 = memberService.imgUpdate(map);
 	    
 		if(result > 0 && result2 > 0) {
+			member.setUserImg(userTMI.getUserImg());
 			msg = "정보 수정이 완료되었습니다";
 		}else {
 			msg = "정보 수정 중 오류가 발생하였습니다. 다시 시도해주세요.";
@@ -219,12 +224,36 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/mTMIUpdate.do")
-	public String mTMIUpdate(UserTMI userTMI, CateInfo cateInfo, Model model) {
+	public String mTMIUpdate(UserTMI userTMI, CateInfo cateInfo, Model model, HttpSession session,
+	         @RequestParam(value="userImg1", required = false) MultipartFile[] userImg1) {
 		
+		String saveDir = session.getServletContext().getRealPath("/resources/upload/userImg");
+
+	      File dir = new File(saveDir);
+	      if(dir.exists() == false) dir.mkdirs();
+	      
+	      for(MultipartFile f : userImg1) {
+	         if(!f.isEmpty()) {
+	        	 
+	            String originName = f.getOriginalFilename();
+	            String ext = originName.substring(originName.lastIndexOf(".")+1);
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+	            
+	            int rndNum = (int)(Math.random() * 1000+1000);
+	            
+	            String renamedName = sdf.format(new java.util.Date()) + "_" + rndNum + "." + ext;
+
+	            try {
+	               f.transferTo(new File(saveDir + "/" + renamedName));
+	            } catch (IllegalStateException | IOException e) {
+	               e.printStackTrace();
+	            }
+	            
+	            userTMI.setUserImg(renamedName);
+
+	         }
+	      }
 		
-		System.out.println("MemberController test3 : "+userTMI);
-		System.out.println(userTMI.getUserId()); 
-		System.out.println(cateInfo);
 		int result = 0;
 		if(cateInfo.getCateId()!=null) {
 			result = memberService.mTMIUpdate(userTMI, cateInfo);			

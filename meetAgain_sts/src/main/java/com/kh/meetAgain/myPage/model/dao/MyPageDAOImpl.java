@@ -48,7 +48,7 @@ public class MyPageDAOImpl implements MyPageDAO {
 
 	@Override
 	public UserTMI selectUserTMI(String userId) {
-		return sqlSession.selectOne("myPageMapper.selectUserTMI");
+		return sqlSession.selectOne("myPageMapper.selectUserTMI", userId);
 	}
 	
 	@Override

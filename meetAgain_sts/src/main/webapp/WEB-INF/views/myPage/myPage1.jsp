@@ -31,10 +31,21 @@
 
 		<div class="row">
 			<div class="col-12 col-md-4 text-center">
-				<img
-					src="${ pageContext.request.contextPath }/resources/img/lorde.png"
-					alt="Raised circle image"
-					class="img-fluid rounded-circle shadow-lg" style="width: 180px;">
+			
+						<c:if test="${owner.userImg eq null }">
+							<img
+								src="${ pageContext.request.contextPath }/resources/img/usericon.png"
+								alt="usericon"
+								class="test img-fluid rounded-circle" style="width: 180px; height:180px;">
+						</c:if>
+						<c:if test="${owner.userImg ne null }">
+							<img
+								src="${ pageContext.request.contextPath }/resources/upload/userImg/${owner.userImg}"
+								alt="Raised circle image"
+								class="test img-fluid rounded-circle"style="width: 180px; height:180px;">
+						</c:if>
+			
+				
 				<div>
 					<hr>
 				</div>
@@ -520,22 +531,8 @@
 
 <!-- 마이페이지 메인 끝 -->
 
-
-
-
-
-
-<!-- 마인펭이지 메인 스크립트작성 -->
-<!--   jQuery first, then Popper.js, then Bootstrap JS -->
-<%-- <script
-	src="${ pageContext.request.contextPath }/resources/vendor/popper/popper.min.js"></script>
-<script
-	src="${ pageContext.request.contextPath }/resources/vendor/bootstrap/bootstrap.min.js"></script>
-<!-- lazy javascript -->
-<script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script> --%>
-
 <script>
-$(function(){
+/* $(function(){ */
 	$(".card").on("click",function(){
 		
 		var gId = $(this).attr("id");
@@ -619,12 +616,6 @@ $(function(){
 		$("#modal-cate").html(category);
 		$("#modal-gid").val(gid);
 	}); */
-	function accountEdit() {
-		location.href = "myPage2.do";
-	}
-	function rateEdit() {
-		location.href = "${ pageContext.request.contextPath }/member/membership.do";
-	}
 	function fn_refresh(){
 		location.reload();
 	}
@@ -632,7 +623,7 @@ $(function(){
 	$(function() {
 		if($('#follower').val() > 0){
 		$("#followerDiv").click(function() {
-			var userId = ${owner.userId};
+			var userId = '${owner.userId}';
 			window.open('${pageContext.request.contextPath}/myPage/followerList.do?uid='+userId,'팔로워','width=300, height=500');
 		}).mouseenter(function() {
 			$(this).css({
@@ -644,7 +635,7 @@ $(function(){
 		
 		if($('#following').val() > 0){
 			$("#followingDiv").click(function() {
-				var userId = ${owner.userId};
+				var userId = '${owner.userId}';
 				window.open('${pageContext.request.contextPath}/myPage/followingList.do?uid='+userId,'팔로잉','width=300, height=500');
 			}).mouseenter(function() {
 				$(this).css({
@@ -658,18 +649,25 @@ $(function(){
 	function unFollow(){
 		var confirm = window.confirm('정말 팔로우를 끊으시겠습니까?');
 		if(confirm){
-			var userId = ${owner.userId};
-			var muserId = ${member.userId};
+			var userId = '${owner.userId}';
+			var muserId = '${member.userId}';
 			location.href="${pageContext.request.contextPath}/myPage/unFollow.do?uid="+userId+"&muserId="+muserId;
 		}
 	}
 	
 	function follow(){
-		var userId = ${owner.userId};
-		var muserId = ${member.userId};
+		var userId = '${owner.userId}';
+		var muserId = '${member.userId}';
 		location.href="${pageContext.request.contextPath}/myPage/follow.do?uid="+userId+"&muserId="+muserId;
 	}
-});
+/* }); */
+	function accountEdit() {
+		var userId = '${member.userId}';
+		location.href = "${ pageContext.request.contextPath }/myPage/myPage2.do?uid="+userId;
+	}
+	function rateEdit() {
+		location.href = "${ pageContext.request.contextPath }/member/membership.do";
+	}
 //별점 마킹 모듈 프로토타입으로 생성
 function Rating(){};
 Rating.prototype.rate = 0;

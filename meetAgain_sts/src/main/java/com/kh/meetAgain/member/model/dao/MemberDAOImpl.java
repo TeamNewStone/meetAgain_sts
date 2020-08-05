@@ -109,8 +109,8 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int imgUpdate(UserTMI userTMI) {
-		return sqlSession.update("memberMapper.imgUpdate", userTMI);
+	public int imgUpdate(Map<String, String> map) {
+		return sqlSession.update("memberMapper.imgUpdate", map);
 	}
 
 }
