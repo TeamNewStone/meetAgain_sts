@@ -69,34 +69,16 @@
     <div class="section desc">
 	    <div class="row">
 		    <div class="col-12 col-md-12">
-          <table class="table">
+          <table class="table" id = "adTop3">
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성일</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
+             
             </tbody>
           </table>
 		    </div>
@@ -133,7 +115,7 @@
 							</p>
 						  </div>
 						  <div class="card-footer">
-								<button type="button" id="rvBtn" class="btn btn-outline-secondary">자세히보기</button> &nbsp;
+								<button type="button" id="rvBtn0" class="btn btn-outline-secondary">자세히보기</button> &nbsp;
 								<span class="badge badge-danger fas fa-heart" id="rv0Like" style="float:right;">0</span>
 						  </div>
 						</div>
@@ -155,7 +137,7 @@
 							</p>
 						  </div>
 						  <div class="card-footer">
-								<button type="button" id="rvBtn" class="btn btn-outline-secondary">자세히보기</button> &nbsp;
+								<button type="button" id="rvBtn1" class="btn btn-outline-secondary">자세히보기</button> &nbsp;
 								<span class="badge badge-danger fas fa-heart" id="rv1Like" style="float:right;">0</span>
 						  </div>
 						</div>
@@ -177,7 +159,7 @@
 							</p>
 						  </div>
 						  <div class="card-footer">
-								<button type="button" id="rvBtn" class="btn btn-outline-secondary">자세히보기</button> &nbsp;
+								<button type="button" id="rvBtn2" class="btn btn-outline-secondary">자세히보기</button> &nbsp;
 								<span class="badge badge-danger fas fa-heart" id="rv2Like" style="float:right;">0</span>
 						  </div>
 						</div>
@@ -284,6 +266,31 @@ $.ajax({
 	}
 });
 	
+	
+$.ajax({
+	url: 'selectAdtop3.do',
+	success : function(data){
+		var $table = $('#adTop3');
+		for(var i in (data.adboard)){
+			console.log(data.adboard);
+			// 내용을 모두 담을 tr 생성
+			var $tr = $('<tr>');
+			
+			// 내용을 각각 표현할 td 태그 생성
+			var $tdBno = $('<td>').text(data.adboard[i].bid);
+			var $tdTitle = $('<td>').text(data.adboard[i].btitle);
+			var $tdBdate = $('<td>').text(data.boardDate[i]);
+					
+			$tr.append($tdBno).append($tdTitle)
+			   .append($tdBdate);
+			
+			$table.append($tr);
+		}
+	},
+	error : function(){
+		alert("에러 발생");
+	}
+});
 $('[name=upFile]').on('change',function(){
     //var fileName = $(this).val();//C:\fakepath\파일명
     //var fileName = this.files[0].name;//파일명(javascript)

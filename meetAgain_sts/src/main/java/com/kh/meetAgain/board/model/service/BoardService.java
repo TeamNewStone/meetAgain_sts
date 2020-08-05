@@ -36,4 +36,6 @@ public interface BoardService {
 	Review selectOneReview(int rvid);
 
 	List<Review> selectTop3rv();
+
+	List<Board> selectTop3ad();
 }

@@ -65,7 +65,11 @@
 	<select id="selectTop3rv" resultMap="ReviewMap">
 		
 		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY R.RVLIKE DESC) "RANK", R.*, G.GTITLE, G.CATE_ID, G.CREATEDATE, G.DURATE FROM REVIEW R JOIN SGROUP G ON(R.GID=G.GID))
-		WHERE <![CDATA[RANK<=3]]>
+		WHERE <![CDATA[RANK<4]]>
 		
+	</select>
+	<select id="selectTop3ad" resultType="Board">
+		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY BID DESC) "RANK", B.* FROM BOARD B WHERE B.BTYPE=0 AND B.BDEL='N')
+		WHERE <![CDATA[RANK<4]]>
 	</select>
 </mapper>
