@@ -48,10 +48,12 @@ public interface SgroupService {
 	List<GB_comment> selectCommentList(int gbId);
 
 	int insertComment(GB_comment gB_comment);
-	
-	Object commentUpdate(int cId);
 
 	List<Calendar> loadList();
+
+	int commentUpdate(GB_comment gB_comment);
+
+	int commentDelete(int cId);
 
 
 	

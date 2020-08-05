@@ -13,19 +13,23 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.common.util.Utils;
+import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
-@SessionAttributes(value= {"sgroup"})
+@SessionAttributes(value= {"sgroup","member"})
 @Controller
 public class SgroupController {
 
@@ -180,9 +184,8 @@ public class SgroupController {
 		int gbRate = sgroupService.updateReadCount(gbId);
 		model.addAttribute("gbRate", gbRate);
 		model.addAttribute("list", list);
-
 		model.addAttribute("Gboard", gb);
-		System.out.println("list : " + list);
+		System.out.println("Detail controller list : " + list);
 
 		return "/sgroup/groupBoardDetail";
 	}
@@ -195,10 +198,12 @@ public class SgroupController {
 	}
 
 	@RequestMapping("/sgroup/gbInsert.do")
-	public String gbInsert(Gboard Gboard, Model model) {
-
+	public String gbInsert(@ModelAttribute("member") Member m, @RequestParam("gId") String gId, Gboard Gboard, Model model) {
+		System.out.println("gid:"+gId+"userid:"+m.getUserId());
+		Gboard.setGId(gId);
+		Gboard.setUserId(m.getUserId());
 		int result = sgroupService.insertgBoard(Gboard);
-
+		
 		String loc = "/sgroup/groupBoardDetail.do";
 		String msg = "";
 		if (result > 0) {
@@ -217,7 +222,7 @@ public class SgroupController {
 	}
 
 	@RequestMapping("sgroup/groupBoardUpdate.do")
-	public String noticeUpdate(@RequestParam int gbId, Model model) {
+	public String noticeUpdate(int gbId, Model model) {
 		model.addAttribute("Gboard", sgroupService.SelectOnegBoard(gbId));
 		return "/sgroup/groupBoardUpdateForm";
 	}
@@ -257,7 +262,8 @@ public class SgroupController {
 		}
 
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
-		System.out.println("deleteController : " + model);
+		System.out.println("deleteController session : " + session);
+		System.out.println("deleteController model : " + model);
 		return "common/msg";
 	}
 
@@ -292,6 +298,7 @@ public class SgroupController {
 
 		GB_comment.setGbId(gbId);
 		int result = sgroupService.insertComment(GB_comment);
+		
 
 		String loc = "/sgroup/insertComment.do";
 		String msg = "";
@@ -309,23 +316,87 @@ public class SgroupController {
 
 	}
 	@RequestMapping("/sgroup/commentUpdate.do")
-	public String commentUpdate(@RequestParam int cId, Model model) {
-		model.addAttribute("GB_comment", sgroupService.commentUpdate(cId));
-		return "/sgroup/insertComment.do";
-	}
-
-	@RequestMapping("/sgroup/cUpdate.do")
-	public String cUpdate(Gboard Gboard, Model model) {
-		int result = sgroupService.updategBoard(Gboard);
+	public String commentUpdate(@RequestParam("cId") int cId, GB_comment GB_comment, Model model) {
+		
+		GB_comment.setCId(cId);
+		int result = sgroupService.commentUpdate(GB_comment);
 
 		String loc = "/sgroup/insertComment.do";
 		String msg = "";
+		if (result > 0) {
+			msg = "댓글 등록 성공!";
+			loc = "/sgroup/groupBoardDetail.do?gbId=" + GB_comment.getGbId();
 
+		} else {
+			msg = "댓글 등록 실패!";
+		}
+
+		model.addAttribute("GB_comment", sgroupService.commentUpdate(GB_comment));
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
-		System.out.println("update Controller : " + Gboard);
-
+		System.out.println("controller GB" + GB_comment);
 		return "common/msg";
+		
+//		return "/sgroup/groupBoardDetail.do?gbId=" + GB_comment.getGbId();
 	}
 	
+//	@RequestMapping("/sgroup/cUpdate.do")
+//	public String cUpdate(Gboard Gboard, Model model) {
+//		int result = sgroupService.updategBoard(Gboard);
+//
+//		String loc = "/sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
+//		String msg = "";
+//
+//		model.addAttribute("loc", loc).addAttribute("msg", msg);
+//		System.out.println("update Controller : " + Gboard);
+//
+//		return "common/msg";
+//	}
+	
+//	@RequestMapping("/sgroup/groupBoardDelete.do")
+//	public String groupBoardDelete(@RequestParam int cId, HttpSession session, Model model) {
+//		int result = sgroupService.deletegBoard(gbId);
+//
+//		String loc = "sgroup/groupBoard.do";
+//		String msg = "";
+//
+//		if (result > 0) {
+//			msg = "게시글 삭제 성공!";
+//
+//		} else {
+//			msg = "게시글 삭제 실패!";
+//		}
+//
+//		model.addAttribute("loc", loc).addAttribute("msg", msg);
+//		System.out.println("deleteController : " + model);
+//		return "common/msg";
+//	}
+	
+	@RequestMapping("/sgroup/commentDelete.do")
+	public String commentDelete(int cId, SessionStatus status, Model model, GB_comment gB_commnet) {
+			
+		try { 
+			int result = sgroupService.commentDelete(cId);
+			
+			String loc = "/sgroup/groupBoardDetail.do";
+			String msg = "";
+			
+			if(result > 0) {
+				loc ="/sgroup/groupBoardDetail.do?gbId=" + gB_commnet.getGbId();
+				msg = "댓글!";
+				status.setComplete(); // 세션 완료(만료) 처리
+			}
+			else msg = "회원 탈퇴 실패!";
+			
+			model.addAttribute("loc", loc);
+			model.addAttribute("msg", msg);		
+					
+		} catch(Exception e) {
+			
+			// 받은 에러를 서버 개발자가 의도한 형식으로 보내기
+			throw new SgroupException(e.getMessage());
+		}
+		
+		return "common/msg";
+	}
 
 }

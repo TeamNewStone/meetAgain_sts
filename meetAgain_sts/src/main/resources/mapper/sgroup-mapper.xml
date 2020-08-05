@@ -126,6 +126,7 @@
 		GBRATE = GBRATE+1 WHERE GBID=#{gbId}
 	</update>
 
+
 	<delete id="deletegBoard" parameterType="_int">
 		DELETE FROM GBOARD
 		WHERE
@@ -151,8 +152,13 @@
 		CONNECT BY PRIOR CID = CREF
 	</select>
 
-	<update id="updateComment" parameterType="_int">
-		UPDATE BOARD_COMMENT SET CCONTENT = #{cContent}
+	<update id="updateComment" parameterType="GB_comment">
+		UPDATE GB_COMMENT SET CCONTENT = #{cContent}
 		WHERE CID = #{cId}
 	</update>
+	
+	<delete id="deleteComment" parameterType="_int">
+		DELETE FROM GB_COMMENT
+               WHERE CID = #{cId}
+	</delete>
 </mapper>
