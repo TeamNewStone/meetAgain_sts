@@ -4,8 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/common/header.jsp" />
-<jsp:useBean id="now" class="java.util.Date" />
-<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 <section style="border-bottom: 1px solid #e0e0e0;">
 <div class="container">
 <br />
@@ -198,12 +196,13 @@
 		<c:forEach items="${list}" var="sg">
 				    
 				  <div class="col-md-4 cardOne" id="${ sg.getGId()}" style="max-width: 500px;">
-					   <c:if test="${sg.getDurate() < today}">
+					   <c:if test="${sg.getIsFin() == 'Y'}">
 					<script>
 				    		$(function(){
 				    			
 				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#${ sg.getGId()}');
 				    			$('#${ sg.getGId()} .component').css('opacity', '0.2');
+				    			$('#${ sg.getGId()}').removeAttr('id');
 				    		});
 				    	</script>		
 				    </c:if>

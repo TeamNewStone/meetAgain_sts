@@ -29,6 +29,7 @@ public interface SgroupService {
 	
 	int insertGroupJoin(Joing joing);
 	
+	int groupLeave(Map<String, String> map);
 
 	List<Map<String, String>> selectgBoardList(String gId, int numPerPage, int cPage);
 
