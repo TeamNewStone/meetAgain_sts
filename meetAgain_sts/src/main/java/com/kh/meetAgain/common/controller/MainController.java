@@ -52,7 +52,7 @@ public class MainController {
 		}
 		map.put("boardDate",date);
 		map.put("adboard", adtop3);
-		System.out.println(adtop3);
+		
 		return map;	
 	}
 }
