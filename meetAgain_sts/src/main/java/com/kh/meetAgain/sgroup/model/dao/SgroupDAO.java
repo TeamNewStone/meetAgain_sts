@@ -55,6 +55,8 @@ public interface SgroupDAO {
 
 	List<Calendar> loadList();
 
+	int deleteCalendar(String cdId);
+
 
 
 

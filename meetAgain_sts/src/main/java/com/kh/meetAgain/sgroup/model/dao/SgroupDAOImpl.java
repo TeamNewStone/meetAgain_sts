@@ -143,6 +143,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 
 
+
+	@Override
+	public int deleteCalendar(String cdId) {
+		return sqlSession.delete("calendarMapper.deleteCalendar", cdId);
+	}
 	
 
 }

@@ -142,14 +142,19 @@ public class BoardController {
 		int check = boardService.selectRvHelpList(map);
 		int result = 0;
 		int fin=0;
+		
 		if(check==0) {
 			result = boardService.plusRvHelp(map);
+			map.put("status", "plus");
 		}else {
 			result = boardService.minusRvHelp(map);
+			map.put("status", "minus");
 		}
 		
 		if(result>0) {
 			fin = boardService.udpateRvLike(rvid);
+			Review review = boardService.selectOneReview(rvid);
+			map.put("like", review.getRvLike());
 		}
 		boolean rs = (fin>0)? true : false;
 		

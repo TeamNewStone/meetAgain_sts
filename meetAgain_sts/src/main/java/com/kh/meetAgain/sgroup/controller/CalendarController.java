@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 
@@ -55,7 +54,7 @@ public class CalendarController {
 		cal.setGInfo(gInfo);
 		cal.setGTime(time);
 		cal.setIsCtn(isCtn);
-			
+		
 		System.out.println("insert 확인" + cal);
 		
 		//cal.setGId(gId);
@@ -90,6 +89,20 @@ public class CalendarController {
 		
 		return "sgroup/groupCalendar";	
 
+	}
+	
+	@RequestMapping("sgroup/deleteCalendar.do")
+	//@RequestBody
+	// 일정 제거
+	public String deleteCalendar(@RequestParam String cdId, Model model) {
+
+		int sendResult = sgroupService.deleteCalendar(cdId);
+		
+		System.out.println(sendResult);
+		
+		model.addAttribute("cdId", cdId);
+		
+		return "sgroup/groupCalendar";		
 	}
 	 
 }

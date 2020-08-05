@@ -142,6 +142,11 @@ public class SgroupServiceImpl implements SgroupService {
 
 	
 
+	@Override
+	public int deleteCalendar(String cdId) {
+		return sgroupDAO.deleteCalendar(cdId);
+	}
+
 
 
 }

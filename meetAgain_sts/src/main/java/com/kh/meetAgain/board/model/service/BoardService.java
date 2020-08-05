@@ -32,4 +32,10 @@ public interface BoardService {
 	int minusRvHelp(Map<String, Object> map);
 
 	int udpateRvLike(int rvid);
+
+	Review selectOneReview(int rvid);
+
+	List<Review> selectTop3rv();
+
+	List<Board> selectTop3ad();
 }

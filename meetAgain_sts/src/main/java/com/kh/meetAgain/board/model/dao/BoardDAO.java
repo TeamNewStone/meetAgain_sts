@@ -28,4 +28,10 @@ public interface BoardDAO {
 	int minusRvHelp(Map<String, Object> map);
 
 	int updateRvLike(int rvid);
+
+	Review selectOneReview(int rvid);
+
+	List<Review> selectTop3rv();
+
+	List<Board> selectTop3ad();
 }
