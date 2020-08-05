@@ -33,7 +33,6 @@ import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 
 @SessionAttributes(value= {"sgroup","member"})
-
 @Controller
 public class SgroupController {
 
