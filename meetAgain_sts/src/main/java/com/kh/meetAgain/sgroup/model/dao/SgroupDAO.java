@@ -28,7 +28,9 @@ public interface SgroupDAO {
 	int insertGroupJoin(Joing joing);
 	
 	int selectGroupCount(String userId);
-  
+	
+	int groupLeave(Map<String, String> map);
+ 
 	List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage);
 
 	 int selectgBoardTotalContents();
@@ -58,6 +60,7 @@ public interface SgroupDAO {
 	int commentDelete(int cId);
 
 	int deleteCalendar(String cdId);
+
 
 
 

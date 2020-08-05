@@ -5,6 +5,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/common/header.jsp" />
 <div class="container">
+${sgroup }
+${joing }
+
 	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
 	<!--===================== 소모임 페이지의 바디 부분 =====================-->
 	<div name="groupBody">
@@ -13,11 +16,21 @@
 				<div class="component">
 					<div class="card">
 						<div class="card-header">
-							<img class="card-img" src="/meetAgain/resources/img/dog-3.jpg"
-								alt="dog">
+
+						<c:if test="${sgroup.getGImg() eq null}">
+				        <c:if test="${sgroup.getGType() eq 'S'}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height:200px;">
+				          </c:if>
+				          <c:if test="${sgroup.getGType() eq 'L'}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav01.png" style="height:200px;">
+				          </c:if>
+				          </c:if>
+				          <c:if test="${sgroup.getGImg() ne null}">
+				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/upload/groupImg/${sgroup.getGImg()}" style="height:200px;">
+				          </c:if>
 						</div>
 						<div class="card-body">
-							<p class="card-text">이 부분에 모임 설명을 씁니다</p>
+							<p class="card-text">${sgroup.getGIntro() }</p>
 						</div>
 						<div class="card-footer" style="text-align: right;">
 							<!-- 이거 수정버튼임 -->
@@ -34,7 +47,7 @@
 					<br />
 					<br />
 				</div>
-				<button class="btn btn-dark">소모임 탈퇴</button>
+				<button class="btn btn-dark" onclick="location.href='${pageContext.request.contextPath}/sgroup/groupLeave.do?gid='+${gid}">소모임 탈퇴</button>
 			</div>
 
 			<!-- ---------이부분까지 사진과 설명---------- -->
@@ -47,12 +60,20 @@
 					</colgroup>
 					<tr>
 						<td><h5>설립일</h5></td>
-						<td><h5>yyyy.mm.dd</h5></td>
-						<td style="text-align: right;"><span> <span
-								class="badge badge-pill badge-primary">정기</span> <span
-								class="badge badge-pill badge-info">6개월</span> <span
-								class="badge badge-pill badge-dark">승인제</span>
-						</span></td>
+						<td><h5>${sgroup.getCreateDate() }</h5></td>
+						<td style="text-align: right;">
+						<span>
+							<c:if test="${sgroup.getGType() eq 'S' }">
+					       		<span class="badge badge-pill badge-primary">단기</span> 		        
+				        	</c:if>
+				        	<c:if test="${sgroup.getGType() eq 'L' }">
+					       		<span class="badge badge-pill badge-primary">정기</span> 			        
+				        	</c:if> 
+							<c:if test="${sgroup.getJoinType() eq 'C' }">
+					       		<span class="badge badge-pill badge-dark">승인제</span>		        
+				        	</c:if>
+						</span>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="3"><hr /></td>
@@ -63,7 +84,30 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<button type="button" class="btn btn-info btn-pill">운동</button>
+						<c:if test="${sgroup.getCateId() eq 'C01' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">운동</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C02' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">친목</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C03' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">공부</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C04' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">취미생활</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C05' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">문화생활</button>			        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C06' }">
+					       <button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">여행</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C07' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">봉사</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C08' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">기타</button>			        
+				        </c:if>
 						</td>
 						<td><span class="badge badge-pill badge-success">20대</span> <span
 							class="badge badge-pill badge-success">30대</span> <span
@@ -72,7 +116,14 @@
 					</tr>
 					<tr>
 						<td><h5>회비여부</h5></td>
-						<td><label>10만원</label></td>
+						<td>
+							<c:if test="${sgroup.getCharge() eq 'Y' }">
+								<label>${sgroup.getGFee()}</label>
+							</c:if>
+							<c:if test="${sgroup.getCharge() eq 'N' }">
+								<label>회비 없음</label>
+							</c:if>
+						</td>
 						<td>매달 10일 수금 <svg width="1.5em" height="1.5em"
 								viewBox="0 0 16 16" class="bi bi-pencil-square"
 								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -89,12 +140,11 @@
 						<div style="display: flex; align-items: center;">
 							<div class="progress progress-lg"
 								style="width: 50%; float: left;">
-								<div class="progress-bar bg-info" role="progressbar"
-									style="width: 25%;" aria-valuenow="50" aria-valuemin="0"
+								<div class="progress-bar bg-info" id="joinCount" role="progressbar" aria-valuenow="50" aria-valuemin="0"
 									aria-valuemax="100"></div>
 							</div>
 							<div style="float: left;">
-								<h5>&nbsp;&nbsp;5/10</h5>
+								<h5>&nbsp;&nbsp;${fn:length(joing)}/${sgroup.getMaxNum() }</h5>
 							</div>
 							<div>
 							&nbsp;&nbsp;<button type="button" class="btn btn-danger"
@@ -102,6 +152,12 @@
 							</div>
 							</div>
 						</td>
+						<script>
+							var joinMemCount = (${fn:length(joing)}/${sgroup.getMaxNum()})*100;
+							$(function(){
+								$('#joinCount').css('width', joinMemCount+'%');
+							});
+						</script>
 
 
 					</tr>
@@ -130,6 +186,29 @@
 
 
 <script type="text/javascript">
+
+
+
+
+$(function(){
+	
+ 	var result = new Array();
+	var json = new Object();
+	
+	<c:forEach var="jo" items="${joing}" varStatus="status">
+		json = '${jo.getGender()}';
+		result.push(json);
+	</c:forEach>
+	
+	var test = JSON.stringify(result);
+	console.log(test); 
+
+/* 	<c:forEach var="jo" items="${joing}" varStatus="status">
+	var result = new Array();
+	result = ${jo.getGender()};
+	</c:forEach> */
+
+
 	google.charts.load('current', {
 		'packages' : [ 'corechart' ]
 	});
@@ -162,11 +241,10 @@
 				.getElementById('piechart'));
 
 		chart.draw(data, options);
-
 	}
-
+});
 	function clickMemList() {
-		location.href = '${ pageContext.request.contextPath }/sgroup/memberList.do';
+		location.href = '${ pageContext.request.contextPath }/sgroup/memberList.do?gid='+${gid};
 	}
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

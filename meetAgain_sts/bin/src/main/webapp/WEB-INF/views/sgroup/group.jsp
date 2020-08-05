@@ -4,22 +4,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/common/header.jsp" />
-
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 <section style="border-bottom: 1px solid #e0e0e0;">
 <div class="container">
+<br />
 <input type="hidden" name="uid" value="${member.userId }" />
 <input type="hidden" id="address1" value="${member.address1 }" />
 <c:if test="${ !empty member.address2 && member.address3}">
 	<input type="hidden" id="address2" value="${member.address2}" />
 	<input type="hidden" id="address3" value="${member.address3}" />
 </c:if>
-<div id="map"></div>
-
-	<br>
 		<div class="row">
 			<div class="col-lg-3 col-md-3">
 				<p>
-					<a href="">${fn:substring(member.address1,3,7)}</a> 의 소모임 리스트를 보고 계십니다.
+					<a href="">${fn:substring(member.address1,3,7)}</a> 주변의 소모임 리스트를 보고 계십니다.
 				</p>
 				<div class="dropdown">
 					<button class="btn btn-secondary dropdown-toggle" type="button"
@@ -33,9 +32,7 @@
 						<a class="dropdown-item" href="#">${fn:substring(member.address3,3,7)}</a>
 					</c:if>
 					</div>
-				</div>
-
-				  
+				</div>  
 			</div>
 			<div class="col-lg-6 col-md-6">
 				<div class="rows">
@@ -72,28 +69,37 @@
 							<div class="col-1.5 custom-control custom-checkbox my-2">
 								<input type="checkbox" class="custom-control-input" id="study"
 									name="hobby"> <label class="custom-control-label"
-									for="study" style="font-weight: 400; margin-right: 10px;">공부</label>
+									for="study" style="font-weight: 400; margin-right: 10px;">친목</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
 								<input type="checkbox" class="custom-control-input" id="commu"
 									name="hobby"> <label class="custom-control-label"
-									for="commu" style="font-weight: 400; margin-right: 10px;">소통</label>
+									for="commu" style="font-weight: 400; margin-right: 10px;">공부</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
 								<input type="checkbox" class="custom-control-input" id="job"
 									name="hobby"> <label class="custom-control-label"
-									for="job" style="font-weight: 400; margin-right: 10px;">취업</label>
+									for="job" style="font-weight: 400; margin-right: 10px;">취미생활</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
 								<input type="checkbox" class="custom-control-input" id="ent"
 									name="hobby"> <label class="custom-control-label"
-									for="ent" style="font-weight: 400; margin-right: 10px;">음악/댄스</label>
+									for="ent" style="font-weight: 400; margin-right: 10px;">문화생활</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="gosang"
+								<input type="checkbox" class="custom-control-input" id="trip"
 									name="hobby"> <label class="custom-control-label"
-									for="gosang" style="font-weight: 400; margin-right: 10px;">고상한
-									취미</label>
+									for="trip" style="font-weight: 400; margin-right: 10px;">여행</label>
+							</div>
+							<div class="col-1.5 custom-control custom-checkbox my-2">
+								<input type="checkbox" class="custom-control-input" id="bong"
+									name="hobby"> <label class="custom-control-label"
+									for="bong" style="font-weight: 400; margin-right: 10px;">봉사</label>
+							</div>
+							<div class="col-1.5 custom-control custom-checkbox my-2">
+								<input type="checkbox" class="custom-control-input" id="etc"
+									name="hobby"> <label class="custom-control-label"
+									for="etc" style="font-weight: 400; margin-right: 10px;">기타</label>
 							</div>
 						</div>
 						<div class="row">
@@ -150,145 +156,59 @@
 				<div class="col-1"></div>
 			</div>
 			<div class="col-lg-3 col-md-3">
-			<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">소모임 생성하기!</button>
+			<button type="button" id="groupCreBtn" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">소모임 생성하기!</button>
+			<c:if test="${groupCount >= 5 and member.getMLevel()==0}">
+				<script>
+					$(function(){
+						$('#groupCreBtn').attr('disabled', true);
+					});
+				</script>
+			</c:if>
+			
 			</div>
 		</div>
-
+		<br />
+<!-- 카테고리 추천 START -->
  	<div class="row">
-			<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
-		</div> 
- <c:forEach items="${CateInfo}" var="ca">
-      <c:forEach items="${list}" var="sg">       
-   <c:if test="${fn:length(ca) != 0}" >
-   	<c:forEach items="${ca.cateId }" var="cateId">
-   		
-   	<c:if test="${cateId eq sg.getCateId() }">   
-      <div class="row">
-              <div class="col-md-4 cardOne" style="max-width: 500px;">
-                <div class="component">
-                  <div class="card" id="${ sg.getGId()}" style="cursor:pointer;">
-                    <input type="hidden" value="${ sg.getGId()}" />
-                    <div class="card-header">
-                    <c:if test="${sg.getGImg() eq null}">
-                    <c:if test="${sg.getGType() eq 'S'}">
-                      <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height:200px;">
-                      </c:if>
-                      <c:if test="${sg.getGType() eq 'L'}">
-                      <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav01.png" style="height:200px;">
-                      </c:if>
-                      </c:if>
-                      <c:if test="${sg.getGImg() ne null}">
-                      <img class="card-img" src="${ pageContext.request.contextPath }/resources/upload/groupImg/${sg.getGImg()}" style="height:200px;">
-                      </c:if>
-                    </div>
-                    <div class="card-body">
-                    
-                    <input type="hidden" id="gPlace" value="${sg.getGPlace() }" />
-                    <c:if test="${sg.getGType() eq 'S' }">
-                         <span class="badge badge-primary mb-2">단기</span>                 
-                    </c:if>
-                    <c:if test="${sg.getGType() eq 'L' }">
-                         <span class="badge badge-primary mb-2">장기</span>                 
-                    </c:if>
-                    
-                    
-                    <c:if test="${sg.getCateId() eq 'C01' }">
-                         <span class="badge badge-secondary mb-2">운동</span>                 
-                    </c:if>
-                    <c:if test="${sg.getCateId() eq 'C02' }">
-                         <span class="badge badge-secondary mb-2">친목</span>                 
-                    </c:if>
-                    <c:if test="${sg.getCateId() eq 'C03' }">
-                         <span class="badge badge-secondary mb-2">공부</span>                 
-                    </c:if>
-                    <c:if test="${sg.getCateId() eq 'C04' }">
-                         <span class="badge badge-secondary mb-2">취미생활</span>                 
-                    </c:if>
-                    <c:if test="${sg.getCateId() eq 'C05' }">
-                         <span class="badge badge-secondary mb-2">문화생활</span>                 
-                    </c:if>
-                    <c:if test="${sg.getCateId() eq 'C06' }">
-                         <span class="badge badge-secondary mb-2">여행</span>                 
-                    </c:if>
-                    <c:if test="${sg.getCateId() eq 'C07' }">
-                         <span class="badge badge-secondary mb-2">봉사</span>                 
-                    </c:if>
-                    <c:if test="${sg.getCateId() eq 'C08' }">
-                         <span class="badge badge-secondary mb-2">기타</span>                 
-                    </c:if>
-                    
-                      <c:if test="${sg.getLimitGroup()[0] eq 'M'}">
-                       <span class="badge badge-danger">남자만</span>
-                    </c:if>
-                    <c:if test="${sg.getLimitGroup()[0] eq 'F'}">
-                       <span class="badge badge-danger">여자만</span>
-                    </c:if>
-                    <c:if test="${sg.getLimitGroup()[0] eq 'A'}">
-                       <span class="badge badge-success">성별무관</span>
-                    </c:if>
-                     
-                    <c:if test="${fn:length(sg.getLimitGroup()) eq 6 or fn:length(sg.getLimitGroup()) eq 1 }">
-                       <span class="badge badge-success">나이 무관</span>
-                       
-                    </c:if>
-                    
-                    <c:if test="${fn:length(sg.getLimitGroup()) lt 6}">
-                       <c:if test="${ fn:length(sg.getLimitGroup()) ne 1}">
-                          <span class="badge badge-danger">나이 제한</span>
-                       </c:if>
-                    </c:if>
-
-                     
-                     
-                     
-                      <h4 class="card-title mt-2">${sg.getGTitle()}</h4>
-                      <p class="card-text">
-                      <c:choose>
-                      <c:when test="${fn:length(sg.getGIntro()) gt 11}">
-                      <c:out value="${fn:substring(sg.getGIntro(),0,15)}..."></c:out>
-                      </c:when>
-                      <c:otherwise>
-                      ${sg.getGIntro()}
-                      </c:otherwise>
-                      </c:choose>
-                      </p>
-                    </div>
-   
-                  </div>
-                </div>
-                
-            <br /><br /><br />
-              </div>
-   </div>
-   </c:if>
-   	</c:forEach>
-            </c:if>
-            </c:forEach> 
-            </c:forEach> 
-		
-	
+		<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
+	</div> 
+	<div class="row" id="testtest">
+		<c:forEach items="${cateInfo}" var="ca" end="2">
+			<c:if test="${!empty ca }">
+				<script>
+				$(function(){
+					$('#${ca.getGId()}').clone(true).appendTo($('#testtest'));
+               			
+				});
+				</script> 
+			</c:if>
+		</c:forEach>
+		<c:if test="${empty cateInfo}">
+			<p style="margin-left:20px"> 설정한 관심 카테고리가 없습니다. 마이페이지에서 관심 카테고리를 등록해주세요! </p>
+		</c:if>
+	</div>
+<!-- 카테고리 추천 END -->
 </div>
 </section>
+<br> <br> <br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-	<br> <br> <br>
+<!-- 소모임 전체 리스트 START -->
 <div class="container">
 	<div class="row">
-		<c:forEach items="${list}" var="sg"> 		
-				  <div class="col-md-4 cardOne" style="max-width: 500px;">
+		<c:forEach items="${list}" var="sg">
+				    
+				  <div class="col-md-4 cardOne" id="${ sg.getGId()}" style="max-width: 500px;">
+					   <c:if test="${sg.getDurate() < today}">
+					<script>
+				    		$(function(){
+				    			
+				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#${ sg.getGId()}');
+				    			$('#${ sg.getGId()} .component').css('opacity', '0.2');
+				    		});
+				    	</script>		
+				    </c:if>
 				    <div class="component">
-				      <div class="card" id="${ sg.getGId()}" style="cursor:pointer;">
+				      <div class="card" style="cursor:pointer;">
 				 <%--        <input type="hidden" value="${ sg.getGId()}" /> --%>
 				        <div class="card-header">
 				        <c:if test="${sg.getGImg() eq null}">
@@ -360,7 +280,9 @@
      						</c:if>
      					</c:if>
 
-     					 
+     					 <c:if test="${!empty sg.getGPwd() }">
+						<span class="badge badge-danger">비공개</span>
+						</c:if>
      					 
      					 
 				          <h4 class="card-title mt-2">${sg.getGTitle()}</h4>
@@ -378,12 +300,13 @@
 	
 				      </div>
 				    </div>
-				    
+				   
 				<br /><br /><br />
 				  </div>
 				</c:forEach> 
 	</div>
 </div>
+<!-- 소모임 전체 LIST END -->
 <script>
 	$(function() {
 		$('.form-group label').each(function() {
@@ -392,17 +315,25 @@
 	});
 	
 	$(function(){
-		$(".card[id]").on("click",function(){
+		$(".cardOne[id]").on("click",function(){
 			var gId = $(this).attr("id");
+			var result = new Array();
 			console.log("gId="+gId);
-			location.href = "${pageContext.request.contextPath}/sgroup/groupInfo.do?gId="+gId;
+			
+			<c:forEach items="${joUser}" var="jo">
+			var json = new Object();
+			json.joGId = ${jo.getGId()};
+			result.push(json);
+			</c:forEach>
+
+			if(JSON.stringify(result).indexOf(gId) < 0){
+				location.href = "${pageContext.request.contextPath}/sgroup/groupInfo.do?gId="+gId;
+			} else {
+				location.href = "${pageContext.request.contextPath}/sgroup/gotoGroup.do?gid="+gId;
+			}
 		});
 	});
 	
-	
-	$(function(){
-		$('.card')
-	});
 </script>
 
 

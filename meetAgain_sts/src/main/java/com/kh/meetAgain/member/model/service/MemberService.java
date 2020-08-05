@@ -25,4 +25,10 @@ public interface MemberService {
 
 	int checkNnDuplicate2(Map<String, String> map);
 
+	int mTMIUpdate2(UserTMI userTMI);
+
+	int mCateDelete(String userId);
+
+	int imgUpdate(UserTMI userTMI);
+
 }

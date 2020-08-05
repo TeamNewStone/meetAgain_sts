@@ -1,7 +1,8 @@
 package com.kh.meetAgain.myPage.model.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
+
+import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data 
 @AllArgsConstructor 
 @NoArgsConstructor
-public class Review implements Serializable{       
+public class Review extends Sgroup implements Serializable{       
 	/**
 	 * 
 	 */

@@ -6,49 +6,83 @@
 	<resultMap type="Sgroup" id="sgroupMap">
 		<id property="gId" column="GID" />
 		<result property="cateId" column="CATE_ID" />
-		<result property="limitGroup" column="LIMITGROUP" typeHandler="Str2ArrayHandler"/>
+		<result property="limitGroup" column="LIMITGROUP"
+			typeHandler="Str2ArrayHandler" />
 	</resultMap>
-	<resultMap type="CateInfo" id="cateInfoMap">
-		<id property="userId" column="userId" />
-		<result property="cateId" column="CATE_ID" typeHandler="Str2ArrayHandler"/>
-	</resultMap>
-	
+
 	<insert id="insertSgroup" parameterType="Sgroup">
-	INSERT ALL INTO SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE, MAXNUM, CHARGE, GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE, LIMITGROUP)
-	VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro}, DEFAULT, #{maxNum}, #{charge}, #{gFee}, #{gPlace}, 
-	#{gType}, #{durate}, DEFAULT, #{gPwd}, #{joinType}, #{limitGroup, typeHandler=Str2ArrayHandler})
-	
-	 INTO JOING(USERID, GID, ISCPT, ISREADY, ISOUT, ISLEAVE) 
-	 VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 
-	 
-	 <choose>
-	 	<when test="joinType.equals('C')">
-	 		2,
-	 	</when>
-	 	<otherwise>
-	 		1,
-	 	</otherwise>
-	 </choose>
-	 DEFAULT, DEFAULT)
-	SELECT * FROM DUAL
+		INSERT ALL INTO
+		SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE,
+		MAXNUM, CHARGE,
+		GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE,
+		LIMITGROUP)
+		VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro},
+		DEFAULT, #{maxNum},
+		#{charge}, #{gFee}, #{gPlace},
+		#{gType}, #{durate},
+		DEFAULT, #{gPwd}, #{joinType}, #{limitGroup,
+		typeHandler=Str2ArrayHandler})
+
+		INTO JOING(USERID, GID, ISCPT, ISREADY,
+		ISOUT, ISLEAVE)
+		VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 1, DEFAULT,
+		DEFAULT)
+		SELECT * FROM DUAL
 	</insert>
 
 	<select id="selectListSgroup" resultMap="sgroupMap">
 		SELECT * FROM SGROUP
+		ORDER BY DURATE DESC
 	</select>
-	
-	<select id="selectOneSgroup" parameterType="string" resultMap="sgroupMap">
+
+	<select id="selectOneSgroup" parameterType="string"
+		resultMap="sgroupMap">
 		SELECT * FROM SGROUP
 		WHERE GID = #{gId}
 	</select>
 
-	<select id="selectCateInfo" parameterType="string" resultMap="cateInfoMap">
-		SELECT C.CATE_ID, G.*, C.USERID FROM CATEINFO C
+
+	<select  id="selectCateInfo" parameterType="string" resultType="CateInfo">
+	  SELECT  C.CATE_ID, G.* FROM CATEINFO C
       JOIN SGROUP G ON(C.CATE_ID=G.CATE_ID) 
-      WHERE USERID = #{userId} AND G.GID IN(
-      SELECT GID FROM JOING WHERE USERID != #{userId})
+      WHERE C.USERID = #{userId} AND G.GID IN(
+      SELECT J.GID FROM JOING J WHERE J.USERID != #{userId}) AND G.GID NOT IN(SELECT GID FROM (SELECT * FROM JOING WHERE USERID = #{userId}))
+
+	</select>
+
+	<select id="selectJoing" parameterType="string"
+		resultType="Joing">
+		SELECT * FROM JOING
+		WHERE GID = #{gId}
+	</select>
+
+	<select id="selectJoingUser" parameterType="string"
+		resultType="Joing">
+		SELECT * FROM JOING
+		WHERE USERID = #{userId}
+	</select>
+
+	
+	<select id="selectGroupCount" parameterType="string" resultType="_int">
+	  SELECT COUNT(*) 
+      FROM JOING
+      GROUP BY USERID
+      HAVING USERID=#{userId}
 	</select>
 	
+	<insert id="insertGroupJoin" parameterType="Joing">
+		INSERT INTO JOING VALUES(#{userId}, #{gId}, 'N',
+		<choose>
+			<when test='joinType=="C"'>
+				2,
+			</when>
+			<otherwise>
+				1,
+			</otherwise>
+		</choose>
+		DEFAULT, DEFAULT)
+	</insert>
+
 	<resultMap type="Gboard" id="gboardMap">
 		<result property="gbId" column="GBID" />
 		<result property="gbTitle" column="GBTITLE" />
@@ -56,19 +90,27 @@
 	</resultMap>
 
 	<insert id="insertgBoard">
-	INSERT INTO GBOARD
-	VALUES
-	(SEQ_GBID.NEXTVAL, '1', '1', #{gbTitle}, #{gbContent}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
-	<!-- 전달한 board객체의 boardNo 프로퍼티에 결과값을 담는다. -->
-	<selectKey keyProperty="gbId" resultType="_int" order="AFTER">
+		INSERT INTO GBOARD
+		VALUES
+		(SEQ_GBID.NEXTVAL, #{gId}, #{userId},
+		#{gbTitle},
+		#{gbContent}, DEFAULT, DEFAULT, DEFAULT,
+		DEFAULT, DEFAULT)
+		<!-- 전달한 board객체의 boardNo 프로퍼티에 결과값을 담는다. -->
+		<selectKey keyProperty="gbId" resultType="_int"
+			order="AFTER">
 			SELECT SEQ_GBID.CURRVAL FROM DUAL
-	</selectKey>
+		</selectKey>
 	</insert>
 
 	<select id="selectgBoardList" resultType="Gboard">
 		SELECT GBID, NICKNAME,
 		GBTITLE, GBRATE, GBDATE
-		FROM GBOARD JOIN MEMBER USING(USERID) ORDER BY
+		FROM GBOARD JOIN MEMBER
+		USING(USERID) WHERE
+		GID =
+		#{gId} AND
+		GBDEL='N' ORDER BY
 		GBID DESC
 	</select>
 
@@ -97,4 +139,28 @@
 		WHERE
 		GBID = #{gbId}
 	</delete>
+
+	<insert id="insertComment" parameterType="GB_comment">
+		INSERT INTO
+		GB_COMMENT
+		VALUES(SEQ_CID.NEXTVAL, #{gbId}, #{userId}, DEFAULT, #{cContent},
+		#{cRef}, #{cLevel}, #{cRec}, #{cDel})
+	</insert>
+
+	<select id="selectCommentList" parameterType="_int"
+		resultType="GB_comment">
+		SELECT C.*, (SELECT USERID
+		FROM MEMBER M WHERE
+		C.USERID=M.USERID)
+		FROM GB_comment C
+		WHERE GBID = #{gbId}
+		START WITH
+		CLEVEL = 1
+		CONNECT BY PRIOR CID = CREF
+	</select>
+
+	<update id="updateComment" parameterType="_int">
+		UPDATE BOARD_COMMENT SET CCONTENT = #{cContent}
+		WHERE CID = #{cId}
+	</update>
 </mapper>

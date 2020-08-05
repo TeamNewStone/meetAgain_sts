@@ -122,5 +122,25 @@ public class AdminServiceImpl implements AdminService {
 		
 	}
 
+	@Override
+	public List<Map<String, String>> selectGroupList1(int cPage, int numPerPage) {
+		return adminDAO.selectGroupList1(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectGroupTotalContents1() {
+		return adminDAO.selectGroupTotalContents1();
+	}
+
+	@Override
+	public List<Map<String, String>> selectGroupList2(int cPage, int numPerPage) {
+		return adminDAO.selectGroupList2(cPage, numPerPage);
+	}
+
+	@Override
+	public int selectGroupTotalContents2() {
+		return adminDAO.selectGroupTotalContents2();
+	}
+
 
 }

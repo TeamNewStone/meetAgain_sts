@@ -16,7 +16,11 @@
 				style="width: 70px; right: 5%; top: 5%;">
 		</div>
 		<div id="userName" style="float: left; padding: 10px;">
-			<h5>사용자명</h5>
+		<c:forEach var="jo" items="${joing }">
+			<c:if test="${jo.getIsCpt()=='Y'}">
+				<h5>${jo.getNickName()}</h5>
+			</c:if>
+		</c:forEach>
 		</div>
 	</div>
 	<br />

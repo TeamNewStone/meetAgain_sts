@@ -59,7 +59,11 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 	
 	@Override
-
+	public int groupLeave(Map<String, String> map) {
+		return sgroupDAO.groupLeave(map);
+	}
+	
+	@Override
 	public List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage) {
 		System.out.println("Service gId : " + gId);
 		return sgroupDAO.selectgBoardList(gId, cPage, numPerPage);
@@ -67,7 +71,6 @@ public class SgroupServiceImpl implements SgroupService {
 	public int selectGroupCount(String userId) {
 		return sgroupDAO.selectGroupCount(userId);
 	}
-
 
 	@Override
 	public int selectgBoardTotalContents() {
@@ -130,6 +133,7 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.loadList();
 	}
 
+
 	@Override
 	public int commentUpdate(GB_comment gB_comment) {
 		System.out.println("Service : " + gB_comment);
@@ -141,6 +145,14 @@ public class SgroupServiceImpl implements SgroupService {
 		
 		return sgroupDAO.commentDelete(cId);
 	}
+
+	
+
+	@Override
+	public int deleteCalendar(String cdId) {
+		return sgroupDAO.deleteCalendar(cdId);
+	}
+
 
 
 }

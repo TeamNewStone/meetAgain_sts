@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.meetAgain.board.model.vo.Board;
+import com.kh.meetAgain.myPage.model.vo.Review;
 @Repository("boardDAO")
 public class BoardDAOImpl implements BoardDAO {
 	
@@ -45,6 +46,48 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int updateReadCount(int bId) {
 		return sqlSession.update("boardMapper.updateReadCount", bId);
+	}
+
+	@Override
+	public List<Review> selectReviewList() {
+		return sqlSession.selectList("boardMapper.selectReviewList");
+	}
+
+	@Override
+	public int selectRvHelpList(Map<String, Object> map) {
+		int result = sqlSession.selectOne("boardMapper.selectRvHelpList",map);
+
+		return result;
+	}
+
+	@Override
+	public int plusRvHelp(Map<String, Object> map) {
+		return sqlSession.insert("boardMapper.plusRvHelp",map);
+	}
+
+	@Override
+	public int minusRvHelp(Map<String, Object> map) {
+		return sqlSession.delete("boardMapper.minusRvHelp",map);
+	}
+
+	@Override
+	public int updateRvLike(int rvid) {
+		return sqlSession.update("boardMapper.updateRvLike",rvid);
+	}
+
+	@Override
+	public Review selectOneReview(int rvid) {
+		return sqlSession.selectOne("boardMapper.selectOneReview",rvid);
+	}
+
+	@Override
+	public List<Review> selectTop3rv() {
+		return sqlSession.selectList("boardMapper.selectTop3rv");
+	}
+
+	@Override
+	public List<Board> selectTop3ad() {
+		return sqlSession.selectList("boardMapper.selectTop3ad");
 	}	
 
 }
