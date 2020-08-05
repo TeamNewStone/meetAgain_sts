@@ -34,4 +34,6 @@ public interface BoardService {
 	int udpateRvLike(int rvid);
 
 	Review selectOneReview(int rvid);
+
+	List<Review> selectTop3rv();
 }

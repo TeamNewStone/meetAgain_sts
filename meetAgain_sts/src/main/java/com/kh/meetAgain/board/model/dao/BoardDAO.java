@@ -30,4 +30,6 @@ public interface BoardDAO {
 	int updateRvLike(int rvid);
 
 	Review selectOneReview(int rvid);
+
+	List<Review> selectTop3rv();
 }
