@@ -274,18 +274,27 @@ $.ajax({
 		for(var i in (data.adboard)){
 			console.log(data.adboard);
 			// 내용을 모두 담을 tr 생성
+			var bid = data.adboard[i].bid;
 			var $tr = $('<tr>');
 			
 			// 내용을 각각 표현할 td 태그 생성
 			var $tdBno = $('<td>').text(data.adboard[i].bid);
 			var $tdTitle = $('<td>').text(data.adboard[i].btitle);
-			var $tdBdate = $('<td>').text(data.boardDate[i]);
+			var $tdBdate = $('<td>').text(data.boardDate[i]);				
 					
 			$tr.append($tdBno).append($tdTitle)
 			   .append($tdBdate);
 			
 			$table.append($tr);
+			
+			
 		}
+		$("td").css("cursor","pointer");
+		$("td").click(function(){
+			var bid = $(this).parent().children().eq(0).text();
+			
+			location.href='${pageContext.request.contextPath}/board/noticeDetail.do?bId='+bid;
+		})
 	},
 	error : function(){
 		alert("에러 발생");
@@ -300,6 +309,9 @@ $('[name=upFile]').on('change',function(){
     console.log($(this).val());
     $(this).next('.custom-file-label').html(fileName);
 })
+
+
+
 });
 </script>
  <c:import url="/WEB-INF/views/common/footer.jsp" />
