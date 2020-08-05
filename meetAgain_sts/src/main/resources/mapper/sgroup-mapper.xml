@@ -51,8 +51,9 @@
 
 	<select id="selectJoing" parameterType="string"
 		resultType="Joing">
-		SELECT J.*, M.BIRTHDAY, M.GENDER, M.NICKNAME FROM JOING J
+		SELECT J.*, M.BIRTHDAY, M.GENDER, M.NICKNAME, U.USERIMG FROM JOING J
 		JOIN MEMBER M ON(J.USERID=M.USERID)
+        JOIN USERTMI U ON(J.USERID=U.USERID)
 		WHERE GID = #{gId} AND ISLEAVE='N'
 	</select>
 

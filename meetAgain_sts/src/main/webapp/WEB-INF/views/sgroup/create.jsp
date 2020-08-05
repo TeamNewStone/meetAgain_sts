@@ -272,7 +272,8 @@
 </div>
 </div>
 	</form>
-
+<script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script> 
+<script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery-ui.min.js"></script>
 <script>
 // form 정규식
 $(document).on("keyup", "input:text[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );});
