@@ -81,4 +81,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.selectTop3rv();
 	}
 
+	@Override
+	public List<Board> selectTop3ad() {
+		return boardDAO.selectTop3ad();
+	}
+
 }
