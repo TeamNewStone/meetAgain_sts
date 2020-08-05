@@ -164,13 +164,6 @@ public class SgroupController {
 		return "sgroup/groupAlbum";
 	}
 
-	@RequestMapping("/sgroup/groupMap.do")
-	public String groupMap(@RequestParam String gid, Model model) {
-		model.addAttribute("gid", gid);
-		return "sgroup/groupMap";
-	}
-
-
 	@RequestMapping("/sgroup/memberList.do")
 	public String memberList(@RequestParam String gid, Model model) {
 		List<Joing> joing = sgroupService.selectJoing(gid);
