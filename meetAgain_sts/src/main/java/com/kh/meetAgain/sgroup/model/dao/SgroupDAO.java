@@ -61,7 +61,6 @@ public interface SgroupDAO {
 
 	int deleteCalendar(String cdId);
 
-
-
+	Sgroup createMapList(String gid);
 
 }

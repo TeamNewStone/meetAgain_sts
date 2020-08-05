@@ -62,4 +62,6 @@ public interface SgroupService {
 
 	int deleteCalendar(String cdId);
 	
+	Sgroup createMapList(String gid);
+	
 }

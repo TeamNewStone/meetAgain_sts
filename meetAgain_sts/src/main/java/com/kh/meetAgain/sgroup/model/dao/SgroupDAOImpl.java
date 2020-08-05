@@ -136,18 +136,20 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.insert("sgroupMapper.insertComment", gB_comment);
 	}
 
-
 	@Override
 	public int commentDelete(int cId) {
 		return sqlSession.delete("sgroupMapper.deleteComment", cId);
 	}
-
 
 	@Override
 	public int deleteCalendar(String cdId) {
 		return sqlSession.delete("calendarMapper.deleteCalendar", cdId);
 	}
 	
+	@Override
+	public Sgroup createMapList(String gid) {
+		return sqlSession.selectOne("mapMapper.createMapList",gid);
+	}
 
 }
 

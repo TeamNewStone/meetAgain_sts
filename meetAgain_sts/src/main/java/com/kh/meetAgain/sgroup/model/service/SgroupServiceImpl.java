@@ -125,14 +125,12 @@ public class SgroupServiceImpl implements SgroupService {
 	public List<GB_comment> selectCommentList(int gbId) {
 		return sgroupDAO.selectCommentList(gbId);
 	}
-
-
+	
 	@Override
 	public List<Calendar> loadList() {
 		return sgroupDAO.loadList();
 	}
-
-
+	
 	@Override
 	public int commentUpdate(GB_comment gB_comment) {
 		System.out.println("Service : " + gB_comment);
@@ -145,13 +143,14 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.commentDelete(cId);
 	}
 
-	
-
 	@Override
 	public int deleteCalendar(String cdId) {
 		return sgroupDAO.deleteCalendar(cdId);
 	}
 
-
+	@Override
+	public Sgroup createMapList(String gid) {
+		return sgroupDAO.createMapList(gid);
+	}
 
 }

@@ -41,6 +41,32 @@
 				// 지도를 생성한다 
 				var map = new kakao.maps.Map(mapContainer, mapOption);
 				var geocoder = new kakao.maps.services.Geocoder();
+				
+				// 주소로 좌표를 검색합니다
+				geocoder.addressSearch('${sg.getGPlace()}', function(result, status) {
+
+				    // 정상적으로 검색이 완료됐으면 
+				     if (status === kakao.maps.services.Status.OK) {
+
+				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+				        // 결과값으로 받은 위치를 마커로 표시합니다
+				        var marker = new kakao.maps.Marker({
+				            map: map,
+				            position: coords
+				        });
+
+				        // 인포윈도우로 장소에 대한 설명을 표시합니다
+				        var infowindow = new kakao.maps.InfoWindow({
+				            content: '<div class="form-control" style="width:150px;text-align:center;padding:6px 0;">모임 장소 ↓</div>'
+				        });
+				        infowindow.open(map, marker);
+
+				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				        map.setCenter(coords);
+				    } 
+				});
+				
 				infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 				// 지도 타입 변경 컨트롤을 생성한다
 				var mapTypeControl = new kakao.maps.MapTypeControl();
@@ -105,7 +131,7 @@
 							var dAddr = !!result[0].road_address ? result[0].road_address.address_name : '';
 				            dAddr += result[0].address.address_name;
 				            
-				            var content = '<div class="bAddr" style="width: 350px; height: 130px;">' +
+				            var content = '<div class="form-control" style="height: 100px; width: 350px;">' +
 				                            '<span class="title">선택하신 핀포인트</span><br>' + 
 				                            detailAddr + '</div>';
 
@@ -210,7 +236,7 @@
 					if (chkBicycle.checked) {
 						map.addOverlayMapTypeId(mapTypes.bicycle);
 					}
-		
+
 				}
 			</script>
 					
@@ -221,12 +247,14 @@
 		<div id="areaName" style="display: flex; align-items: center;">
 			<div style="float: left;">				
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" id="searchLoc" placeholder="법정동 주소 검색" style="">
+					<input type="text" class="form-control" id="searchLoc" placeholder="법정동 주소 검색">
 					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" id="searchBtn" type="button" onclick="searchLocation();">검색</button>					
+						<button class="btn btn-outline-secondary" id="searchBtn" type="button" onclick="searchLocation()">검색</button>					
 					</div>
 				</div>				
-				<i class="fa fa-map-marker fa-3x"></i><h3>[모임장소위치]</h3>
+				<i class="fa fa-map-marker fa-3x"></i><br>
+				<input type="hidden" value="${gid}" />									
+					<h6><span>${sg.getGPlace()}</span></h6><br>				
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
 			</div>
 		</div>
