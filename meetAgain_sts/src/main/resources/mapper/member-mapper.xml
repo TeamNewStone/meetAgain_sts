@@ -21,7 +21,7 @@
 
 	<select id="selectOne" parameterType="string"
 		resultType="Member">
-		SELECT * FROM MEMBER WHERE USERID = #{userId}
+		SELECT * FROM MEMBER JOIN USERTMI USING(USERID) WHERE USERID = #{userId}
 	</select>
 
 	<update id="mTMIUpdate" parameterType="UserTMI">
@@ -92,8 +92,8 @@
 		}
 	</delete>
 	
-	<update id="imgUpdate" parameterType="userTMI">
-		UPDATE USERTMI SET USERIMG=#{userImg}
+	<update id="imgUpdate" parameterType="hashmap">
+		UPDATE USERTMI SET USERIMG=#{userImg} WHERE USERID=#{userId}
 	</update>
 
 </mapper>

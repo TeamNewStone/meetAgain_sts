@@ -25,11 +25,11 @@
   <div class="info">
     <div class="row">
 	    <div class="col-12 col-md-4 text-center">
-	    <c:if test="${member.userImg eq null }">
-		    <img src="${ pageContext.request.contextPath }/resources/img/usericon.png" alt="usericon" class="img-fluid rounded-circle" id="sampleImg" style="width: 180px;">
+	    <c:if test="${userTMI.userImg eq null }">
+		    <img src="${ pageContext.request.contextPath }/resources/img/usericon.png" alt="usericon" class="img-fluid rounded-circle" id="sampleImg" style="width: 180px; height:180px;">
 	    </c:if>
-	    <c:if test="${member.userImg ne null }">
-		    <img src="${ pageContext.request.contextPath }/resources/img/${member.userImg}" alt="Raised circle image" class="img-fluid rounded-circle" id="sampleImg" style="width: 180px;">
+	    <c:if test="${userTMI.userImg ne null }">
+		    <img src="${ pageContext.request.contextPath }/resources/upload/userImg/${userTMI.userImg}" alt="Raised circle image" class="img-fluid rounded-circle" id="sampleImg" style="width: 180px; height:180px;">
 	    </c:if>
 	    <br />
 		  <button type="button" id="mimgBtn">사진 첨부</button>
