@@ -6,22 +6,29 @@
 <c:import url="/WEB-INF/views/common/header.jsp" />
 <div class="container">
 <c:import url="/WEB-INF/views/common/groupHeader.jsp" />
-
 	<!--===================== 소모임 페이지의 바디 부분 =====================-->
 	<h4>모임장</h4>
 	<div id="gLeader" style="overflow: hidden; height: auto; display: flex; align-items: center;">
-				<div id="userPic" style="float: left; padding: 10px;">
-			<img src="/meetAgain/resources/img/usericon.png" alt="usericon"
-				data-toggle="dropdown" class="img-fluid rounded-circle"
-				style="width: 70px; right: 5%; top: 5%;">
-		</div>
-		<div id="userName" style="float: left; padding: 10px;">
 		<c:forEach var="jo" items="${joing }">
 			<c:if test="${jo.getIsCpt()=='Y'}">
+				<div id="userPic" style="float: left; padding: 10px;">
+					<c:if test="${jo.getUserImg() eq null }">
+					<img src="/meetAgain/resources/img/usericon.png" alt="usericon"
+						data-toggle="dropdown" class="img-fluid rounded-circle"
+						style="width: 70px; right: 5%; top: 5%;">
+					</c:if>
+					<c:if test="${jo.getUserImg() ne null }">
+					<img src="<%-- ${ pageContext.request.contextPath }/resources/upload/groupImg/${jo.getUserImg()} --%>" alt="usericon"
+						data-toggle="dropdown" class="img-fluid rounded-circle"
+						style="width: 70px; right: 5%; top: 5%;">
+					</c:if>
+			
+		</div>
+		<div id="userName" style="float: left; padding: 10px;">
 				<h5>${jo.getNickName()}</h5>
+		</div>
 			</c:if>
 		</c:forEach>
-		</div>
 	</div>
 	<br />
 	<div id="gMember">
@@ -30,49 +37,36 @@
 	<tr>
 		<td>
 		<div id="gLeader" style="overflow: hidden; height: auto; display: flex; align-items: center;">
+		<c:forEach var="jo" items="${joing }">
+			<c:if test="${jo.getIsCpt()=='N'}">
 				<div id="userPic" style="float: left; padding: 10px;">
-			<img src="/meetAgain/resources/img/usericon.png" alt="usericon"
-				data-toggle="dropdown" class="img-fluid rounded-circle"
-				style="width: 70px; right: 5%; top: 5%;">
+				<c:if test="${jo.getUserImg() eq null }">
+					<img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="img-fluid rounded-circle"
+					style="width: 70px; right: 5%; top: 5%;">
+				</c:if>
+				<c:if test="${jo.getUserImg() ne null }">
+					<img src="<%-- ${ pageContext.request.contextPath }/resources/upload/groupImg/${jo.getUserImg()} --%>" alt="usericon" data-toggle="dropdown" class="img-fluid rounded-circle"
+					style="width: 70px; right: 5%; top: 5%;">
+				</c:if>
 		</div>
 		<div id="userName" style="float: left; padding: 10px;">
-			<h5>사용자1</h5>
+			<h5>${jo.getNickName() }</h5>
 		</div>
-	</div>
-		</td>
-		
-		<td>
-		<div id="gLeader" style="overflow: hidden; height: auto; display: flex; align-items: center;">
-				<div id="userPic" style="float: left; padding: 10px;">
-			<img src="/meetAgain/resources/img/usericon.png" alt="usericon"
-				data-toggle="dropdown" class="img-fluid rounded-circle"
-				style="width: 70px; right: 5%; top: 5%;">
-		</div>
-		<div id="userName" style="float: left; padding: 10px;">
-			<h5>사용자2</h5>
-		</div>
-	</div>
-		</td>
-		
-		<td>
-		<div id="gLeader" style="overflow: hidden; height: auto; display: flex; align-items: center;">
-				<div id="userPic" style="float: left; padding: 10px;">
-			<img src="/meetAgain/resources/img/usericon.png" alt="usericon"
-				data-toggle="dropdown" class="img-fluid rounded-circle"
-				style="width: 70px; right: 5%; top: 5%;">
-		</div>
-		<div id="userName" style="float: left; padding: 10px;">
-			<h5>사용자3</h5>
-		</div>
+		</c:if>
+		</c:forEach>
 	</div>
 		</td>
 	</tr>
 	</table>
 	</div>
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
 	
+	<div>
+		
+	</div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	</div>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
