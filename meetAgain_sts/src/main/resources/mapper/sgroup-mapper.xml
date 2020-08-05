@@ -32,6 +32,7 @@
 
 	<select id="selectListSgroup" resultMap="sgroupMap">
 		SELECT * FROM SGROUP
+		ORDER BY DURATE DESC
 	</select>
 
 	<select id="selectOneSgroup" parameterType="string"
@@ -40,14 +41,13 @@
 		WHERE GID = #{gId}
 	</select>
 
-	<select id="selectCateInfo" parameterType="string"
-		resultType="CateInfo">
-		SELECT C.CATE_ID, G.* FROM CATEINFO C
-		JOIN SGROUP G
-		ON(C.CATE_ID=G.CATE_ID)
-		WHERE C.USERID = #{userId} AND G.GID IN(
-		SELECT
-		J.GID FROM JOING J WHERE J.USERID != #{userId})
+
+	<select  id="selectCateInfo" parameterType="string" resultType="CateInfo">
+	  SELECT  C.CATE_ID, G.* FROM CATEINFO C
+      JOIN SGROUP G ON(C.CATE_ID=G.CATE_ID) 
+      WHERE C.USERID = #{userId} AND G.GID IN(
+      SELECT J.GID FROM JOING J WHERE J.USERID != #{userId}) AND G.GID NOT IN(SELECT GID FROM (SELECT * FROM JOING WHERE USERID = #{userId}))
+
 	</select>
 
 	<select id="selectJoing" parameterType="string"
@@ -62,6 +62,14 @@
 		WHERE USERID = #{userId}
 	</select>
 
+	
+	<select id="selectGroupCount" parameterType="string" resultType="_int">
+	  SELECT COUNT(*) 
+      FROM JOING
+      GROUP BY USERID
+      HAVING USERID=#{userId}
+	</select>
+	
 	<insert id="insertGroupJoin" parameterType="Joing">
 		INSERT INTO JOING VALUES(#{userId}, #{gId}, 'N',
 		<choose>
@@ -125,7 +133,6 @@
 		UPDATE GBOARD SET
 		GBRATE = GBRATE+1 WHERE GBID=#{gbId}
 	</update>
-
 
 	<delete id="deletegBoard" parameterType="_int">
 		DELETE FROM GBOARD

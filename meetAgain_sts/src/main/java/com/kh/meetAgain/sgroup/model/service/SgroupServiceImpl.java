@@ -59,10 +59,15 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 	
 	@Override
+
 	public List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage) {
 		System.out.println("Service gId : " + gId);
 		return sgroupDAO.selectgBoardList(gId, cPage, numPerPage);
 	}
+	public int selectGroupCount(String userId) {
+		return sgroupDAO.selectGroupCount(userId);
+	}
+
 
 	@Override
 	public int selectgBoardTotalContents() {

@@ -95,47 +95,69 @@ public class SgroupController {
 	}
 
 	// 소모임 전체 리스트 출력
-	@RequestMapping("sgroup/group.do")
-	public String group(Model model) {
-
+	@RequestMapping("/sgroup/group.do")
+	public String group(@ModelAttribute("member") Member m, Model model) {
+		
 		List<Sgroup> list = sgroupService.selectSgroupList();
-
+		List<CateInfo> cateInfo = sgroupService.selectCateInfo(m.getUserId());
+		List<Joing> joUser = sgroupService.selectJoingUser(m.getUserId());
+		int groupCount = sgroupService.selectGroupCount(m.getUserId());
+		
 		model.addAttribute("list", list);
+		model.addAttribute("cateInfo", cateInfo);
+		model.addAttribute("joUser", joUser);
+		model.addAttribute("groupCount", groupCount);
+
+		System.out.println("groupCount(group.do) : " + groupCount);
+		System.out.println("cateInfo : " + cateInfo);
 
 		return "sgroup/group";
 	}
 
 	// 소모임 한개 출력
-	@RequestMapping("sgroup/groupInfo.do")
-	public String groupInfo(@RequestParam String gId, Model model) {
 
+	public String groupInfo(@ModelAttribute("member") Member m, @RequestParam String gId, Model model) {
+		
 		Sgroup sr = sgroupService.selectOneSgroup(gId);
 
-		System.out.println("sr1111 : " + sr);
+		List<Joing> joing = sgroupService.selectJoing(gId);
+		
+		int groupCount = sgroupService.selectGroupCount(m.getUserId());
 
 		model.addAttribute("sgroup", sr);
-
+		model.addAttribute("joing", joing);
+		model.addAttribute("groupCount", groupCount);
+		System.out.println("groupCount : " + groupCount);
+		
 		return "sgroup/groupInfo";
 	}
 
 	@RequestMapping("/sgroup/groupAlbum.do")
-	public String groupAlbum() {
+	public String groupAlbum(@RequestParam String gid, Model model) {
+		model.addAttribute("gid", gid);
 		return "sgroup/groupAlbum";
 	}
 
 	@RequestMapping("/sgroup/groupMap.do")
-	public String groupMap() {
+	public String groupMap(@RequestParam String gid, Model model) {
+		model.addAttribute("gid", gid);
 		return "sgroup/groupMap";
 	}
 
+
 	@RequestMapping("/sgroup/memberList.do")
-	public String memberList() {
+	public String memberList(@RequestParam String gid, Model model) {
+		List<Joing> joing = sgroupService.selectJoing(gid);
+		
+		model.addAttribute("joing", joing);
 		return "sgroup/memberList";
 	}
 
+
 	@RequestMapping("/sgroup/groupBoard.do")
-	public String groupBoard(@RequestParam("gId") String gId,
+	public String groupBoard(@RequestParam("gid") String gId,
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, Model model) {
+
 		// 한 페이지 당 게시글 수
 		int numPerPage = 10; // limit 역할
 
@@ -165,16 +187,12 @@ public class SgroupController {
 		
 		System.out.println("list : " + list);
 		System.out.println("Controller gId : " + gId);
+
+		model.addAttribute("gid", gId);
+
 		return "/sgroup/groupBoard";
-
 	}
-
-	@RequestMapping("/sgroup/groupDetail.do")
-	public String groupDetail() {
-
-		return "sgroup/groupDetail";
-	}
-
+	
 	@RequestMapping("/sgroup/groupBoardDetail.do")
 	public String groupBoardDetail(@RequestParam int gbId, Model model) {
 
@@ -267,8 +285,6 @@ public class SgroupController {
 		return "common/msg";
 	}
 
-	
-
 	@RequestMapping("/sgroup/selectGboardComment.do")
 	public String listComment(Model model) {
 
@@ -336,40 +352,9 @@ public class SgroupController {
 		System.out.println("controller GB" + GB_comment);
 		return "common/msg";
 		
-//		return "/sgroup/groupBoardDetail.do?gbId=" + GB_comment.getGbId();
 	}
 	
-//	@RequestMapping("/sgroup/cUpdate.do")
-//	public String cUpdate(Gboard Gboard, Model model) {
-//		int result = sgroupService.updategBoard(Gboard);
-//
-//		String loc = "/sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
-//		String msg = "";
-//
-//		model.addAttribute("loc", loc).addAttribute("msg", msg);
-//		System.out.println("update Controller : " + Gboard);
-//
-//		return "common/msg";
-//	}
-	
-//	@RequestMapping("/sgroup/groupBoardDelete.do")
-//	public String groupBoardDelete(@RequestParam int cId, HttpSession session, Model model) {
-//		int result = sgroupService.deletegBoard(gbId);
-//
-//		String loc = "sgroup/groupBoard.do";
-//		String msg = "";
-//
-//		if (result > 0) {
-//			msg = "게시글 삭제 성공!";
-//
-//		} else {
-//			msg = "게시글 삭제 실패!";
-//		}
-//
-//		model.addAttribute("loc", loc).addAttribute("msg", msg);
-//		System.out.println("deleteController : " + model);
-//		return "common/msg";
-//	}
+
 	
 	@RequestMapping("/sgroup/commentDelete.do")
 	public String commentDelete(int cId, SessionStatus status, Model model, GB_comment gB_commnet) {
@@ -397,6 +382,14 @@ public class SgroupController {
 		}
 		
 		return "common/msg";
+	}
+
+	@RequestMapping("/sgroup/groupDetail.do")
+	public String groupDetail(@RequestParam String gid, Model model) {
+		Sgroup s = sgroupService.selectOneSgroup(gid);
+		model.addAttribute("sgroup", s);
+		model.addAttribute("gid", gid);
+		return "sgroup/groupDetail";
 	}
 
 }
