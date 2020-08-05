@@ -54,7 +54,17 @@
         var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
         chart2.draw(data2, options2);
+        
       }
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
       $(function(){
     	  console.log($(window).width());

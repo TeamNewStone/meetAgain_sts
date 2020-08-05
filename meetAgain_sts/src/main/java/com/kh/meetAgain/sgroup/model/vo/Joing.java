@@ -1,5 +1,9 @@
 package com.kh.meetAgain.sgroup.model.vo;
 
+import java.sql.Date;
+
+import com.kh.meetAgain.member.model.vo.Member;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +11,12 @@ import lombok.NoArgsConstructor;
 @Data 
 @AllArgsConstructor 
 @NoArgsConstructor
-public class Joing {
+public class Joing extends Member {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3456L;
 	private String userId;
 	private String gId;
 	private String isCpt;
@@ -16,4 +24,7 @@ public class Joing {
 	private String isOut;
 	private String isLeave;
 	private String joinType;
+	/*
+	 * private Date birthday; private String gender; private String nickName;
+	 */
 }

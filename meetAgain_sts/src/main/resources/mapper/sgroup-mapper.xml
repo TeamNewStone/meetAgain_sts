@@ -45,29 +45,28 @@
 	<select  id="selectCateInfo" parameterType="string" resultType="CateInfo">
 	  SELECT  C.CATE_ID, G.* FROM CATEINFO C
       JOIN SGROUP G ON(C.CATE_ID=G.CATE_ID) 
-      WHERE C.USERID = #{userId} AND G.GID IN(
-      SELECT J.GID FROM JOING J WHERE J.USERID != #{userId}) AND G.GID NOT IN(SELECT GID FROM (SELECT * FROM JOING WHERE USERID = #{userId}))
-
+      WHERE C.USERID = #{userId} AND G.GID NOT IN(SELECT GID FROM (SELECT * FROM JOING WHERE USERID = #{userId})) AND ISFIN='N'
 	</select>
 
 	<select id="selectJoing" parameterType="string"
 		resultType="Joing">
-		SELECT * FROM JOING
-		WHERE GID = #{gId}
+		SELECT J.*, M.BIRTHDAY, M.GENDER, M.NICKNAME FROM JOING J
+		JOIN MEMBER M ON(J.USERID=M.USERID)
+		WHERE GID = #{gId} AND ISLEAVE='N'
 	</select>
 
 	<select id="selectJoingUser" parameterType="string"
 		resultType="Joing">
 		SELECT * FROM JOING
-		WHERE USERID = #{userId}
+		WHERE USERID = #{userId} AND ISLEAVE='N' AND ISOUT='N'
 	</select>
 
 	
 	<select id="selectGroupCount" parameterType="string" resultType="_int">
-	  SELECT COUNT(*) 
-      FROM JOING
+	   SELECT COUNT(*) 
+      	FROM JOING
+       WHERE USERID= #{userId} AND ISLEAVE='N' AND ISOUT='N'
       GROUP BY USERID
-      HAVING USERID=#{userId}
 	</select>
 	
 	<insert id="insertGroupJoin" parameterType="Joing">
@@ -83,6 +82,10 @@
 		DEFAULT, DEFAULT)
 	</insert>
 
+	<update id="groupLeave" parameterType="hashmap">
+		UPDATE JOING SET ISLEAVE = 'Y' WHERE USERID = #{userId} AND GID = #{gid}
+	</update>
+	
 	<resultMap type="Gboard" id="gboardMap">
 		<result property="gbId" column="GBID" />
 		<result property="gbTitle" column="GBTITLE" />

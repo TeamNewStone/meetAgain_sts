@@ -41,7 +41,7 @@
 	</select>
 	
 	<select id="getMyGroup" resultMap="sgroupMap">
-		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId}
+		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId} AND ISLEAVE='N' AND ISOUT='N'
 	</select>
 	
 	<select id="getCreateGroup"  resultMap="sgroupMap">

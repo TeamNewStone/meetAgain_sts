@@ -59,7 +59,11 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 	
 	@Override
-
+	public int groupLeave(Map<String, String> map) {
+		return sgroupDAO.groupLeave(map);
+	}
+	
+	@Override
 	public List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage) {
 		System.out.println("Service gId : " + gId);
 		return sgroupDAO.selectgBoardList(gId, cPage, numPerPage);
@@ -135,6 +139,8 @@ public class SgroupServiceImpl implements SgroupService {
 	public Object commentUpdate(int cId) {
 		return sgroupDAO.commentUpdate(cId);
 	}
+
+	
 
 
 

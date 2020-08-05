@@ -4,6 +4,7 @@ package com.kh.meetAgain.sgroup.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -116,7 +117,7 @@ public class SgroupController {
 	}
 
 	// 소모임 한개 출력
-
+	@RequestMapping("/sgroup/groupInfo.do")
 	public String groupInfo(@ModelAttribute("member") Member m, @RequestParam String gId, Model model) {
 		
 		Sgroup sr = sgroupService.selectOneSgroup(gId);
@@ -128,11 +129,29 @@ public class SgroupController {
 		model.addAttribute("sgroup", sr);
 		model.addAttribute("joing", joing);
 		model.addAttribute("groupCount", groupCount);
-		System.out.println("groupCount : " + groupCount);
 		
 		return "sgroup/groupInfo";
 	}
 
+	@RequestMapping("/sgroup/groupJoin.do")
+	public String groupJoin(Joing joing, Model model) {
+
+		int result = sgroupService.insertGroupJoin(joing);
+
+		System.out.println("result : " + result);
+
+		 String loc = "/sgroup/group.do"; 
+		 String msg = "";
+
+		 if(result > 0) msg = "모임 가입 성공!"; 
+		 else msg = "모임 가입 실패!";
+
+		  model.addAttribute("loc", loc); 
+		  model.addAttribute("msg", msg);
+
+		return "common/msg";
+	}
+	
 	@RequestMapping("/sgroup/groupAlbum.do")
 	public String groupAlbum(@RequestParam String gid, Model model) {
 		model.addAttribute("gid", gid);
@@ -154,7 +173,28 @@ public class SgroupController {
 		return "sgroup/memberList";
 	}
 
+	@RequestMapping("/sgroup/groupLeave.do")
+	public String groupLeave(@ModelAttribute("member") Member m, @RequestParam String gid, Model model) {
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("userId", m.getUserId());
+		map.put("gid", gid);
+		
+		int result = sgroupService.groupLeave(map);
+		
+		 String loc = "/sgroup/group.do"; 
+		 String msg = "";
 
+		 if(result > 0) msg = "모임 탈퇴 성공!"; 
+		 else msg = "모임 탈퇴 실패!";
+
+		  model.addAttribute("loc", loc); 
+		  model.addAttribute("msg", msg);
+
+		return "common/msg";
+	}
+	
+	
 	@RequestMapping("/sgroup/groupBoard.do")
 	public String groupBoard(@RequestParam("gid") String gId,
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, Model model) {
@@ -356,8 +396,12 @@ public class SgroupController {
 	@RequestMapping("/sgroup/groupDetail.do")
 	public String groupDetail(@RequestParam String gid, Model model) {
 		Sgroup s = sgroupService.selectOneSgroup(gid);
+		List<Joing> joing = sgroupService.selectJoing(gid);
 		model.addAttribute("sgroup", s);
+		model.addAttribute("joing", joing);
 		model.addAttribute("gid", gid);
+		
+		System.out.println("joing-groupDetail : " + joing);
 		return "sgroup/groupDetail";
 	}
 

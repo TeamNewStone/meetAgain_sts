@@ -65,6 +65,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 
 	@Override
+	public int groupLeave(Map<String, String> map) {
+		return sqlSession.update("sgroupMapper.groupLeave", map);
+	}
+	
+	@Override
 	public List<Map<String, String>> selectgBoardList(String gId ,int cPage, int numPerPage) {
 		RowBounds rows = new RowBounds((cPage - 1) * numPerPage, numPerPage);
 		List<Map<String, String>> list = sqlSession.selectList("sgroupMapper.selectgBoardList", gId, rows);
@@ -136,6 +141,8 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int commentUpdate(int cId) {
 		return sqlSession.update("sgroupMapper.updateComment", cId);
 	}
+
+
 	
 
 }
