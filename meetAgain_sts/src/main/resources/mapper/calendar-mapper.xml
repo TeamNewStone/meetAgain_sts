@@ -11,7 +11,7 @@
 	</resultMap> -->	
 	
 	<insert id="insertSchedule" parameterType="Calendar">
-		INSERT INTO CALENDAR VALUES(SEQ_CDID.NEXTVAL, #{gId}, #{gDate}, #{gDateEnd}, #{gInfo}, #{gTime}, DEFAULT)
+		INSERT INTO CALENDAR VALUES(SEQ_CDID.NEXTVAL, #{gId}, #{gDate}, #{gDateEnd}, #{gInfo}, #{gTime}, #{isCtn})
 	</insert>
 	
 	<select id="loadList" resultType="Calendar">
