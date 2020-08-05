@@ -120,66 +120,65 @@
         <div class="col-md-3 offset-md-2">
           <div class="component">
 						<div class="card">
-							<div class="card-header">
-						  	<img class="card-img" src="/meetAgain/resources/img/dog-1.jpg" alt="dog">
+							<div class="card-header">		  	
+							<img class="card-img" id="rv0Image" src="/meetAgain/resources/img/fav01.png">
 							</div>
 						  <div class="card-body">
-							  <span class="badge badge-success mb-2">Study</span>
-						    <h4 class="card-title">352_프로그래밍</h4>
-						    <p class="card-text">
-						    
-							<c:choose>
-					        <c:when test="${fn:length(reviewTitle) gt 20}">
-					        <c:out value="${fn:substring(reviewTitle, 0, 19)}...">
-					        </c:out></c:when>
-					        <c:otherwise>
-					        <c:out value="${reviewTitle}">
-					        </c:out></c:otherwise>
-							</c:choose>
-
+							  <span class="badge badge-success mb-2" id="rv0Cate">
+								NONE
+							</span>
+						    <h4 class="card-title" id="rv0Title">-</h4>
+						    <p class="card-text" id="rv0Content">
+						    아직 등록되지 않았습니다.
 							</p>
-						    <!-- 20자까지 보여주기 -->
 						  </div>
 						  <div class="card-footer">
-								<button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#handleModal">자세히보기</button> &nbsp;
-								<span class="badge badge-danger fas fa-heart" style="float:right;">10</span>
-								<!-- 10 : 도움이 된 (좋아요) 수 -->
+								<button type="button" id="rvBtn" class="btn btn-outline-secondary">자세히보기</button> &nbsp;
+								<span class="badge badge-danger fas fa-heart" id="rv0Like" style="float:right;">0</span>
 						  </div>
 						</div>
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="component">
-            <div class="card">
-							<div class="card-header">
-						  	<img class="card-img" src="/meetAgain/resources/img/dog-2.jpg" alt="dog">
-							</div>
-						  <div class="card-body">
-							  <span class="badge badge-warning mb-2">Vacation</span>
-						    <h4 class="card-title">Woof! How to find</h4>
-						    <p class="card-text">Considering Spain's abundant coastline... </p>
-						  </div>
-						  <div class="card-footer">
-								<button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exReviewInsert">자세히보기</button> &nbsp;
-								
-						  </div>
-						</div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
+      <div class="col-md-3 ">
           <div class="component">
 						<div class="card">
-							<div class="card-header">
-						  	<img class="card-img" src="/meetAgain/resources/img/dog-3.jpg" alt="dog">
+							<div class="card-header">		  	
+							<img class="card-img" id="rv1Image" src="/meetAgain/resources/img/fav01.png">
 							</div>
 						  <div class="card-body">
-							  <span class="badge badge-secondary mb-2">Hobby</span>
-						    <h4 class="card-title">Getting Started With Your Puppy</h4>
-						    <p class="card-text">This new addition to your family will ... </p>
+							  <span class="badge badge-success mb-2" id="rv1Cate">
+								NONE
+							</span>
+						    <h4 class="card-title" id="rv1Title">-</h4>
+						    <p class="card-text" id="rv1Content">
+						    아직 등록되지 않았습니다.
+							</p>
 						  </div>
 						  <div class="card-footer">
-								<a href="#a" class="btn btn-outline-primary">Read More</a>
+								<button type="button" id="rvBtn" class="btn btn-outline-secondary">자세히보기</button> &nbsp;
+								<span class="badge badge-danger fas fa-heart" id="rv1Like" style="float:right;">0</span>
+						  </div>
+						</div>
+          </div>
+        </div>
+         <div class="col-md-3">
+          <div class="component">
+						<div class="card">
+							<div class="card-header">		  	
+							<img class="card-img" id="rv2Image"src="/meetAgain/resources/img/fav01.png">
+							</div>
+						  <div class="card-body">
+							  <span class="badge badge-success mb-2" id="rv2Cate">
+								NONE
+							</span>
+						    <h4 class="card-title" id="rv2Title">-</h4>
+						    <p class="card-text" id="rv2Content">
+						    아직 등록되지 않았습니다.
+							</p>
+						  </div>
+						  <div class="card-footer">
+								<button type="button" id="rvBtn" class="btn btn-outline-secondary">자세히보기</button> &nbsp;
+								<span class="badge badge-danger fas fa-heart" id="rv2Like" style="float:right;">0</span>
 						  </div>
 						</div>
           </div>
@@ -241,43 +240,50 @@
 </div>
 </div>
 
-
-
-
-
-
 <br><br><br>
 <script>
 
-
-//별점 마킹 모듈 프로토타입으로 생성
-function Rating(){};
-Rating.prototype.rate = 0;
-Rating.prototype.setRate = function(newrate){
-  //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
-  this.rate = newrate;
-  let items = document.querySelectorAll('.rate_radio');
-  items.forEach(function(item, idx){
-      if(idx < newrate){
-          item.checked = true;
-      }else{
-          item.checked = false;
-      }
-  });
-}
-let rating = new Rating();//별점 인스턴스 생성
-
-document.addEventListener('DOMContentLoaded', function(){
-    //별점선택 이벤트 리스너
-    document.querySelector('.rating').addEventListener('click',function(e){
-        let elem = e.target;
-        if(elem.classList.contains('rate_radio')){
-            rating.setRate(parseInt(elem.value));
-        }
-    })
-});
-
 $(function(){
+$.ajax({
+	url : "selectRvtop3.do",
+	success : function(data){
+		console.log(data.review);
+		for(var i in (data.review)){
+			var cate = data.review[i].cateId;
+			var title = data.review[i].gtitle;
+			var content;
+			if((data.review[i].rvContent).length>20){
+				content = (data.review[i].rvContent).substr(0,19)+'...';
+			}else{
+				content = data.review[i].rvContent;				
+			}
+			var like = data.review[i].rvLike;
+			var image = data.review[i].rvImage;
+			var category;
+			
+			
+			if(cate=="C01") category="운동";
+			else if(cate=="C02") category="친목";
+			else if(cate=="C03") category="공부";
+			else if(cate=="C04") category="취미생활";
+			else if(cate=="C05") category="문화생활";
+			else if(cate=="C06") category="여행";
+			else if(cate=="C07") category="봉사";
+			else if(cate=="C08") category="기타";
+			
+			$("#rv"+i+"Title").html(title);
+			$("#rv"+i+"Cate").html(category);
+			$("#rv"+i+"Content").html(content);
+			$("#rv"+i+"Like").html(like);
+			if(image !=null) $("#rv"+i+"Image")
+			.attr('src','${ pageContext.request.contextPath }/resources/upload/reviewImg/'+image);
+		} 
+	},
+	error : function(){
+		alert("에러 발생");
+	}
+});
+	
 $('[name=upFile]').on('change',function(){
     //var fileName = $(this).val();//C:\fakepath\파일명
     //var fileName = this.files[0].name;//파일명(javascript)

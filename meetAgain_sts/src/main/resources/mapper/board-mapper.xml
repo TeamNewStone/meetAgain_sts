@@ -61,4 +61,11 @@
 	<select id="selectOneReview" parameterType="_int" resultType="Review">
 		SELECT * FROM REVIEW WHERE RVID=#{rvid}
 	</select>
+	
+	<select id="selectTop3rv" resultMap="ReviewMap">
+		
+		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY R.RVLIKE DESC) "RANK", R.*, G.GTITLE, G.CATE_ID, G.CREATEDATE, G.DURATE FROM REVIEW R JOIN SGROUP G ON(R.GID=G.GID))
+		WHERE <![CDATA[RANK<=3]]>
+		
+	</select>
 </mapper>
