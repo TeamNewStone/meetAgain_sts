@@ -115,7 +115,8 @@
 							</p>
 						  </div>
 						  <div class="card-footer">
-								<button type="button" id="rvBtn0" class="btn btn-outline-secondary">자세히보기</button> &nbsp;
+								<button type="button" id="rvBtn0" class="btn btn-outline-secondary"
+								>자세히보기</button> &nbsp;
 								<span class="badge badge-danger fas fa-heart" id="rv0Like" style="float:right;">0</span>
 						  </div>
 						</div>
@@ -176,11 +177,12 @@
     <div class="modal-content">
       <div class="modal-header">
       <div style="float:left;">
-        <h4 class="modal-title" id="exampleModalLabel">352_프로그래밍
-        <span class="badge badge-success mb-2">Study</span><br />
+        <h4 class="modal-title" id="exampleModalLabel">
+        <span id="modal-title"></span>
+        <span class="badge badge-success mb-2" id="modal-cate">Study</span><br />
         
         </h4>
-        <h6 style="font-weight:normal;color:#9c9c9c;">2020/02/19 ~ 2020/08/10</h6>
+        <h6 id = "modal-date" style="font-weight:normal;color:#9c9c9c;">2020/02/19 ~ 2020/08/10</h6>
         </div>
         <div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -190,30 +192,24 @@
       <div class="modal-body">
       <p id="star_grade">
       별점 : 
-      <c:forEach var="i" begin="1" end="5">
-        ★
-       </c:forEach>
 	   </p>
         <form action="#">
         <div class="card-header">
-        <img class="card-img" src="/meetAgain/resources/img/dog-1.jpg" alt="dog">
+        <img class="modal-img" src="/meetAgain/resources/img/dog-1.jpg" style="width : 100%;">
         </div>
         <div class="card-body custom-control custom-checkbox my-2">
 		<textarea class="form-control" rows="5" style="resize:none;" readonly >
-		${reviewTitle }
 	</textarea>
-
         </div>
-
-		
-        <br />
-
+		   <br />
 </form>
         </div>
               <div class="modal-footer">
+              <input type="hidden" id="userId" value="${member.userId }" />
+              <input type="hidden" name="rvId"  id="reviewId"/>
         <p style="font-size:15px;">이 리뷰가 도움이 되셨나요?
-        <button type="button" class="btn btn-outline-danger btn-icon btn-sm"><i class="fas fa-heart"></i></button>
-        30
+        <button type="button" class="btn btn-outline-danger btn-icon btn-sm" id="likeBtn"><i class="fas fa-heart"></i></button>
+        <span id="heartrate" >30</span>
         </p>
       </div>
         
@@ -229,7 +225,6 @@ $(function(){
 $.ajax({
 	url : "selectRvtop3.do",
 	success : function(data){
-		console.log(data.review);
 		for(var i in (data.review)){
 			var cate = data.review[i].cateId;
 			var title = data.review[i].gtitle;
@@ -259,7 +254,89 @@ $.ajax({
 			$("#rv"+i+"Like").html(like);
 			if(image !=null) $("#rv"+i+"Image")
 			.attr('src','${ pageContext.request.contextPath }/resources/upload/reviewImg/'+image);
-		} 
+		}
+		
+		$("#rvBtn1, #rvBtn2, #rvBtn0").click(function(){
+			var i;
+			if($(this).attr('id') == 'rvBtn0') i=0;
+			else if($(this).attr('id') == 'rvBtn1') i=1;
+			else i=2;
+			
+			var gtitle = data.review[i].gtitle;
+			var content = data.review[i].rvContent;
+			var cate = data.review[i].cateId;
+			var star = data.review[i].rvStar;
+			var like = data.review[i].rvLike;
+			var img = data.review[i].rvImage;
+			var sdate = data.sdate[i];
+			var edate = data.edate[i];
+			var id = data.review[i].rvId;
+			var category;
+			var starcount;
+			
+			if(cate=="C01") category="운동";
+			else if(cate=="C02") category="친목";
+			else if(cate=="C03") category="공부";
+			else if(cate=="C04") category="취미생활";
+			else if(cate=="C05") category="문화생활";
+			else if(cate=="C06") category="여행";
+			else if(cate=="C07") category="봉사";
+			else if(cate=="C08") category="기타";
+			
+			if(star==1) starcount = "별점 : ★";
+			else if(star==2) starcount = "별점 : ★★";
+			else if(star==3) starcount = "별점 : ★★★";
+			else if(star==4) starcount = "별점 : ★★★★";
+			else if(star==5) starcount = "별점 : ★★★★★";
+			else starcount = "별점 : ";
+			/* var sdate = $(this).data('sdate');
+			var edate = $(this).data('edate');
+						var like = $(this).data('like');
+			
+			
+			var img = $(this).data('img');
+			var id = $(this).data('rid');
+			var starcount; */
+			$("#star_grade").html(starcount);
+			$("#modal-title").html(gtitle);
+			$(".form-control").val(content);
+			$("#modal-cate").html(category);
+			$("#heartrate").html(like);
+			$("#modal-date").html(sdate+" ~ "+edate);
+			$("#handleModal").modal();
+			$("#reviewId").val(id);
+			
+			if(img!='') $(".modal-img").attr('src','${ pageContext.request.contextPath }/resources/upload/reviewImg/'+img);
+			else $(".modal-img").attr('src','/meetAgain/resources/img/fav01.png');
+		});
+		
+		$("#likeBtn").click(function(){
+			
+			var rvid = $("#reviewId").val();
+			var userid;
+			
+			if($("#userId").val()!='') {
+				userid = $("#userId").val();
+				
+				$.ajax({
+					url : "board/helpRv.do",
+					data : {
+						rvid : rvid,
+						userid : userid
+					},
+					success : function(data){
+						if(data.result==false)	alert("에러 발생!");
+						else{
+							$("#heartrate").html(data.like);
+						}
+					},
+					error : function(){
+						alert("에러 발생");
+					}
+				});		
+			}
+			
+		});
 	},
 	error : function(){
 		alert("에러 발생");
@@ -272,7 +349,6 @@ $.ajax({
 	success : function(data){
 		var $table = $('#adTop3');
 		for(var i in (data.adboard)){
-			console.log(data.adboard);
 			// 내용을 모두 담을 tr 생성
 			var bid = data.adboard[i].bid;
 			var $tr = $('<tr>');
@@ -299,6 +375,9 @@ $.ajax({
 	error : function(){
 		alert("에러 발생");
 	}
+});
+$("#handleModal").on('hide.bs.modal',function(){
+	location.reload();
 });
 $('[name=upFile]').on('change',function(){
     //var fileName = $(this).val();//C:\fakepath\파일명
