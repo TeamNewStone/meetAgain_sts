@@ -45,6 +45,7 @@
 	<select  id="selectCateInfo" parameterType="string" resultType="CateInfo">
 	  SELECT  C.CATE_ID, G.* FROM CATEINFO C
       JOIN SGROUP G ON(C.CATE_ID=G.CATE_ID) 
+
       WHERE C.USERID = #{userId} AND G.GID NOT IN(SELECT GID FROM (SELECT * FROM JOING WHERE USERID = #{userId})) AND ISFIN='N'
 	</select>
 
@@ -162,8 +163,13 @@
 		CONNECT BY PRIOR CID = CREF
 	</select>
 
-	<update id="updateComment" parameterType="_int">
-		UPDATE BOARD_COMMENT SET CCONTENT = #{cContent}
+	<update id="updateComment" parameterType="GB_comment">
+		UPDATE GB_COMMENT SET CCONTENT = #{cContent}
 		WHERE CID = #{cId}
 	</update>
+	
+	<delete id="deleteComment" parameterType="_int">
+		DELETE FROM GB_COMMENT
+               WHERE CID = #{cId}
+	</delete>
 </mapper>

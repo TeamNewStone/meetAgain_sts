@@ -30,11 +30,10 @@ public class CalendarController {
 				@RequestParam("gTime") String gTime,
 				@RequestParam(value="isCtn", required = false, defaultValue = "N") String isCtn) {
 
-		System.out.println(gTime); // 12:01
+		// System.out.println(gTime); // 12:01
 		//***************gid임의지정
 		//String gid = "1";		
-		
-		
+
 		Date date = Date.valueOf(gDate);
 		Date date2 = Date.valueOf(gDateEnd);
 		int hour = Integer.parseInt(gTime.substring(0, 2));
@@ -53,13 +52,15 @@ public class CalendarController {
 		cal.setGDateEnd(date2);
 		cal.setGInfo(gInfo);
 		cal.setGTime(time);
-		cal.setIsCtn(isCtn);
+		cal.setIsCtn(isCtn);		
 		
-		System.out.println("insert 확인" + cal);
+		System.out.println("insert 확인 : " + cal);
 		
 		//cal.setGId(gId);
-		int result = sgroupService.addCalendar(cal);	
-						
+
+		sgroupService.addCalendar(cal);	
+
+		/*		
 		String addMsg = "";
 
 		if (result > 0) {
@@ -68,7 +69,7 @@ public class CalendarController {
 		} else {
 			addMsg = "생성 실패";
 			System.out.println("생성 실패");
-		}
+		} */
 		
 		return "redirect:groupCalendar.do";	
 	}

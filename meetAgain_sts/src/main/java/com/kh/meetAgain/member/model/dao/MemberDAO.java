@@ -31,6 +31,6 @@ public interface MemberDAO {
 
 	int mCateDelete(String userId);
 
-	int imgUpdate(UserTMI userTMI);
+	int imgUpdate(Map<String, String> map);
 
 }

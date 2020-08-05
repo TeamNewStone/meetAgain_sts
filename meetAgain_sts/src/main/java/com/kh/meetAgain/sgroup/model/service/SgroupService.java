@@ -28,7 +28,7 @@ public interface SgroupService {
 	List<Joing> selectJoingUser(String userId);
 	
 	int insertGroupJoin(Joing joing);
-	
+
 	int groupLeave(Map<String, String> map);
 
 	List<Map<String, String>> selectgBoardList(String gId, int numPerPage, int cPage);
@@ -51,12 +51,14 @@ public interface SgroupService {
 	int addCalendar(Calendar calendar);
 
 	List<GB_comment> selectCommentList(int gbId);
-
-	int insertComment(GB_comment gB_comment);
 	
 	Object commentUpdate(int cId);
 
 	List<Calendar> loadList();
+
+	int commentUpdate(GB_comment gB_comment);
+
+	int commentDelete(int cId);
 
 	int deleteCalendar(String cdId);
 	

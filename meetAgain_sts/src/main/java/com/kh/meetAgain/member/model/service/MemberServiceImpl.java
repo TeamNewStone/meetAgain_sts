@@ -85,7 +85,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int imgUpdate(UserTMI userTMI) {
-		return memberDAO.imgUpdate(userTMI);
+	public int imgUpdate(Map<String, String> map) {
+		return memberDAO.imgUpdate(map);
 	}
 }

@@ -82,7 +82,7 @@
 	});
 
 	function gboardInsert() {
-		location.href = "${pageContext.request.contextPath}/sgroup/gboardInsert.do";
+		location.href = "${pageContext.request.contextPath}/sgroup/gboardInsert.do?gId=${param.gId}";
 	}
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

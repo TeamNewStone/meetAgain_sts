@@ -83,7 +83,8 @@ public class MyPageController {
 		// 3. 패아자 HTML 생성
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "myPage1.do");
 		System.out.println("controller : "+list);
-		
+		System.out.println("왜 안되나요 해당 사진 가져와라 : " + owner.getUserImg());
+		System.out.println(owner);
 		model.addAttribute("list", list);
 		
 		model.addAttribute("owner",owner);
@@ -125,7 +126,9 @@ public class MyPageController {
 	 */
 	
 	@RequestMapping("myPage/myPage2.do")
-	public String myPage2() {
+	public String myPage2(@RequestParam("uid") String userId, Model model) {
+		UserTMI userTMI = mpSvc.selectUserTMI(userId);
+		model.addAttribute("userTMI", userTMI);
 		return "myPage/myPage2";
 	}
 	@RequestMapping("myPage/myPageOther.do")
@@ -152,6 +155,8 @@ public class MyPageController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userId", userId);
 		map.put("muserId", muserId);
+		System.out.println("userId : "+userId);
+		System.out.println("muserId : "+muserId);
 		int result = mpSvc.insertFollow(map);
 		
 		if(result > 0) {
@@ -172,9 +177,11 @@ public class MyPageController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userId", userId);
 		map.put("muserId", muserId);
+		System.out.println("userId : "+userId);
+		System.out.println("muserId : "+muserId);
 		int result = mpSvc.deleteFollow(map);
 		
-		if(result > 0) {
+		if(result != 0) {
 			msg = "언팔로우를 완료하였습니다!";
 		}else {
 			msg = "언팔로우에 실패하였습니다. 다시 시도해 주세요.";

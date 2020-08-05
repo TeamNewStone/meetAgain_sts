@@ -26,10 +26,21 @@ public class MainController {
 	@ResponseBody
 	public Map<String, Object> rvTop3() {
 		Map<String,Object> map = new HashMap<String,Object>();
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");		
+		String[] sdate = new String[3];
+		String[] edate = new String[3];
 		
 		List<Review> rvtop3 = new ArrayList<Review>();
 		rvtop3 = boardService.selectTop3rv();
 		
+		for(int i=0; i<rvtop3.size(); i++) {
+			
+			sdate[i] = sdFormat.format(rvtop3.get(i).getCreateDate());
+			edate[i] = sdFormat.format(rvtop3.get(i).getDurate());
+		}
+		
+		map.put("sdate",sdate);
+		map.put("edate",edate);
 		map.put("review", rvtop3);
 		
 		return map;	
@@ -45,7 +56,7 @@ public class MainController {
 		List<Board> adtop3 = new ArrayList<Board>();
 		adtop3 = boardService.selectTop3ad();
 		
-		for(int i=0; i<3; i++) {
+		for(int i=0; i<adtop3.size(); i++) {
 		
 			date[i] = sdFormat.format(adtop3.get(i).getBDate());
 			
