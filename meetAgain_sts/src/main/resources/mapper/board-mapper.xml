@@ -57,4 +57,8 @@
 	<update id="updateRvLike" parameterType="_int">
 		UPDATE REVIEW SET RVLIKE = (SELECT COUNT(*) FROM RVHELP WHERE RVID=#{rvid}) WHERE RVID=#{rvid}
 	</update>
+	
+	<select id="selectOneReview" parameterType="_int" resultType="Review">
+		SELECT * FROM REVIEW WHERE RVID=#{rvid}
+	</select>
 </mapper>
