@@ -14,7 +14,7 @@
 	</div>
 
 	<div id="gname" style="float: left; padding: 10px;">		
-		<button class="btn bg-transparent" onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupDetail.do'"><h4>소모임 이름</h4></button>
+		<button class="btn bg-transparent" onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupDetail.do?gid='+${gid}"><h4>${sgroup.getGTitle() }</h4></button>
 	</div>
 	<div id="btnMenu" style="margin-left: auto;">
 <!-- 
@@ -34,16 +34,16 @@
 		</ul>
  -->
 			<button id="group-boardbtn" class="btn btn-outline-secondary"
-			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupBoard.do'">게시판</button>
+			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupBoard.do?gid='+${gid}">게시판</button>
 			&nbsp;
 			<button id="group-mapbtn" class="btn btn-outline-secondary"
-			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupMap.do'">&nbsp;지도&nbsp;</button>
+			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupMap.do?gid='+${gid}">&nbsp;지도&nbsp;</button>
 			&nbsp;
 			<button id="group-calbtn" class="btn btn-outline-secondary"
-			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupCalendar.do'">캘린더</button>
+			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupCalendar.do?gid='+${gid}">캘린더</button>
 			&nbsp;
 			<button id="group-albumbtn" class="btn btn-outline-secondary"
-			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupAlbum.do'">사진첩</button>
+			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupAlbum.do?gid='+${gid}">사진첩</button>
 	
 	</div>
 </div>

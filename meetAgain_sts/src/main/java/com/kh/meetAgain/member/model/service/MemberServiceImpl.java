@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println("ServiceImpl : " + userTMI + " / " + userTMI.getUserId());
 		int result1 = memberDAO.mTMIUpdate(userTMI);
 		int result2 = 0;
-		
+		result2 = memberDAO.mCateDelete(userTMI.getUserId());
 		for(int i = 0; i < cateInfo.getCateId().length; i++) {
 			result2 = memberDAO.mCateUpdate(userTMI.getUserId(), cateInfo.getCateId()[i]);
 			if(result2 == 0) break;
@@ -73,4 +73,19 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.checkNnDuplicate2(map);
 	}
 	 @Override public int memberOut(Member m) { return memberDAO.memberOut(m); }
+
+	@Override
+	public int mTMIUpdate2(UserTMI userTMI) {
+		return memberDAO.mTMIUpdate(userTMI);
+	}
+
+	@Override
+	public int mCateDelete(String userId) {
+		return memberDAO.mCateDelete(userId);
+	}
+
+	@Override
+	public int imgUpdate(UserTMI userTMI) {
+		return memberDAO.imgUpdate(userTMI);
+	}
 }

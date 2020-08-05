@@ -15,8 +15,9 @@
 				data-toggle="dropdown" class="img-fluid rounded-circle"
 				style="width: 70px; right: 5%; top: 5%;">
 		</div>
+		<c:forEach var="jo" items="${joing }">
 		<div id="userName" style="float: left; padding: 10px;">
-			<h5>사용자명</h5>
+			<h5>${joing }</h5>
 		</div>
 	</div>
 	<br />

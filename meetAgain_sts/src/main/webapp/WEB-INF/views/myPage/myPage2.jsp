@@ -25,11 +25,20 @@
   <div class="info">
     <div class="row">
 	    <div class="col-12 col-md-4 text-center">
-		    <img src="${ pageContext.request.contextPath }/resources/img/lorde.png" alt="Raised circle image" class="img-fluid rounded-circle shadow-lg" style="width: 180px;">
+	    <c:if test="${member.userImg eq null }">
+		    <img src="${ pageContext.request.contextPath }/resources/img/usericon.png" alt="usericon" class="img-fluid rounded-circle" id="sampleImg" style="width: 180px;">
+	    </c:if>
+	    <c:if test="${member.userImg ne null }">
+		    <img src="${ pageContext.request.contextPath }/resources/img/${member.userImg}" alt="Raised circle image" class="img-fluid rounded-circle" id="sampleImg" style="width: 180px;">
+	    </c:if>
+	    <br />
+		  <button type="button" id="mimgBtn">사진 첨부</button>
 	    </div>
 	    
       <div class="col-12 col-md-4">
-          <form action="${ pageContext.request.contextPath }/member/mUpdate.do">
+          <form action="${ pageContext.request.contextPath }/member/mUpdate.do" method = "post" enctype="multipart/form-data">
+				<input type="file" name="userImg1" id="profileImgBtn" style="display: none;"
+				onchange="loadImg(this);" />
         <div class="row">            
           <div class="col-12 text-left"><p style="font-size: 20px; font-weight: bold;">${member.nickName } 님의 기본정보 : </p></div>
          
@@ -52,7 +61,7 @@
           <div class="col-12 col-md-3 text-right"><p id="textFm">주소 (기본) : </p></div>          
           <div class="col-12 col-md-9 text-right">
             <div class="input-group">
-              <input type="text" class="form-control" name="addressCode1" required>
+              <input type="text" class="form-control" name="addressCode1">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="addressSearchBtn1();">검색</button>
               </div>
@@ -120,6 +129,24 @@
     <script src="${ pageContext.request.contextPath }/resources/js/lazy.js"></script>        
         
     <script>
+    
+    $('#mimgBtn').on('click', function() {
+    	$('#profileImgBtn').click();
+    });
+
+    function loadImg(value) {
+
+    	if (value.files && value.files[0]) {
+
+    		var reader = new FileReader();
+
+    		reader.onload = function(e) {
+    			$('#sampleImg').attr('src', e.target.result);
+    		}
+
+    		reader.readAsDataURL(value.files[0]);
+    	}
+    };
     
     $('#NickName').keyup(function(){
     	$(this).val($(this).val().replace(" ", ""));
