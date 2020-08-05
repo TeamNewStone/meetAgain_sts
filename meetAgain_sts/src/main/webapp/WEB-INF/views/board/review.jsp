@@ -63,7 +63,7 @@
 								data-content="${rv.getRvContent() }" data-img = "${rv.getRvImage() }"
 								data-sdate="${rv.getCreateDate()}" data-edate="${rv.getDurate()}" data-like="${rv.getRvLike() }"
 								>자세히보기</button> &nbsp;
-								<span class="badge badge-danger fas fa-heart" style="float:right;">${rv.getRvLike() }</span>
+								<span class="badge badge-danger fas fa-heart" id="rvLike" style="float:right;">${rv.getRvLike() }</span>
 								<!-- 10 : 도움이 된 (좋아요) 수 -->
 						  </div>
 						</div>
@@ -173,8 +173,12 @@ $(function(){
 		
 		$("#handleModal").modal();
 	
+		return false;
 	}); 
-	
+	$("#handleModal").on('hide.bs.modal',function(){
+		console.log("콘솔끔!");
+		location.reload();
+	});
 	$("#likeBtn").click(function(){
 		
 		var rvid = $("#reviewId").val();
@@ -190,8 +194,10 @@ $(function(){
 					userid : userid
 				},
 				success : function(data){
-					if(data.result==false)
-					alert("에러 발생!");
+					if(data.result==false)	alert("에러 발생!");
+					else{
+						$("#heartrate").html(data.like);
+					}
 				},
 				error : function(){
 					alert("에러 발생");

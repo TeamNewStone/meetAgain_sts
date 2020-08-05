@@ -71,4 +71,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.updateRvLike(rvid);
 	}
 
+	@Override
+	public Review selectOneReview(int rvid) {
+		return boardDAO.selectOneReview(rvid);
+	}
+
 }

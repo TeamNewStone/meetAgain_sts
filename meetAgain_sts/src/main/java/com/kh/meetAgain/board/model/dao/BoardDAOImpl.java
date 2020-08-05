@@ -73,6 +73,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int updateRvLike(int rvid) {
 		return sqlSession.update("boardMapper.updateRvLike",rvid);
+	}
+
+	@Override
+	public Review selectOneReview(int rvid) {
+		return sqlSession.selectOne("boardMapper.selectOneReview",rvid);
 	}	
 
 }
