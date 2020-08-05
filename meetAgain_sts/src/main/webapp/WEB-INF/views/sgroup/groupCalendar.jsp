@@ -145,19 +145,19 @@
 				   start : "${sc.getGDate()}",
 				   end : "${sc.getGDateEnd()}"
 				   }
-				   <c:if test="${!scIndex2.last}">,</c:if>			   
+				   <c:if test="${!scIndex2.last}">,</c:if>		   
 				   </c:forEach>
 				],
 				
 				eventClick: function(info) {
 					
-					var realTitle = title;
+					var realTitle = '${sc.getGInfo()}';
+					console.log(realTitle);
 					
-					// console.log(realTitle);
 					
 					/* alert('Event: ' + info.event.title);
 					alert('일정 위치 x, y: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-					alert('View: ' + info.view.type); */			    			    
+					alert('View: ' + info.view.type); */    			    
 				   
 					var result = confirm('해당 "' + info.event.title + '" 일정을 삭제하시겠습니까 ??');
 						if(result){
@@ -183,29 +183,7 @@
 			
 		});
 
-	</script>
-
-		<script>
-		/* <c:forEach items="${sclist}" var="scNormal" varStatus="scIndex3">
-		<c:set var="realtime" value='${scNormal.gTime}' />	
-		
-			var ime = "${realtime}";
-			var result = ime.substring(10, 16);
-			// console.log(result);
-			
-			var schedulaDiv1 = $(this).attr('_normalScheduleList');
-			
-				console.log(schedulaDiv1);
-			
-			
-				schedulaDiv1.innerHTML +=
-					'<span class="badge badge-pill badge-success" style="font-size: 15px;">모임명 : ' + 
-						'${scNormal.gInfo}' + '<br>일정 : ' + '${scNormal.gDate}' + 
-							'<br>시간 : ' + result + '</span><br>';
-							<c:if test="${!scIndex3.last}">;</c:if>
-										
-		</c:forEach>	 */	
-	</script>
+	</script>	
 	
 	<script>
 		function addCal() {
