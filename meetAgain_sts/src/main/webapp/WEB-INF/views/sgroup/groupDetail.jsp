@@ -5,9 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/common/header.jsp" />
 <div class="container">
-${sgroup }
-${joing }
-
 	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
 	<!--===================== 소모임 페이지의 바디 부분 =====================-->
 	<div name="groupBody">
@@ -109,10 +106,29 @@ ${joing }
 					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">기타</button>			        
 				        </c:if>
 						</td>
-						<td><span class="badge badge-pill badge-success">20대</span> <span
-							class="badge badge-pill badge-success">30대</span> <span
-							class="badge badge-pill badge-success">40대</span> <span
-							class="badge badge-pill badge-warning">성별무관</span></td>
+						<td>
+							<c:if test="${fn:length(sgroup.getLimitGroup()) eq 6 or fn:length(sgroup.getLimitGroup()) eq 1 }">
+	     						<span class="badge badge-pill badge-success">나이무관</span> 
+	     						
+	     					</c:if>
+	     					
+	     					<c:if test="${fn:length(sgroup.getLimitGroup()) lt 6}">
+	     						<c:if test="${ fn:length(sgroup.getLimitGroup()) ne 1}">
+		     						<c:forEach var="li" items="${sgroup.getLimitGroup()}" begin="1">
+		     							<span class="badge badge-pill badge-success">${li}</span> 
+		     						</c:forEach>
+	     						</c:if>
+	     					</c:if>
+							<c:if test="${sgroup.getLimitGroup()[0] eq 'M'}">
+     							<span class="badge badge-pill badge-warning">남자만</span>
+     						</c:if>
+     						<c:if test="${sgroup.getLimitGroup()[0] eq 'F'}">
+     							<span class="badge badge-pill badge-warning">여자만</span>
+     						</c:if>
+     						<c:if test="${sgroup.getLimitGroup()[0] eq 'A'}">
+     							<span class="badge badge-pill badge-warning">성별무관</span>	
+     						</c:if>
+						</td>
 					</tr>
 					<tr>
 						<td><h5>회비여부</h5></td>
@@ -186,10 +202,6 @@ ${joing }
 
 
 <script type="text/javascript">
-
-
-
-
 $(function(){
 	
  	var result = new Array();
@@ -202,13 +214,16 @@ $(function(){
 	
 	var test = JSON.stringify(result);
 	console.log(test); 
-
-/* 	<c:forEach var="jo" items="${joing}" varStatus="status">
-	var result = new Array();
-	result = ${jo.getGender()};
-	</c:forEach> */
-
-
+	
+	var mCnt = 0;
+	var fCnt = 0;
+	
+	for(var i in test){
+		if(test[i].trim() == "M") mCnt++;
+		else if(test[i].trim() == "F") fCnt++;
+			
+	}
+	
 	google.charts.load('current', {
 		'packages' : [ 'corechart' ]
 	});
@@ -217,7 +232,7 @@ $(function(){
 	function drawChart() {
 
 		var data = google.visualization.arrayToDataTable([
-				[ 'Task', 'Hours per Day' ], [ 'Male', 5 ], [ 'Female', 5 ],
+				[ 'Task', 'Hours per Day' ], [ 'Male', mCnt ], [ 'Female', fCnt ],
 
 		]);
 

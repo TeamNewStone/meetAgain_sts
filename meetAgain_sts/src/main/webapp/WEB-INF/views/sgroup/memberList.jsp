@@ -18,7 +18,7 @@
 						style="width: 70px; right: 5%; top: 5%;">
 					</c:if>
 					<c:if test="${jo.getUserImg() ne null }">
-					<img src="<%-- ${ pageContext.request.contextPath }/resources/upload/groupImg/${jo.getUserImg()} --%>" alt="usericon"
+					<img src="${ pageContext.request.contextPath }/resources/upload/userImg/${jo.getUserImg()}" alt="usericon"
 						data-toggle="dropdown" class="img-fluid rounded-circle"
 						style="width: 70px; right: 5%; top: 5%;">
 					</c:if>
@@ -45,7 +45,7 @@
 					style="width: 70px; right: 5%; top: 5%;">
 				</c:if>
 				<c:if test="${jo.getUserImg() ne null }">
-					<img src="<%-- ${ pageContext.request.contextPath }/resources/upload/groupImg/${jo.getUserImg()} --%>" alt="usericon" data-toggle="dropdown" class="img-fluid rounded-circle"
+					<img src="${ pageContext.request.contextPath }/resources/upload/userImg/${jo.getUserImg()}" alt="usericon" data-toggle="dropdown" class="img-fluid rounded-circle"
 					style="width: 70px; right: 5%; top: 5%;">
 				</c:if>
 		</div>
