@@ -44,9 +44,17 @@
 					<br />
 					<br />
 				</div>
-				<button class="btn btn-dark" onclick="location.href='${pageContext.request.contextPath}/sgroup/groupLeave.do?gid='+${gid}">소모임 탈퇴</button>
+				<button class="btn btn-dark" id="groupLeave" onclick="return groupLeave();">소모임 탈퇴</button>
 			</div>
-
+			<c:forEach var="jo" items="${joing }">
+				<c:if test="${jo.getUserId().equals(member.getUserId()) and jo.getIsCpt()=='Y'}">
+					<script>
+						$(function(){
+							$('#groupLeave').attr('disabled', true);
+						});
+					</script>
+				</c:if>
+			</c:forEach>
 			<!-- ---------이부분까지 사진과 설명---------- -->
 			<div class="col-md-8 col-lg-8">
 				<table  cellpadding="5px" style="width: 100%;">
@@ -260,6 +268,18 @@ $(function(){
 });
 	function clickMemList() {
 		location.href = '${ pageContext.request.contextPath }/sgroup/memberList.do?gid='+${gid};
-	}
+	};
+	
+	function groupLeave(){
+		var checkResult = window.confirm('모임을 탈퇴하시겠습니까?');
+		
+		if(checkResult == true) {
+			location.href='${pageContext.request.contextPath}/sgroup/groupLeave.do?gid='+${gid}
+		    return true;
+		} else {
+		    return false;
+		}
+		
+	};
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

@@ -32,7 +32,7 @@ import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 
-@SessionAttributes(value= {"sgroup","member", "gid"})
+@SessionAttributes(value= {"member", "gid"})
 
 @Controller
 public class SgroupController {
@@ -52,14 +52,14 @@ public class SgroupController {
 			@RequestParam String userId) {
 
 		System.out.println("sgroup : " + sgroup);
+		System.out.println("sgroupImg : " + sgroupImg);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
 
 		File dir = new File(saveDir);
 
 		System.out.println("폴더가 있나요? " + dir.exists());
 
-		if (dir.exists() == false)
-			dir.mkdirs();
+		if (dir.exists() == false) dir.mkdirs();
 
 		for (MultipartFile f : sgroupImg) {
 			if (!f.isEmpty()) {
@@ -79,10 +79,11 @@ public class SgroupController {
 				}
 
 				sgroup.setGImg(renamedName);
-
+				
 			}
 		}
 
+		System.out.println("sgroup2222 : " + sgroup);
 		int result = sgroupService.insertSgroup(sgroup);
 		String msg = "";
 
