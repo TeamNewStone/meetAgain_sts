@@ -155,7 +155,7 @@
 			</div>
 			<div class="col-lg-3 col-md-3">
 			<button type="button" id="groupCreBtn" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">소모임 생성하기!</button>
-			<c:if test="${groupCount >= 5 and member.getMLevel()==0}">
+			<c:if test="${groupCount != 0 && groupCount >= 5 and member.getMLevel()==0}">
 				<script>
 					$(function(){
 						$('#groupCreBtn').attr('disabled', true);
