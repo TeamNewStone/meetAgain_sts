@@ -4,12 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.member.model.vo.MemberShip;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 
 @Repository("memberDAO")
@@ -116,6 +118,22 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public Member selectOneMember(String userId) {
 		return sqlSession.selectOne("memberMapper.selectOneMember", userId);
+	}
+
+	@Override
+	public MemberShip selectOneMember2(String userId) {
+		return sqlSession.selectOne("memberMapper.selectOneMember2", userId);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMHList(int cPage, int numPerPage, String userId) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("memberMapper.selectMHList", userId, rows);
+	}
+
+	@Override
+	public int selectMHTotalContents(String userId) {
+		return sqlSession.selectOne("memberMapper.selectMHTotalContents", userId);
 	}
 
 }

@@ -99,4 +99,16 @@
 		SELECT * FROM MEMBER JOIN USERTMI USING(USERID) WHERE USERID=#{userId}
 	</select>
 
+	<select id="selectOneMember2" resultType="MemberShip">
+		SELECT * FROM MEMBER JOIN MEMBERSHIP USING(USERID) WHERE USERID=#{userId}
+	</select>
+	
+	<select id="selectMHList" resultType="MsHistory">
+		SELECT * FROM MSHISTORY MH JOIN MEMBERSHIP MS ON(MH.USERID=MS.USERID)
+		JOIN MEMBER M ON(M.USERID=MS.USERID) WHERE MH.USERID=#{userId}
+	</select>
+	
+	<select id="selectMHTotalContents" resultType="_int">
+		SELECT COUNT(*) FROM MSHISTORY WHERE USERID=#{userId}
+	</select>
 </mapper>

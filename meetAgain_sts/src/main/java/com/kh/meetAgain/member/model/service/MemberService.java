@@ -1,8 +1,10 @@
 package com.kh.meetAgain.member.model.service;
+import java.util.List;
 import java.util.Map;
 
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.member.model.vo.MemberShip;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 
 public interface MemberService {
@@ -32,5 +34,11 @@ public interface MemberService {
 	int imgUpdate(Map<String, String> map);
 
 	Member selectOneMember(String userId);
+
+	MemberShip selectOneMember2(String userId);
+
+	List<Map<String, String>> selectMHList(int cPage, int numPerPage, String userId);
+
+	int selectMHTotalContents(String userId);
 
 }
