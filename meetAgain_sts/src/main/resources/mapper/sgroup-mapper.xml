@@ -63,14 +63,14 @@
 		WHERE USERID = #{userId} AND ISLEAVE='N' AND ISOUT='N'
 	</select>
 
-	
+
 	<select id="selectGroupCount" parameterType="string" resultType="_int">
 	  	SELECT COUNT(*) 
       	FROM JOING
         WHERE USERID=#{userId} AND ISLEAVE='N' AND ISOUT='N'
         GROUP BY USERID
 	</select>
-	
+
 	<insert id="insertGroupJoin" parameterType="Joing">
 		INSERT INTO JOING VALUES(#{userId}, #{gId}, 'N',
 		<choose>
@@ -87,7 +87,7 @@
 	<update id="groupLeave" parameterType="hashmap">
 		UPDATE JOING SET ISLEAVE = 'Y' WHERE USERID = #{userId} AND GID = #{gid}
 	</update>
-	
+
 	<resultMap type="Gboard" id="gboardMap">
 		<result property="gbId" column="GBID" />
 		<result property="gbTitle" column="GBTITLE" />
@@ -119,9 +119,9 @@
 		GBID DESC
 	</select>
 
-	<select id="selectgBoardTotalContent" resultType="_int">
+	<select id="selectgBoardTotalContent" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
-		FROM GBOARD
+		FROM GBOARD WHERE GID=#{gId}
 	</select>
 
 	<select id="selectOnegBoard" parameterType="_int"
@@ -158,7 +158,7 @@
 		FROM MEMBER M WHERE
 		C.USERID=M.USERID)
 		FROM GB_comment C
-		WHERE GBID = #{gbId}
+		WHERE GBID = #{gbId} AND CDEL = 'N'
 		START WITH
 		CLEVEL = 1
 		CONNECT BY PRIOR CID = CREF
@@ -169,8 +169,8 @@
 		WHERE CID = #{cId}
 	</update>
 	
-	<delete id="deleteComment" parameterType="_int">
-		DELETE FROM GB_COMMENT
+	<update id="deleteComment" parameterType="_int">
+		UPDATE GB_COMMENT SET CDEL = 'Y' 
                WHERE CID = #{cId}
-	</delete>
+	</update>
 </mapper>

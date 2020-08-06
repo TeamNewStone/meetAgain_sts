@@ -7,11 +7,11 @@
 <div class="container">
 	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
 
-	<form action="${pageContext.request.contextPath}/sgroup/gbInsert.do"
+	<form action="${pageContext.request.contextPath }/sgroup/gbInsert.do"
 		method="post">
 		<div id="titleArea">
-			<input type="hidden" name="gId" value="${param.gId}"/>
-			<input type="hidden" name="userId" value="${Gboard.userId}"/>
+			<input type="hidden" name="gId" value="${ param.gId}"/>
+			<input type="hidden" name="userId" value="${member.getUserId() }"/>
 			
 			<input type="text" class="form-control" id="gbTitle" name="gbTitle"
 				placeholder="제목을 입력하세요" />

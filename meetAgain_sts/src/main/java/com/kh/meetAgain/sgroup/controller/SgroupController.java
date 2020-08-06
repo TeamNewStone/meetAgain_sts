@@ -32,7 +32,7 @@ import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 
-@SessionAttributes(value= {"sgroup","member"})
+@SessionAttributes(value= {"sgroup","member", "gid"})
 
 @Controller
 public class SgroupController {
@@ -224,7 +224,7 @@ public class SgroupController {
 		List<Map<String, String>> list = sgroupService.selectgBoardList(gId, cPage, numPerPage);
 
 		// 2. 페이지 계산을 위한 총 페이지 개수
-		int totalContents = sgroupService.selectgBoardTotalContents();
+		int totalContents = sgroupService.selectgBoardTotalContents(gId);
 
 		// 3. 패아자 HTML 생성
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "groupBoard.do");
@@ -274,11 +274,11 @@ public class SgroupController {
 
 	}
 
-	@RequestMapping("/sgroup/gbInsert.do")
-	public String gbInsert(@ModelAttribute("member") Member m, @RequestParam("gId") String gId, Gboard Gboard, Model model) {
-		System.out.println("gid:"+gId+"userid:"+m.getUserId());
+	@RequestMapping(value="/sgroup/gbInsert.do", method=RequestMethod.POST)
+	public String gbInsert(@RequestParam("gId") String gId, @RequestParam("userId") String userid,Gboard Gboard, Model model) {
+		System.out.println("gid:"+gId+"userid:"+userid);
 		Gboard.setGId(gId);
-		Gboard.setUserId(m.getUserId());
+		Gboard.setUserId(userid);
 		int result = sgroupService.insertgBoard(Gboard);
 		
 		String loc = "/sgroup/groupBoardDetail.do";
@@ -416,24 +416,23 @@ public class SgroupController {
 
 
 	@RequestMapping("/sgroup/commentDelete.do")
-	public String commentDelete(int cId, SessionStatus status, Model model, GB_comment gB_commnet) {
+	public String commentDelete(@RequestParam("cId") int cId, Model model, @RequestParam("gbId") int gbId) {
 			
 		try { 
 			int result = sgroupService.commentDelete(cId);
 			
 			String loc = "/sgroup/groupBoardDetail.do";
 			String msg = "";
-			
+		//	int gId = gB_comment.getGbId();
 			if(result > 0) {
-				loc ="/sgroup/groupBoardDetail.do?gbId=" + gB_commnet.getGbId();
-				msg = "댓글!";
-				status.setComplete(); // 세션 완료(만료) 처리
+				loc ="/sgroup/groupBoardDetail.do?gbId="+ gbId;
+				msg = "댓글 작성";
 			}
-			else msg = "회원 탈퇴 실패!";
+			else msg = "댓글 삭제 실패!";
 			
 			model.addAttribute("loc", loc);
 			model.addAttribute("msg", msg);		
-					
+			System.out.println("gB_comment.getGbId() : " +gbId);
 		} catch(Exception e) {
 			
 			// 받은 에러를 서버 개발자가 의도한 형식으로 보내기

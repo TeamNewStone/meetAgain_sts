@@ -61,6 +61,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 	
 	@Override
 	public int selectGroupCount(String userId) {
+		System.out.println(userId);
 		return sqlSession.selectOne("sgroupMapper.selectGroupCount", userId);
 	}
 
@@ -82,8 +83,8 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 
 
-	public int selectgBoardTotalContents() {
-		return sqlSession.selectOne("sgroupMapper.selectgBoardTotalContent");
+	public int selectgBoardTotalContents(String gId) {
+		return sqlSession.selectOne("sgroupMapper.selectgBoardTotalContent",gId);
 	}
 
 	@Override
@@ -127,6 +128,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 	@Override
 	public List<GB_comment> selectCommentList(int gbId) {
+		System.out.println("selectCommentList : "+gbId);
 		return sqlSession.selectList("sgroupMapper.selectCommentList", gbId);
 	}
 
@@ -145,6 +147,13 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int deleteCalendar(String cdId) {
 		return sqlSession.delete("calendarMapper.deleteCalendar", cdId);
 	}
+
+
+	@Override
+	public int commentUpdate(GB_comment gB_comment) {
+		return sqlSession.insert("sgroupMapper.updateComment", gB_comment);
+	}
+
 	
 	@Override
 	public Sgroup createMapList(String gid) {
