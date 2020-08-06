@@ -33,7 +33,7 @@ public interface SgroupDAO {
  
 	List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage);
 
-	 int selectgBoardTotalContents();
+	 int selectgBoardTotalContents(String gId);
 
 	Gboard selectOnegBoard(int bId);
 
@@ -50,8 +50,6 @@ public interface SgroupDAO {
 	List<GB_comment> selectCommentList(int gbId);
 
 	int insertComment(GB_comment gB_comment);
-	
-	int commentUpdate(int cId);
 
 	List<Calendar> loadList();
 

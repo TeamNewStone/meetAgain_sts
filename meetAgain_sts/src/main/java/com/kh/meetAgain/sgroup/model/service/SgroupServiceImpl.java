@@ -72,8 +72,8 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
-	public int selectgBoardTotalContents() {
-		return sgroupDAO.selectgBoardTotalContents();
+	public int selectgBoardTotalContents(String gId) {
+		return sgroupDAO.selectgBoardTotalContents(gId);
 	}
 
 	@Override
@@ -123,6 +123,7 @@ public class SgroupServiceImpl implements SgroupService {
 
 	@Override
 	public List<GB_comment> selectCommentList(int gbId) {
+		System.out.println("selectCommentList : "+gbId);
 		return sgroupDAO.selectCommentList(gbId);
 	}
 
