@@ -18,7 +18,7 @@
 		<div class="col-12">
 			<div class="content" align="center">
 				<div class="read-top">
-					<div class="subject">${Gboard.gbTitle}</div>
+					<div class="subject" name="gbTitle">${Gboard.gbTitle}</div>
 					<div id="noticeDate">${Gboard.gbDate}</div>
 				</div>
 				<div class="read-md">
@@ -32,9 +32,9 @@
 				<div class="col-3"></div>
 				<div class="col-3"></div>
 				<div class="col-3">
-					<a class="btn_1" onclick="goDelete()">삭제하기</a>
-					<a class="btn_1" onclick="goUpdate()">수정하기</a>
-<%-- 					<a class="btn_1 checkout_btn_1" href="<%=request.getContextPath()%>/sgroup/groupBoard.do?gId=${gb.getGId()}">메뉴로 돌아가기</a> --%>
+					<button="btn_1" onclick="goDelete()">삭제하기</button> <a class="btn_1"
+						onclick="goUpdate()">수정하기</a>
+					<%-- 					<a class="btn_1 checkout_btn_1" href="<%=request.getContextPath()%>/sgroup/groupBoard.do?gId=${gb.getGId()}">메뉴로 돌아가기</a> --%>
 
 				</div>
 				<div class="replyArea">
@@ -70,7 +70,7 @@
 									class="replyList${gbc.getCLevel()}">
 									<tr>
 										<td rowspan="2"></td>
-										<td>${gbc.getCDate()}</td>
+										<td>${gbc.getCDate()}${gbc.getNickName()}</td>
 										<td align="center"><c:if
 												test="${ member.userId eq gbc.getUserId()}">
 												<input type="hidden" name="cId" value="${gbc.getCId()}" />
@@ -139,7 +139,7 @@
 	function goDelete() {
 		var gbId = $
 		{
-			Gboard.gbId
+			GB_comment.gbId
 		}
 		;
 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="
@@ -179,7 +179,7 @@
 		var gbId = "${Gboard.gbId}";
 
 		location.href = "${ pageContext.request.contextPath}/sgroup/commentDelete.do"
-				+ "?cId=" + cId;
+				+ "?cId=" + cId+"&gbId="+gbId;
 	}
 
 	function reComment(obj) {

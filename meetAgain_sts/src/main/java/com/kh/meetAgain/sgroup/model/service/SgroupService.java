@@ -36,7 +36,7 @@ public interface SgroupService {
 	int selectGroupCount(String userId);
 	
 
- int selectgBoardTotalContents();
+ int selectgBoardTotalContents(String gId);
 
 	 Gboard SelectOnegBoard(int bId);
 
@@ -51,8 +51,6 @@ public interface SgroupService {
 	int addCalendar(Calendar calendar);
 
 	List<GB_comment> selectCommentList(int gbId);
-	
-	Object commentUpdate(int cId);
 
 	List<Calendar> loadList();
 
@@ -61,6 +59,8 @@ public interface SgroupService {
 	int commentDelete(int cId);
 
 	int deleteCalendar(String cdId);
+
+	int insertComment(GB_comment gB_comment);
 	
 	Sgroup createMapList(String gid);
 	

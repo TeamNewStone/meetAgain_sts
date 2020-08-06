@@ -37,7 +37,8 @@
 
 	<div style="width: 34%; float: left;">
 		<%-- 페이지 처리 --%>
-		<ul class="pagination pagination-sm" align="center">
+		<c:out value="${pageBar }" escapeXml="false"/>
+		<!-- <ul class="pagination pagination-sm" align="center">
 			<li class="page-item disabled"><a class="page-link" href="#a"><i
 					class="fas fa-long-arrow-alt-left"></i></a></li>
 			<li class="page-item active"><a class="page-link" href="#a">1</a>
@@ -46,7 +47,7 @@
 			<li class="page-item"><a class="page-link" href="#a">3</a></li>
 			<li class="page-item"><a class="page-link" href="#a"><i
 					class="fas fa-long-arrow-alt-right"></i></a></li>
-		</ul>
+		</ul> -->
 	</div>
 
 	<div class="searchArea" style="width: 33%; float: left;">
@@ -82,7 +83,7 @@
 	});
 
 	function gboardInsert() {
-		location.href = "${pageContext.request.contextPath}/sgroup/gboardInsert.do?gId=${param.gId}";
+		location.href = "${pageContext.request.contextPath}/sgroup/gboardInsert.do?gId="+${gid};
 	}
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
