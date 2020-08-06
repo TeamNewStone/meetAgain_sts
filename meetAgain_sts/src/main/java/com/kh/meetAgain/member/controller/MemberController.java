@@ -224,13 +224,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/mTMIUpdate.do")
-	public String mTMIUpdate(UserTMI userTMI, CateInfo cateInfo, Model model, HttpSession session,
+	public String mTMIUpdate(Member member, UserTMI userTMI, CateInfo cateInfo, Model model, HttpSession session,
 	         @RequestParam(value="userImg1", required = false) MultipartFile[] userImg1) {
 		
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/userImg");
 
 	      File dir = new File(saveDir);
 	      if(dir.exists() == false) dir.mkdirs();
+	      System.out.println("아니 왜안되는데 이거 : "+userImg1);
 	      
 	      for(MultipartFile f : userImg1) {
 	         if(!f.isEmpty()) {
@@ -261,7 +262,7 @@ public class MemberController {
 			result = memberService.mCateDelete(userTMI.getUserId());
 			result = memberService.mTMIUpdate2(userTMI);
 		}
-		 
+		member.setUserImg(userTMI.getUserImg()); 
 		String loc="/";
 		String msg="";
 		

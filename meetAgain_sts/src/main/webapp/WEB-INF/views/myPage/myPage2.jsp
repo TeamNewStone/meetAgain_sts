@@ -37,6 +37,7 @@
 	    
       <div class="col-12 col-md-4">
           <form action="${ pageContext.request.contextPath }/member/mUpdate.do" method = "post" enctype="multipart/form-data">
+          
 				<input type="file" name="userImg1" id="profileImgBtn" style="display: none;"
 				onchange="loadImg(this);" />
         <div class="row">            
