@@ -1,6 +1,7 @@
 package com.kh.meetAgain.member.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.meetAgain.member.model.dao.MemberDAO;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.member.model.vo.MemberShip;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 
 @Service("memberService")
@@ -92,5 +94,20 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member selectOneMember(String userId) {
 		return memberDAO.selectOneMember(userId);
+	}
+
+	@Override
+	public MemberShip selectOneMember2(String userId) {
+		return memberDAO.selectOneMember2(userId);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMHList(int cPage, int numPerPage, String userId) {
+		return memberDAO.selectMHList(cPage, numPerPage, userId);
+	}
+
+	@Override
+	public int selectMHTotalContents(String userId) {
+		return memberDAO.selectMHTotalContents(userId);
 	}
 }
