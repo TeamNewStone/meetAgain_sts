@@ -65,10 +65,10 @@
 
 
 	<select id="selectGroupCount" parameterType="string" resultType="_int">
-	   SELECT COUNT(*) 
+	  	SELECT COUNT(*) 
       	FROM JOING
-       WHERE USERID= #{userId} AND ISLEAVE='N' AND ISOUT='N'
-      GROUP BY USERID
+        WHERE USERID=#{userId} AND ISLEAVE='N' AND ISOUT='N'
+        GROUP BY USERID
 	</select>
 
 	<insert id="insertGroupJoin" parameterType="Joing">

@@ -105,8 +105,16 @@ public class SgroupController {
 		List<Sgroup> list = sgroupService.selectSgroupList();
 		List<CateInfo> cateInfo = sgroupService.selectCateInfo(m.getUserId());
 		List<Joing> joUser = sgroupService.selectJoingUser(m.getUserId());
-		int groupCount = sgroupService.selectGroupCount(m.getUserId());
 		
+		int groupCount = 0;
+		
+		try {
+			
+			groupCount = sgroupService.selectGroupCount(m.getUserId());
+		
+		}catch(NullPointerException e) {
+			groupCount = 0;
+		}
 		model.addAttribute("list", list);
 		model.addAttribute("cateInfo", cateInfo);
 		model.addAttribute("joUser", joUser);
@@ -128,7 +136,15 @@ public class SgroupController {
 
 		List<Joing> joing = sgroupService.selectJoing(gId);
 		
-		int groupCount = sgroupService.selectGroupCount(m.getUserId());
+		int groupCount = 0;
+		
+		try {
+			
+			groupCount = sgroupService.selectGroupCount(m.getUserId());
+		
+		}catch(NullPointerException e) {
+			groupCount = 0;
+		}
 
 		model.addAttribute("sgroup", sr);
 		model.addAttribute("joing", joing);
