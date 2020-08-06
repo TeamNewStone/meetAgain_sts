@@ -434,7 +434,7 @@
 
 			<section id="gBoardList" class="container">
 
-				<table id="tbl-board" class="table" style="text-align: center;">
+				<table id="tbl-board" class="table table-hover" style="text-align: center;">
 					<thead>
 						<tr>
 							<th>소모임명</th>
@@ -446,8 +446,8 @@
 							<th>조회수</th>
 						</tr>
 					</thead>
-					<tbody class="table-hover">
-						<c:if test="${list ne null }">
+					<tbody>
+						<c:if test="${!empty list}">
 							<c:forEach items="${list}" var="gb">
 								<tr id="${gb.gbId}">
 									<td>${gb.GTitle}</td>
@@ -544,7 +544,7 @@
 <!-- 마이페이지 메인 끝 -->
 
 <script>
-/* $(function(){ */
+
 	$(".card").on("click",function(){
 		
 		var gId = $(this).attr("id");
@@ -672,7 +672,7 @@
 		var muserId = '${member.userId}';
 		location.href="${pageContext.request.contextPath}/myPage/follow.do?uid="+userId+"&muserId="+muserId;
 	}
-/* }); */
+
 	function accountEdit() {
 		var userId = '${member.userId}';
 		location.href = "${ pageContext.request.contextPath }/myPage/myPage2.do?uid="+userId;
@@ -680,6 +680,18 @@
 	function rateEdit() {
 		location.href = "${ pageContext.request.contextPath }/member/membership.do";
 	}
+	
+	// 내가 쓴 게시글 클릭하면 해당 게시글로 이동
+	$('tr[id]').mouseenter(function() {
+		$(this).css({
+			"cursor" : "pointer"
+		});
+	}).on('click',function(){
+		var gbId = $(this).attr("id");
+		location.href='${pageContext.request.contextPath}/sgroup/groupBoardDetail.do?gbId='+gbId;
+	})
+	
+	
 //별점 마킹 모듈 프로토타입으로 생성
 function Rating(){};
 Rating.prototype.rate = 0;

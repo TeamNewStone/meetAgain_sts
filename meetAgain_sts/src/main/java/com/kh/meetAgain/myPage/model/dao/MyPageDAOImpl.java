@@ -20,10 +20,10 @@ public class MyPageDAOImpl implements MyPageDAO {
 	SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<Map<String, String>> selectMyBoardList(int cPage, int numPerPage) {
+	public List<Map<String, String>> selectMyBoardList(int cPage, int numPerPage, String userId) {
 		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		
-		return sqlSession.selectList("myPageMapper.selectMyBoardList", null, rows);
+		return sqlSession.selectList("myPageMapper.selectMyBoardList", userId, rows);
 	}
 
 	@Override
