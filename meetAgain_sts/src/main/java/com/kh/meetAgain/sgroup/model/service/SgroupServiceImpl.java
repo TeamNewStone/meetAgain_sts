@@ -33,8 +33,8 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
-	public Sgroup selectOneSgroup(String gId) {
-		return sgroupDAO.selectOneSgroup(gId);
+	public Sgroup selectOneSgroup(String gid) {
+		return sgroupDAO.selectOneSgroup(gid);
 	}
 
 	@Override
@@ -43,8 +43,8 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
-	public List<Joing> selectJoing(String gId) {
-		return sgroupDAO.selectJoing(gId);
+	public List<Joing> selectJoing(String gid) {
+		return sgroupDAO.selectJoing(gid);
 	}
 
 	@Override
@@ -152,6 +152,11 @@ public class SgroupServiceImpl implements SgroupService {
 	@Override
 	public Sgroup createMapList(String gid) {
 		return sgroupDAO.createMapList(gid);
+	}
+
+	@Override
+	public int countGroupMember(String gid) {
+		return sgroupDAO.countGroupMember(gid);
 	}
 
 }

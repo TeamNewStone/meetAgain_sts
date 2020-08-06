@@ -16,12 +16,12 @@ public interface SgroupDAO {
 	
 	List<Sgroup> selectSgroupList();
 	
-	Sgroup selectOneSgroup(String gId);
+	Sgroup selectOneSgroup(String gid);
 
 
 	List<CateInfo> selectCateInfo(String userId);
 
-	List<Joing> selectJoing(String gId);
+	List<Joing> selectJoing(String gid);
 	
 	List<Joing> selectJoingUser(String userId);
 	
@@ -60,5 +60,7 @@ public interface SgroupDAO {
 	int deleteCalendar(String cdId);
 
 	Sgroup createMapList(String gid);
+
+	int countGroupMember(String gid);
 
 }

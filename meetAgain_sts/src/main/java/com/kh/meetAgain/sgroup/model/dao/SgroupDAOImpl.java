@@ -34,8 +34,8 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 	
 	@Override
-	public Sgroup selectOneSgroup(String gId) {
-		return sqlSession.selectOne("sgroupMapper.selectOneSgroup", gId);
+	public Sgroup selectOneSgroup(String gid) {
+		return sqlSession.selectOne("sgroupMapper.selectOneSgroup", gid);
 	}
 	
 	@Override
@@ -45,8 +45,8 @@ public class SgroupDAOImpl implements SgroupDAO {
 	
 	
 	@Override
-	public List<Joing> selectJoing(String gId) {
-		return sqlSession.selectList("sgroupMapper.selectJoing", gId);
+	public List<Joing> selectJoing(String gid) {
+		return sqlSession.selectList("sgroupMapper.selectJoing", gid);
 	}
 	
 	@Override
@@ -158,6 +158,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 	@Override
 	public Sgroup createMapList(String gid) {
 		return sqlSession.selectOne("mapMapper.createMapList",gid);
+	}
+
+	@Override
+	public int countGroupMember(String gid) {
+		return sqlSession.selectOne("sgroupMapper.countGroupMember", gid);
 	}
 
 }

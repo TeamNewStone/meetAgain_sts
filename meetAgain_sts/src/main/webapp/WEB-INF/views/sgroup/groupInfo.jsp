@@ -107,10 +107,10 @@
 						$('#gFee').toLocaleString();
 					});
 				</script>
-				
+
 				<div class="form-group">
 				<label style="margin-bottom:-1px">인원 수</label>
-				<p>${fn:length(joing) } / ${sgroup.getMaxNum() } 명</p>
+				<p>${groupMem } / ${sgroup.getMaxNum() } 명</p>
 				</div>
 			
 				<div class="form-group">
@@ -127,13 +127,19 @@
 				</div>
 
 				<div class="form-group">
-				<label style="margin-bottom:-1px">나이 제한</label>
-				<c:if test="">
-                	<span class="badge badge-pill badge-success">10대</span>
-                </c:if>
-                <c:if test="Arrays.asList(${sgroup.getLimitGroup()}).contains('20대')">
-                	<span class="badge badge-pill badge-success">20대</span>
-                </c:if>
+				<label style="margin-bottom:-1px">가입 가능 연령대</label>
+					<c:if test="${fn:length(sgroup.getLimitGroup()) eq 6 or fn:length(sgroup.getLimitGroup()) eq 1 }">
+		     		<p class="badge badge-pill badge-success">나이무관</p> 
+		     		</c:if>
+		     		<c:if test="${fn:length(sgroup.getLimitGroup()) lt 6}">
+		     			<c:if test="${ fn:length(sgroup.getLimitGroup()) ne 1}">
+			     			<div>
+			     			<c:forEach var="li" items="${sgroup.getLimitGroup()}" begin="1">
+			     				<span class="badge badge-pill badge-success">${li}</span> 
+			     			</c:forEach>
+			     			</div>
+		     			</c:if>
+		     		</c:if>
 				</div>
 				
 				<div class="form-group">
@@ -172,7 +178,16 @@
 							});
 						</script>
 					</c:if>
-				
+					<c:forEach var="jo" items="${joing}">
+						<c:if test="${jo.getUserId().equals(member.getUserId()) and jo.getIsReady()=='2'}">
+						<script>
+						$(function(){
+							$('#joinGroupBtn').html('승인중').attr('disabled', true);
+						});
+						</script>
+						</c:if>
+					</c:forEach>
+						
 				</div>
 				</div>
 			</div>
@@ -183,27 +198,28 @@
 </form>
 </div>
 <script>
+
 function groupConfirm(){
 	var checkResult = window.confirm('모임에 가입하시겠습니까?');
-	<c:if test="${!empty sgroup.getGPwd()}">
-	var gPwd = ${sgroup.getGPwd()};
-	var inputPassword = window.prompt('모임 비밀번호를 입력하세요'); 
-		if(gPwd==inputPassword){
-			return true;
-		}else {
-			alert('비밀번호가 틀렸습니다.');
-		    return false;
-		}
-	</c:if>
+	
+	if(checkResult == true) {
+		<c:if test="${!empty sgroup.getGPwd()}">
+			var gPwd = ${sgroup.getGPwd()};
+			var inputPassword = window.prompt('모임 비밀번호를 입력하세요'); 
+				if(gPwd==inputPassword){
+					return true;
+				}else {
+					alert('비밀번호가 틀렸습니다.');
+				    return false;
+				}
+		</c:if>
+		return true;
+	} else {
+		return false;
+	}
+};
+	
+	
 
-
-
-		if(checkResult == true) {
-		    return true;
-		} else {
-		    return false;
-		}
-
-}
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

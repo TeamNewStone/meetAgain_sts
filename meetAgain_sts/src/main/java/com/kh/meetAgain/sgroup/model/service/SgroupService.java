@@ -19,11 +19,11 @@ public interface SgroupService {
 	
 	List<Sgroup> selectSgroupList();
 	
-	Sgroup selectOneSgroup(String gId);
+	Sgroup selectOneSgroup(String gid);
 
 	List<CateInfo> selectCateInfo(String userId);
 	
-	List<Joing> selectJoing(String gId);
+	List<Joing> selectJoing(String gid);
 
 	List<Joing> selectJoingUser(String userId);
 	
@@ -63,5 +63,7 @@ public interface SgroupService {
 	int insertComment(GB_comment gB_comment);
 	
 	Sgroup createMapList(String gid);
+
+	int countGroupMember(String gid);
 	
 }
