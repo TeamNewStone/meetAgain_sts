@@ -4,8 +4,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapMapper">
 
-	<select id="createMapList" resultType="Sgroup" parameterType="string">
+	<select id="createMapList" parameterType="string" resultType="Sgroup">
 		SELECT GID, GPLACE FROM SGROUP WHERE GID = #{gid}
+	</select>
+	
+	<select id="meetingPlaceMasterStatus" parameterType="string" resultType="Joing" >
+		SELECT GID, ISCPT FROM JOING WHERE GID = #{gid}
 	</select>
 	
 </mapper>

@@ -7,13 +7,9 @@
 <%@ page
 	import="java.util.*, com.kh.meetAgain.sgroup.model.vo.*, com.kh.meetAgain.member.model.vo.*"%>
 
-<c:import url="/WEB-INF/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" /><div class="container" style="taxt-align: center;">
+	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
 
-<br>
-<br>
-<br>
-<br>
-<div class="container" style="taxt-align: center;">
 	<div class="row">
 		<div class="col-12">
 			<div class="content" align="center">
@@ -32,7 +28,7 @@
 				<div class="col-3"></div>
 				<div class="col-3"></div>
 				<div class="col-3">
-					<button="btn_1" onclick="goDelete()">삭제하기</button> <a class="btn_1"
+				<a class="btn_1" onclick="goDelete()">삭제하기</button> <a class="btn_1"
 						onclick="goUpdate()">수정하기</a>
 					<%-- 					<a class="btn_1 checkout_btn_1" href="<%=request.getContextPath()%>/sgroup/groupBoard.do?gId=${gb.getGId()}">메뉴로 돌아가기</a> --%>
 
@@ -124,9 +120,9 @@
 
 </div>
 <script>
-	function goGboard() {
-		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoard.do"
-	}
+// 	function goGboard() {
+// 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoard.do"
+// 	}
 	function goUpdate() {
 		var gbId = $
 		{

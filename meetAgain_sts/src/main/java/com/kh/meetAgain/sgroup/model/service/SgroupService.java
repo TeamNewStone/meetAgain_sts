@@ -66,4 +66,6 @@ public interface SgroupService {
 
 	int countGroupMember(String gid);
 	
+	Joing meetingPlaceMasterStatus(String gid);
+	
 }

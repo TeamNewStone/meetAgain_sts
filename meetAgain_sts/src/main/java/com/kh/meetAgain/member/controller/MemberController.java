@@ -3,7 +3,9 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +23,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.member.model.service.MemberService;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.member.model.vo.MemberShip;
+import com.kh.meetAgain.member.model.vo.MsHistory;
 import com.kh.meetAgain.member.model.vo.UserTMI;
-import com.kh.meetAgain.myPage.model.service.MyPageService;
-import com.kh.meetAgain.myPage.model.service.MyPageServiceImpl;
 
 @SessionAttributes(value= {"member"})
 @Controller
@@ -89,7 +92,30 @@ public class MemberController {
 	}
 	
 	@RequestMapping("member/membership.do")
-	public String membership() {
+	public String membership(@ModelAttribute("member") Member m, MemberShip ms, Model model,
+			@RequestParam(value="cPage", required=false, defaultValue="1") int cPage) {
+		int numPerPage = 10;
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		String pageBar = "";
+		if(m.getMLevel() == 1) {
+			// 프리미엄 회원일 경우 . 일반 회원은 어차피 로그인할 때 member 들고오고 다른 테이블은 필요없으므로 굳이 service X
+			 list = memberService.selectMHList(cPage, numPerPage, m.getUserId());
+			
+			int totalContents = memberService.selectMHTotalContents(m.getUserId());
+			
+			pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "membership.do");
+			ms = memberService.selectOneMember2(m.getUserId());
+		} 
+		
+		
+		/* Date endDate = mh.getPayDate().getMonth()+1; */
+		model.addAttribute("ms", ms);
+		model.addAttribute("list", list);
+		/* 없어도 되는지 확인
+		 * model.addAttribute("totalContents", totalContents);
+		 * model.addAttribute("numPerPage", numPerPage);
+		 */
+		model.addAttribute("pageBar", pageBar);
 		return "member/membership";
 	}
 	@RequestMapping("member/login.do")

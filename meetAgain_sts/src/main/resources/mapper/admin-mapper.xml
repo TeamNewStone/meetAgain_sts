@@ -55,7 +55,7 @@
 	UPDATE MEMBER SET OUT_YN='Y' WHERE NICKNAME=#{tnickName}
 </update>
 <select id="selectMemberList" resultType="Member">
-	SELECT * FROM MEMBER
+	SELECT * FROM MEMBER WHERE USERID != 'meetAgainAdmin'
 </select>
 <select id="selectMemberTotalContents" resultType="_int">
 	SELECT COUNT(*) FROM MEMBER
