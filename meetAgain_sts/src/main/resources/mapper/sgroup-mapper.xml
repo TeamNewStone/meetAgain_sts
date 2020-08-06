@@ -12,21 +12,13 @@
 
 	<insert id="insertSgroup" parameterType="Sgroup">
 		INSERT ALL INTO
-		SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE,
-		MAXNUM, CHARGE,
-		GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE,
-		LIMITGROUP)
-		VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro},
-		DEFAULT, #{maxNum},
-		#{charge}, #{gFee}, #{gPlace},
-		#{gType}, #{durate},
-		DEFAULT, #{gPwd}, #{joinType}, #{limitGroup,
-		typeHandler=Str2ArrayHandler})
+		SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE, MAXNUM, CHARGE, GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE, LIMITGROUP)
+		VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro}, DEFAULT, #{maxNum},
+		#{charge}, #{gFee}, #{gPlace}, #{gType}, #{durate},
+		DEFAULT, #{gPwd}, #{joinType}, #{limitGroup, typeHandler=Str2ArrayHandler})
 
-		INTO JOING(USERID, GID, ISCPT, ISREADY,
-		ISOUT, ISLEAVE)
-		VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 1, DEFAULT,
-		DEFAULT)
+		INTO JOING(USERID, GID, ISCPT, ISREADY, ISOUT, ISLEAVE)
+		VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 1, DEFAULT, DEFAULT)
 		SELECT * FROM DUAL
 	</insert>
 
@@ -45,14 +37,14 @@
 	<select  id="selectCateInfo" parameterType="string" resultType="CateInfo">
 	  SELECT  C.CATE_ID, G.* FROM CATEINFO C
       JOIN SGROUP G ON(C.CATE_ID=G.CATE_ID) 
-
       WHERE C.USERID = #{userId} AND G.GID NOT IN(SELECT GID FROM (SELECT * FROM JOING WHERE USERID = #{userId})) AND ISFIN='N'
 	</select>
 
 	<select id="selectJoing" parameterType="string"
 		resultType="Joing">
-		SELECT J.*, M.BIRTHDAY, M.GENDER, M.NICKNAME FROM JOING J
+		SELECT J.*, M.BIRTHDAY, M.GENDER, M.NICKNAME, U.USERIMG FROM JOING J
 		JOIN MEMBER M ON(J.USERID=M.USERID)
+        JOIN USERTMI U ON(J.USERID=U.USERID)
 		WHERE GID = #{gId} AND ISLEAVE='N'
 	</select>
 
@@ -64,10 +56,10 @@
 
 
 	<select id="selectGroupCount" parameterType="string" resultType="_int">
-	   SELECT COUNT(*) 
+	  	SELECT COUNT(*) 
       	FROM JOING
-       WHERE USERID= #{userId} AND ISLEAVE='N' AND ISOUT='N'
-      GROUP BY USERID
+        WHERE USERID=#{userId} AND ISLEAVE='N' AND ISOUT='N'
+        GROUP BY USERID
 	</select>
 
 	<insert id="insertGroupJoin" parameterType="Joing">

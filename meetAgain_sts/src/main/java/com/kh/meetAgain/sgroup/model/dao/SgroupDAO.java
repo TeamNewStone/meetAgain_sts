@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.meetAgain.member.model.vo.CateInfo;
-import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
@@ -59,7 +58,8 @@ public interface SgroupDAO {
 
 	int deleteCalendar(String cdId);
 
+	Sgroup createMapList(String gid);
 
-
+	Joing meetingPlaceMasterStatus(String gid);
 
 }

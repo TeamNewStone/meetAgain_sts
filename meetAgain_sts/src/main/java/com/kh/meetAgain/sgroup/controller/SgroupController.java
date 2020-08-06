@@ -52,14 +52,14 @@ public class SgroupController {
 			@RequestParam String userId) {
 
 		System.out.println("sgroup : " + sgroup);
+		System.out.println("sgroupImg : " + sgroupImg);
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
 
 		File dir = new File(saveDir);
 
 		System.out.println("폴더가 있나요? " + dir.exists());
 
-		if (dir.exists() == false)
-			dir.mkdirs();
+		if (dir.exists() == false) dir.mkdirs();
 
 		for (MultipartFile f : sgroupImg) {
 			if (!f.isEmpty()) {
@@ -105,8 +105,16 @@ public class SgroupController {
 		List<Sgroup> list = sgroupService.selectSgroupList();
 		List<CateInfo> cateInfo = sgroupService.selectCateInfo(m.getUserId());
 		List<Joing> joUser = sgroupService.selectJoingUser(m.getUserId());
-		int groupCount = sgroupService.selectGroupCount(m.getUserId());
 		
+		int groupCount = 0;
+		
+		try {
+			
+			groupCount = sgroupService.selectGroupCount(m.getUserId());
+		
+		}catch(NullPointerException e) {
+			groupCount = 0;
+		}
 		model.addAttribute("list", list);
 		model.addAttribute("cateInfo", cateInfo);
 		model.addAttribute("joUser", joUser);
@@ -128,7 +136,15 @@ public class SgroupController {
 
 		List<Joing> joing = sgroupService.selectJoing(gId);
 		
-		int groupCount = sgroupService.selectGroupCount(m.getUserId());
+		int groupCount = 0;
+		
+		try {
+			
+			groupCount = sgroupService.selectGroupCount(m.getUserId());
+		
+		}catch(NullPointerException e) {
+			groupCount = 0;
+		}
 
 		model.addAttribute("sgroup", sr);
 		model.addAttribute("joing", joing);
@@ -163,13 +179,6 @@ public class SgroupController {
 		model.addAttribute("gid", gid);
 		return "sgroup/groupAlbum";
 	}
-
-	@RequestMapping("/sgroup/groupMap.do")
-	public String groupMap(@RequestParam String gid, Model model) {
-		model.addAttribute("gid", gid);
-		return "sgroup/groupMap";
-	}
-
 
 	@RequestMapping("/sgroup/memberList.do")
 	public String memberList(@RequestParam String gid, Model model) {

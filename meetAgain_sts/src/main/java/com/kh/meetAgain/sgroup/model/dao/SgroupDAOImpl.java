@@ -7,8 +7,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
-
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
@@ -138,12 +136,10 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.insert("sgroupMapper.insertComment", gB_comment);
 	}
 
-
 	@Override
 	public int commentDelete(int cId) {
 		return sqlSession.delete("sgroupMapper.deleteComment", cId);
 	}
-
 
 	@Override
 	public int deleteCalendar(String cdId) {
@@ -157,6 +153,16 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 
 	
+	@Override
+	public Sgroup createMapList(String gid) {
+		return sqlSession.selectOne("mapMapper.createMapList", gid);
+	}
+
+	@Override
+	public Joing meetingPlaceMasterStatus(String gid) {
+		System.out.println("DAO실행 : " + gid);		
+		return sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", gid);
+	}
 
 }
 
