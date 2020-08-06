@@ -148,6 +148,12 @@
 					<div class="col-md-4" style="max-width: 500px;">
 						<div class="component">
 						<c:if test="${mg.getIsFin() eq 'Y'}">
+							<script>
+				    		$(function(){				    			
+				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#${ mg.getGId()}');
+				    			$('#${ mg.getGId()} .card-header').css('opacity', '0.2');				 
+				    		});
+				    	</script>		
 							<div class="card-fin" id = "${mg.getGId()}">
 							</c:if>
 							<c:if test="${mg.getIsFin() ne 'Y'}">
@@ -276,6 +282,12 @@
 					<div class="col-md-4" style="max-width: 500px;">
 						<div class="component">
 							<c:if test="${cg.getIsFin() eq 'Y'}">
+							<script>
+				    		$(function(){				
+				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#${cg.getGId()}');
+				    			$('#${cg.getGId()}.card-header').css('opacity', '0.2');
+				    		});
+				    	</script>		
 							<div class="card-fin" id = "${cg.getGId()}">
 							</c:if>
 							<c:if test="${cg.getIsFin() ne 'Y'}">
