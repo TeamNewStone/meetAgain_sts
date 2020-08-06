@@ -18,7 +18,7 @@
 						  <h1>부가정보</h1>
 					  <br />
 					  </div>
-					  <form style="line-height:1em;"action="${ pageContext.request.contextPath }/member/mTMIUpdate.do">
+					  <form style="line-height:1em;"action="${ pageContext.request.contextPath }/member/mTMIUpdate.do"  method = "post" enctype="multipart/form-data">
 					  
 					  
 					  <input type="hidden" name="userId" value="${UserTMI.userId }" />

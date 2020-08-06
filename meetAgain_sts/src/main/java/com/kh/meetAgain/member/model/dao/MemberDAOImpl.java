@@ -113,4 +113,9 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.update("memberMapper.imgUpdate", map);
 	}
 
+	@Override
+	public Member selectOneMember(String userId) {
+		return sqlSession.selectOne("memberMapper.selectOneMember", userId);
+	}
+
 }

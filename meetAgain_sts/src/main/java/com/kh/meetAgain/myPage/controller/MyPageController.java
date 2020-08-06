@@ -43,7 +43,7 @@ public class MyPageController {
 	int cPage, Model model) {
 		
 		/*===============프로필화면에 표시될 값 가져오기===============*/
-		Member owner = mservice.selectOne(userId);//마이페이지 주인의 정보값
+		Member owner = mservice.selectOneMember(userId);//마이페이지 주인의 정보값
 		int following = mpSvc.totalFollowing(userId);
 		int follower = mpSvc.totalFollower(userId);
 		int groupSum = mpSvc.totalGroup(userId);
@@ -83,7 +83,7 @@ public class MyPageController {
 		// 3. 패아자 HTML 생성
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "myPage1.do");
 		System.out.println("controller : "+list);
-		System.out.println("왜 안되나요 해당 사진 가져와라 : " + owner.getUserImg());
+		//System.out.println("왜 안되나요 해당 사진 가져와라 : " + owner.getUserImg());
 		System.out.println(owner);
 		model.addAttribute("list", list);
 		

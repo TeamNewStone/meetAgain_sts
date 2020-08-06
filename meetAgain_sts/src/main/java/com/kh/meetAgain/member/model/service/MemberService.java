@@ -31,4 +31,6 @@ public interface MemberService {
 
 	int imgUpdate(Map<String, String> map);
 
+	Member selectOneMember(String userId);
+
 }
