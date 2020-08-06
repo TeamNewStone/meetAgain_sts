@@ -85,6 +85,7 @@ public class SgroupController {
 
 		System.out.println("sgroup2222 : " + sgroup);
 		int result = sgroupService.insertSgroup(sgroup);
+		String loc = "/sgroup/group.do";
 		String msg = "";
 
 		if (result > 0) {
@@ -95,7 +96,9 @@ public class SgroupController {
 			System.out.println("모임생성완료");
 		}
 
-		return "redirect:/sgroup/group.do";
+		model.addAttribute("loc", loc); 
+		model.addAttribute("msg", msg);
+		return "common/msg";
 
 	}
 
@@ -131,25 +134,27 @@ public class SgroupController {
 
 	@RequestMapping("/sgroup/groupInfo.do")
 
-	public String groupInfo(@ModelAttribute("member") Member m, @RequestParam String gId, Model model) {
+	public String groupInfo(@ModelAttribute("member") Member m, @RequestParam String gid, Model model) {
 		
-		Sgroup sr = sgroupService.selectOneSgroup(gId);
+		Sgroup sr = sgroupService.selectOneSgroup(gid);
 
-		List<Joing> joing = sgroupService.selectJoing(gId);
-		
+		List<Joing> joing = sgroupService.selectJoing(gid);
+		int groupMem = 0;
 		int groupCount = 0;
 		
 		try {
 			
 			groupCount = sgroupService.selectGroupCount(m.getUserId());
-		
+			groupMem = sgroupService.countGroupMember(gid);
 		}catch(NullPointerException e) {
 			groupCount = 0;
+			groupMem = 0;
 		}
 
 		model.addAttribute("sgroup", sr);
 		model.addAttribute("joing", joing);
 		model.addAttribute("groupCount", groupCount);
+		model.addAttribute("groupMem", groupMem);
 
 		System.out.println("groupCount : " + groupCount);
 
@@ -165,13 +170,18 @@ public class SgroupController {
 
 		 String loc = "/sgroup/group.do"; 
 		 String msg = "";
+		 if(joing.getJoinType().equals("C")) {
+			 if(result >0) msg = "가입 신청이 완료되었습니다. 승인이 완료 될 때까지 기다려주세요.";
+			 else msg = "모임 신청 실패!";
+		
+		 } else {
+		 
+			 if(result > 0) msg = "모임 가입 성공!"; 
+			 else msg = "모임 가입 실패!";
 
-		 if(result > 0) msg = "모임 가입 성공!"; 
-		 else msg = "모임 가입 실패!";
-
-		  model.addAttribute("loc", loc); 
-		  model.addAttribute("msg", msg);
-
+		 }
+		 model.addAttribute("loc", loc); 
+		 model.addAttribute("msg", msg);
 		return "common/msg";
 	}
 	
@@ -184,6 +194,7 @@ public class SgroupController {
 	@RequestMapping("/sgroup/memberList.do")
 	public String memberList(@RequestParam String gid, Model model) {
 		List<Joing> joing = sgroupService.selectJoing(gid);
+		
 		
 		model.addAttribute("joing", joing);
 		return "sgroup/memberList";
@@ -447,10 +458,19 @@ public class SgroupController {
 	public String groupDetail(@RequestParam String gid, Model model) {
 		Sgroup s = sgroupService.selectOneSgroup(gid);
 		List<Joing> joing = sgroupService.selectJoing(gid);
+		
+		int groupMem = 0;
+		
+		try {
+			groupMem = sgroupService.countGroupMember(gid);
+		
+		}catch(NullPointerException e) {
+			groupMem = 0;
+		}
 		model.addAttribute("sgroup", s);
 		model.addAttribute("joing", joing);
 		model.addAttribute("gid", gid);
-		
+		model.addAttribute("groupMem", groupMem);
 		System.out.println("joing-groupDetail : " + joing);
 
 		return "sgroup/groupDetail";

@@ -25,7 +25,7 @@
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
 						<a class="dropdown-item" href="#">${fn:substring(member.address1,3,7)}</a>
-					<c:if test="${ !empty member.address2 && member.address3}">
+					<c:if test="${ !empty member.address2 and !empty member.address3}">
 						<a class="dropdown-item" href="#">${fn:substring(member.address2,3,7)}</a> 
 						<a class="dropdown-item" href="#">${fn:substring(member.address3,3,7)}</a>
 					</c:if>
@@ -326,7 +326,7 @@
 			</c:forEach>
 
 			if(JSON.stringify(result).indexOf(gId) < 0){
-				location.href = "${pageContext.request.contextPath}/sgroup/groupInfo.do?gId="+gId;
+				location.href = "${pageContext.request.contextPath}/sgroup/groupInfo.do?gid="+gId;
 			} else {
 				location.href = "${pageContext.request.contextPath}/sgroup/gotoGroup.do?gid="+gId;
 			}

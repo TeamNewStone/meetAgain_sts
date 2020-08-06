@@ -30,7 +30,7 @@
 	<select id="selectOneSgroup" parameterType="string"
 		resultMap="sgroupMap">
 		SELECT * FROM SGROUP
-		WHERE GID = #{gId}
+		WHERE GID = #{gid}
 	</select>
 
 
@@ -42,18 +42,23 @@
 
 	<select id="selectJoing" parameterType="string"
 		resultType="Joing">
-		SELECT J.*, M.BIRTHDAY, M.GENDER, M.NICKNAME, U.USERIMG FROM JOING J
+		SELECT J.*, M.BIRTHDAY, M.GENDER, M.NICKNAME, U.USERIMG, S.JOINTYPE FROM JOING J
 		JOIN MEMBER M ON(J.USERID=M.USERID)
         JOIN USERTMI U ON(J.USERID=U.USERID)
-		WHERE GID = #{gId} AND ISLEAVE='N'
+        JOIN SGROUP S ON(J.GID=S.GID)
+		WHERE J.GID = #{gid} AND ISLEAVE='N'
 	</select>
 
 	<select id="selectJoingUser" parameterType="string"
 		resultType="Joing">
 		SELECT * FROM JOING
-		WHERE USERID = #{userId} AND ISLEAVE='N' AND ISOUT='N'
+		WHERE USERID = #{userId} AND ISLEAVE='N' AND ISOUT='N' AND ISREADY=1
 	</select>
 
+	<select id="countGroupMember" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM JOING
+		WHERE GID=#{gid} AND ISLEAVE='N' AND ISOUT='N' AND ISREADY=1
+	</select>
 
 	<select id="selectGroupCount" parameterType="string" resultType="_int">
 	  	SELECT COUNT(*) 

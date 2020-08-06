@@ -38,7 +38,7 @@
 		<td>
 		<div id="gLeader" style="overflow: hidden; height: auto; display: flex; align-items: center;">
 		<c:forEach var="jo" items="${joing }">
-			<c:if test="${jo.getIsCpt()=='N'}">
+			<c:if test="${jo.getIsCpt()=='N' and jo.getIsReady()=='1'}">
 				<div id="userPic" style="float: left; padding: 10px;">
 				<c:if test="${jo.getUserImg() eq null }">
 					<img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="img-fluid rounded-circle"
@@ -59,14 +59,58 @@
 	</tr>
 	</table>
 	</div>
-	
-	<div>
-		
-	</div>
+	<br />
+<c:forEach var="jo" items="${joing }">
+	<c:if test="${jo.getJoinType()=='C' and jo.getUserId().equals(member.getUserId()) and jo.getIsCpt()=='Y'}">
+		<h4>가입 대기 명단</h4>
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col">닉네임</th>
+		      <th scope="col">승인</th>
+		       <th scope="col">상태</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <c:if test="${jo.getIsReady()==2}">
+		      <td>${jo.getNickName() }</td>
+		      </c:if>
+		      <td>
+		      	<button type="button" class="btn btn-secondary" id="accept">승인</button> /
+		      	<button type="button" class="btn btn-danger" id="reject">거절</button>
+		      	</td>
+		      <td>
+		      
+		      </td>
+		    </tr>
+		   </tbody>
+		  </table>
+		</c:if>
+</c:forEach>
 	<br />
 	<br />
 	<br />
 	<br />
 	<br />
 	</div>
+	<script>
+	$('#accept').on('click', function() {
+
+	      $.ajax({
+	         url : '${pageContext.request.contextPath}/sgroup/joinSuccess.do',
+	         data : {
+	            userId :   },
+	         success : function(data) {
+
+	            if (data == 0) {
+	               alert('오류가 발생하였습니다.');
+	            } else {
+	               alert('승인 완료되었습니다.');
+	               location.href = '${pageContext.request.contextPath}/sgroup/group.do';
+	            }
+	         }
+	      });
+	   });
+	</script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

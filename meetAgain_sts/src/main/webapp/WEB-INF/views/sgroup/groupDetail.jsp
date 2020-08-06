@@ -148,7 +148,7 @@
 								<label>회비 없음</label>
 							</c:if>
 						</td>
-						<td>매달 10일 수금 <svg width="1.5em" height="1.5em"
+<!-- 						<td>매달 10일 수금 <svg width="1.5em" height="1.5em"
 								viewBox="0 0 16 16" class="bi bi-pencil-square"
 								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
  		 <path
@@ -156,7 +156,7 @@
  		 <path fill-rule="evenodd"
 									d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
 		</svg>
-						</td>
+						</td> -->
 					</tr>
 					<tr>
 						<td><h5>모임인원</h5></td>
@@ -168,7 +168,7 @@
 									aria-valuemax="100"></div>
 							</div>
 							<div style="float: left;">
-								<h5>&nbsp;&nbsp;${fn:length(joing)}/${sgroup.getMaxNum() }</h5>
+								<h5>&nbsp;&nbsp;${groupMem}/${sgroup.getMaxNum() }</h5>
 							</div>
 							<div>
 							&nbsp;&nbsp;<button type="button" class="btn btn-danger"
@@ -177,7 +177,7 @@
 							</div>
 						</td>
 						<script>
-							var joinMemCount = (${fn:length(joing)}/${sgroup.getMaxNum()})*100;
+							var joinMemCount = (${groupMem}/${sgroup.getMaxNum()})*100;
 							$(function(){
 								$('#joinCount').css('width', joinMemCount+'%');
 							});
@@ -186,8 +186,9 @@
 
 					</tr>
 					<tr>
-						<td><h5>평균연령</h5></td>
-						<td colspan="2"><label>20</label>대(그래프로 대체)</td>
+						<td><h5>평균나이</h5></td>
+						<td colspan="2"><label id="groupAge"></label>세</td>
+						
 					</tr>
 					<tr>
 						<td><h5>성비</h5></td>
@@ -210,14 +211,44 @@
 
 
 <script type="text/javascript">
+
+$(function(){ 
+	var result = new Array();
+	var json = new Object();
+	
+	<c:forEach var="jo" items="${joing}" varStatus="st">
+		var birthYear = '${jo.getBirthday()}'.substr(0,4);
+		var today = new Date();
+		var nowYear = today.getFullYear();
+		var age = nowYear - birthYear + 1;
+		json = age;
+		result.push(json);
+		</c:forEach>
+		var test2 = JSON.stringify(result).replace(/[\[\]']+/g,'');
+		
+		var testSplit = test2.split(',');
+
+		var groupAge = 0;
+		
+		for(var i=0; i < testSplit.length; i++){
+			groupAge += parseInt(testSplit[i]);
+		}	
+		
+		console.log("groupAge : " + groupAge);
+		$('#groupAge').html(groupAge/${fn:length(joing)});
+	});
+
 $(function(){
+	
 	
  	var result = new Array();
 	var json = new Object();
 	
 	<c:forEach var="jo" items="${joing}" varStatus="status">
+		<c:if test="${jo.getIsReady()=='1'}">
 		json = '${jo.getGender()}';
 		result.push(json);
+		</c:if>
 	</c:forEach>
 	
 	var test = JSON.stringify(result);
