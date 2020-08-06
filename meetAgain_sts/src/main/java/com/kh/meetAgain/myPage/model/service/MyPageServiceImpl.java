@@ -17,8 +17,8 @@ public class MyPageServiceImpl implements MyPageService {
 	@Autowired MyPageDAO mpDAO;
 
 	@Override
-	public List<Map<String, String>> selectMyBoardList(int cPage, int numPerPage) {
-		return mpDAO.selectMyBoardList(cPage, numPerPage);
+	public List<Map<String, String>> selectMyBoardList(int cPage, int numPerPage, String muserId) {
+		return mpDAO.selectMyBoardList(cPage, numPerPage, muserId);
 	}
 
 	@Override
