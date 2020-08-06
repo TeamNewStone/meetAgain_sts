@@ -154,4 +154,9 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.createMapList(gid);
 	}
 
+	@Override
+	public Joing meetingPlaceMasterStatus(String gid) {
+		return sgroupDAO.meetingPlaceMasterStatus(gid);
+	}
+
 }
