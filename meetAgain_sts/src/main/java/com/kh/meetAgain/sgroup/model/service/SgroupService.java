@@ -63,5 +63,7 @@ public interface SgroupService {
 	int insertComment(GB_comment gB_comment);
 	
 	Sgroup createMapList(String gid);
+
+	Joing meetingPlaceMasterStatus(String gid);
 	
 }
