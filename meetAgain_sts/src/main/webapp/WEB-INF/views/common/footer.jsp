@@ -15,7 +15,7 @@
 		</ul>
 		<br />
 		<ul class="footer-menu list-unstyled d-flex flex-row text-center text-md-left">
-			<li><a href="${ pageContext.request.contextPath }/myPage/myPage1.do">마이페이지</a></li>
+			<li><a href="${ pageContext.request.contextPath}/myPage/myPage1.do?uid=${member.userId}">마이페이지</a></li>
 			<li><a href="${ pageContext.request.contextPath }/board/review.do">리뷰</a></li>
 		</ul>
 		
