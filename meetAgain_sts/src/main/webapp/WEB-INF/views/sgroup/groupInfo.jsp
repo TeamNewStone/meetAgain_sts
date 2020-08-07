@@ -217,11 +217,11 @@ function groupConfirm(){
 	var result = new Array();
 		var json = new Object();
 	if(checkResult == true) {
-		<c:if test="${sgroup.getLimitGroup()[0] eq 'M' and member.getGender() eq 'F'}">
+		<c:if test="${sgroup.getLimitGroup()[0] eq 'M' and member.getGender().trim() eq 'F'}">
     		alert('이 모임은 남자만 가입가능합니다.');
     		return false;
     	</c:if>
-    	<c:if test="${sgroup.getLimitGroup()[0] eq 'F' and member.getGender() eq 'M'}">
+    	<c:if test="${sgroup.getLimitGroup()[0] eq 'F' and member.getGender().trim() eq 'M'}">
 	    	alert('이 모임은 여자만 가입가능합니다.');
 			return false;
     	</c:if>
