@@ -14,13 +14,29 @@
 
 	<div class="container" style="overflow: hidden; height: auto;">
 		<c:import url="/WEB-INF/views/common/groupHeader.jsp" />		
-
+		<c:set var="now" value="<%=new java.util.Date()%>" />
+		<c:set var="sysMonth"><fmt:formatDate value="${now}" pattern="MM" /></c:set> 
 		<div class="row">
 		
 			<div class="col-4">
-				<button class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" value="일정추가">일정추가</button>
+			<div style="margin-bottom : 10%;">
+			<div style="float:left;">
+				<h2 id="scheduleList">
+				<c:if test="${sysMonth lt 10}">
+					${fn:substring(sysMonth,1,2)}월의 일정
+				</c:if>
+				<c:if test="${sysMonth gt 9}"> 
+					${sysMonth}월의 일정
+				</c:if></h2>
+			</div>
+			<div style="float:right;">
+			<button class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" value="일정추가">일정추가</button>
+			</div>
+			</div>
 				<!-- 소모임 타이틀 표시 -->
-				<h2 id="scheduleList"></h2>
+				<br />
+				<br />
+			<div>
 				
 				<span>일반모임</span><br>
 					<c:forEach items="${sclist}" var="normalList" varStatus="scIndex">
@@ -28,8 +44,15 @@
 						<c:set var="genCtn" value="${normalList.getIsCtn()}" />
 							<c:if test="${genCtn eq 'N'}">
 							<li class="list-group-item">
-							모임명 : ${normalList.getGInfo()}<br>
-							일정 : ${normalList.getGDate()} ~ ${normalList.getGDateEnd()}<br>
+							일정 : ${normalList.getGInfo()}<br>
+							날짜 : 
+							<c:if test="${normalList.getGDate() <normalList.getGDateEnd()}">
+							${normalList.getGDate()} ~ ${normalList.getGDateEnd()}
+							</c:if>
+							<c:if test="${normalList.getGDate() > normalList.getGDateEnd()}">
+							${normalList.getGDateEnd()} ~ ${normalList.getGDate()}
+							</c:if>
+							<br>
 							시간 : ${fn:substring(calTime, 10, 16)}	<br>
 							</li>											
 							</c:if>
@@ -40,13 +63,19 @@
 						<c:set var="genCtn" value="${normalList.getIsCtn()}" />
 							<c:if test="${genCtn eq 'Y'}">
 							<li class="list-group-item">
-							모임명 : ${normalList.getGInfo()}<br>
-							일정 : ${normalList.getGDate()} ~ ${normalList.getGDateEnd()}<br>
+							일정 : ${normalList.getGInfo()}<br>
+							날짜 : 
+							<c:if test="${normalList.getGDate() <normalList.getGDateEnd()}">
+							${normalList.getGDate()} ~ ${normalList.getGDateEnd()}
+							</c:if>
+							<c:if test="${normalList.getGDate() > normalList.getGDateEnd()}">
+							${normalList.getGDateEnd()} ~ ${normalList.getGDate()}
+							</c:if>
 							시간 : ${fn:substring(calTime, 10, 16)}	<br>
 							</li>											
 							</c:if>
 					</c:forEach>
-					
+				</div>	
 			</div>
 			
 			<div class="col-8">
@@ -106,7 +135,9 @@
 				</div>
 			</div>
 		</div>
-		
+		<br />
+		<br />
+		<br />
 	</div>
 	
 	<script>
