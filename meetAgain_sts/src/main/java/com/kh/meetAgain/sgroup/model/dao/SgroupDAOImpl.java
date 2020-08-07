@@ -173,6 +173,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int joinSuccess(Map<String, String> map) {
 		return sqlSession.update("sgroupMapper.joinSuccess", map);
 	}
+	
+	@Override
+	public int meetingPlaceMasterStatus(Map<String, Object> map) {
+		return sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", map);
+	}
 
 }
 

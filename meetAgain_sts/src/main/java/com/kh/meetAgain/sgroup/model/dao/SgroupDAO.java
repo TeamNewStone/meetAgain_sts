@@ -66,5 +66,6 @@ public interface SgroupDAO {
 
 	int joinSuccess(Map<String, String> map);
 
+	int meetingPlaceMasterStatus(Map<String, Object> map);
 
 }

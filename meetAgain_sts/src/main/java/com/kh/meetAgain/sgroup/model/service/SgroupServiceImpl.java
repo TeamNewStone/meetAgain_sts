@@ -169,5 +169,10 @@ public class SgroupServiceImpl implements SgroupService {
 	public int joinSuccess(Map<String, String> map) {
 		return sgroupDAO.joinSuccess(map);
 	}
+	
+	@Override
+	public int meetingPlaceMasterStatus(Map<String, Object> map) {
+		return sgroupDAO.meetingPlaceMasterStatus(map);
+	}
 
 }

@@ -253,7 +253,8 @@
 					</div>
 				</div>				
 				<i class="fa fa-map-marker fa-3x"></i><br>
-				<input type="hidden" value="${gid}" />									
+				<input type="hidden" name = "gId" value="${gid}" />
+				<input type="text" name = "userId"  value="${jg.getUserId()}" />
 					<h6><span>${sg.getGPlace()}</span></h6><br>				
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
 			</div>
@@ -265,13 +266,10 @@
 			<br />
 			<div>
 				<button type="button" class="btn btn-info"	id="findRoad">카카오맵에서<br>길찾기</button>
-					<c:set var="mc" value="${sgMc.getIsCpt()}"/>
-					<c:choose>
-						<c:when test="${mc eq 'Y'}">
+					<c:set var="mc" value="${sgMc.getIsCpt()}"/>					
+					<c:if test="${mc eq 'Y'}">
 							<button type="button" class="btn btn-light" id="reloadmap" style="width: 113px; height: 60px;">장소변경</button>
-						</c:when>
-						<c:when test="${mc ne 'Y'}" />
-					</c:choose>
+					</c:if>
 			</div>
 		</div>
 
