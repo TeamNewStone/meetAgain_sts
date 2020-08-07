@@ -41,6 +41,7 @@
 				// 지도를 생성한다 
 				var map = new kakao.maps.Map(mapContainer, mapOption);
 				var geocoder = new kakao.maps.services.Geocoder();
+				var Ha, Ga;
 				
 				// 주소로 좌표를 검색합니다
 				geocoder.addressSearch('${gPlace}', function(result, status) {
@@ -149,18 +150,25 @@
 						    var resultDiv2 = document.getElementById('_mapMakerCheck2'); 
 						    resultDiv2.innerHTML = message2;						    
 						   
+						    console.log(latlng.Ha);
+						    console.log(latlng.Ga);
 						
 				        }
-
+				        Ha = latlng.Ha;
+				        Ga = latlng.Ga;
+						
 				    });
 
+				});			
+				
+				$(function(){
 					$('#findRoad').on('click', function() {						
-						if(confirm("카카오맵으로 넘어가시겠습니까?"))
-							window.open(url + '다시만나모임에서 선택한 장소' + ',' + latlng.Ha + ',' + latlng.Ga);							
-							// console.log(latlng.Ha + ',' + latlng.Ga);														
-					});
-
-				});				
+						if(confirm("카카오맵으로 넘어가시겠습니까?")){
+							window.open('https://map.kakao.com/link/to/다시만나모임에서 선택한 장소' + ',' + Ha + ',' + Ga);
+							return null;
+						}
+					});					
+				});
 				
 				// 장소검색
 				var places = new kakao.maps.services.Places();
@@ -257,7 +265,7 @@
 				<input type="hidden" name = "gId" value="${gid}" />
 				<c:set var="place" value="${gid}" />
 				<input type="hidden" name = "userId"  value="${user1.getUserId()}" />			
-					<h6><span>가져온 모임장소 : <br>${gPlace}</span></h6><br>		
+					<h6><span>소모임 모임장소 : <br>${gPlace}</span></h6><br>		
 							
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
 			</div> 
