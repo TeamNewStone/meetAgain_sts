@@ -62,7 +62,7 @@ public class MyPageDAOImpl implements MyPageDAO {
 	}
 	
 	@Override
-	public List<Sgroup> getMyGroup(String userId) {
+	public List<HashMap<String,Object>> getMyGroup(String userId) {
 		return sqlSession.selectList("myPageMapper.getMyGroup",userId);
 	}
 
@@ -100,4 +100,11 @@ public class MyPageDAOImpl implements MyPageDAO {
 		
 		return sqlSession.selectOne("myPageMapper.selectReview",hmap);
 	}
+
+	@Override
+	public int checkIn(Map<String, Object> map) {
+		return sqlSession.selectOne("myPageMapper.checkIn",map);
+	}
+
+	
 }
