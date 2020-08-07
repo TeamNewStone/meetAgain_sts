@@ -25,11 +25,6 @@ public class ServiceController {
 		return "serviceCenter/faq";
 	}
 
-	@RequestMapping("/serviceCenter/otoInquiry.do")
-	public String otoInquiry() {
-		return "serviceCenter/otoInquiry";
-	}
-
 	@RequestMapping("/serviceCenter/reportStatus.do")
 	public String reportStatus(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
 			Model model, HttpSession session) {
@@ -59,5 +54,9 @@ public class ServiceController {
 	@RequestMapping("/serviceCenter/PTC.do")
 	public String PTC() {
 		return "serviceCenter/PTC";
+	}
+	@RequestMapping("/serviceCenter/privacy_agreement.do")
+	public String test() {
+		return "serviceCenter/privacy_agreement";
 	}
 }
