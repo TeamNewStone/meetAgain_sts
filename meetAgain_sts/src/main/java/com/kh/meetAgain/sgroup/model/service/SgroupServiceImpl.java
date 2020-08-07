@@ -174,6 +174,11 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.getMaster(gId);
 	}
 
+	@Override
+	public Sgroup groupMapUpdate(String gId) {
+		return sgroupDAO.groupMapUpdate(gId);
+	}
+
 
 
 }

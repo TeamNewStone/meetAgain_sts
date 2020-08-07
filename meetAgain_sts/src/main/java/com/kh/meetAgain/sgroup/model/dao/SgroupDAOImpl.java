@@ -183,6 +183,10 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.selectOne("mapMapper.getMaster", gId);
 	}
 
+	@Override
+	public Sgroup groupMapUpdate(String gId) {
+		return sqlSession.selectOne("mapMapper.groupMapUpdate", gId);
+	}
 	
 }
 

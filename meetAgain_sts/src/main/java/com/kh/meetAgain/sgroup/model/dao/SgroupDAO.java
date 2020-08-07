@@ -68,5 +68,7 @@ public interface SgroupDAO {
 
 	Joing getMaster(String gId);
 
+	Sgroup groupMapUpdate(String gId);
+
 	
 }
