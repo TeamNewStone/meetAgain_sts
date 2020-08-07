@@ -60,8 +60,11 @@ public interface SgroupDAO {
 
 	Sgroup createMapList(String gid);
 
+	int countGroupMember(String gid);
+	
 	Joing meetingPlaceMasterStatus(String gid);
 
-	int countGroupMember(String gid);
+	int joinSuccess(Map<String, String> map);
 
+	int meetingPlaceMasterStatus(Map<String, Object> map);
 }

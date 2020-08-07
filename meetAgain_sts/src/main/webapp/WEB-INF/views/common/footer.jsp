@@ -37,7 +37,7 @@
 <div class="copyright text-center">
   <hr />
     <a href="#">서비스이용약관</a> | 
-    <a href="#">개인정보 취급 약관</a>
+    <a href="${pageContext.request.contextPath }/serviceCenter/PTC.do">개인정보 취급 방침</a>
 	<p class="small">&copy; 2020, NewStone <span class="text-danger"><i class="fas fa-heart"></i></span> All rights reserved</p>
 </div>
 </div>

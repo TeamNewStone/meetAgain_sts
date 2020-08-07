@@ -159,9 +159,15 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.countGroupMember(gid);
 	}
 	
+
 	@Override
-	public Joing meetingPlaceMasterStatus(String gid) {
-		return sgroupDAO.meetingPlaceMasterStatus(gid);
+	public int joinSuccess(Map<String, String> map) {
+		return sgroupDAO.joinSuccess(map);
+	}
+	
+	@Override
+	public int meetingPlaceMasterStatus(Map<String, Object> map) {
+		return sgroupDAO.meetingPlaceMasterStatus(map);
 
 	}
 

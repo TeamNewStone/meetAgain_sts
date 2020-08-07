@@ -169,5 +169,15 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.selectOne("sgroupMapper.countGroupMember", gid);
 	}
 
+	@Override
+	public int joinSuccess(Map<String, String> map) {
+		return sqlSession.update("sgroupMapper.joinSuccess", map);
+	}
+	
+	@Override
+	public int meetingPlaceMasterStatus(Map<String, Object> map) {
+		return sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", map);
+	}
+
 }
 

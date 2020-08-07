@@ -20,17 +20,17 @@ public class ServiceController {
 	
 	@Autowired ServCenterService scs;
 	
-	@RequestMapping("serviceCenter/faq.do")
+	@RequestMapping("/serviceCenter/faq.do")
 	public String faq() {
 		return "serviceCenter/faq";
 	}
 
-	@RequestMapping("serviceCenter/otoInquiry.do")
+	@RequestMapping("/serviceCenter/otoInquiry.do")
 	public String otoInquiry() {
 		return "serviceCenter/otoInquiry";
 	}
 
-	@RequestMapping("serviceCenter/reportStatus.do")
+	@RequestMapping("/serviceCenter/reportStatus.do")
 	public String reportStatus(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
 			Model model, HttpSession session) {
 		// 한 페이지 당 게시글 수 
@@ -55,5 +55,9 @@ public class ServiceController {
 		model.addAttribute("pageBar", pageBar);
 
 		return "serviceCenter/reportStatus";
+	}
+	@RequestMapping("/serviceCenter/PTC.do")
+	public String PTC() {
+		return "serviceCenter/PTC";
 	}
 }

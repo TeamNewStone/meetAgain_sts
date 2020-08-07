@@ -72,7 +72,7 @@
           <div class="col-12 col-md-9"><input type="text" class="form-control" name="address1" 
           value="${member.address1}" required></div>
 
-<c:if test="${member.MLevel eq 1 }">
+<c:if test="${member.MLevel == 1 }">
           <div class="col-12 col-md-3 text-right"><p id="textFm">직장 : </p></div>
           <div class="col-12 col-md-9 text-right">
             <div class="input-group">
