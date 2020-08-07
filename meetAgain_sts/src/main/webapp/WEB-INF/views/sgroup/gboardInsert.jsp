@@ -6,9 +6,8 @@
 <c:import url="/WEB-INF/views/common/header.jsp" />
 <div class="container">
 	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
-
 	<form action="${pageContext.request.contextPath }/sgroup/gbInsert.do"
-		method="post">
+		method="post" enctype="multipart/form-data">
 		<div id="titleArea">
 			<input type="hidden" name="gId" value="${ param.gId}"/>
 			<input type="hidden" name="userId" value="${member.getUserId() }"/>
@@ -33,7 +32,7 @@
 	$(function() {
 		$("#group-boardbtn").attr('class', 'btn btn-secondary');
 	});
-	$('#summernote').summernote(
+	var check = $('#summernote').summernote(
 			{
 				height : 300,
 				toolbar : [ [ 'style', [ 'bold', 'italic', 'underline' ] ],
@@ -42,7 +41,33 @@
 						[ 'fontname', [ 'fontname' ] ],
 						[ 'color', [ 'forecolor', 'backcolor' ] ],
 						[ 'para', [ 'paragraph' ] ], [ 'table', [ 'table' ] ],
-						[ 'insert', [ 'link', 'picture' ] ], ]
+						[ 'insert', [ 'link', 'picture' ] ] 
+				], callbacks : {
+			         onImageUpload : function(files, editor,
+			               welEditorble) {
+			            data = new FormData();
+			            data.append("file", files[0]);
+			            
+			            $.ajax({
+			               data : data,
+			               type : "post",
+			               url : '${pageContext.request.contextPath}/sgroup/aImgInsert.do', // servlet url
+			               cache : false,
+			               contentType : false,
+			               processData : false,
+			               success : function(fileUrl) {
+			                  check.summernote('insertImage', fileUrl);
+			                  alert("이미지 등록 성공!" + fileUrl);
+			               },
+			               error : function(request, status, error) {
+			                  alert("code:" + request.status + "\n"
+			                        + "message:"
+			                        + request.responseText + "\n"
+			                        + "error:" + error);
+			               }
+			            });
+			         }
+					      }
 			});
 	$(function() {
 		$('.note-btn-group').children('button').removeClass('dropdown-toggle');

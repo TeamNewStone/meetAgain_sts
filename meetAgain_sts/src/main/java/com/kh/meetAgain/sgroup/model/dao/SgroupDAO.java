@@ -34,7 +34,7 @@ public interface SgroupDAO {
 
 	 int selectgBoardTotalContents(String gId);
 
-	Gboard selectOnegBoard(int bId);
+	Gboard selectOnegBoard(int gbId);
 
 	int insertgBoard(Gboard Gboard);
 
@@ -67,5 +67,4 @@ public interface SgroupDAO {
 	int joinSuccess(Map<String, String> map);
 
 	int meetingPlaceMasterStatus(Map<String, Object> map);
-
 }

@@ -38,7 +38,7 @@ public interface SgroupService {
 
  int selectgBoardTotalContents(String gId);
 
-	 Gboard SelectOnegBoard(int bId);
+	 Gboard SelectOnegBoard(int gbId);
 
 	int insertgBoard(Gboard Gboard);
 
