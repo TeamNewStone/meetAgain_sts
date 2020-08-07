@@ -254,7 +254,7 @@
 				</div>				
 				<i class="fa fa-map-marker fa-3x"></i><br>
 				<input type="hidden" name = "gId" value="${gid}" />
-				<input type="text" name = "userId"  value="${jg.getUserId()}" />
+				<input type="hidden" name = "userId"  value="${userId}" />
 					<h6><span>${sg.getGPlace()}</span></h6><br>				
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
 			</div>
