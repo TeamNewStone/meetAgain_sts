@@ -15,7 +15,15 @@
 	</select>
 	
 	<select id="meetingPlaceMasterStatus" parameterType="map" resultMap="resM" >		
-		SELECT GID, ISCPT FROM JOING WHERE GID = #{gId} AND USERID = #{userId} AND ISCPT = #{IsCpt}
+		SELECT * FROM JOING WHERE GID = #{gId} AND USERID = #{userId} AND ISCPT = #{isCpt}
+	</select>
+	
+	<select id="getMasterStatus" parameterType="string" resultType="Joing">
+		SELECT GID, ISCPT, USERID FROM JOING WHERE GID = #{gId} AND USERID = #{userId} AND ISCPT = #{isCpt}
+	</select>
+	
+	<select id="getMaster" parameterType="string" resultType="Joing">
+		SELECT ISCPT FROM JOING WHERE ISCPT = 'Y'
 	</select>
 	
 </mapper>

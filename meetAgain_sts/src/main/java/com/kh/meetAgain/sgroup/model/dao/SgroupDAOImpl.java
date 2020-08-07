@@ -69,20 +69,20 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 	
 	@Override
-	public List<Map<String, String>> selectgBoardList(String gid ,int cPage, int numPerPage) {
+	public List<Map<String, String>> selectgBoardList(String gId ,int cPage, int numPerPage) {
 		RowBounds rows = new RowBounds((cPage - 1) * numPerPage, numPerPage);
-		List<Map<String, String>> list = sqlSession.selectList("sgroupMapper.selectgBoardList", gid, rows);
+		List<Map<String, String>> list = sqlSession.selectList("sgroupMapper.selectgBoardList", gId, rows);
 
 		System.out.println("cPage : " + cPage);
 		System.out.println("numPerPage : " + numPerPage);
-		System.out.println("DAO gid : " + gid);
+		System.out.println("DAO gId : " + gId);
 		System.out.println("list 출력 : " + list);
 		return list;
 	}
 
 
-	public int selectgBoardTotalContents(String gid) {
-		return sqlSession.selectOne("sgroupMapper.selectgBoardTotalContent",gid);
+	public int selectgBoardTotalContents(String gId) {
+		return sqlSession.selectOne("sgroupMapper.selectgBoardTotalContent",gId);
 	}
 
 	@Override
@@ -160,21 +160,27 @@ public class SgroupDAOImpl implements SgroupDAO {
 	@Override
 	public int joinSuccess(Map<String, String> map) {
 		return sqlSession.update("sgroupMapper.joinSuccess", map);
-	}
-	
+	}	
+
 	@Override
-	public int meetingPlaceMasterStatus(Map<String, Object> map) {
+	public Sgroup getMyPlace(String gId) {
+		return sqlSession.selectOne("mapMapper.getMyPlace", gId);
+	}
+
+	@Override
+	public int getMasterStatus(Map<String, Object> map) {
 		int result = 0;
+		
 		if(sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", map)==null) {
-			result = 0;
-		}else	result = 1;
+			result = 1;
+		} else	result = 0;
 		
 		return result;
 	}
 
 	@Override
-	public Sgroup getMyPlace(String gId) {
-		return sqlSession.selectOne("mapMapper.getMyPlace", gId);
+	public Joing getMaster(String gId) {
+		return sqlSession.selectOne("mapMapper.getMaster", gId);
 	}
 
 	
