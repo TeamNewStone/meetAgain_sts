@@ -1,5 +1,6 @@
 package com.kh.meetAgain.sgroup.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
@@ -112,11 +114,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 	
 	@Override
-	public List<Calendar> loadList() {		
+	public List<Calendar> loadList(String gId) {		
 		//System.out.println("DAO실행");
 		// System.out.println(sqlSession.selectList("calendarMapper.loadList"));
 		
-		return sqlSession.selectList("calendarMapper.loadList");
+		return sqlSession.selectList("calendarMapper.loadList", gId);
 	}
 
 	@Override
@@ -174,7 +176,7 @@ public class SgroupDAOImpl implements SgroupDAO {
 		if(sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", map)==null) {
 			result = 1;
 		} else	result = 0;
-		
+		System.out.println("dAORESULT : "+result);
 		return result;
 	}
 
@@ -184,9 +186,19 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 
 	@Override
+	public int checkCtn(String gId, String userId) {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("gId", gId);
+		map.put("userId", userId);
+		
+		return sqlSession.selectOne("calendarMapper.checkCtn",map);
+	}
+
+@Override
 	public Sgroup groupMapUpdate(String gId) {
 		return sqlSession.selectOne("mapMapper.groupMapUpdate", gId);
 	}
+
 	
 }
 

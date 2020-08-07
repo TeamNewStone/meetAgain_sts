@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.meetAgain.member.model.vo.CateInfo;
+import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
@@ -52,7 +53,7 @@ public interface SgroupService {
 
 	List<GB_comment> selectCommentList(int gbId);
 
-	List<Calendar> loadList();
+	List<Calendar> loadList(String gId);
 
 	int commentUpdate(GB_comment gB_comment);
 
@@ -72,6 +73,9 @@ public interface SgroupService {
 
 	Joing getMaster(String gId);
 
+	int checkCtn(String gId, String userId);
+
 	Sgroup groupMapUpdate(String gId);
+
 
 }
