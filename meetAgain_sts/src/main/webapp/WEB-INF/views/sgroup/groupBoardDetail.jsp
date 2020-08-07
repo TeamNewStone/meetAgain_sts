@@ -28,9 +28,9 @@
 				<div class="col-3"></div>
 				<div class="col-3"></div>
 				<div class="col-3">
-				<a class="btn_1" onclick="goDelete()">삭제하기</button> <a class="btn_1"
-						onclick="goUpdate()">수정하기</a>
-					<%-- 					<a class="btn_1 checkout_btn_1" href="<%=request.getContextPath()%>/sgroup/groupBoard.do?gId=${gb.getGId()}">메뉴로 돌아가기</a> --%>
+				<a class="btn_1" onclick="goDelete()">삭제하기</a>
+				<a class="btn_1" onclick="goUpdate()">수정하기</a>
+					<%-- <a class="btn_1 checkout_btn_1" href="<%=request.getContextPath()%>/sgroup/groupBoard.do?gId=${gb.getGId()}">메뉴로 돌아가기</a> --%>
 
 				</div>
 				<div class="replyArea">
@@ -120,26 +120,19 @@
 
 </div>
 <script>
+
 // 	function goGboard() {
 // 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoard.do"
 // 	}
 	function goUpdate() {
-		var gbId = $
-		{
-			Gboard.gbId
-		}
+		var gbId = "${Gboard.gbId}"
 		;
-		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardUpdate.do?gbId="
-				+ gbId;
+		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardUpdate.do?gbId="+gbId;
 	}
 	function goDelete() {
-		var gbId = $
-		{
-			GB_comment.gbId
-		}
+		var gbId = "${Gboard.gbId}"
 		;
-		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="
-				+ gbId;
+		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="+gbId;
 	}
 
 	function updateReply(obj) {

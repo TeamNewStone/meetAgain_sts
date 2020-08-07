@@ -15,12 +15,12 @@ public interface SgroupDAO {
 	
 	List<Sgroup> selectSgroupList();
 	
-	Sgroup selectOneSgroup(String gId);
+	Sgroup selectOneSgroup(String gid);
 
 
 	List<CateInfo> selectCateInfo(String userId);
 
-	List<Joing> selectJoing(String gId);
+	List<Joing> selectJoing(String gid);
 	
 	List<Joing> selectJoingUser(String userId);
 	
@@ -34,7 +34,7 @@ public interface SgroupDAO {
 
 	 int selectgBoardTotalContents(String gId);
 
-	Gboard selectOnegBoard(int bId);
+	Gboard selectOnegBoard(int gbId);
 
 	int insertgBoard(Gboard Gboard);
 
@@ -61,5 +61,7 @@ public interface SgroupDAO {
 	Sgroup createMapList(String gid);
 
 	Joing meetingPlaceMasterStatus(String gid);
+
+	int countGroupMember(String gid);
 
 }

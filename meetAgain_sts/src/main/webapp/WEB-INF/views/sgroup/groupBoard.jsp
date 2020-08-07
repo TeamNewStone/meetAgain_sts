@@ -71,8 +71,7 @@
 				.click(
 						function() {
 							var gbId = $(this).attr("id");
-							location.href = "${pageContext.request.contextPath}/sgroup/groupBoardDetail.do?gbId="
-									+ gbId;
+							location.href = "${pageContext.request.contextPath}/sgroup/groupBoardDetail.do?gbId="+ gbId;
 
 						}).mouseenter(function() {
 					$(this).parent().css({
