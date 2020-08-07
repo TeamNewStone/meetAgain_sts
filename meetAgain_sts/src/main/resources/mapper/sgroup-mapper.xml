@@ -62,8 +62,9 @@
 
 	<select id="selectGroupCount" parameterType="string" resultType="_int">
 	  	SELECT COUNT(*) 
-      	FROM JOING
-        WHERE USERID=#{userId} AND ISLEAVE='N' AND ISOUT='N'
+      	FROM JOING J
+        JOIN SGROUP S ON(J.GID=S.GID)
+        WHERE USERID=#{userId} AND ISLEAVE='N' AND ISOUT='N' AND ISFIN='N'
         GROUP BY USERID
 	</select>
 	

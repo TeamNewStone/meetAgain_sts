@@ -187,7 +187,9 @@
 						</script>
 						</c:if>
 					</c:forEach>
-						
+					<input type="hidden" id="private"/>
+					<input type="hidden" id="ageConfirm" />
+					<input type="hidden" id="genderConfirm"/>	
 				</div>
 				</div>
 			</div>
@@ -199,6 +201,12 @@
 </div>
 <script>
 var age ="";
+var cnt1 = "0";
+var cnt2 = "0";
+var cnt3 = "0";
+var cnt4 = "0";
+var cnt5 = "0";
+var myAgeTest = 0;
 $(function(){ 
 	var result = new Array();
 	var json = new Object();
@@ -207,56 +215,80 @@ $(function(){
 		var today = new Date();
 		var nowYear = today.getFullYear();
 		age = nowYear - birthYear + 1;
+  		
+		<c:forEach var="li" items="${sgroup.getLimitGroup()}" begin="1">
+			json = "${li}";
+		console.log("json : " + json);
+		result.push(json);
+		</c:forEach>
+		var myage = String(age).substr(0,1);
 		
 		
-		console.log("age : " + age);
+		console.log("myage : " + myage);
+	 	for(var i in result){
+	 		if(result[i] == "10대") cnt1 = "1";
+	 		else if(result[i] == "20대") cnt2 = "1";
+	 		else if(result[i] == "30대") cnt3 = "1";
+	 		else if(result[i] == "40대") cnt4 = "1";
+	 		else if(result[i] == "50대") cnt5 = "1";
+	 	}
+	 	if(myage==1) myAgeTest = cnt1;
+	 	else if(myage==2) myAgeTest = cnt2;
+	 	else if(myage==3) myAgeTest = cnt3;
+	 	else if(myage==4) myAgeTest = cnt4;
+	 	else if(myage==5) myAgeTest = cnt5;
+	 	
+	 	
 	});
-	
-function groupConfirm(){
-	var checkResult = window.confirm('모임에 가입하시겠습니까?');
-	var result = new Array();
-		var json = new Object();
-	if(checkResult == true) {
-		<c:if test="${sgroup.getLimitGroup()[0] eq 'M' and member.getGender() eq 'F'}">
-    		alert('이 모임은 남자만 가입가능합니다.');
-    		return false;
-    	</c:if>
-    	<c:if test="${sgroup.getLimitGroup()[0] eq 'F' and member.getGender() eq 'M'}">
-	    	alert('이 모임은 여자만 가입가능합니다.');
-			return false;
-    	</c:if>
- 		/* <c:forEach var="li" items="${sgroup.getLimitGroup()}" begin="1">
-  			json = '${li}';
- 			result.push(json);
- 		</c:forEach>
-		var test2 = JSON.stringify(result).replace(/[\[\]']+/g,'');
 
-		for(var i in test2){
-			if(!test2[i].trim().substr(1,1).equals(age.substr(0,1))) {
-				alert(test2[i]+'만 가입 가능합니다.');
-				return false;
-			}
-				
-		} */
-		
-		<c:if test="${!empty sgroup.getGPwd()}">
-			var gPwd = ${sgroup.getGPwd()};
-			var inputPassword = window.prompt('모임 비밀번호를 입력하세요'); 
-				if(gPwd==inputPassword){
-					return true;
-				}else {
-					alert('비밀번호가 틀렸습니다.');
-				    return false;
-				}
-		</c:if>
- 
-		return true;
-	} else {
-		return false;
-	}
-};
-	
-	
+$(function(){	
+	$('form').on('submit',function(event){
+        alert("이 내용으로 가입 하시겠습니까?");
+        
+        <c:if test="${!empty sgroup.getGPwd()}">
+    	var gPwd = ${sgroup.getGPwd()};
+    	var inputPassword = window.prompt('모임 비밀번호를 입력하세요'); 
+    		if(gPwd==inputPassword){
+    			$('#private').addClass('success').removeClass('fail');
+    		}else {
+    			alert('비밀번호가 틀렸습니다.');
+    			$('#private').addClass('fail').removeClass('success');
+    		}
+    	</c:if>
+    	
+    	<c:if test="${fn:length(sgroup.getLimitGroup()) lt 6}">
+    		<c:if test="${ fn:length(sgroup.getLimitGroup()) ne 1}">
+    			if(myAgeTest==1){
+    				$('#ageConfirm').addClass('success').removeClass('fail');
+    		 	} else {
+    		 		alert("연령대가 맞지 않습니다.");
+    		 		$('#ageConfirm').addClass('fail').removeClass('success');
+    		 	}
+    		</c:if>
+    	</c:if>
+    	
+    	<c:if test="${sgroup.getLimitGroup()[0] eq 'M' and member.getGender().trim() eq 'F'}">
+    		alert('이 모임은 남자만 가입가능합니다.');
+    		$('#genderConfirm').addClass('fail').removeClass('success');
+    	</c:if>
+    	<c:if test="${sgroup.getLimitGroup()[0] eq 'F' and member.getGender().trim() eq 'M'}">
+    		alert('이 모임은 여자만 가입가능합니다.');
+    		$('#genderConfirm').addClass('fail').removeClass('success');
+    	</c:if>
+    	
+        if($('.fail').length == 0 && confirm) {
+            alert(' 성공!');
+        }else{
+
+            event.preventDefault();
+        }
+
+    
+    });
+
+});
+
+	 
 
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
