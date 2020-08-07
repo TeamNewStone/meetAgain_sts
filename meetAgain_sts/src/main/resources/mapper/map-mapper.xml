@@ -4,12 +4,26 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapMapper">
 
-	<select id="createMapList" parameterType="string" resultType="Sgroup">
-		SELECT GID, GPLACE FROM SGROUP WHERE GID = #{gid}
+	<resultMap type="Joing" id="resM">		
+		
+		<result column="USERID" property="userId" />
+		
+	</resultMap>
+
+	<select id="getMyPlace" parameterType="string" resultType="Sgroup">
+		SELECT GID, GPLACE FROM SGROUP WHERE GID = #{gId}
 	</select>
 	
-	<select id="meetingPlaceMasterStatus" parameterType="string" resultType="Joing" >
-		SELECT GID, ISCPT FROM JOING WHERE GID = #{gid}
+	<select id="meetingPlaceMasterStatus" parameterType="map" resultMap="resM" >		
+		SELECT * FROM JOING WHERE GID = #{gId} AND USERID = #{userId} AND ISCPT = #{isCpt}
+	</select>
+	
+	<select id="getMasterStatus" parameterType="string" resultType="Joing">
+		SELECT GID, ISCPT, USERID FROM JOING WHERE GID = #{gId} AND USERID = #{userId} AND ISCPT = #{isCpt}
+	</select>
+	
+	<select id="getMaster" parameterType="string" resultType="Joing">
+		SELECT ISCPT FROM JOING WHERE ISCPT = 'Y'
 	</select>
 	
 </mapper>

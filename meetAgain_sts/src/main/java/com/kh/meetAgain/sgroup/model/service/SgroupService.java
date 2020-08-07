@@ -1,14 +1,14 @@
 package com.kh.meetAgain.sgroup.model.service;
 
 import java.util.List;
-
 import java.util.Map;
-import com.kh.meetAgain.sgroup.model.vo.Sgroup;
+
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Joing;
+import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 public interface SgroupService {
 
@@ -38,7 +38,7 @@ public interface SgroupService {
 
  int selectgBoardTotalContents(String gId);
 
-	 Gboard SelectOnegBoard(int bId);
+	 Gboard SelectOnegBoard(int gbId);
 
 	int insertgBoard(Gboard Gboard);
 
@@ -61,13 +61,15 @@ public interface SgroupService {
 	int deleteCalendar(String cdId);
 
 	int insertComment(GB_comment gB_comment);
-	
-	Sgroup createMapList(String gid);
 
 	int countGroupMember(String gid);
 	
-	Joing meetingPlaceMasterStatus(String gid);
-	
 	int joinSuccess(Map<String, String> map);
-	
+
+	Sgroup getMyPlace(String gId);
+
+	int getMasterStatus(Map<String, Object> map);
+
+	Joing getMaster(String gId);
+
 }

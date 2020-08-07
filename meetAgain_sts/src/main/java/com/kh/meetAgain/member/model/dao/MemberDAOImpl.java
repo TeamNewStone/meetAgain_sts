@@ -44,7 +44,6 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public int mCateUpdate(String userId, String cateId) {
-		System.out.println("MemberDAOImpl test : ");
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("userId", userId);

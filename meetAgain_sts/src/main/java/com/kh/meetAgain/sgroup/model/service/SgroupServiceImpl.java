@@ -77,8 +77,8 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
-	public Gboard SelectOnegBoard(int bId) {
-		return sgroupDAO.selectOnegBoard(bId);
+	public Gboard SelectOnegBoard(int gbId) {
+		return sgroupDAO.selectOnegBoard(gbId);
 	}
 
 	@Override
@@ -150,24 +150,30 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
-	public Sgroup createMapList(String gid) {
-		return sgroupDAO.createMapList(gid);
-	}
-
-	@Override
 	public int countGroupMember(String gid) {
 		return sgroupDAO.countGroupMember(gid);
-	}
-	
-	@Override
-	public Joing meetingPlaceMasterStatus(String gid) {
-		return sgroupDAO.meetingPlaceMasterStatus(gid);
-
-	}
+	}	
 
 	@Override
 	public int joinSuccess(Map<String, String> map) {
 		return sgroupDAO.joinSuccess(map);
 	}
+
+	@Override
+	public Sgroup getMyPlace(String gId) {
+		return sgroupDAO.getMyPlace(gId);
+	}
+
+	@Override
+	public int getMasterStatus(Map<String, Object> map) {
+		return sgroupDAO.getMasterStatus(map);
+	}
+
+	@Override
+	public Joing getMaster(String gId) {
+		return sgroupDAO.getMaster(gId);
+	}
+
+
 
 }

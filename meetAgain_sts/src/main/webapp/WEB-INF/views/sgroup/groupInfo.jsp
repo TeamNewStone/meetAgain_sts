@@ -240,6 +240,25 @@ $(function(){
 	 	
 	 	
 	});
+function groupConfirm(){
+	var checkResult = window.confirm('모임에 가입하시겠습니까?');
+	var result = new Array();
+		var json = new Object();
+	if(checkResult == true) {
+		<c:if test="${sgroup.getLimitGroup()[0] eq 'M' and member.getGender().trim() eq 'F'}">
+    		alert('이 모임은 남자만 가입가능합니다.');
+    		return false;
+    	</c:if>
+    	<c:if test="${sgroup.getLimitGroup()[0] eq 'F' and member.getGender().trim() eq 'M'}">
+	    	alert('이 모임은 여자만 가입가능합니다.');
+			return false;
+    	</c:if>
+ 		/* <c:forEach var="li" items="${sgroup.getLimitGroup()}" begin="1">
+  			json = '${li}';
+ 			result.push(json);
+ 		</c:forEach>
+		var test2 = JSON.stringify(result).replace(/[\[\]']+/g,'');
+>>>>>>> refs/heads/master
 
 $(function(){	
 	$('form').on('submit',function(event){

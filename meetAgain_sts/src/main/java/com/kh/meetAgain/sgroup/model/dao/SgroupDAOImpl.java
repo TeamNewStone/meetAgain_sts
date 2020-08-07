@@ -113,8 +113,8 @@ public class SgroupDAOImpl implements SgroupDAO {
 	
 	@Override
 	public List<Calendar> loadList() {		
-		System.out.println("DAO실행");
-		System.out.println(sqlSession.selectList("calendarMapper.loadList"));
+		//System.out.println("DAO실행");
+		// System.out.println(sqlSession.selectList("calendarMapper.loadList"));
 		
 		return sqlSession.selectList("calendarMapper.loadList");
 	}
@@ -152,18 +152,6 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.insert("sgroupMapper.updateComment", gB_comment);
 	}
 
-	
-	@Override
-	public Sgroup createMapList(String gid) {
-		return sqlSession.selectOne("mapMapper.createMapList", gid);
-	}
-
-	@Override
-	public Joing meetingPlaceMasterStatus(String gid) {
-		System.out.println("DAO실행 : " + gid);		
-		return sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", gid);
-	}
-
 	@Override
 	public int countGroupMember(String gid) {
 		return sqlSession.selectOne("sgroupMapper.countGroupMember", gid);
@@ -172,7 +160,29 @@ public class SgroupDAOImpl implements SgroupDAO {
 	@Override
 	public int joinSuccess(Map<String, String> map) {
 		return sqlSession.update("sgroupMapper.joinSuccess", map);
+	}	
+
+	@Override
+	public Sgroup getMyPlace(String gId) {
+		return sqlSession.selectOne("mapMapper.getMyPlace", gId);
 	}
 
+	@Override
+	public int getMasterStatus(Map<String, Object> map) {
+		int result = 0;
+		
+		if(sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", map)==null) {
+			result = 1;
+		} else	result = 0;
+		
+		return result;
+	}
+
+	@Override
+	public Joing getMaster(String gId) {
+		return sqlSession.selectOne("mapMapper.getMaster", gId);
+	}
+
+	
 }
 

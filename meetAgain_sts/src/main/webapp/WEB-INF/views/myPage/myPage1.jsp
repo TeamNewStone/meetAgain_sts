@@ -150,11 +150,11 @@
 						<c:if test="${mg.getIsFin() eq 'Y'}">
 							<script>
 				    		$(function(){				    			
-				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#${ mg.getGId()}');
-				    			$('#${ mg.getGId()} .card-header').css('opacity', '0.2');				 
+				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#m-${ mg.getGId()}');
+				    			$('#m-${ mg.getGId()} .card-header').css('opacity', '0.2');				 
 				    		});
 				    	</script>		
-							<div class="card-fin" id = "${mg.getGId()}">
+							<div class="card-fin" id = "m-${mg.getGId()}">
 							</c:if>
 							<c:if test="${mg.getIsFin() ne 'Y'}">
 							<div class="card" id = "${mg.getGId()}">
@@ -284,16 +284,16 @@
 							<c:if test="${cg.getIsFin() eq 'Y'}">
 							<script>
 				    		$(function(){				
-				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#${cg.getGId()}');
-				    			$('#${cg.getGId()}.card-header').css('opacity', '0.2');
+				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#c-${cg.getGId()}');
+				    			$('#c-${cg.getGId()} .card-header').css('opacity', '0.2');
 				    		});
 				    	</script>		
-							<div class="card-fin" id = "${cg.getGId()}">
+							<div class="card-fin" id = "c-${cg.getGId()}">
 							</c:if>
 							<c:if test="${cg.getIsFin() ne 'Y'}">
 							<div class="card" id = "${cg.getGId()}">
 							</c:if>
-								<div class="card-header">
+								<div class="card-header" id="mycardImg">
 									<c:if test="${cg.getGImg() eq null}">
 										<c:if test="${cg.getGType() eq 'S'}">
 											<img class="card-img"

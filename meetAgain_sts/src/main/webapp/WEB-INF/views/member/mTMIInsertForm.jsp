@@ -151,7 +151,6 @@ $('#MBTI').keyup(function(){
 	$(this).val($(this).val().toUpperCase());
 });
 
-
 $('#mimgBtn').on('click', function() {
 	$('#profileImgBtn').click();
 });

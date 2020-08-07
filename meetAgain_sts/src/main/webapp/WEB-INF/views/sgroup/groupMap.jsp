@@ -41,9 +41,10 @@
 				// 지도를 생성한다 
 				var map = new kakao.maps.Map(mapContainer, mapOption);
 				var geocoder = new kakao.maps.services.Geocoder();
+				var Ha, Ga;
 				
 				// 주소로 좌표를 검색합니다
-				geocoder.addressSearch('${sg.getGPlace()}', function(result, status) {
+				geocoder.addressSearch('${gPlace}', function(result, status) {
 
 				    // 정상적으로 검색이 완료됐으면 
 				     if (status === kakao.maps.services.Status.OK) {
@@ -149,18 +150,25 @@
 						    var resultDiv2 = document.getElementById('_mapMakerCheck2'); 
 						    resultDiv2.innerHTML = message2;						    
 						   
+						    console.log(latlng.Ha);
+						    console.log(latlng.Ga);
 						
 				        }
-
+				        Ha = latlng.Ha;
+				        Ga = latlng.Ga;
+						
 				    });
 
+				});			
+				
+				$(function(){
 					$('#findRoad').on('click', function() {						
-						if(confirm("카카오맵으로 넘어가시겠습니까?"))
-							window.open(url + '다시만나모임에서 선택한 장소' + ',' + latlng.Ha + ',' + latlng.Ga);							
-							// console.log(latlng.Ha + ',' + latlng.Ga);														
-					});
-
-				});				
+						if(confirm("카카오맵으로 넘어가시겠습니까?")){
+							window.open('https://map.kakao.com/link/to/다시만나모임에서 선택한 장소' + ',' + Ha + ',' + Ga);
+							return null;
+						}
+					});					
+				});
 				
 				// 장소검색
 				var places = new kakao.maps.services.Places();
@@ -253,10 +261,14 @@
 					</div>
 				</div>				
 				<i class="fa fa-map-marker fa-3x"></i><br>
-				<input type="hidden" value="${gid}" />									
-					<h6><span>${sg.getGPlace()}</span></h6><br>				
+				<c:set var="user1" value="${member}"/>
+				<input type="hidden" name = "gId" value="${gid}" />
+				<c:set var="place" value="${gid}" />
+				<input type="hidden" name = "userId"  value="${user1.getUserId()}" />			
+					<h6><span>소모임 모임장소 : <br>${gPlace}</span></h6><br>		
+							
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
-			</div>
+			</div> 
 		</div>
 
 		<div>
@@ -265,13 +277,9 @@
 			<br />
 			<div>
 				<button type="button" class="btn btn-info"	id="findRoad">카카오맵에서<br>길찾기</button>
-					<c:set var="mc" value="${sgMc.getIsCpt()}"/>
-					<c:choose>
-						<c:when test="${mc eq 'Y'}">
-							<button type="button" class="btn btn-light" id="reloadmap" style="width: 113px; height: 60px;">장소변경</button>
-						</c:when>
-						<c:when test="${mc ne 'Y'}" />
-					</c:choose>
+					<c:if test="${isCpt eq true}">
+						<button type="button" class="btn btn-light" id="reloadmap" style="width: 113px; height: 60px;">장소변경</button>
+					</c:if>
 			</div>
 		</div>
 

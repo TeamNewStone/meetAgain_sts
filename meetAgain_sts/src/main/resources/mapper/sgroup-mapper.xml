@@ -140,11 +140,9 @@
 		GBRATE = GBRATE+1 WHERE GBID=#{gbId}
 	</update>
 
-	<delete id="deletegBoard" parameterType="_int">
-		DELETE FROM GBOARD
-		WHERE
-		GBID = #{gbId}
-	</delete>
+	<update id="deletegBoard" parameterType="_int">
+		UPDATE GBOARD SET GBDEL = 'Y' WHERE GBID = #{gbId}
+	</update>
 
 	<insert id="insertComment" parameterType="GB_comment">
 		INSERT INTO

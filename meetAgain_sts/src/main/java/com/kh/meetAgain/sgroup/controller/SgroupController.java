@@ -238,7 +238,7 @@ public class SgroupController {
 	
 
 	@RequestMapping("/sgroup/groupBoard.do")
-	public String groupBoard(@RequestParam("gid") String gId,
+	public String groupBoard(@RequestParam("gid") String gid,
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, Model model) {
 
 		// 한 페이지 당 게시글 수
@@ -247,19 +247,20 @@ public class SgroupController {
 		// 1. 현재 페이지 게시글 목록 가져오기
 		// 실제 데이터베이스의 데이터에서
 		// 머릿글 : 키(key) , 실제 값 : 값(value) => 여러 개니까 List에 담기
-		List<Map<String, String>> list = sgroupService.selectgBoardList(gId, cPage, numPerPage);
+		List<Map<String, String>> list = sgroupService.selectgBoardList(gid, cPage, numPerPage);
 
 		// 2. 페이지 계산을 위한 총 페이지 개수
-		int totalContents = sgroupService.selectgBoardTotalContents(gId);
+		int totalContents = sgroupService.selectgBoardTotalContents(gid);
 
 		// 3. 패아자 HTML 생성
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "groupBoard.do");
-
-
+		
+		Sgroup s = sgroupService.selectOneSgroup(gid);
+		model.addAttribute("sgroup", s);
 		String loc = "/sgroup/groupBoard.do";
 		String msg = "";
 		
-			loc = "/sgroup/groupBoard.do?gId=" + gId;
+			loc = "/sgroup/groupBoard.do?gid=" + gid;
 
 		
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
@@ -270,9 +271,9 @@ public class SgroupController {
 
 		
 		System.out.println("list : " + list);
-		System.out.println("Controller gId : " + gId);
+		System.out.println("Controller gid : " + gid);
 
-		model.addAttribute("gid", gId);
+		model.addAttribute("gid", gid);
 
 		return "/sgroup/groupBoard";
 
@@ -293,6 +294,7 @@ public class SgroupController {
 		return "/sgroup/groupBoardDetail";
 	}
 
+
 	@RequestMapping("sgroup/gboardInsert.do")
 	public String gboardInsert() {
 
@@ -301,17 +303,18 @@ public class SgroupController {
 	}
 
 	@RequestMapping(value="/sgroup/gbInsert.do", method=RequestMethod.POST)
-	public String gbInsert(@RequestParam("gId") String gId, @RequestParam("userId") String userid,Gboard Gboard, Model model) {
-		System.out.println("gid:"+gId+"userid:"+userid);
-		Gboard.setGId(gId);
+	public String gbInsert(@RequestParam("gid") String gid, @RequestParam("userid") String userid,Gboard Gboard, Model model) {
+		System.out.println("gid:"+gid+" userid:"+userid);
+		System.out.println(Gboard);
+		Gboard.setGId(gid);
 		Gboard.setUserId(userid);
 		int result = sgroupService.insertgBoard(Gboard);
 		
-		String loc = "/sgroup/groupBoardDetail.do";
+		String loc = "/sgroup/groupBoard.do";
 		String msg = "";
 		if (result > 0) {
 			msg = "게시글 등록 성공!";
-			loc = "/sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
+			loc = "/sgroup/groupBoard.do?gid=" + gid;
 
 		} else {
 			msg = "게시글 등록 실패!";
@@ -323,6 +326,7 @@ public class SgroupController {
 		return "common/msg";
 
 	}
+
 
 	@RequestMapping("sgroup/groupBoardUpdate.do")
 	public String noticeUpdate(int gbId, Model model) {
@@ -358,8 +362,8 @@ public class SgroupController {
 		String msg = "";
 
 		if (result > 0) {
-			msg = "게시글 삭제 성공!";
-
+			msg = "게시글 등록 성공!";
+			loc = "/sgroup/groupBoardDetail.do?gbId="+gbId;
 		} else {
 			msg = "게시글 삭제 실패!";
 		}
@@ -378,7 +382,7 @@ public class SgroupController {
 		 * 
 		 * model.addAttribute("list", list);
 		 */
-		return "/sgroup/groupBoardDetail.do";
+		return "/sgroup/groupBoard.do";
 
 	}
 
@@ -449,7 +453,7 @@ public class SgroupController {
 			
 			String loc = "/sgroup/groupBoardDetail.do";
 			String msg = "";
-		//	int gId = gB_comment.getGbId();
+		//	int gid = gB_comment.getGbId();
 			if(result > 0) {
 				loc ="/sgroup/groupBoardDetail.do?gbId="+ gbId;
 				msg = "댓글 작성";

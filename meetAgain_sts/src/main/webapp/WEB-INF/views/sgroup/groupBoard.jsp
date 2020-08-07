@@ -71,8 +71,7 @@
 				.click(
 						function() {
 							var gbId = $(this).attr("id");
-							location.href = "${pageContext.request.contextPath}/sgroup/groupBoardDetail.do?gbId="
-									+ gbId;
+							location.href = "${pageContext.request.contextPath}/sgroup/groupBoardDetail.do?gbId="+ gbId;
 
 						}).mouseenter(function() {
 					$(this).parent().css({
@@ -83,7 +82,7 @@
 	});
 
 	function gboardInsert() {
-		location.href = "${pageContext.request.contextPath}/sgroup/gboardInsert.do?gId="+${gid};
+		location.href = "${pageContext.request.contextPath}/sgroup/gboardInsert.do?gid="+${gid};
 	}
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
