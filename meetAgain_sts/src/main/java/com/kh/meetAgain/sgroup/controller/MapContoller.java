@@ -55,9 +55,14 @@ public class MapContoller {
 	}
 	
 	@PostMapping("/mapPlaceUpdate.do")
-	public String mapPlaceUpdate() {
+	public String mapPlaceUpdate(
+					@RequestParam("gid") String gId, Model model) {
 		
-		return "sgroup/groupMap";		
+		Sgroup sg = sgroupService.groupMapUpdate(gId);
+		
+		model.addAttribute("gPlace", sg.getGPlace() );
+		
+		return "sgroup/groupMap";
 	}
 	
 }

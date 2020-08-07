@@ -72,4 +72,6 @@ public interface SgroupService {
 
 	Joing getMaster(String gId);
 
+	Sgroup groupMapUpdate(String gId);
+
 }
