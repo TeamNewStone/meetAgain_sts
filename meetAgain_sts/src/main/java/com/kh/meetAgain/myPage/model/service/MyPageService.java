@@ -1,10 +1,12 @@
 package com.kh.meetAgain.myPage.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.vo.Review;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 public interface MyPageService {
@@ -24,7 +26,7 @@ public interface MyPageService {
 
 	List<Map<String, String>> selectFollowingList(String userId);
 
-	List<Sgroup> getMyGroup(String userId);
+	 List<HashMap<String,Object>> getMyGroup(String userId);
 
 	List<Sgroup> getCreateGroup(String userId);
 
@@ -36,5 +38,9 @@ public interface MyPageService {
 
 	int insertReview(Review review);
 
-	Review selectReview(String userId, String gId);	
+	Review selectReview(String userId, String gId);
+
+	int checkIn(Map<String, Object> map);
+
+		
 }

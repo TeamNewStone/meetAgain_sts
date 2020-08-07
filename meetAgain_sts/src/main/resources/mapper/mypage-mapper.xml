@@ -41,7 +41,11 @@
 		SELECT M.NICKNAME, M.USERID FROM FOLLOW JOIN MEMBER M ON(FOLLOWIN = M.USERID) WHERE FOLLOWER=#{userId}
 	</select>
 	
-	<select id="getMyGroup" resultMap="sgroupMap">
+	<!-- <select id="getMyGroup" resultMap="sgroupMap">
+		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId} AND ISLEAVE='N' AND ISOUT='N' ORDER BY ISFIN
+	</select> -->
+	
+	<select id="getMyGroup" resultType="hashmap">
 		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId} AND ISLEAVE='N' AND ISOUT='N' ORDER BY ISFIN
 	</select>
 	
@@ -68,4 +72,10 @@
 	<select id="selectReview" parameterType="hashmap" resultType="Review">
 		SELECT * FROM REVIEW WHERE USERID= #{userid} AND GID= #{gid}
 	</select>
+	
+	<select id="checkIn" parameterType = "hashmap" resultType = "_int">
+	SELECT count(*) FROM JOING WHERE USERID = #{userId} AND GID = #{gId} AND ISOUT='N' AND ISLEAVE='N' AND ISREADY=1
+	</select>
+	
+	
 </mapper>
