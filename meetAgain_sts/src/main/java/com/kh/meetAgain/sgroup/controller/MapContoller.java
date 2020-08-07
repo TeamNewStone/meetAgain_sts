@@ -22,7 +22,7 @@ public class MapContoller {
 	SgroupService sgroupService;
 
 	@RequestMapping("/sgroup/groupMap.do")
-	public Map<String, Object> groupMap(@RequestParam("gid") String gid, String userId, Model model) {
+	public Map<String, Object> groupMap(@RequestParam("gid") String gid, @RequestParam("userId") String userId, Model model) {
 		System.out.println("컨트롤러 : " + gid);
 		// 등록 주소 가져오기				
 		Sgroup list = sgroupService.createMapList(gid);		

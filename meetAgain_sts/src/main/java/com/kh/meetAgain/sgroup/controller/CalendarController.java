@@ -26,6 +26,7 @@ public class CalendarController {
 	@RequestMapping("sgroup/addCalendar.do")
 	// @PostMapping	
 	public String addCalendar(		
+				@RequestParam("gid") String gId,
 				@RequestParam("gDate") String gDate,
 				@RequestParam("gDateEnd") String gDateEnd,
 				@RequestParam("gInfo") String gInfo,
@@ -45,6 +46,7 @@ public class CalendarController {
 
 		Calendar cal = new Calendar();
 		
+		cal.setGId(gId);
 		cal.setGDate(date);
 		cal.setGDateEnd(date2);
 		cal.setGInfo(gInfo);
@@ -54,6 +56,8 @@ public class CalendarController {
 		System.out.println("insert 확인 : " + cal);
 
 		int result = sgroupService.addCalendar(cal);
+		
+		// model.addAttribute("gid", gId);	
 		
 		return "redirect:groupCalendar.do";	
 		

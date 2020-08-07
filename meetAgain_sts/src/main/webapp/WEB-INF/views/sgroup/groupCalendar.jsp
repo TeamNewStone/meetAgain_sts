@@ -84,7 +84,7 @@
 						<!-- 소모임id -->
 						<form method="POST" action="addCalendar.do">
 						 
-						 <input type="hidden" name="gId" value="${gid}" />
+						 <input type="hidden" name="gid" value="${gid}" />
 						 <!-- <input type="hidden" name="gId" /> -->
 							<table id="my_table_1" data-toggle="table" data-sort-stable="true">													
 							   <tbody>
