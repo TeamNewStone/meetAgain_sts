@@ -61,13 +61,13 @@ public interface SgroupService {
 	int deleteCalendar(String cdId);
 
 	int insertComment(GB_comment gB_comment);
-	
-	Sgroup createMapList(String gid);
 
 	int countGroupMember(String gid);
 	
 	int joinSuccess(Map<String, String> map);
-	
+
+	Sgroup getMyPlace(String gId);
+
 	int meetingPlaceMasterStatus(Map<String, Object> map);
 
 }

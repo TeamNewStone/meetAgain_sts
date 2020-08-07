@@ -255,8 +255,10 @@
 				<i class="fa fa-map-marker fa-3x"></i><br>
 				<c:set var="user1" value="${member}"/>
 				<input type="hidden" name = "gId" value="${gid}" />
-				<input type="text" name = "userId"  value="${user1.getUserId()}" />
-					<h6><span>${getGPlace()}</span></h6><br>				
+				<c:set var="place" value="${gid}" />
+				<input type="hidden" name = "userId"  value="${user1.getUserId()}" />			
+					<h6><span>가져온 모임장소 : <br>${gPlace}</span></h6><br>		
+							
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
 			</div>
 		</div>
