@@ -26,7 +26,8 @@
 		SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWIN = #{userId}
 	</select>
 	<select id="totalGroup" resultType="_int">
-		SELECT COUNT(*) FROM JOING WHERE USERID = #{userId} AND ISLEAVE = 'N'
+		SELECT COUNT(*) FROM JOING JOIN SGROUP USING(GID)
+		WHERE USERID = #{userId} AND ISLEAVE = 'N' AND ISOUT='N' AND ISFIN='N'
 	</select>
 	<select id="selectUserTMI" resultType = "UserTMI">
 		SELECT * FROM USERTMI WHERE USERID = #{userId}
