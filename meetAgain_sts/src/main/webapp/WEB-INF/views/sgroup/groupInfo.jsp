@@ -135,7 +135,7 @@
 		     			<c:if test="${ fn:length(sgroup.getLimitGroup()) ne 1}">
 			     			<div>
 			     			<c:forEach var="li" items="${sgroup.getLimitGroup()}" begin="1">
-			     				<span class="badge badge-pill badge-success">${li}</span> 
+			     				<span class="badge badge-pill badge-success">${li}</span>
 			     			</c:forEach>
 			     			</div>
 		     			</c:if>
@@ -198,11 +198,47 @@
 </form>
 </div>
 <script>
+var age ="";
+$(function(){ 
+	var result = new Array();
+	var json = new Object();
 
+		var birthYear = '${member.getBirthday()}'.substr(0,4);
+		var today = new Date();
+		var nowYear = today.getFullYear();
+		age = nowYear - birthYear + 1;
+		
+		
+		console.log("age : " + age);
+	});
+	
 function groupConfirm(){
 	var checkResult = window.confirm('모임에 가입하시겠습니까?');
-	
+	var result = new Array();
+		var json = new Object();
 	if(checkResult == true) {
+		<c:if test="${sgroup.getLimitGroup()[0] eq 'M' and member.getGender() eq 'F'}">
+    		alert('이 모임은 남자만 가입가능합니다.');
+    		return false;
+    	</c:if>
+    	<c:if test="${sgroup.getLimitGroup()[0] eq 'F' and member.getGender() eq 'M'}">
+	    	alert('이 모임은 여자만 가입가능합니다.');
+			return false;
+    	</c:if>
+ 		/* <c:forEach var="li" items="${sgroup.getLimitGroup()}" begin="1">
+  			json = '${li}';
+ 			result.push(json);
+ 		</c:forEach>
+		var test2 = JSON.stringify(result).replace(/[\[\]']+/g,'');
+
+		for(var i in test2){
+			if(!test2[i].trim().substr(1,1).equals(age.substr(0,1))) {
+				alert(test2[i]+'만 가입 가능합니다.');
+				return false;
+			}
+				
+		} */
+		
 		<c:if test="${!empty sgroup.getGPwd()}">
 			var gPwd = ${sgroup.getGPwd()};
 			var inputPassword = window.prompt('모임 비밀번호를 입력하세요'); 
@@ -213,6 +249,7 @@ function groupConfirm(){
 				    return false;
 				}
 		</c:if>
+ 
 		return true;
 	} else {
 		return false;

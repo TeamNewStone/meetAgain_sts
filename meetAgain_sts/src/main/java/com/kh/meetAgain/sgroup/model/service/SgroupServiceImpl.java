@@ -165,4 +165,9 @@ public class SgroupServiceImpl implements SgroupService {
 
 	}
 
+	@Override
+	public int joinSuccess(Map<String, String> map) {
+		return sgroupDAO.joinSuccess(map);
+	}
+
 }

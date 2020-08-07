@@ -66,6 +66,10 @@
         WHERE USERID=#{userId} AND ISLEAVE='N' AND ISOUT='N'
         GROUP BY USERID
 	</select>
+	
+	<update id="joinSuccess" parameterType="hashmap">
+		 UPDATE JOING SET ISREADY=1 WHERE USERID=#{userId} AND GID = #{gid}
+	</update>
 
 	<insert id="insertGroupJoin" parameterType="Joing">
 		INSERT INTO JOING VALUES(#{userId}, #{gId}, 'N',
