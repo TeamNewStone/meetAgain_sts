@@ -30,7 +30,7 @@ public interface SgroupDAO {
 	
 	int groupLeave(Map<String, String> map);
  
-	List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage);
+	List<Map<String, String>> selectgBoardList(String gid, int cPage, int numPerPage);
 
 	 int selectgBoardTotalContents(String gId);
 

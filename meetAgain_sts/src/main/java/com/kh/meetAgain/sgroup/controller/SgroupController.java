@@ -303,17 +303,18 @@ public class SgroupController {
 	}
 
 	@RequestMapping(value="/sgroup/gbInsert.do", method=RequestMethod.POST)
-	public String gbInsert(@RequestParam("gid") String gid, @RequestParam("userId") String userid,Gboard Gboard, Model model) {
-		System.out.println("gid:"+gid+"userid:"+userid);
+	public String gbInsert(@RequestParam("gid") String gid, @RequestParam("userid") String userid,Gboard Gboard, Model model) {
+		System.out.println("gid:"+gid+" userid:"+userid);
+		System.out.println(Gboard);
 		Gboard.setGId(gid);
 		Gboard.setUserId(userid);
 		int result = sgroupService.insertgBoard(Gboard);
 		
-		String loc = "/sgroup/groupBoardDetail.do";
+		String loc = "/sgroup/groupBoard.do";
 		String msg = "";
 		if (result > 0) {
 			msg = "게시글 등록 성공!";
-			loc = "/sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
+			loc = "/sgroup/groupBoard.do?gid=" + gid;
 
 		} else {
 			msg = "게시글 등록 실패!";
@@ -325,6 +326,7 @@ public class SgroupController {
 		return "common/msg";
 
 	}
+
 
 	@RequestMapping("sgroup/groupBoardUpdate.do")
 	public String noticeUpdate(int gbId, Model model) {
