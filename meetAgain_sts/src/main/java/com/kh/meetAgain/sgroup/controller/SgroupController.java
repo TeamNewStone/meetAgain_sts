@@ -197,9 +197,23 @@ public class SgroupController {
 		
 		
 		model.addAttribute("joing", joing);
+		model.addAttribute("gid", gid);
 		return "sgroup/memberList";
 	}
 
+	@RequestMapping("/sgroup/joinSuccess.do")
+	public String joinSuccess(@RequestParam String userId, @RequestParam String gid, Model model) {
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("userId", userId);
+		map.put("gid", gid);
+		
+		int result = sgroupService.joinSuccess(map);
+		
+
+		return "common/msg";
+	}
 
 	@RequestMapping("/sgroup/groupLeave.do")
 	public String groupLeave(@ModelAttribute("member") Member m, @RequestParam String gid, Model model) {

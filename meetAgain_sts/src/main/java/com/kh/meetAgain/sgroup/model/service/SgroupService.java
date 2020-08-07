@@ -68,4 +68,6 @@ public interface SgroupService {
 	
 	Joing meetingPlaceMasterStatus(String gid);
 	
+	int joinSuccess(Map<String, String> map);
+	
 }

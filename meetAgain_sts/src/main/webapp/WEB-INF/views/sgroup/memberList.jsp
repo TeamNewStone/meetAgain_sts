@@ -63,26 +63,27 @@
 <c:forEach var="jo" items="${joing }">
 	<c:if test="${jo.getJoinType()=='C' and jo.getUserId().equals(member.getUserId()) and jo.getIsCpt()=='Y'}">
 		<h4>가입 대기 명단</h4>
-		<table class="table">
+		<table class="table" style="width:50%; text-align:center;">
 		  <thead>
 		    <tr>
-		      <th scope="col">닉네임</th>
-		      <th scope="col">승인</th>
-		       <th scope="col">상태</th>
+		      <th style="width:25%;">닉네임</th>
+		      <th style="width:25%;">승인</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		    <tr>
-		      <c:if test="${jo.getIsReady()==2}">
-		      <td>${jo.getNickName() }</td>
-		      </c:if>
+		    <c:forEach var="jo2" items="${joing }">
+		      <c:if test="${jo2.getIsReady()==2}">
+		      <td>${jo2.getNickName() }</td>
+		      <input type=hidden value="${jo2.getUserId() }" name="userId" id="userId"/>
+		      <input type=hidden value="${gid}" name="gid" id="gid"/>
 		      <td>
-		      	<button type="button" class="btn btn-secondary" id="accept">승인</button> /
-		      	<button type="button" class="btn btn-danger" id="reject">거절</button>
-		      	</td>
-		      <td>
-		      
+		      	<button type="button" class="btn btn-secondary" id="accept">승인</button>
+<!-- 		     <button type="button" class="btn btn-danger" id="reject">거절</button> -->
 		      </td>
+		      </c:if>
+		      </c:forEach>
+	      
 		    </tr>
 		   </tbody>
 		  </table>
@@ -100,14 +101,15 @@
 	      $.ajax({
 	         url : '${pageContext.request.contextPath}/sgroup/joinSuccess.do',
 	         data : {
-	            userId :   },
-	         success : function(data) {
+	            userId : $('#userId').val(),
+	            gid : $('#gid').val()
+	            }, success : function(data) {
 
 	            if (data == 0) {
 	               alert('오류가 발생하였습니다.');
 	            } else {
 	               alert('승인 완료되었습니다.');
-	               location.href = '${pageContext.request.contextPath}/sgroup/group.do';
+	               location.href = '${pageContext.request.contextPath}/sgroup/memberList.do?gid='+${gid};
 	            }
 	         }
 	      });
