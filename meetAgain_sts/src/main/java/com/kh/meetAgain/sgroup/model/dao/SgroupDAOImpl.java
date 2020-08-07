@@ -176,7 +176,12 @@ public class SgroupDAOImpl implements SgroupDAO {
 	
 	@Override
 	public int meetingPlaceMasterStatus(Map<String, Object> map) {
-		return sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", map);
+		int result = 0;
+		if(sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", map)==null) {
+			result = 0;
+		}else	result = 1;
+		
+		return result;
 	}
 
 }
