@@ -11,11 +11,11 @@
 	</resultMap>
 
 	<select id="createMapList" parameterType="string" resultType="Sgroup">
-		SELECT GID, GPLACE FROM SGROUP WHERE GID = #{gid}
+		SELECT GID, GPLACE FROM SGROUP WHERE GID = #{gId}
 	</select>
 	
-	<select id="meetingPlaceMasterStatus" parameterType="string" resultMap="resM" >		
-		SELECT GID, ISCPT FROM JOING WHERE GID = #{gid} AND USERID = #{userId} AND ISCPT = #{IsCpt}
+	<select id="meetingPlaceMasterStatus" parameterType="map" resultMap="resM" >		
+		SELECT GID, ISCPT FROM JOING WHERE GID = #{gId} AND USERID = #{userId} AND ISCPT = #{IsCpt}
 	</select>
 	
 </mapper>

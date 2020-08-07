@@ -6,10 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
@@ -22,30 +24,36 @@ public class MapContoller {
 	SgroupService sgroupService;
 
 	@RequestMapping("/sgroup/groupMap.do")
-	public Map<String, Object> groupMap(@RequestParam("gid") String gid, @RequestParam("userId") String userId, Model model) {
-		System.out.println("컨트롤러 : " + gid);
+	public String groupMap(
+					@RequestParam("gid") String gId,
+					@ModelAttribute("member") Member m, Sgroup sg) {
+		System.out.println("컨트롤러 m 출력 : "+m);
 		// 등록 주소 가져오기				
-		Sgroup list = sgroupService.createMapList(gid);		
+		String userId = m.getUserId();
+		String gPlace = sg.getGPlace();
+		
+		System.out.println(gPlace);
+		
+//		Sgroup list = sgroupService.createMapList(gId);		
+//		System.out.println("컨트롤러 : " + gId);
 		
 		Joing jg = new Joing();
+		
+		jg.setGId(gId);
+		jg.setUserId(userId);
 						
 		// 모임장 정보				
 		Map<String, Object> map = new HashMap<String, Object>();
-		
-		// map.get("userId");
-		map.put("gId", gid);
+
+		map.put("gid", gId);
 		map.put("userId", userId);
+		map.put("gPlace", gPlace);
 		
-		System.out.println("ㅋ너트롤러 맵 " + map);
-		int result = sgroupService.meetingPlaceMasterStatus(map);
-						
-		model.addAttribute("sg", list);
-		model.addAttribute("jg", map);
+		int result = sgroupService.meetingPlaceMasterStatus(map);		
 		
-		System.out.println("controller map result → "+ list);		
-		System.out.println("controller meetingPlaceStatus result → " + map);
+		System.out.println("컨트롤러 맵 " + map);	
 		
-		return map;
+		return "sgroup/groupMap";
 	}
 	
 }
