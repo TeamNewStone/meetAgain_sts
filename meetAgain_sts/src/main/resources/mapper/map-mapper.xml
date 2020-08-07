@@ -10,7 +10,7 @@
 		
 	</resultMap>
 
-	<select id="createMapList" parameterType="string" resultType="Sgroup">
+	<select id="getMyPlace" parameterType="string" resultType="Sgroup">
 		SELECT GID, GPLACE FROM SGROUP WHERE GID = #{gId}
 	</select>
 	

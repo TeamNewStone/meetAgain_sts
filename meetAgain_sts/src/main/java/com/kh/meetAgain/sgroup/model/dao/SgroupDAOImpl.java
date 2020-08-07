@@ -152,18 +152,6 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.insert("sgroupMapper.updateComment", gB_comment);
 	}
 
-	
-	@Override
-	public Sgroup createMapList(String gid) {
-		return sqlSession.selectOne("mapMapper.createMapList", gid);
-	}
-
-	@Override
-	public Joing meetingPlaceMasterStatus(String gid) {
-		System.out.println("DAO실행 : " + gid);		
-		return sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", gid);
-	}
-
 	@Override
 	public int countGroupMember(String gid) {
 		return sqlSession.selectOne("sgroupMapper.countGroupMember", gid);
@@ -184,5 +172,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return result;
 	}
 
+	@Override
+	public Sgroup getMyPlace(String gId) {
+		return sqlSession.selectOne("mapMapper.getMyPlace", gId);
+	}
+
+	
 }
 

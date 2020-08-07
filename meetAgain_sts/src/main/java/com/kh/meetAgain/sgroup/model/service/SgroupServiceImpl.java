@@ -150,15 +150,9 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
-	public Sgroup createMapList(String gid) {
-		return sgroupDAO.createMapList(gid);
-	}
-
-	@Override
 	public int countGroupMember(String gid) {
 		return sgroupDAO.countGroupMember(gid);
-	}
-	
+	}	
 
 	@Override
 	public int joinSuccess(Map<String, String> map) {
@@ -168,7 +162,11 @@ public class SgroupServiceImpl implements SgroupService {
 	@Override
 	public int meetingPlaceMasterStatus(Map<String, Object> map) {
 		return sgroupDAO.meetingPlaceMasterStatus(map);
+	}
 
+	@Override
+	public Sgroup getMyPlace(String gId) {
+		return sgroupDAO.getMyPlace(gId);
 	}
 
 }
