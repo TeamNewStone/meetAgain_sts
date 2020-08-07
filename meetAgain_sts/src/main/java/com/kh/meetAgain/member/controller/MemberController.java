@@ -222,7 +222,8 @@ public class MemberController {
 		}else {
 			isNew=false;
 			map.put("wdYN",m.getWd_Yn());
-			System.out.println("wdYN : "+m.getWd_Yn());
+			map.put("isOut",m.getOut_Yn());
+			System.out.println("selectOne m : "+m);
 		}
 		
 		map.put("isNew", isNew);
