@@ -8,32 +8,31 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 
 @Controller
-@SessionAttributes(value= {"member", "gid"})
+@SessionAttributes(value= {"member", "gid"}) // 페이지 세션
 public class CalendarController {
 	
 	@Autowired
 	SgroupService sgroupService;	
 	 
 	@RequestMapping("sgroup/addCalendar.do")
-	public String addCalendar(
-				@RequestParam("gId") String gId,
+	// @PostMapping	
+	public String addCalendar(		
+				@RequestParam("gid") String gId,
 				@RequestParam("gDate") String gDate,
 				@RequestParam("gDateEnd") String gDateEnd,
 				@RequestParam("gInfo") String gInfo,
 				@RequestParam("gTime") String gTime,
-				@RequestParam(value="isCtn", required = false, defaultValue = "N") String isCtn) {
-
-		// System.out.println(gTime); // 12:01
-		//***************gid임의지정
-		//String gid = "1";		
-
+				@RequestParam(value="isCtn", required = false, defaultValue = "N") String isCtn, ModelMap model) {
+		
 		Date date = Date.valueOf(gDate);
 		Date date2 = Date.valueOf(gDateEnd);
 		int hour = Integer.parseInt(gTime.substring(0, 2));
@@ -52,30 +51,20 @@ public class CalendarController {
 		cal.setGDateEnd(date2);
 		cal.setGInfo(gInfo);
 		cal.setGTime(time);
-		cal.setIsCtn(isCtn);		
+		cal.setIsCtn(isCtn);
 		
 		System.out.println("insert 확인 : " + cal);
+
+		int result = sgroupService.addCalendar(cal);
 		
-		//cal.setGId(gId);
-
-		sgroupService.addCalendar(cal);	
-
-		/*		
-		String addMsg = "";
-
-		if (result > 0) {
-			addMsg = "일정 생성됨";
-			System.out.println("일정 생성됨");
-		} else {
-			addMsg = "생성 실패";
-			System.out.println("생성 실패");
-		} */
+		// model.addAttribute("gid", gId);	
 		
 		return "redirect:groupCalendar.do";	
+		
 	}
 	
 	@RequestMapping("sgroup/groupCalendar.do")
-	public String loadList(@RequestParam String gid, Model model) {
+	public String loadList(Model model) {
 		
 		// 일정 조회
 		List<Calendar> list = new ArrayList<Calendar>(); 
@@ -85,15 +74,13 @@ public class CalendarController {
 		System.out.println("\n" + list);
 		System.out.println("controller");
 
-		model.addAttribute("sclist", list);
-		model.addAttribute("gid", gid);
+		model.addAttribute("sclist", list);		
 		
 		return "sgroup/groupCalendar";	
 
 	}
 	
 	@RequestMapping("sgroup/deleteCalendar.do")
-	//@RequestBody
 	// 일정 제거
 	public String deleteCalendar(@RequestParam String cdId, Model model) {
 

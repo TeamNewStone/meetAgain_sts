@@ -9,7 +9,7 @@ import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 public interface MyPageDAO {
 
-	List<Map<String, String>> selectMyBoardList(int cPage, int numPerPage);
+	List<Map<String, String>> selectMyBoardList(int cPage, int numPerPage, String muserId);
 
 	int selectMyBoardTotalContents();
 

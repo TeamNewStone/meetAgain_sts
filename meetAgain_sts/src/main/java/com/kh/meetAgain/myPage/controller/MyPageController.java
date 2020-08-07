@@ -75,7 +75,7 @@ public class MyPageController {
 		// 실제 데이터베이스의 데이터에서
 		// 머릿글 : 키(key) , 실제 값 : 값(value) => 여러 개니까 List에 담기
 		List<Map<String, String>> list
-			= mpSvc.selectMyBoardList(cPage, numPerPage);
+			= mpSvc.selectMyBoardList(cPage, numPerPage, muserId);
 		
 		// 2. 페이지 계산을 위한 총 페이지 개수
 		int totalContents = mpSvc.selectMyBoardTotalContents();
