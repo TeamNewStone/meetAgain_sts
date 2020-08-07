@@ -128,8 +128,8 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 	
 	@Override
-	public List<Calendar> loadList() {
-		return sgroupDAO.loadList();
+	public List<Calendar> loadList(String gId) {
+		return sgroupDAO.loadList(gId);
 	}
 	
 	@Override
@@ -172,6 +172,11 @@ public class SgroupServiceImpl implements SgroupService {
 	@Override
 	public Joing getMaster(String gId) {
 		return sgroupDAO.getMaster(gId);
+	}
+
+	@Override
+	public int checkCtn(String gId, String userId) {
+		return sgroupDAO.checkCtn(gId, userId);
 	}
 
 

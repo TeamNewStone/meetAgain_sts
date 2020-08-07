@@ -119,10 +119,12 @@
 										<td id="tx">약속 시간</td>
 										<td><input type="time" name="gTime" class="form-control"  /></td>
 									</tr>
+									<c:if test="${isCtn }">
 									<tr>
 										<td id="tx">정기 모임</td>
 										<td><input type="checkbox" id="isCtnChk" /></td>
 									</tr>		
+									</c:if>
 								</tbody>
 							</table>								
 						<input type="hidden" name="isCtn" id="_Y" value="N" />											

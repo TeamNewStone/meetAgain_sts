@@ -3,17 +3,21 @@ package com.kh.meetAgain.sgroup.controller;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 
@@ -58,18 +62,29 @@ public class CalendarController {
 	}
 	
 	@RequestMapping("sgroup/groupCalendar.do")
-	public String loadList(Model model) {
+	public String loadList(Model model, @ModelAttribute("member") Member m, @ModelAttribute("gid") String gId) {
 		
 		// 일정 조회
 		List<Calendar> list = new ArrayList<Calendar>(); 
-
-		list = sgroupService.loadList();
-
+		Map <String,Object> isCtn = new HashMap<String,Object>();
+		
+		isCtn.put("gid", gId);
+		isCtn.put("userId",m.getUserId());
+		
+		list = sgroupService.loadList(gId);
+		int result = sgroupService.checkCtn(gId, m.getUserId());
+		
+		boolean ctnCheck = (result==1) ? true : false;
+		
 		// System.out.println("\n" + list);
 		// System.out.println("controller");
 
-		model.addAttribute("sclist", list);		
+		model.addAttribute("sclist", list);
+		model.addAttribute("isCtn",ctnCheck);
 		
+		System.out.println("calendar ------------- result : "+result);
+		System.out.println("calendar ------------- gid : "+gId);
+		System.out.println("calendar ------------- isCtn : "+ctnCheck);
 		return "sgroup/groupCalendar";	
 
 	}

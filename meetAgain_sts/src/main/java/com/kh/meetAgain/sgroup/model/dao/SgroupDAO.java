@@ -50,7 +50,7 @@ public interface SgroupDAO {
 
 	int insertComment(GB_comment gB_comment);
 
-	List<Calendar> loadList();
+	List<Calendar> loadList(String gId);
 
 	int commentUpdate(GB_comment gB_comment);
 
@@ -67,6 +67,8 @@ public interface SgroupDAO {
 	int getMasterStatus(Map<String, Object> map);
 
 	Joing getMaster(String gId);
+
+	int checkCtn(String gId, String userId);
 
 	
 }
