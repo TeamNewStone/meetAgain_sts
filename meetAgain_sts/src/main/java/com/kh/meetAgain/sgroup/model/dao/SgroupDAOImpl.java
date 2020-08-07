@@ -194,6 +194,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.selectOne("calendarMapper.checkCtn",map);
 	}
 
+@Override
+	public Sgroup groupMapUpdate(String gId) {
+		return sqlSession.selectOne("mapMapper.groupMapUpdate", gId);
+	}
+
 	
 }
 

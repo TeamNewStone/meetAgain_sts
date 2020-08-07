@@ -26,4 +26,12 @@
 		SELECT ISCPT FROM JOING WHERE ISCPT = 'Y'
 	</select>
 	
+	<update id="groupMapUpdate" parameterType="Sgroup">
+		UPDATE SGROUP
+			<set>
+				GPLACE = #{gPlace}	
+			</set>
+		WHERE GID = #{gId}
+	</update>
+	
 </mapper>

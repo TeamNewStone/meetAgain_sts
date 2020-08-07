@@ -70,5 +70,8 @@ public interface SgroupDAO {
 
 	int checkCtn(String gId, String userId);
 
+	Sgroup groupMapUpdate(String gId);
+
+
 	
 }

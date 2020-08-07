@@ -177,6 +177,11 @@ public class SgroupServiceImpl implements SgroupService {
 	@Override
 	public int checkCtn(String gId, String userId) {
 		return sgroupDAO.checkCtn(gId, userId);
+  }
+  
+  	@Override
+	public Sgroup groupMapUpdate(String gId) {
+		return sgroupDAO.groupMapUpdate(gId);
 	}
 
 

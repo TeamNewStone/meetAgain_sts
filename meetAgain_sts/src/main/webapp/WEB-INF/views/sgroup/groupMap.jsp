@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<!-- 우편번호 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" ></script>   
+   
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
 <div class="container" style="overflow: hidden; height: auto;">
@@ -41,6 +45,7 @@
 				// 지도를 생성한다 
 				var map = new kakao.maps.Map(mapContainer, mapOption);
 				var geocoder = new kakao.maps.services.Geocoder();
+				var Ha, Ga;
 				
 				// 주소로 좌표를 검색합니다
 				geocoder.addressSearch('${gPlace}', function(result, status) {
@@ -149,18 +154,25 @@
 						    var resultDiv2 = document.getElementById('_mapMakerCheck2'); 
 						    resultDiv2.innerHTML = message2;						    
 						   
+						    console.log(latlng.Ha);
+						    console.log(latlng.Ga);
 						
 				        }
-
+				        Ha = latlng.Ha;
+				        Ga = latlng.Ga;
+						
 				    });
 
+				});			
+				
+				$(function(){
 					$('#findRoad').on('click', function() {						
-						if(confirm("카카오맵으로 넘어가시겠습니까?"))
-							window.open(url + '다시만나모임에서 선택한 장소' + ',' + latlng.Ha + ',' + latlng.Ga);							
-							// console.log(latlng.Ha + ',' + latlng.Ga);														
-					});
-
-				});				
+						if(confirm("카카오맵으로 넘어가시겠습니까?")){
+							window.open('https://map.kakao.com/link/to/다시만나모임에서 선택한 장소' + ',' + Ha + ',' + Ga);
+							return null;
+						}
+					});					
+				});
 				
 				// 장소검색
 				var places = new kakao.maps.services.Places();
@@ -173,7 +185,7 @@
 				}
 
 				var callback1 = function (result, status) {
-					var div5 = document.getElementById('_mapMakerCheck2');
+					var div5 = document.getElementById('_mapMakerCheck2');					
 
 					if (status === kakao.maps.services.Status.OK) {
 
@@ -253,11 +265,11 @@
 					</div>
 				</div>				
 				<i class="fa fa-map-marker fa-3x"></i><br>
-				<c:set var="user1" value="${member}"/>
-				<input type="hidden" name = "gId" value="${gid}" />
-				<c:set var="place" value="${gid}" />
-				<input type="hidden" name = "userId"  value="${user1.getUserId()}" />			
-					<h6><span>가져온 모임장소 : <br>${gPlace}</span></h6><br>		
+					<c:set var="user1" value="${member}"/>
+					<input type="hidden" name = "gId" value="${gid}" />					
+					<input type="hidden" name = "userId"  value="${user1.getUserId()}" />			
+					<h6><span>소모임 모임장소 : </span></h6><br>
+					<input type="text" class="form-control" name="address" style="width: 364px;" value="${gPlace}"><br>
 							
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
 			</div> 
@@ -270,19 +282,89 @@
 			<div>
 				<button type="button" class="btn btn-info"	id="findRoad">카카오맵에서<br>길찾기</button>
 					<c:if test="${isCpt eq true}">
-						<button type="button" class="btn btn-light" id="reloadmap" style="width: 113px; height: 60px;">장소변경</button>
+						<button type="submit" class="btn btn-light" id="sample6_address" style="width: 113px; height: 60px;" onclick="addressSearchBtn3()">장소변경</button>							
 					</c:if>
+					<button type="submit" onclick="tsetttt()">dddd</button>
 			</div>
 		</div>
 
 	</div>
-	<br /> <br />
+	<br /><br />
 </div>
 
 <script>
-	$('#reloadmap').click(function() {
-		location.reload();
-	});	
+	function addressSearchBtn3() {
+    // 참조 API : http://postcode.map.daum.net/guide
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = ''; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    fullAddr = data.roadAddress;
+
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    fullAddr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                if(data.userSelectedType === 'R'){
+                    //법정동명이 있을 경우 추가한다.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
+                	
+                	$('[name=address]').val('');
+                	// $('[name=address]').val(fullAddr);
+                	
+	                // location.reload(true);
+	                /* $.ajax({
+					       url: '${pageContext.request.contextPath}/mapPlaceUpdate.do',
+					       data: {
+					    	   cdId : cdId
+					       },
+					       type: "POST",
+					       success: function () {
+					         // location.reload(true);
+					         alert('수정완료.');
+					       }
+						   
+					    }); */
+					location.href='${pageContext.request.contextPath}/mapPlaceUpdate.do';
+                } else {
+                	return false;
+                }
+                
+                
+            }
+        }).open();
+    };	
+
+
+
+</script>
+<script>
+
+function tsetttt() {
+	location.href='${pageContext.request.contextPath}/sgroup/groupMap.do?gid='+${gid};
+}
+
 </script>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
+
