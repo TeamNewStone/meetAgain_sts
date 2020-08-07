@@ -14,14 +14,10 @@
 	<input type="hidden" id="address3" value="${member.address3}" />
 </c:if>
 		<div class="row">
-			<div class="col-lg-3 col-md-3">
-				<p>
-					<a href="">${fn:substring(member.address1,3,7)}</a> 주변의 소모임 리스트를 보고 계십니다.
-				</p>
+			<div class="col-lg-4 col-md-4">
 				<div class="dropdown">
-					<button class="btn btn-secondary dropdown-toggle" type="button"
-						id="dropdownMenuButton" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">지역선택</button>
+						<a href="" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">${fn:substring(member.address1,3,7)}</a> 주변의 소모임 리스트 입니다.
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
 						<a class="dropdown-item" href="#">${fn:substring(member.address1,3,7)}</a>
@@ -32,37 +28,46 @@
 					</div>
 				</div>  
 			</div>
-			<div class="col-lg-6 col-md-6">
+			<div class="col-lg-8 col-md-8">
 				<div class="rows">
 					<div class="row">
-						<div class="col-8">
-							<input type="search" class="form-control" id="search"
-								placeholder="모임을 검색하세요">
-						</div>
 						<div class="col-4">
-							<button type="button" class="btn btn-info">상세 검색 ▼</button>
+							<input type="search" class="form-control" id="search" placeholder="모임을 검색하세요">
+						</div>
+						<div class="col-2">
+							<button type="button" class="btn btn-info" style="margin-left: -20%;background:#132742; border:#132742;">검색</button>
+						</div>
+						<div class="col-3">
+							<button type="button" class="btn btn-info" id="showFilter" style="margin-left: -40%;background:#132742; border:#132742 ;">상세 검색 ▼</button>
+						</div>
+						<div class="col-2">
+							<button type="button" id="groupCreBtn" class="btn btn-success" style="margin-left: -80%;background:#ffb5b6; border:#ffb5b6;" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">모임 생성</button>
+							<c:if test="${groupCount != 0 && groupCount >= 5 and member.getMLevel()==0}">
+							<script>
+								$(function(){
+									$('#groupCreBtn').attr('disabled', true);
+								});
+							</script>
+							</c:if>
 						</div>
 					</div>
-					<div class="rows form-group">
+					
+					
+					<div class="rows form-group" id="filter" style="display : none;">
 						<div class="row">
-							<div class="col-2 custom-control custom-radio my-2">
-								<input type="radio" id="short-term" name="term"
-									class="custom-control-input" checked> <label
-									class="custom-control-label" for="short-term">단기</label>
+							<div class="col-1.5 custom-control custom-checkbox my-2">
+								<input type="checkbox" class="custom-control-input" id="health" name="gType"> 
+								<label class="custom-control-label" for="health" style="font-weight: 400; margin-right: 10px;">단기</label>
 							</div>
-							<div class="col-2 custom-control custom-radio my-2">
-								<input type="radio" id="long-term" name="term"
-									class="custom-control-input"> <label
-									class="custom-control-label" for="long-term">장기</label>
+							<div class="col-1.5 custom-control custom-checkbox my-2">
+								<input type="checkbox" class="custom-control-input" id="Long" name="gType"> 
+								<label class="custom-control-label" for="Long" style="font-weight: 400; margin-right: 10px;">장기</label>
 							</div>
-							<div class="col-8 custom-control custom-radio my-2"></div>
 						</div>
 						<div class="row">
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="health"
-									name="hobby" checked> <label
-									class="custom-control-label" for="health"
-									style="font-weight: 400; margin-right: 10px;">운동</label>
+								<input type="checkbox" class="custom-control-input" id="health" name="cateId"> 
+								<label class="custom-control-label" for="health" style="font-weight: 400; margin-right: 10px;">운동</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
 								<input type="checkbox" class="custom-control-input" id="study"
@@ -102,10 +107,8 @@
 						</div>
 						<div class="row">
 							<div class="custom-control custom-checkbox col-1.5 ">
-								<input type="checkbox" class="custom-control-input" id="teens"
-									name="ages" checked> <label
-									class="custom-control-label" for="teens"
-									style="font-weight: 400; margin-right: 10px;">10대</label>
+								<input type="checkbox" class="custom-control-input" id="teens" name="ages"> 
+								<label class="custom-control-label" for="teens" style="font-weight: 400; margin-right: 10px;">10대</label>
 							</div>
 							<div class="custom-control custom-checkbox col-1.5">
 								<input type="checkbox" class="custom-control-input" id="2teens"
@@ -128,8 +131,6 @@
 									for="5teens" style="font-weight: 400; margin-right: 10px;">50대</label>
 							</div>
 						</div>
-					</div>
-
 					<div class="row" style="margin-top: 10px;">
 						<div class="col-1.5 custom-control custom-radio my-2">
 							<input type="radio" id="whatever" name="gender"
@@ -150,11 +151,20 @@
 						</div>
 						<div class="col-6 custom-control custom-radio my-2"></div>
 					</div>
+					</div>
 				</div>
 				<div class="col-1"></div>
 			</div>
-			<div class="col-lg-3 col-md-3">
-			<button type="button" id="groupCreBtn" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">소모임 생성하기!</button>
+			
+			<script>
+			$('#showFilter').click(function(){
+				 $('#filter').toggle();
+			});
+			
+			</script>
+			
+<%-- 			<div class="col-lg-3 col-md-3">
+			<button type="button" id="groupCreBtn" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">모임 생성</button>
 			<c:if test="${groupCount != 0 && groupCount >= 5 and member.getMLevel()==0}">
 				<script>
 					$(function(){
@@ -163,10 +173,11 @@
 				</script>
 			</c:if>
 			
-			</div>
+			</div> --%>
 		</div>
 		<br />
 <!-- 카테고리 추천 START -->
+ 	<br /><br />
  	<div class="row">
 		<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
 	</div> 
