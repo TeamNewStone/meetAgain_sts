@@ -31,12 +31,12 @@ public interface SgroupService {
 
 	int groupLeave(Map<String, String> map);
 
-	List<Map<String, String>> selectgBoardList(String gId, int numPerPage, int cPage);
+	List<Map<String, String>> selectgBoardList(String gid, int numPerPage, int cPage);
 
 	int selectGroupCount(String userId);
 	
 
- int selectgBoardTotalContents(String gId);
+ int selectgBoardTotalContents(String gid);
 
 	 Gboard SelectOnegBoard(int gbId);
 
@@ -66,6 +66,8 @@ public interface SgroupService {
 
 	int countGroupMember(String gid);
 	
-	Joing meetingPlaceMasterStatus(String gid);
+	int joinSuccess(Map<String, String> map);
 	
+	int meetingPlaceMasterStatus(Map<String, Object> map);
+
 }

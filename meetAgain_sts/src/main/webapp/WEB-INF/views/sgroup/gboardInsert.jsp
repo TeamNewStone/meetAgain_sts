@@ -9,8 +9,8 @@
 	<form action="${pageContext.request.contextPath }/sgroup/gbInsert.do"
 		method="post" enctype="multipart/form-data">
 		<div id="titleArea">
-			<input type="hidden" name="gId" value="${ param.gId}"/>
-			<input type="hidden" name="userId" value="${member.getUserId() }"/>
+			<input type="hidden" name="gid" value="${ param.gid}"/>
+			<input type="hidden" name="userid" value="${member.getUserId() }"/>
 			
 			<input type="text" class="form-control" id="gbTitle" name="gbTitle"
 				placeholder="제목을 입력하세요" />
