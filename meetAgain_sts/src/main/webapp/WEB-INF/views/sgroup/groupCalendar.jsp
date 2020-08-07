@@ -4,20 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/common/header.jsp" />
-<%-- <%
-	Calendar cal = (Calendar)session.getAttribute("sclist");
-%>
-<%if ( cal == null ) { %>
-	<script>
-		//alert('불러오기 완료');
-		console.debug(cal);
-	</script>
-<% } else { %>
-	<script> 
-		//alert('불러오기 실패');
-		console.debug(cal);
-	</script>
-<% } %> --%>
 
 <link href='${ pageContext.request.contextPath }/resources/css/main.css' rel='stylesheet' type='text/css'>
 <script src="${ pageContext.request.contextPath }/resources/js/main.js"></script>

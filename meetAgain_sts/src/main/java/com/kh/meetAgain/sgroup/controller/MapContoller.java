@@ -34,14 +34,7 @@ public class MapContoller {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		Sgroup sg = sgroupService.getMyPlace(gId);
-		System.out.println("컨트롤러장소 : " + sg);
-		
-		/*
-		 * Joing jg = sgroupService.getMaster(gId);
-		 *  System.out.println(jg);
-		String isCpt = jg.getIsCpt();
-		 */
-		
+		// System.out.println("컨트롤러장소 : " + sg);
 		
 		map.put("gid", gId);
 		map.put("userId", userId);
@@ -49,11 +42,6 @@ public class MapContoller {
 
 		int mapResult = sgroupService.getMasterStatus(map);
 		/////결과 : 모임장일경우 1, 아닐경우 0
-		
-		/* System.out.println("모임장 여부 : " + jg); */	
-		
-		/* System.out.println("컨트롤러 맵메소드 " + map); */	
-		
 		
 		boolean isCpt = (mapResult==1) ? true : false;
 		

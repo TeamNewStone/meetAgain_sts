@@ -113,8 +113,8 @@ public class SgroupDAOImpl implements SgroupDAO {
 	
 	@Override
 	public List<Calendar> loadList() {		
-		System.out.println("DAO실행");
-		System.out.println(sqlSession.selectList("calendarMapper.loadList"));
+		//System.out.println("DAO실행");
+		// System.out.println(sqlSession.selectList("calendarMapper.loadList"));
 		
 		return sqlSession.selectList("calendarMapper.loadList");
 	}

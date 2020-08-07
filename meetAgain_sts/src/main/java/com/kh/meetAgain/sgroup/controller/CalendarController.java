@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -23,8 +24,7 @@ public class CalendarController {
 	@Autowired
 	SgroupService sgroupService;	
 	 
-	@RequestMapping("sgroup/addCalendar.do")
-	// @PostMapping	
+	@PostMapping("sgroup/addCalendar.do")	
 	public String addCalendar(		
 				@RequestParam("gid") String gId,
 				@RequestParam("gDate") String gDate,
@@ -39,10 +39,6 @@ public class CalendarController {
 		int min = Integer.parseInt(gTime.substring(3));
 		
 		Timestamp time = Timestamp.valueOf(date.toString() + " " + hour + ":" + min + ":00"); // 20: + 14 + :00
-				
-//		System.out.println(hour);
-//		System.out.println(min);		
-//		System.out.println(time);
 
 		Calendar cal = new Calendar();
 		
@@ -53,12 +49,10 @@ public class CalendarController {
 		cal.setGTime(time);
 		cal.setIsCtn(isCtn);
 		
-		System.out.println("insert 확인 : " + cal);
+		// System.out.println("insert 확인 : " + cal);
 
 		int result = sgroupService.addCalendar(cal);
-		
-		// model.addAttribute("gid", gId);	
-		
+
 		return "redirect:groupCalendar.do";	
 		
 	}
@@ -71,8 +65,8 @@ public class CalendarController {
 
 		list = sgroupService.loadList();
 
-		System.out.println("\n" + list);
-		System.out.println("controller");
+		// System.out.println("\n" + list);
+		// System.out.println("controller");
 
 		model.addAttribute("sclist", list);		
 		
@@ -86,7 +80,7 @@ public class CalendarController {
 
 		int sendResult = sgroupService.deleteCalendar(cdId);
 		
-		System.out.println(sendResult);
+		// System.out.println(sendResult);
 		
 		model.addAttribute("cdId", cdId);
 		
