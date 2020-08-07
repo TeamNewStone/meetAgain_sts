@@ -189,7 +189,8 @@
 					</c:forEach>
 					<input type="hidden" id="private"/>
 					<input type="hidden" id="ageConfirm" />
-					<input type="hidden" id="genderConfirm"/>	
+					<input type="hidden" id="genderConfirm"/>
+					<input type="hidden" id="maxNumConfirm"/>	
 				</div>
 				</div>
 			</div>
@@ -245,6 +246,12 @@ $(function(){
 $(function(){	
 	$('form').on('submit',function(event){
         alert("이 내용으로 가입 하시겠습니까?");
+        
+        <c:if test="${sgroup.getMaxNum()==groupMem }">
+        	alert('가입가능한 인원수를 초과하였습니다.');
+    		$('#maxNumConfirm').addClass('fail').removeClass('success');
+    		return false;
+        </c:if>
         
         <c:if test="${!empty sgroup.getGPwd()}">
     	var gPwd = ${sgroup.getGPwd()};
