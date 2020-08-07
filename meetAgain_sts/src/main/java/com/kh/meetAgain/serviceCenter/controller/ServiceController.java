@@ -56,4 +56,8 @@ public class ServiceController {
 
 		return "serviceCenter/reportStatus";
 	}
+	@RequestMapping("/serviceCenter/PTC.do")
+	public String PTC() {
+		return "serviceCenter/PTC";
+	}
 }
