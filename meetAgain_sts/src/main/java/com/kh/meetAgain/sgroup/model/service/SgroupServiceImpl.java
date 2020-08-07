@@ -63,17 +63,17 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 	
 	@Override
-	public List<Map<String, String>> selectgBoardList(String gid, int cPage, int numPerPage) {
-		System.out.println("Service gid : " + gid);
-		return sgroupDAO.selectgBoardList(gid, cPage, numPerPage);
+	public List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage) {
+		System.out.println("Service gId : " + gId);
+		return sgroupDAO.selectgBoardList(gId, cPage, numPerPage);
 	}
 	public int selectGroupCount(String userId) {
 		return sgroupDAO.selectGroupCount(userId);
 	}
 
 	@Override
-	public int selectgBoardTotalContents(String gid) {
-		return sgroupDAO.selectgBoardTotalContents(gid);
+	public int selectgBoardTotalContents(String gId) {
+		return sgroupDAO.selectgBoardTotalContents(gId);
 	}
 
 	@Override
@@ -158,15 +158,20 @@ public class SgroupServiceImpl implements SgroupService {
 	public int joinSuccess(Map<String, String> map) {
 		return sgroupDAO.joinSuccess(map);
 	}
-	
-	@Override
-	public int meetingPlaceMasterStatus(Map<String, Object> map) {
-		return sgroupDAO.meetingPlaceMasterStatus(map);
-	}
 
 	@Override
 	public Sgroup getMyPlace(String gId) {
 		return sgroupDAO.getMyPlace(gId);
+	}
+
+	@Override
+	public int getMasterStatus(Map<String, Object> map) {
+		return sgroupDAO.getMasterStatus(map);
+	}
+
+	@Override
+	public Joing getMaster(String gId) {
+		return sgroupDAO.getMaster(gId);
 	}
 
 

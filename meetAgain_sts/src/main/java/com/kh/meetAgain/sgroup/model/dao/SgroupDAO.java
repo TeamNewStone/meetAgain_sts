@@ -30,7 +30,7 @@ public interface SgroupDAO {
 	
 	int groupLeave(Map<String, String> map);
  
-	List<Map<String, String>> selectgBoardList(String gid, int cPage, int numPerPage);
+	List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage);
 
 	 int selectgBoardTotalContents(String gId);
 
@@ -62,9 +62,11 @@ public interface SgroupDAO {
 
 	int joinSuccess(Map<String, String> map);
 
-	int meetingPlaceMasterStatus(Map<String, Object> map);
-
 	Sgroup getMyPlace(String gId);
+
+	int getMasterStatus(Map<String, Object> map);
+
+	Joing getMaster(String gId);
 
 	
 }

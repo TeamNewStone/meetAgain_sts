@@ -43,7 +43,7 @@
 				var geocoder = new kakao.maps.services.Geocoder();
 				
 				// 주소로 좌표를 검색합니다
-				geocoder.addressSearch('${sg.getGPlace()}', function(result, status) {
+				geocoder.addressSearch('${gPlace}', function(result, status) {
 
 				    // 정상적으로 검색이 완료됐으면 
 				     if (status === kakao.maps.services.Status.OK) {
@@ -260,7 +260,7 @@
 					<h6><span>가져온 모임장소 : <br>${gPlace}</span></h6><br>		
 							
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
-			</div>
+			</div> 
 		</div>
 
 		<div>
@@ -269,9 +269,8 @@
 			<br />
 			<div>
 				<button type="button" class="btn btn-info"	id="findRoad">카카오맵에서<br>길찾기</button>
-					<c:set var="mc" value="${sgMc.getIsCpt()}"/>					
-					<c:if test="${mc eq 'Y'}">
-							<button type="button" class="btn btn-light" id="reloadmap" style="width: 113px; height: 60px;">장소변경</button>
+					<c:if test="${isCpt eq true}">
+						<button type="button" class="btn btn-light" id="reloadmap" style="width: 113px; height: 60px;">장소변경</button>
 					</c:if>
 			</div>
 		</div>
