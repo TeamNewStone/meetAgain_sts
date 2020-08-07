@@ -70,4 +70,6 @@ public interface SgroupService {
 	
 	int joinSuccess(Map<String, String> map);
 	
+	int meetingPlaceMasterStatus(Map<String, Object> map);
+
 }
