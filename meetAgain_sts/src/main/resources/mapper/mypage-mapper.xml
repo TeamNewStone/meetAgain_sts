@@ -41,11 +41,11 @@
 	</select>
 	
 	<select id="getMyGroup" resultMap="sgroupMap">
-		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId} AND ISLEAVE='N' AND ISOUT='N'
+		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId} AND ISLEAVE='N' AND ISOUT='N' ORDER BY ISFIN
 	</select>
 	
 	<select id="getCreateGroup"  resultMap="sgroupMap">
-		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId} AND ISCPT='Y'
+		SELECT * FROM SGROUP JOIN JOING USING(GID) WHERE USERID = #{userId} AND ISCPT='Y' ORDER BY ISFIN
 	</select>
 	
 	<select id="selectFollowYN" parameterType="hashmap" resultType="_int">
