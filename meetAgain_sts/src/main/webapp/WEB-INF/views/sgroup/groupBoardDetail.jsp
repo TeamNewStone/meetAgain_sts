@@ -27,9 +27,9 @@
 				<div class="col-3"></div>
 				<div class="col-3"></div>
 				<div class="col-3">
-					<a class="btn_1" onclick="goDelete()">삭제하기</a> <a class="btn_1"
-						onclick="goUpdate()">수정하기</a> <a class="btn_1 checkout_btn_1"
-						onclick="goBack()">뒤로 가기</a>
+				<a class="btn_1" onclick="goDelete()">삭제하기</a> 
+				<a class="btn_1" onclick="goUpdate()">수정하기</a>
+				<a class="btn_1 checkout_btn_1" onclick="goBack()">뒤로 가기</a>
 
 				</div>
 				<div class="replyArea">
