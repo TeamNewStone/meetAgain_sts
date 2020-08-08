@@ -14,13 +14,20 @@
 		INSERT INTO CALENDAR VALUES(SEQ_CDID.NEXTVAL, #{gId}, #{gDate}, #{gDateEnd}, #{gInfo}, #{gTime}, #{isCtn})
 	</insert>
 	
-	<select id="loadList" resultType="Calendar">
+	<select id="loadList" resultType="Calendar" parameterType="string">
 		<!-- SELECT C.*, SUBSTR((TO_CHAR(GTIME, 'HH:MI'), 1, 11) FROM CALENDAR C -->
-		SELECT CDID, GID, GDATE, GDATEEND + 1 "GDATEEND", GINFO, GTIME, ISCTN FROM CALENDAR
+		SELECT CDID, GID, GDATE, GDATEEND + 1 "GDATEEND", GINFO, GTIME, ISCTN FROM CALENDAR WHERE GID =#{gId}
 	</select>
 	
 	<delete id="deleteCalendar" parameterType="string">
 		DELETE FROM CALENDAR WHERE CDID = #{cdId}
 	</delete>
 	
+	<select id="checkCtn" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*) FROM JOING WHERE GID = #{gId} AND USERID = #{userId} AND ISCPT = 'Y'
+	</select>
+	
+	<update id="modify" parameterType="hashmap">
+		UPDATE CALENDAR SET GINFO=#{info}, GTIME=#{time} WHERE CDID= #{cdid}
+	</update>
 </mapper>

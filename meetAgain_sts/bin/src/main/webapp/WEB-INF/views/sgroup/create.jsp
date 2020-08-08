@@ -4,10 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 <c:import url="/WEB-INF/views/common/header.jsp" />
-
-
 <form action="${ pageContext.request.contextPath }/sgroup/sgroupCreateEnd.do" method="post" enctype="multipart/form-data" onsubmit="return validate(this);">
 <div class="container">
 	<div class="intro">
@@ -39,7 +36,6 @@
 					</div>
 				<input type="file" name="sgroupImg" id="groupImgBtn" style="display: none;" onchange="loadImg(this);" />
 				</div> 
-
 			<div style="display : inline; margin-left:10%">
 			<p>* 모임 타이틀</p>
 			<div class="form-group">
@@ -121,7 +117,6 @@
 				    <input type="checkbox" class="custom-control-input" id="chargeCheck" name="chargeCheck" value="N">
 				    <label class="custom-control-label" for="chargeCheck">회비여부</label>
 				  </div>
-
 				  <input type="hidden" id="gFee" name="gFee">
 				  <input type="text" id="gFeeCopy" class="form-control" numberonly="true" placeholder="회비 금액을 입력해주세요." style="display:none;">
 				</div>
@@ -133,7 +128,6 @@
 					
 				});
 				</script>
-
 				
 				<div class="form-group">
 				  <span> * 인원수 </span>
@@ -173,13 +167,11 @@
 				
 				var coords, userAdr;
 				var X, Y, userX, userY;
-
 				var container = document.getElementById('map');
 				var options = {
 					center: new kakao.maps.LatLng(33.450701, 126.570667),
 					level: 3
 				};
-
 				var map = new kakao.maps.Map(container, options);
 				var geocoder = new kakao.maps.services.Geocoder();
 				
@@ -211,7 +203,6 @@
 				
 					test33(X, Y, userX, userY);									
 				});
-
 			
 			</script>
 				<p>모임 연령대</p>
@@ -276,7 +267,6 @@
 <script>
 // form 정규식
 $(document).on("keyup", "input:text[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );});
-
 function validate(){
 	var gPwd = $("#gPwd");
 	var gFeeCopy = $("#gFeeCopy");
@@ -319,7 +309,6 @@ function validate(){
 	}
 	
 }
-
 	$('#mimgBtn').on('click', function() {
 		$('#groupImgBtn').click();
 	});
@@ -400,7 +389,6 @@ function validate(){
 	    			var year = $( "#startDate" ).val().split("-")[0];
 	    			var mon = $( "#startDate" ).val().split("-")[1];
 	    			var day = $( "#startDate" ).val().split("-")[2];
-
 	    			var date = new Date(year, mon-1, day);
 	    			date.setMonth(date.getMonth() + 3);
 	    			
@@ -410,7 +398,6 @@ function validate(){
 	    			
 	    			durate.minDate = date;
 	    			console.log("endDate.minDate : " + date);
-
 	    			$('#durate').val(durate.minDate);
 	    		
 	    		});
@@ -425,20 +412,16 @@ function validate(){
 				{
 					oncomplete : function(data) {
 						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
 						// 각 주소의 노출 규칙에 따라 주소를 조합한다.
 						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
 						var fullAddr = ''; // 최종 주소 변수
 						var extraAddr = ''; // 조합형 주소 변수
-
 						// 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
 						if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
 							fullAddr = data.roadAddress;
-
 						} else { // 사용자가 지번 주소를 선택했을 경우(J)
 							fullAddr = data.jibunAddress;
 						}
-
 						// 사용자가 선택한 주소가 도로명 타입일때 조합한다.
 						if (data.userSelectedType === 'R') {
 							//법정동명이 있을 경우 추가한다.
@@ -454,12 +437,9 @@ function validate(){
 							fullAddr += (extraAddr !== '' ? ' (' + extraAddr
 									+ ')' : '');
 						}
-
 						// 우편번호와 주소 정보를 해당 필드에 넣는다.
 						$('#zipCode1').val(data.zonecode); //5자리 새우편번호 사용
-
 						$('#gPlace').val(fullAddr);
-
 						// 커서를 상세주소 필드로 이동한다.
 						$('#gPlace').focus();
 					}
@@ -467,6 +447,6 @@ function validate(){
 	};
 	
 </script>
-
-
+<script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery.min.js"></script> 
+<script src="${ pageContext.request.contextPath }/resources/vendor/jquery/jquery-ui.min.js"></script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

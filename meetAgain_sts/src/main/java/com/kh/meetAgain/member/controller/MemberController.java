@@ -107,14 +107,8 @@ public class MemberController {
 			ms = memberService.selectOneMember2(m.getUserId());
 		} 
 		
-		
-		/* Date endDate = mh.getPayDate().getMonth()+1; */
 		model.addAttribute("ms", ms);
 		model.addAttribute("list", list);
-		/* 없어도 되는지 확인
-		 * model.addAttribute("totalContents", totalContents);
-		 * model.addAttribute("numPerPage", numPerPage);
-		 */
 		model.addAttribute("pageBar", pageBar);
 		return "member/membership";
 	}
@@ -135,8 +129,6 @@ public class MemberController {
 		boolean isUsable = memberService.checkNnDuplicate(nickName) == 0 ? true : false;
 		map.put("isUsable", isUsable);
 		
-		// @ResponseBody 는 결과가 viewResolver로 가지 않고,
-		// 직접 그 결과 자체를 화면으로 전달한다.
 		return map;
 	}
 	@RequestMapping("/member/checkNnDuplicate2.do")
@@ -150,20 +142,20 @@ public class MemberController {
 		boolean isUsable2 = memberService.checkNnDuplicate2(map2) == 0 ? true : false;
 		map.put("isUsable2", isUsable2);
 		
-		// @ResponseBody 는 결과가 viewResolver로 가지 않고,
-		// 직접 그 결과 자체를 화면으로 전달한다.
 		return map;
 	}	
 	@RequestMapping("/member/mUpdate.do")
 	public String mUpdate( UserTMI userTMI,
 			Member member, Model model, HttpSession session,
 	         @RequestParam(value="userImg1", required = false) MultipartFile[] userImg1) {
-		
+
 		int result = memberService.mUpdate(member);
-		System.out.println("되라될되로다 : "+userImg1);
+		System.out.println("되라될되로다 : "+userImg1[0].getOriginalFilename());
 		String loc="/";
 		String msg="";
 		System.out.println(member.getUserImg());
+		if(userImg1[0].getOriginalFilename() != "") {
+			
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/userImg");
 
 	      File dir = new File(saveDir);
@@ -202,7 +194,9 @@ public class MemberController {
 		}else {
 			msg = "정보 수정 중 오류가 발생하였습니다. 다시 시도해주세요.";
 		}
-		
+		}else {
+			msg="정보 수정이 완료되었습니다.";
+		}
 		model.addAttribute("loc", loc);
 		model.addAttribute("msg", msg);
 		
@@ -235,7 +229,7 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		
 		try {
-		Member m = memberService.selectOne(userId);
+		Member m = memberService.selectOneMember(userId);
 		
 		String msg = "로그인 성공!";
 		String loc = "/";
@@ -253,7 +247,9 @@ public class MemberController {
 	@RequestMapping("/member/mTMIUpdate.do")
 	public String mTMIUpdate(Member member, UserTMI userTMI, CateInfo cateInfo, Model model, HttpSession session,
 	         @RequestParam(value="userImg1", required = false) MultipartFile[] userImg1) {
-		
+		String loc="/";
+		String msg="";
+		if(userImg1[0].getOriginalFilename() != "") {
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/userImg");
 
 	      File dir = new File(saveDir);
@@ -290,13 +286,14 @@ public class MemberController {
 			result = memberService.mTMIUpdate2(userTMI);
 		}
 		member.setUserImg(userTMI.getUserImg()); 
-		String loc="/";
-		String msg="";
 		
 		if(result > 0) {
 			msg="정보 수정이 완료되었습니다.";
 		}else {
 			msg="정보 수정 중 오류가 발생하였습니다. 다시 시도해 주세요.";
+		}
+		}else {
+			msg="정보 수정이 완료되었습니다.";
 		}
 		model.addAttribute("loc", loc);
 		model.addAttribute("msg", msg);

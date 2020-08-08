@@ -1,5 +1,6 @@
 package com.kh.meetAgain.sgroup.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
@@ -69,20 +72,20 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 	
 	@Override
-	public List<Map<String, String>> selectgBoardList(String gid ,int cPage, int numPerPage) {
+	public List<Map<String, String>> selectgBoardList(String gId ,int cPage, int numPerPage) {
 		RowBounds rows = new RowBounds((cPage - 1) * numPerPage, numPerPage);
-		List<Map<String, String>> list = sqlSession.selectList("sgroupMapper.selectgBoardList", gid, rows);
+		List<Map<String, String>> list = sqlSession.selectList("sgroupMapper.selectgBoardList", gId, rows);
 
 		System.out.println("cPage : " + cPage);
 		System.out.println("numPerPage : " + numPerPage);
-		System.out.println("DAO gid : " + gid);
+		System.out.println("DAO gId : " + gId);
 		System.out.println("list 출력 : " + list);
 		return list;
 	}
 
 
-	public int selectgBoardTotalContents(String gid) {
-		return sqlSession.selectOne("sgroupMapper.selectgBoardTotalContent",gid);
+	public int selectgBoardTotalContents(String gId) {
+		return sqlSession.selectOne("sgroupMapper.selectgBoardTotalContent",gId);
 	}
 
 	@Override
@@ -112,11 +115,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 	
 	@Override
-	public List<Calendar> loadList() {		
-		System.out.println("DAO실행");
-		System.out.println(sqlSession.selectList("calendarMapper.loadList"));
+	public List<Calendar> loadList(String gId) {		
+		//System.out.println("DAO실행");
+		// System.out.println(sqlSession.selectList("calendarMapper.loadList"));
 		
-		return sqlSession.selectList("calendarMapper.loadList");
+		return sqlSession.selectList("calendarMapper.loadList", gId);
 	}
 
 	@Override
@@ -152,18 +155,6 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.insert("sgroupMapper.updateComment", gB_comment);
 	}
 
-	
-	@Override
-	public Sgroup createMapList(String gid) {
-		return sqlSession.selectOne("mapMapper.createMapList", gid);
-	}
-
-	@Override
-	public Joing meetingPlaceMasterStatus(String gid) {
-		System.out.println("DAO실행 : " + gid);		
-		return sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", gid);
-	}
-
 	@Override
 	public int countGroupMember(String gid) {
 		return sqlSession.selectOne("sgroupMapper.countGroupMember", gid);
@@ -172,12 +163,60 @@ public class SgroupDAOImpl implements SgroupDAO {
 	@Override
 	public int joinSuccess(Map<String, String> map) {
 		return sqlSession.update("sgroupMapper.joinSuccess", map);
+	}	
+
+	@Override
+	public int checkCtn(String gId, String userId) {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("gId", gId);
+		map.put("userId", userId);
+		
+		return sqlSession.selectOne("calendarMapper.checkCtn",map);
+	}
+
+	@Override
+	public Sgroup getMyPlace(String gId) {
+		return sqlSession.selectOne("mapMapper.getMyPlace", gId);
+	}
+
+	@Override
+	public int getMasterStatus(Map<String, Object> map) {
+
+			int result = 0;		
+		
+			if(sqlSession.selectOne("mapMapper.getMasterStatus", map)==null) {
+				result = 0;
+			} else	result = 1;
+		
+		System.out.println("DAO ㅅlfgod " + map);
+		
+		return result;
+	}
+
+	@Override
+	public int groupMapUpdate(Map<String, String> map) {
+		return sqlSession.update("mapMapper.groupMapUpdate", map);
 	}
 	
 	@Override
-	public int meetingPlaceMasterStatus(Map<String, Object> map) {
-		return sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", map);
+	public List<Sgroup> searchGroup(Map<String, Object> map) {
+		return sqlSession.selectList("sgroupMapper.searchGroup", map);
+	}
+	
+
+	@Override
+	public int bReportInsert(Report r) {
+		return sqlSession.insert("sgroupMapper.bReportInsert", r);
 	}
 
+	@Override
+	public int cReportInsert(Report r) {
+		return sqlSession.insert("sgroupMapper.cReportInsert", r);
+	}
+	
+	@Override
+	public int modifyCalendar(Map<String, Object> map) {
+		return sqlSession.update("calendarMapper.modify",map);
+	}
 }
 

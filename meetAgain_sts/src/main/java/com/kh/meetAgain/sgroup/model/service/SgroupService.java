@@ -1,14 +1,16 @@
 package com.kh.meetAgain.sgroup.model.service;
 
 import java.util.List;
-
 import java.util.Map;
-import com.kh.meetAgain.sgroup.model.vo.Sgroup;
+
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.member.model.vo.CateInfo;
+import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
 import com.kh.meetAgain.sgroup.model.vo.Joing;
+import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 public interface SgroupService {
 
@@ -31,12 +33,12 @@ public interface SgroupService {
 
 	int groupLeave(Map<String, String> map);
 
-	List<Map<String, String>> selectgBoardList(String gid, int numPerPage, int cPage);
+	List<Map<String, String>> selectgBoardList(String gId, int numPerPage, int cPage);
 
 	int selectGroupCount(String userId);
 	
 
- int selectgBoardTotalContents(String gid);
+ int selectgBoardTotalContents(String gId);
 
 	 Gboard SelectOnegBoard(int gbId);
 
@@ -52,7 +54,7 @@ public interface SgroupService {
 
 	List<GB_comment> selectCommentList(int gbId);
 
-	List<Calendar> loadList();
+	List<Calendar> loadList(String gId);
 
 	int commentUpdate(GB_comment gB_comment);
 
@@ -61,13 +63,25 @@ public interface SgroupService {
 	int deleteCalendar(String cdId);
 
 	int insertComment(GB_comment gB_comment);
-	
-	Sgroup createMapList(String gid);
 
 	int countGroupMember(String gid);
 	
 	int joinSuccess(Map<String, String> map);
+
+	int checkCtn(String gId, String userId);
+
+	Sgroup getMyPlace(String gId);
+
+	int getMasterStatus(Map<String, Object> map);
+
+	int groupMapUpdate(Map<String, String> map);
+
+	List<Sgroup> searchGroup(Map<String, Object> map);
 	
-	int meetingPlaceMasterStatus(Map<String, Object> map);
+	int bReportInsert(Report r);
+
+	int cReportInsert(Report r);
+
+	int modifyCalendar(Map<String, Object> map);
 
 }

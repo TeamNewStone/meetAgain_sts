@@ -7,22 +7,31 @@
 <%@ page
 	import="java.util.*, com.kh.meetAgain.sgroup.model.vo.*, com.kh.meetAgain.member.model.vo.*"%>
 
-<c:import url="/WEB-INF/views/common/header.jsp" />
+<c:import url="/WEB-INF/views/common/header.jsp" /><div class="container" style="taxt-align: center;">
+	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
 
-<br>
-<br>
-<br>
-<br>
-<div class="container" style="taxt-align: center;">
 	<div class="row">
 		<div class="col-12">
 			<div class="content" align="center">
 				<div class="read-top">
-					<div class="subject">${Gboard.gbTitle}</div>
+					<div class="subject" name="gbTitle">${Gboard.gbTitle}</div>
 					<div id="noticeDate">${Gboard.gbDate}</div>
 				</div>
 				<div class="read-md">
 					<input type="hidden" id="gbContent" value="${Gboard.gbContent}" />
+					<br> <br>
+					<p>${Gboard.gbContent}</p>
+
+				</div>
+				<br> <br> <br> <br> <br>
+				<div class="col-3"></div>
+				<div class="col-3"></div>
+				<div class="col-3"></div>
+				<div class="col-3">
+				<a class="btn_1" onclick="goDelete()">삭제하기</a>
+				<a class="btn_1" onclick="goUpdate()">수정하기</a>
+					<%-- <a class="btn_1 checkout_btn_1" href="<%=request.getContextPath()%>/sgroup/groupBoard.do?gId=${gb.getGId()}">메뉴로 돌아가기</a> --%>
+
 				</div>
 				<div class="replyArea">
 					<div class="replyWriteArea">
@@ -57,7 +66,7 @@
 									class="replyList${gbc.getCLevel()}">
 									<tr>
 										<td rowspan="2"></td>
-										<td>${gbc.getCDate()}</td>
+										<td>${gbc.getCDate()}${gbc.getNickName()}</td>
 										<td align="center"><c:if
 												test="${ member.userId eq gbc.getUserId()}">
 												<input type="hidden" name="cId" value="${gbc.getCId()}" />
@@ -111,32 +120,24 @@
 
 </div>
 <script>
-	function goGboard() {
-		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoard.do"
-	}
+
+// 	function goGboard() {
+// 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoard.do"
+// 	}
 	function goUpdate() {
-		var gbId = $
-		{
-			Gboard.gbId
-		}
+		var gbId = "${Gboard.gbId}"
 		;
-		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardUpdate.do?gbId="
-				+ gbId;
+		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardUpdate.do?gbId="+gbId;
 	}
 	function goDelete() {
-		var gbId = $
-		{
-			Gboard.gbId
-		}
+		var gbId = "${Gboard.gbId}"
 		;
-		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="
-				+ gbId;
+		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="+gbId;
 	}
 
 	function updateReply(obj) {
 		// 현재 위치와 가장 근접한 textarea 접근하기
-		$(obj).parent().parent().next().find('textarea').removeAttr(
-				'readonly');
+		$(obj).parent().parent().next().find('textarea').removeAttr('readonly');
 
 		// 수정 완료 버튼을 화면 보이게 하기
 		$(obj).siblings('.updateConfirm').css('display', 'inline');
@@ -147,8 +148,7 @@
 
 	function updateConfirm(obj) {
 		// 댓글의 내용 가져오기
-		var content = $(obj).parent().parent().parent().next().find('textarea')
-				.val();
+		var content = $(obj).parent().parent().next().find('textarea').val();
 
 		// 댓글의 번호 가져오기
 		var cId = $(obj).siblings('input').val();
@@ -157,7 +157,7 @@
 		var gbId = "${Gboard.gbId}";
 
 		location.href = "${ pageContext.request.contextPath}/sgroup/commentUpdate.do?"
-				+ "cId=" + cId + "&gbId=" + gbId + "&cContent=" + cContent;
+				+ "cId=" + cId + "&gbId=" + gbId + "&cContent=" + content;
 	}
 
 	function deleteReply(obj) {
@@ -167,8 +167,8 @@
 		// 게시글 번호 가져오기
 		var gbId = "${Gboard.gbId}";
 
-		location.href = "${ pageContext.request.contextPath}/sgroup/deleteComment.do"
-				+ "?cId=" + cId + "&gbId=" + gbId;
+		location.href = "${ pageContext.request.contextPath}/sgroup/commentDelete.do"
+				+ "?cId=" + cId+"&gbId="+gbId;
 	}
 
 	function reComment(obj) {
@@ -198,7 +198,8 @@
 		console.log(cRef + " : " + cLevel);
 
 		// 게시글 번호 가져오기
-		var gbId = "${Gboard.gbId}";;
+		var gbId = "${Gboard.gbId}";
+		;
 		var parent = $(obj).parent().parent();
 		var grandparent = parent.parent();
 		var siblingsTR = grandparent.siblings().last();

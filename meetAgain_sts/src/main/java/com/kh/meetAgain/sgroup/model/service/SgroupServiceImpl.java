@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.dao.SgroupDAO;
 import com.kh.meetAgain.sgroup.model.exception.SgroupException;
@@ -63,17 +64,17 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 	
 	@Override
-	public List<Map<String, String>> selectgBoardList(String gid, int cPage, int numPerPage) {
-		System.out.println("Service gid : " + gid);
-		return sgroupDAO.selectgBoardList(gid, cPage, numPerPage);
+	public List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage) {
+		System.out.println("Service gId : " + gId);
+		return sgroupDAO.selectgBoardList(gId, cPage, numPerPage);
 	}
 	public int selectGroupCount(String userId) {
 		return sgroupDAO.selectGroupCount(userId);
 	}
 
 	@Override
-	public int selectgBoardTotalContents(String gid) {
-		return sgroupDAO.selectgBoardTotalContents(gid);
+	public int selectgBoardTotalContents(String gId) {
+		return sgroupDAO.selectgBoardTotalContents(gId);
 	}
 
 	@Override
@@ -128,8 +129,8 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 	
 	@Override
-	public List<Calendar> loadList() {
-		return sgroupDAO.loadList();
+	public List<Calendar> loadList(String gId) {
+		return sgroupDAO.loadList(gId);
 	}
 	
 	@Override
@@ -150,27 +151,54 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
-	public Sgroup createMapList(String gid) {
-		return sgroupDAO.createMapList(gid);
-	}
-
-	@Override
 	public int countGroupMember(String gid) {
 		return sgroupDAO.countGroupMember(gid);
-	}
-	
+	}	
 
 	@Override
 	public int joinSuccess(Map<String, String> map) {
 		return sgroupDAO.joinSuccess(map);
 	}
-	
-	@Override
-	public int meetingPlaceMasterStatus(Map<String, Object> map) {
-		return sgroupDAO.meetingPlaceMasterStatus(map);
 
+	@Override
+	public int checkCtn(String gId, String userId) {
+		return sgroupDAO.checkCtn(gId, userId);
+	}	
+
+	@Override
+	public Sgroup getMyPlace(String gId) {
+		return sgroupDAO.getMyPlace(gId);
 	}
 
+	@Override
+	public int getMasterStatus(Map<String, Object> map) {
+		return sgroupDAO.getMasterStatus(map);
+	}
+
+	@Override
+	public int groupMapUpdate(Map<String, String> map) {
+		return sgroupDAO.groupMapUpdate(map);
+	}
+
+	@Override
+	public List<Sgroup> searchGroup(Map<String, Object> map) {
+		return sgroupDAO.searchGroup(map);
+	}
+	
+	@Override
+	public int bReportInsert(Report r) {
+		return sgroupDAO.bReportInsert(r);
+	}
+
+	@Override
+	public int cReportInsert(Report r) {
+		return sgroupDAO.cReportInsert(r);
+	}
+
+	@Override
+	public int modifyCalendar(Map<String, Object> map) {
+		return sgroupDAO.modifyCalendar(map);
+	}
 
 
 }

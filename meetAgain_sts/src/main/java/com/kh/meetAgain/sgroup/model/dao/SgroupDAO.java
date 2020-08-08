@@ -2,6 +2,7 @@ package com.kh.meetAgain.sgroup.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
@@ -30,7 +31,7 @@ public interface SgroupDAO {
 	
 	int groupLeave(Map<String, String> map);
  
-	List<Map<String, String>> selectgBoardList(String gid, int cPage, int numPerPage);
+	List<Map<String, String>> selectgBoardList(String gId, int cPage, int numPerPage);
 
 	 int selectgBoardTotalContents(String gId);
 
@@ -50,7 +51,7 @@ public interface SgroupDAO {
 
 	int insertComment(GB_comment gB_comment);
 
-	List<Calendar> loadList();
+	List<Calendar> loadList(String gId);
 
 	int commentUpdate(GB_comment gB_comment);
 
@@ -58,13 +59,23 @@ public interface SgroupDAO {
 
 	int deleteCalendar(String cdId);
 
-	Sgroup createMapList(String gid);
-
 	int countGroupMember(String gid);
-	
-	Joing meetingPlaceMasterStatus(String gid);
 
 	int joinSuccess(Map<String, String> map);
 
-	int meetingPlaceMasterStatus(Map<String, Object> map);
+	int checkCtn(String gId, String userId);
+
+	Sgroup getMyPlace(String gId);
+
+	int getMasterStatus(Map<String, Object> map);
+
+	int groupMapUpdate(Map<String, String> map);
+
+	List<Sgroup> searchGroup(Map<String, Object> map);
+	
+	int bReportInsert(Report r);
+
+	int cReportInsert(Report r);
+	
+	int modifyCalendar(Map<String, Object> map);
 }

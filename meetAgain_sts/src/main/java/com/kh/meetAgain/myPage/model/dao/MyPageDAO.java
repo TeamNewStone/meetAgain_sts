@@ -1,10 +1,12 @@
 package com.kh.meetAgain.myPage.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.vo.Review;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 public interface MyPageDAO {
@@ -25,7 +27,7 @@ public interface MyPageDAO {
 
 	List<Map<String, String>> selectFollowingList(String userId);
 
-	List<Sgroup> getMyGroup(String userId);
+	 List<HashMap<String,Object>> getMyGroup(String userId);
 
 	List<Sgroup> getCreateGroup(String userId);
 
@@ -38,4 +40,8 @@ public interface MyPageDAO {
 	int insertReview(Review review);
 
 	Review insertReview(String userId, String gId);
+
+	int checkIn(Map<String, Object> map);
+
+
 }

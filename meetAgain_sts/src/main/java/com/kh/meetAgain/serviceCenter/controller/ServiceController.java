@@ -25,11 +25,6 @@ public class ServiceController {
 		return "serviceCenter/faq";
 	}
 
-	@RequestMapping("/serviceCenter/otoInquiry.do")
-	public String otoInquiry() {
-		return "serviceCenter/otoInquiry";
-	}
-
 	@RequestMapping("/serviceCenter/reportStatus.do")
 	public String reportStatus(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
 			Model model, HttpSession session) {
@@ -51,7 +46,7 @@ public class ServiceController {
 		model.addAttribute("list", list);
 
 		model.addAttribute("totalContents", totalContents);
-		model.addAttribute("numPerPage", numPerPage);
+		model.addAttribute("numPerPage", numPerPage); 
 		model.addAttribute("pageBar", pageBar);
 
 		return "serviceCenter/reportStatus";
@@ -60,4 +55,12 @@ public class ServiceController {
 	public String PTC() {
 		return "serviceCenter/PTC";
 	}
+	@RequestMapping("/serviceCenter/privacy_agreement.do")
+	public String test() {
+		return "serviceCenter/privacy_agreement";
+	}
+	@RequestMapping("/serviceCenter/ToS.do")
+	public String ToS() {
+		return "serviceCenter/ToS";
+	}	
 }

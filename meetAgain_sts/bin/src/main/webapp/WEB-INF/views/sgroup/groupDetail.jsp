@@ -44,9 +44,17 @@
 					<br />
 					<br />
 				</div>
-				<button class="btn btn-dark">소모임 탈퇴</button>
+				<button class="btn btn-dark" id="groupLeave" onclick="return groupLeave();">소모임 탈퇴</button>
 			</div>
-
+			<c:forEach var="jo" items="${joing }">
+				<c:if test="${jo.getUserId().equals(member.getUserId()) and jo.getIsCpt()=='Y'}">
+					<script>
+						$(function(){
+							$('#groupLeave').attr('disabled', true);
+						});
+					</script>
+				</c:if>
+			</c:forEach>
 			<!-- ---------이부분까지 사진과 설명---------- -->
 			<div class="col-md-8 col-lg-8">
 				<table  cellpadding="5px" style="width: 100%;">
@@ -58,11 +66,19 @@
 					<tr>
 						<td><h5>설립일</h5></td>
 						<td><h5>${sgroup.getCreateDate() }</h5></td>
-						<td style="text-align: right;"><span> <span
-								class="badge badge-pill badge-primary">정기</span> <span
-								class="badge badge-pill badge-info">6개월</span> <span
-								class="badge badge-pill badge-dark">승인제</span>
-						</span></td>
+						<td style="text-align: right;">
+						<span>
+							<c:if test="${sgroup.getGType() eq 'S' }">
+					       		<span class="badge badge-pill badge-primary">단기</span> 		        
+				        	</c:if>
+				        	<c:if test="${sgroup.getGType() eq 'L' }">
+					       		<span class="badge badge-pill badge-primary">정기</span> 			        
+				        	</c:if> 
+							<c:if test="${sgroup.getJoinType() eq 'C' }">
+					       		<span class="badge badge-pill badge-dark">승인제</span>		        
+				        	</c:if>
+						</span>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="3"><hr /></td>
@@ -73,17 +89,66 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<button type="button" class="btn btn-info btn-pill">운동</button>
+						<c:if test="${sgroup.getCateId() eq 'C01' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">운동</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C02' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">친목</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C03' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">공부</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C04' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">취미생활</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C05' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">문화생활</button>			        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C06' }">
+					       <button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">여행</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C07' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">봉사</button>		        
+				        </c:if>
+				        <c:if test="${sgroup.getCateId() eq 'C08' }">
+					       	<button type="button" class="btn btn-secondary btn-pill" style="background:#132742; border:#132742;">기타</button>			        
+				        </c:if>
 						</td>
-						<td><span class="badge badge-pill badge-success">20대</span> <span
-							class="badge badge-pill badge-success">30대</span> <span
-							class="badge badge-pill badge-success">40대</span> <span
-							class="badge badge-pill badge-warning">성별무관</span></td>
+						<td>
+							<c:if test="${fn:length(sgroup.getLimitGroup()) eq 6 or fn:length(sgroup.getLimitGroup()) eq 1 }">
+	     						<span class="badge badge-pill badge-success">나이무관</span> 
+	     						
+	     					</c:if>
+	     					
+	     					<c:if test="${fn:length(sgroup.getLimitGroup()) lt 6}">
+	     						<c:if test="${ fn:length(sgroup.getLimitGroup()) ne 1}">
+		     						<c:forEach var="li" items="${sgroup.getLimitGroup()}" begin="1">
+		     							<span class="badge badge-pill badge-success">${li}</span> 
+		     						</c:forEach>
+	     						</c:if>
+	     					</c:if>
+							<c:if test="${sgroup.getLimitGroup()[0] eq 'M'}">
+     							<span class="badge badge-pill badge-warning">남자만</span>
+     						</c:if>
+     						<c:if test="${sgroup.getLimitGroup()[0] eq 'F'}">
+     							<span class="badge badge-pill badge-warning">여자만</span>
+     						</c:if>
+     						<c:if test="${sgroup.getLimitGroup()[0] eq 'A'}">
+     							<span class="badge badge-pill badge-warning">성별무관</span>	
+     						</c:if>
+						</td>
 					</tr>
 					<tr>
 						<td><h5>회비여부</h5></td>
-						<td><label>10만원</label></td>
-						<td>매달 10일 수금 <svg width="1.5em" height="1.5em"
+						<td>
+							<c:if test="${sgroup.getCharge() eq 'Y' }">
+								<label>${sgroup.getGFee()}</label>
+							</c:if>
+							<c:if test="${sgroup.getCharge() eq 'N' }">
+								<label>회비 없음</label>
+							</c:if>
+						</td>
+<!-- 						<td>매달 10일 수금 <svg width="1.5em" height="1.5em"
 								viewBox="0 0 16 16" class="bi bi-pencil-square"
 								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
  		 <path
@@ -91,7 +156,7 @@
  		 <path fill-rule="evenodd"
 									d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
 		</svg>
-						</td>
+						</td> -->
 					</tr>
 					<tr>
 						<td><h5>모임인원</h5></td>
@@ -99,12 +164,11 @@
 						<div style="display: flex; align-items: center;">
 							<div class="progress progress-lg"
 								style="width: 50%; float: left;">
-								<div class="progress-bar bg-info" role="progressbar"
-									style="width: 25%;" aria-valuenow="50" aria-valuemin="0"
+								<div class="progress-bar bg-info" id="joinCount" role="progressbar" aria-valuenow="50" aria-valuemin="0"
 									aria-valuemax="100"></div>
 							</div>
 							<div style="float: left;">
-								<h5>&nbsp;&nbsp;5/10</h5>
+								<h5>&nbsp;&nbsp;${groupMem}/${sgroup.getMaxNum() }</h5>
 							</div>
 							<div>
 							&nbsp;&nbsp;<button type="button" class="btn btn-danger"
@@ -112,12 +176,19 @@
 							</div>
 							</div>
 						</td>
+						<script>
+							var joinMemCount = (${groupMem}/${sgroup.getMaxNum()})*100;
+							$(function(){
+								$('#joinCount').css('width', joinMemCount+'%');
+							});
+						</script>
 
 
 					</tr>
 					<tr>
-						<td><h5>평균연령</h5></td>
-						<td colspan="2"><label>20</label>대(그래프로 대체)</td>
+						<td><h5>평균나이</h5></td>
+						<td colspan="2"><label id="groupAge"></label>세</td>
+						
 					</tr>
 					<tr>
 						<td><h5>성비</h5></td>
@@ -140,6 +211,58 @@
 
 
 <script type="text/javascript">
+
+$(function(){ 
+	var result = new Array();
+	var json = new Object();
+	
+	<c:forEach var="jo" items="${joing}" varStatus="st">
+		var birthYear = '${jo.getBirthday()}'.substr(0,4);
+		var today = new Date();
+		var nowYear = today.getFullYear();
+		var age = nowYear - birthYear + 1;
+		json = age;
+		result.push(json);
+		</c:forEach>
+		var test2 = JSON.stringify(result).replace(/[\[\]']+/g,'');
+		
+		var testSplit = test2.split(',');
+
+		var groupAge = 0;
+		
+		for(var i=0; i < testSplit.length; i++){
+			groupAge += parseInt(testSplit[i]);
+		}	
+		
+		console.log("groupAge : " + groupAge);
+		$('#groupAge').html(groupAge/${fn:length(joing)});
+	});
+
+$(function(){
+	
+	
+ 	var result = new Array();
+	var json = new Object();
+	
+	<c:forEach var="jo" items="${joing}" varStatus="status">
+		<c:if test="${jo.getIsReady()=='1'}">
+		json = '${jo.getGender()}';
+		result.push(json);
+		</c:if>
+	</c:forEach>
+	
+	var test = JSON.stringify(result);
+	console.log(test); 
+	
+	var mCnt = 0;
+	var fCnt = 0;
+	
+	for(var i in test){
+		if(test[i].trim() == "M") mCnt++;
+		else if(test[i].trim() == "F") fCnt++;
+			
+	}
+	
 	google.charts.load('current', {
 		'packages' : [ 'corechart' ]
 	});
@@ -148,7 +271,7 @@
 	function drawChart() {
 
 		var data = google.visualization.arrayToDataTable([
-				[ 'Task', 'Hours per Day' ], [ 'Male', 5 ], [ 'Female', 5 ],
+				[ 'Task', 'Hours per Day' ], [ 'Male', mCnt ], [ 'Female', fCnt ],
 
 		]);
 
@@ -172,11 +295,22 @@
 				.getElementById('piechart'));
 
 		chart.draw(data, options);
-
 	}
-
+});
 	function clickMemList() {
 		location.href = '${ pageContext.request.contextPath }/sgroup/memberList.do?gid='+${gid};
-	}
+	};
+	
+	function groupLeave(){
+		var checkResult = window.confirm('모임을 탈퇴하시겠습니까?');
+		
+		if(checkResult == true) {
+			location.href='${pageContext.request.contextPath}/sgroup/groupLeave.do?gid='+${gid}
+		    return true;
+		} else {
+		    return false;
+		}
+		
+	};
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
