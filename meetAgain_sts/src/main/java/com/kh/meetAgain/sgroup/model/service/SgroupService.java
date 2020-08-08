@@ -67,15 +67,12 @@ public interface SgroupService {
 	
 	int joinSuccess(Map<String, String> map);
 
+	int checkCtn(String gId, String userId);
+
 	Sgroup getMyPlace(String gId);
 
 	int getMasterStatus(Map<String, Object> map);
 
-	Joing getMaster(String gId);
-
-	int checkCtn(String gId, String userId);
-
-	Sgroup groupMapUpdate(String gId);
-
+	int groupMapUpdate(Map<String, String> map);
 
 }
