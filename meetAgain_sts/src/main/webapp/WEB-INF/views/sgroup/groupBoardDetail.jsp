@@ -6,10 +6,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page
 	import="java.util.*, com.kh.meetAgain.sgroup.model.vo.*, com.kh.meetAgain.member.model.vo.*"%>
-
-<c:import url="/WEB-INF/views/common/header.jsp" /><div class="container" style="taxt-align: center;">
+<c:import url="/WEB-INF/views/common/header.jsp" />
+<div class="container" style="taxt-align: center;">
 	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
-
 	<div class="row">
 		<div class="col-12">
 			<div class="content" align="center">
@@ -28,9 +27,9 @@
 				<div class="col-3"></div>
 				<div class="col-3"></div>
 				<div class="col-3">
-				<a class="btn_1" onclick="goDelete()">삭제하기</a>
-				<a class="btn_1" onclick="goUpdate()">수정하기</a>
-					<%-- <a class="btn_1 checkout_btn_1" href="<%=request.getContextPath()%>/sgroup/groupBoard.do?gId=${gb.getGId()}">메뉴로 돌아가기</a> --%>
+					<a class="btn_1" onclick="goDelete()">삭제하기</a> <a class="btn_1"
+						onclick="goUpdate()">수정하기</a> <a class="btn_1 checkout_btn_1"
+						onclick="goBack()">뒤로 가기</a>
 
 				</div>
 				<div class="replyArea">
@@ -42,7 +41,8 @@
 								type="hidden" name="gbId" value="${Gboard.gbId}" /> <input
 								type="hidden" name="cRef" value="1" /> <input type="hidden"
 								name="cLevel" value="1" /> <input type="hidden" name="cRec"
-								value="0" /> <input type="hidden" name="cDel" value="N" />
+								value="0" /> <input type="hidden" name="cDel" value="N" /> <input
+								type="hidden" name="gid" value="${gid}" />
 							<table>
 								<tr>
 									<td><textArea rows="3" cols="80" id="cContent"
@@ -66,14 +66,13 @@
 									class="replyList${gbc.getCLevel()}">
 									<tr>
 										<td rowspan="2"></td>
-										<td>${gbc.getCDate()}${gbc.getNickName()}</td>
+										<td>${gbc.getCDate()}${member.getNickName()}</td>
 										<td align="center"><c:if
 												test="${ member.userId eq gbc.getUserId()}">
 												<input type="hidden" name="cId" value="${gbc.getCId()}" />
 
 												<button type="button" class="updateBtn"
 													onclick="updateReply(this);">수정하기</button>
-
 												<button type="button" class="updateConfirm"
 													onclick="updateConfirm(this);" style="display: none;">수정완료</button> &nbsp;&nbsp;
 												<button type="button" class="deleteBtn"
@@ -117,22 +116,19 @@
 		</div>
 	</div>
 	<br>
-
 </div>
 <script>
-
-// 	function goGboard() {
-// 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoard.do"
-// 	}
+	// 	function goGboard() {
+	// 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoard.do"
+	// 	}
 	function goUpdate() {
-		var gbId = "${Gboard.gbId}"
-		;
-		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardUpdate.do?gbId="+gbId;
+		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardUpdate.do?gbId="+ ${Gboard.gbId} + "&gid=" + ${gid};
 	}
 	function goDelete() {
-		var gbId = "${Gboard.gbId}"
-		;
-		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="+gbId;
+		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="+ ${Gboard.gbId} + "&gid=" + ${gid};
+	}
+	function goBack() {
+		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoard.do?gid="+ ${gid};
 	}
 
 	function updateReply(obj) {
@@ -156,9 +152,8 @@
 		// 게시글 번호 가져오기
 		var gbId = "${Gboard.gbId}";
 
-		location.href = "${ pageContext.request.contextPath}/sgroup/commentUpdate.do?"
-				+ "cId=" + cId + "&gbId=" + gbId + "&cContent=" + content;
-	}
+		location.href = "${ pageContext.request.contextPath}/sgroup/commentUpdate.do?gid="+${gid}+"&cId=" + cId + "&gbId=" + gbId + "&cContent=" + content;
+		}
 
 	function deleteReply(obj) {
 		// 댓글의 번호 가져오기
@@ -167,9 +162,9 @@
 		// 게시글 번호 가져오기
 		var gbId = "${Gboard.gbId}";
 
-		location.href = "${ pageContext.request.contextPath}/sgroup/commentDelete.do"
-				+ "?cId=" + cId+"&gbId="+gbId;
-	}
+		location.href = "${ pageContext.request.contextPath}/sgroup/commentDelete.do?cId="
+				+ cId + "&gbId=" + gbId + "&gid=" + ${gid};
+		}
 
 	function reComment(obj) {
 		// 추가 완료 버튼을 화면 보이게 하기
@@ -214,6 +209,7 @@
 				+ '&gbId=' + gbId + '&cRef=' + cRef + '&cLevel=' + cLevel;
 	}
 </script>
+
 <script>
 	console.log("${list}");
 </script>
