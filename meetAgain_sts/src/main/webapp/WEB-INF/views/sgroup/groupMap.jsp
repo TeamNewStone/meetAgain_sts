@@ -18,9 +18,7 @@
 	
 		<div id="map" style="width: 90%; height: 500px;"></div>
 		<hr />
-		<div id="clickLatlng"></div>
-		
-			<hr>
+			
 			<p>
 				<input type="checkbox" id="chkUseDistrict" onclick="setOverlayMapTypeId()" /> 지적편집도 정보 보기
 				<input type="checkbox" id="chkTerrain" onclick="setOverlayMapTypeId()" /> 지형정보 보기 
@@ -33,26 +31,34 @@
 
 	<div id="infoArea" style="width: 50%; float: left;">
 		<div id="areaName" style="display: flex; align-items: center;">
-			<div style="float: left;">				
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" id="searchLoc" placeholder="법정동 주소 검색">
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" id="searchBtn" type="button" onclick="searchLocation()">검색</button>					
+								
+				<div style="float: left;">
+				<h3><svg width="1.5em" height="2em" viewBox="0 0 16 16"
+					class="bi bi-geo-alt" fill="currentColor"
+					xmlns="http://www.w3.org/2000/svg">
+		  <path fill-rule="evenodd"
+						d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+		</svg>&nbsp;
+		<span>${gPlace }</span></h3><br>
+				</div>
 					</div>
-				</div>				
-				<i class="fa fa-map-marker fa-3x"></i><br>
+					<div >
+				<div>
 					<c:set var="user1" value="${member}"/>
 					<input type="hidden" id="gid" name = "gid" value="${gid}" />					
 					<input type="hidden" name = "userId"  value="${user1.getUserId()}" />
 					<input type="hidden" name = "isCpt"  value="${isCpt}" />
-					<h6><span>소모임 모임장소 : </span></h6><br>
-					기본 주소 : <input type="text" class="form-control" value="${gPlace }" id="gPlace" style="width: 450px;" disabled>
-					<c:if test="${isCptc eq true}">
+				
+				<h5>- 도로명 주소 : <span id="add1"> </span></h5>
+				<h5>- &nbsp;&nbsp;지번 주소&nbsp;&nbsp; : <span id="add2"> </span></h5>								
+				
+				<br />
+				
+				<c:if test="${isCptc eq true}">
 					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px;" disabled><br>
 					<!-- <input type="hidden" id="jangso" name="gPlace"  /> --></c:if>
-							
-				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
-			</div> 
+				</div>
+		 
 		</div>
 
 		<div>
@@ -115,6 +121,16 @@
 
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 	        map.setCenter(coords);
+	        
+	        Ha = result[0].y;
+	        Ga = result[0].x;
+	        
+	        var add1 = result[0].road_address.address_name;
+	        var add2 = result[0].address.address_name;
+	        
+	        
+	        $("#add1").html(add1);
+	        $("#add2").html(add2);
 	    } 
 	});
 	
@@ -141,82 +157,12 @@
 	// 지도에 마커를 표시합니다
 	marker.setMap(map);
 
-	// 지도에 클릭 이벤트를 등록합니다
-	// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-	    
-	    // 클릭한 위도, 경도 정보를 가져옵니다 
-	    var latlng = mouseEvent.latLng; 
-	    
-	    // console.log(latlng);
-	    // 위도 경도 분리
-	    /* var weg = latlng.getLat();
-	    var geg = latlng.getLng(); */
-	    
-	    // 마커 위치를 클릭한 위치로 옮깁니다
-	    marker.setPosition(latlng);
-	    
-	    // 위도경도
-	    var message1 = '클릭한 정확한 위치의 위도는 ' + latlng.getLat() + ' 이고, <br>';
-	    message1 += '경도는 ' + latlng.getLng() + ' 입니다.';
-	    
-	    var resultDiv1 = document.getElementById('clickLatlng');
-	    resultDiv1.innerHTML = message1;
-	    
-	    var url = 'https://map.kakao.com/link/to/';
-
-	    // 마커 주소 전달
-	    
-	    // 미등록된 도로명주소는 무시됨
-	    
-		function searchDetailAddrFromCoords(coords, callback) {
-			// 좌표로 법정동 상세 주소 정보를 요청합니다
-			geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-		}
-
-	    searchDetailAddrFromCoords(latlng, function(result, status) {
-	        if (status === kakao.maps.services.Status.OK) {
-	            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-	            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-
-				var dAddr = !!result[0].road_address ? result[0].road_address.address_name : '';
-	            dAddr += result[0].address.address_name;
-	            
-	            var content = '<div class="form-control" style="height: 100px; width: 350px;">' +
-	                            '<span class="title">선택하신 핀포인트</span><br>' + 
-	                            detailAddr + '</div>';
-
-	            // 마커를 클릭한 위치에 표시합니다 
-	            marker.setPosition(latlng);
-	            marker.setMap(map);
-
-	            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-	            infowindow.setContent(content);
-	            infowindow.open(map, marker);
-	            
-	            // var message2 = '<br>선택하신 장소는 <br>도로명 : ' + result[0].road_address.address_name + '<br>지번 : ' + result[0].address.address_name;
-	            var message2 = '<br>선택하신 장소는' + '<br>' + detailAddr;
-			    						    
-			    var resultDiv2 = document.getElementById('_mapMakerCheck2'); 
-			    resultDiv2.innerHTML = message2;						    
-			   
-			    console.log(latlng.Ha);
-			    console.log(latlng.Ga);
-			
-	        }
-	        Ha = latlng.Ha;
-	        Ga = latlng.Ga;
-			
-	    });
-
-	});			
 	
 	$(function(){
 		$('#findRoad').on('click', function() {						
-			if(confirm("카카오맵으로 넘어가시겠습니까?")){
-				window.open('https://map.kakao.com/link/to/다시만나모임에서 선택한 장소' + ',' + Ha + ',' + Ga);
-				return null;
-			}
+			
+				window.open('https://map.kakao.com/link/to/${gPlace}' + ',' + Ha + ',' + Ga);
+			
 		});					
 	});
 	
