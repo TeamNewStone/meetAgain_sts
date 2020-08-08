@@ -75,6 +75,11 @@
 			<div
 				class="col-12 col-md-8 d-flex flex-column align-items-center align-items-lg-start">
 				<div class="d-flex flex-row align-items-start mt-3 mt-lg-0">
+				<c:if test="${owner.getMLevel() eq 1 }">
+				<div>
+				<img src="${ pageContext.request.contextPath }/resources/img/premium.jpg" style="width : 50px;"  /> &nbsp;
+				</div>
+				</c:if>
 					<div class="name">
 						<h2 class="mb-0">${owner.nickName}</h2>
 
