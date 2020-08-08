@@ -109,12 +109,24 @@
              <p style="color :#fff; width : 200px; margin-top:5px" id="login"> ${member.nickName}님, 안녕하세요!</p>
             </li>
             <li class="nav-item dropdown" id="userIcon">
-                   <img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="test img-fluid rounded-circle" style="width : 60px;">
+           				<c:if test="${member.userImg eq null }">
+							<img
+								src="${ pageContext.request.contextPath }/resources/img/usericon.png"
+								alt="usericon"
+								class="test img-fluid rounded-circle" style="width: 60px; height:60px;">
+						</c:if>
+						<c:if test="${member.userImg ne null }">
+							<img
+								src="${ pageContext.request.contextPath }/resources/upload/userImg/${member.userImg}"
+								alt="Raised circle image"
+								class="test img-fluid rounded-circle"style="width: 60px; height:60px;">
+						</c:if>
+                   <!-- <img src="/meetAgain/resources/img/usericon.png" alt="usericon" data-toggle="dropdown" class="test img-fluid rounded-circle" style="width : 60px;"> -->
               <div class="dropdown-menu dropdown-menu-right dropMenuDiv" aria-labelledby="nav-inner-primary_dropdown_1">
                 <!-- <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/logout.do">로그아웃</a>-->
                 <a class="dropdown-item" onclick="userLogout();">로그아웃</a>
                 <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage1.do?uid=${member.userId}">마이페이지</a>
-                <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage2.do">개인정보수정</a>
+                <a class="dropdown-item" href="${ pageContext.request.contextPath }/myPage/myPage2.do?uid=${member.userId}">개인정보수정</a>
                 <a class="dropdown-item" href="${ pageContext.request.contextPath }/member/membership.do">등급관리</a>
               </div>
             </li>
@@ -150,6 +162,7 @@
     	var confirm = window.confirm("로그아웃 하시겠습니까?");
     	if(confirm) location.href="${ pageContext.request.contextPath }/member/logout.do";
     }
+
 
     </script>
     <!-- header 끝 -->

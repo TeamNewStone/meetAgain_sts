@@ -4,8 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <c:import url="/WEB-INF/views/common/header.jsp" />
-<section class="pricing py-5">
+<section class="pricing py-5" id="mshipCard">
   <div class="container">
     <div style="text-align:center;">
     <div class="row">
@@ -55,12 +56,22 @@
 		<div class="row">
 			<div class="col-12">
 				<div style="font-size : 1.2em">
-					<span>000 회원님은 <b>프리미엄</b> 등급입니다.</span>
-					<button type="button" class="btn btn-secondary btn-pill" style="background:#ffb5b6; border:#ffb5b6; display:inline">해지하기</button>
+					<span>${member.userName } 회원님은
+					<c:if test="${member.MLevel eq 0}">
+					 <b>일반</b> 
+					</c:if>
+					<c:if test="${member.MLevel eq 1}">
+					 <b>프리미엄</b> 
+					</c:if>
+					 등급입니다.</span>
+					 <c:if test="${member.MLevel eq 1}">
+					<button type="button" class="btn btn-secondary btn-pill" id="quitbtn" style="background:#ffb5b6; border:#ffb5b6; display:inline" onclick="quit();">해지하기</button>
 					<p></p>
-					<p>가입일 : 2020-07-23 (매월 23일 결제)</p>
+					<p>가입일 : ${ms.joinDate } </p>
+					</c:if>
 				</div>
 				<br /><br />
+				<c:if test="${member.MLevel eq 1}">
 				<div>
 				<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 				  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -75,38 +86,78 @@
 				      <th scope="col">결제일</th>
 				      <th scope="col">멤버십</th>
 				      <th scope="col">금액</th>
-				      <th scope="col">상태</th>
-				      <th scope="col">비고</th>
+				      <th scope="col">만료일</th>
 				    </tr>
 				  </thead>
 				  <tbody>
+				  <c:forEach items="${list }" var="mh" varStatus="st">
 				    <tr>
-				      <td>2020-07-23</td>
+				      <td>${mh.payDate }</td>
 				      <td>프리미엄 회원 정기결제</td>
-				      <td>(월)4,500원</td>
-				      <td></td>
-				      <td></td>
+				      <td>${mh.payment } 원</td>
+				      <td id="endDate${st.index }"></td>
 				    </tr>
-				    <tr>
-				      <td>2019-04-10</td>
-				      <td>프리미엄 회원 정기결제</td>
-				      <td>(월)4,500원</td>
-				      <td>만료일 2020-04-10</td>
-				      <td>19년 4월 프로모션 15% 할인 </td>
-				    </tr>
+				    
+				    <script>
+				    	$(function(){
+				    		var year = '${mh.payDate}'.substr(0,4);
+				    		var mm = parseInt('${mh.payDate}'.substr(5,2))+1;
+							mm = (mm < 10) ? '0'+mm : mm;
+							mm = (mm > 12) ? '01' : mm;
+				    		console.log("ㄴ미ㅗㄹ:"+mm);
+							var dd = '${mh.payDate}'.substr(8,2);
+							console.log("일도 되나" +dd);
+							$('#endDate${st.index}').text(year+"-"+mm+"-"+dd);
+				    	})
+				    </script>
+				    
+				  </c:forEach>  
 				  </tbody>
 				</table>
+				<br />
+				<c:out value="${pageBar }" escapeXml="false"/>
+				</c:if>
 
 			</div>
 		</div>
 	</div>
 </div>
 
+<br />
+<br />
+<br />
+<br />
+<br /><br />
+<br />
+<br />
+<br />
 
 
 	<script type="text/javascript"
 		src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script>
+		
+		$(function(){
+			console.log('${member.MLevel}');
+			if('${member.MLevel}'==1){
+				$('#mshipCard').css('display','none');
+			}else{
+				$('#mshipCard').css('display','block');
+			}
+			
+		});
+		function quit(){
+			var mm = '${mh.payDate}'.getMonth()+1;
+			mm = (mm < 10) ? '0'+mm : mm;
+			mm = (mm > 12) ? '01' : mm;
+			var dd = '${mh.payDate}'.getDate()-1;
+			dd = (dd < 10) ? '0'+dd : dd;
+			var endDate = new Date('${mh.payDate}'.getYear(), mm, dd);
+			console.log("날짜 더해지나요? "+endDate);
+		}
+		
+	
+	
 		var IMP = window.IMP; // 생략가능
 
 		$(function() {

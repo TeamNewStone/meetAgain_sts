@@ -128,7 +128,7 @@
 <script>
 $(function(){
 
-	$("#rvBtn").click(function(){
+	$(".btn-outline-secondary").click(function(){
 		
 		var gtitle = $(this).data('title');
 		var sdate = $(this).data('sdate');
