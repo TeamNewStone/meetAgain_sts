@@ -292,7 +292,7 @@
 						<c:if test="${isCptc eq false}">
 							<input type="hidden" placeholder="${isCptc}췍"/>
 						</c:if>				
-						
+
 			</div>
 		</div>
 
@@ -352,35 +352,32 @@
 
  <script type="text/javascript">
    $('#placeUpdate').on('click', function(){
-	   // console.log('dd');
 	   
 	   var realMap = $('#jangso').val();
 	   
 	   if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
-		   
-		   console.log(realMap);
         	
-          $.ajax({
-  	       url: '${pageContext.request.contextPath}/sgroup/mapPlaceUpdate.do',
-  	       data: {  	    	    
-  	    	    gid : ${gid},
-  	    	    gPlace : realMap
-  	       },
-  	       type: "POST",
-
-  	       success: function(data) {
-  	    	   //console.log(data)
-  	         if (data == 0) {
-  	               alert('오류가 발생하였습니다.');
-  	            } else {
-  	               alert('수정완료.');
-  	            }
-  	    	   location.reload();
-  	       }
-  	        , error : function(error){
-  	    	   console.log(error);
-  	       }
-  	    }); 
+		   if(realMap == ''){
+			   alert('변경 실패 !');
+			   return null;
+		   } else {
+	          $.ajax({
+	  	       url: "<c:url value='/2edit' />",
+	  	       data: {  	    	    
+	  	    	    gid : ${gid},
+	  	    	    gPlace : realMap
+	  	       },
+	  	       type: "POST",	
+	  	       success: function(data) {
+	  	         if (data == 0) alert('오류가 발생하였습니다.');
+	  	    	   location.reload();
+	  	       }
+	  	        , error : function(error){
+	  	    	   console.log(error);
+	  	       }
+	  	    });
+		   }
+          
            // console.log(fullAddr);
            
        } else {
