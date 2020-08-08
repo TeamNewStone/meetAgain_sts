@@ -30,14 +30,22 @@
 				</c:if></h2>
 			</div>
 			<div style="float:right;">
+			<c:if test="${group.getGType() eq 'L'}">
 			<button class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" value="일정추가">일정추가</button>
+			</c:if>
+			<c:if test="${group.getGType() eq 'S'}">
+				<c:if test="${isCtn }">
+			<button class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" value="일정추가">일정수정</button>
+			</c:if>
+			</c:if>
 			</div>
 			</div>
 				<!-- 소모임 타이틀 표시 -->
 				<br />
 				<br />
+					
 			<div>
-				
+			<c:if test="${group.getGType() eq 'L'}">		
 				<span>일반모임</span><br>
 					<c:forEach items="${sclist}" var="normalList" varStatus="scIndex">
 						<c:set var = "calTime" value="${normalList.getGTime()}"/>
@@ -75,7 +83,30 @@
 							</li>											
 							</c:if>
 					</c:forEach>
+				</c:if>
+				
+				<c:if test="${group.getGType() eq 'S' }">
+				<br><span>정기모임</span>
+				<c:forEach items="${sclist}" var="normalList" varStatus="scIndex">
+				<c:set var = "calTime" value="${normalList.getGTime()}"/>
+							<li class="list-group-item">
+							<input type="hidden" id="sid" value=${normalList.getCdId() } />
+							일정 : ${normalList.getGInfo()}<br>
+							날짜 : ${normalList.getGDate() } <br />
+							시간 : ${fn:substring(calTime, 10, 16)}	<br>
+							</li>											
+							
+					</c:forEach>
+				</c:if>
+				
+				
+				
+				
+				
+				
+				
 				</div>	
+					
 			</div>
 			
 			<div class="col-8">
@@ -92,7 +123,12 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
+						<c:if test="${group.getGType() eq 'L' }">
 						<h4 class="modal-title" id="exampleModalLabel" style="text-align: center;">모임 일정 추가</h4>
+						</c:if>
+							   <c:if test="${group.getGType() eq 'S' }">
+							   <h4 class="modal-title" id="exampleModalLabel" style="text-align: center;" >모임 일정 수정</h4>
+						</c:if>
 						<h6>오늘날짜 : ${year}</h6>						
 					</div>
 					<div class="modal-body">						
@@ -103,6 +139,23 @@
 						 <!-- <input type="hidden" name="gId" /> -->
 							<table id="my_table_1" data-toggle="table" data-sort-stable="true">													
 							   <tbody>
+							   <c:if test="${group.getGType() eq 'S' }">
+							   <tr>
+										<td id="tx">일정 날짜</td>
+										<td><input type="date" name="gDate" class="form-control" id="sdate" value = "${group.getDurate()}" readonly/>
+										
+										</td>
+									</tr>
+								<tr>
+										<td id="tx">일정 설명</td>
+										<td><input type="text" name="gInfo" class="form-control" id="sinfo"  /></td>
+									</tr>
+									<tr>
+										<td id="tx">약속 시간</td>
+										<td><input type="time" name="gTime" class="form-control" id="stime" /></td>
+									</tr>
+							   </c:if>
+							   <c:if test = "${group.getGType() eq 'L'}">
 									<tr>
 										<td id="tx">일정 시작 날짜</td>
 										<td><input type="date" name="gDate" class="form-control" /></td>
@@ -125,12 +178,18 @@
 										<td><input type="checkbox" id="isCtnChk" /></td>
 									</tr>		
 									</c:if>
+									</c:if>
 								</tbody>
 							</table>								
 						<input type="hidden" name="isCtn" id="_Y" value="N" />											
 						<div class="modal-footer">
 							<button type="button" class="btn btn-light" data-dismiss="modal">닫기</button>
+							<c:if test="${group.getGType() eq 'S'}">
+							<button type="button" class="btn btn-primary" id="modifyCal" >일정 수정</button>
+							</c:if>
+							<c:if test="${group.getGType() eq 'L'}">
 							<button type="submit" class="btn btn-primary" id="addCal">일정 등록</button>
+							</c:if>
 						</div>
 						</form>					
 					</div>
@@ -220,14 +279,48 @@
 			
 		});
 		
+		$("#modifyCal").click(function(){
+			var cdate = $("#sdate").val();
+			var cinfo = $("#sinfo").val();
+			var ctime = $("#stime").val();
+			var cdid = $("#sid").val();
+			
+			//alert("테스트! info : "+cinfo+", time : "+ctime);
+			
+			$.ajax({
+				url : "${ pageContext.request.contextPath }/sgroup/modifyCalendar.do",
+				data : {
+					cdate : cdate,
+					cinfo : cinfo,
+					ctime : ctime,
+					cdid : cdid
+				},
+				success : function(data){
+					if(data.result==true){
+						alert("수정이 완료되었습니다.");
+						location.reload();
+					}else{
+						alert("에러 발생!");
+					}
+						
+				},
+				error : function(){
+					 alert("error");
+
+				}
+			});
+		});
 	</script>	
 
 	<script>
+	
 		function addCal() {			
 			location.href="${ pageContext.request.contextPath }/sgroup/addCalendar.do";
 		}
 
 		$('#isCtnChk').change( function() {
+			consol.elog("d왜안나와");
+
 			if ( $('#isCtnChk').is(':checked')) {
 				console.log('체크값 : ' + $(this).val());
 				$('#_Y').val('Y');

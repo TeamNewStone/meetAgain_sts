@@ -208,5 +208,9 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.insert("sgroupMapper.cReportInsert", r);
 	}
 	
+	@Override
+	public int modifyCalendar(Map<String, Object> map) {
+		return sqlSession.update("calendarMapper.modify",map);
+	}
 }
 

@@ -79,5 +79,8 @@ public interface SgroupService {
 	int bReportInsert(Report r);
 
 	int cReportInsert(Report r);
+	
+	int modifyCalendar(Map<String, Object> map);
 
+	
 }
