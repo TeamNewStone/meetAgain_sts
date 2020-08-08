@@ -19,8 +19,7 @@
 		WHERE USERID=#{userId}
 	</update>
 
-	<select id="selectOne" parameterType="string"
-		resultType="Member">
+	<select id="selectOne" parameterType="string" resultType="Member">
 		SELECT * FROM MEMBER WHERE USERID = #{userId}
 	</select>
 
@@ -35,6 +34,9 @@
 		INSERT INTO CATEINFO VALUES(#{userId}, #{cateId})
 
 	</insert>
+	<delete id="mCateDelete" parameterType="string">
+		DELETE FROM CATEINFO WHERE USERID=#{userId}
+	</delete>
 
 	<select id="selectOneTMI" parameterType="string"
 		resultType="UserTMI">
@@ -88,5 +90,25 @@
 		#{result, mode=OUT, jdbcType=NUMERIC, javaType=integer} )
 		}
 	</delete>
+	
+	<update id="imgUpdate" parameterType="hashmap">
+		UPDATE USERTMI SET USERIMG=#{userImg} WHERE USERID=#{userId}
+	</update>
+	
+	<select id="selectOneMember" parameterType="string" resultType="Member">
+		SELECT * FROM MEMBER JOIN USERTMI USING(USERID) WHERE USERID=#{userId}
+	</select>
 
+	<select id="selectOneMember2" resultType="MemberShip">
+		SELECT * FROM MEMBER JOIN MEMBERSHIP USING(USERID) WHERE USERID=#{userId}
+	</select>
+	
+	<select id="selectMHList" resultType="MsHistory">
+		SELECT * FROM MSHISTORY MH JOIN MEMBERSHIP MS ON(MH.USERID=MS.USERID)
+		JOIN MEMBER M ON(M.USERID=MS.USERID) WHERE MH.USERID=#{userId}
+	</select>
+	
+	<select id="selectMHTotalContents" resultType="_int">
+		SELECT COUNT(*) FROM MSHISTORY WHERE USERID=#{userId}
+	</select>
 </mapper>
