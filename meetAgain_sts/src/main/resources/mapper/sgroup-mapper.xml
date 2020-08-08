@@ -110,19 +110,19 @@
 	</insert>
 
 	<select id="selectgBoardList" resultType="Gboard">
-		SELECT GBID, NICKNAME,
+		SELECT GBID, NICKNAME, GID,
 		GBTITLE, GBRATE, GBDATE
 		FROM GBOARD JOIN MEMBER
 		USING(USERID) WHERE
 		GID =
-		#{gId} AND
+		#{gid} AND
 		GBDEL='N' ORDER BY
 		GBID DESC
 	</select>
 
 	<select id="selectgBoardTotalContent" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
-		FROM GBOARD WHERE GID=#{gId}
+		FROM GBOARD WHERE GID=#{gid}
 	</select>
 
 	<select id="selectOnegBoard" parameterType="_int"

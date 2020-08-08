@@ -231,7 +231,7 @@ public class SgroupController {
 		 if(result > 0) msg = "모임 탈퇴 성공!"; 
 		 else msg = "모임 탈퇴 실패!";
 
-		  model.addAttribute("loc", loc); 
+		  model.addAttribute("loc", loc);
 		  model.addAttribute("msg", msg);
 
 		return "common/msg";
@@ -281,15 +281,19 @@ public class SgroupController {
 	}
 	
 	@RequestMapping("/sgroup/groupBoardDetail.do")
-	public String groupBoardDetail(@RequestParam int gbId, Model model) {
-
+	public String groupBoardDetail(@RequestParam int gbId, @RequestParam("gid") String gid, Model model) {
+		
 		Gboard gb = sgroupService.SelectOnegBoard(gbId);
+		Sgroup s = sgroupService.selectOneSgroup(gid);
 		List<GB_comment> list = sgroupService.selectCommentList(gbId);
 
 		int gbRate = sgroupService.updateReadCount(gbId);
+		model.addAttribute("sgroup", s);
 		model.addAttribute("gbRate", gbRate);
 		model.addAttribute("list", list);
 		model.addAttribute("Gboard", gb);
+		model.addAttribute("gid", gid);
+		System.out.println("sgroup : "+s);
 		System.out.println("Detail controller list : " + list);
 
 		return "/sgroup/groupBoardDetail";
@@ -310,7 +314,6 @@ public class SgroupController {
 		Gboard.setGId(gid);
 		Gboard.setUserId(userid);
 		int result = sgroupService.insertgBoard(Gboard);
-		
 		String loc = "/sgroup/groupBoard.do";
 		String msg = "";
 		if (result > 0) {
@@ -330,33 +333,35 @@ public class SgroupController {
 
 
 	@RequestMapping("sgroup/groupBoardUpdate.do")
-	public String noticeUpdate(int gbId, Model model) {
+	public String gBoardUpdate(@RequestParam int gbId, @RequestParam String gid, Model model) {
 		model.addAttribute("Gboard", sgroupService.SelectOnegBoard(gbId));
+		model.addAttribute("gid", gid);
+		System.out.println("model에 gbId가 있는지 확인 : " + model);
+
 		return "/sgroup/groupBoardUpdateForm";
 	}
 
 	@RequestMapping("/sgroup/gbUpdate.do")
-	public String gbUpdate(Gboard Gboard, Model model) {
+	public String gbUpdate(@RequestParam("gid") String gid,@RequestParam("gbId") int gbId, Gboard Gboard, Model model) {
 		int result = sgroupService.updategBoard(Gboard);
-
-		String loc = "sgroup/groupBoard.do";
+		System.out.println("result ? : " + result);
+		String loc = "sgroup/groupBoardDetail.do";
 		String msg = "";
 
 		if (result > 0) {
 			msg = "게시글 수정이 완료되었습니다";
-			loc = "/sgroup/groupBoardDetail.do?gbId=" + Gboard.getGbId();
+			loc = "/sgroup/groupBoardDetail.do?gbId="+gbId+"&gid="+gid; 
 		} else {
 			msg = "게시글 수정 실패. 다시 시도해주세요";
 		}
 
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
-		System.out.println("updateController : " + Gboard);
 
 		return "common/msg";
 	}
 
 	@RequestMapping("/sgroup/groupBoardDelete.do")
-	public String groupBoardDelete(@RequestParam int gbId, HttpSession session, Model model) {
+	public String groupBoardDelete(@RequestParam int gbId, @RequestParam String gid, Model model) {
 		int result = sgroupService.deletegBoard(gbId);
 
 		String loc = "sgroup/groupBoard.do";
@@ -364,28 +369,18 @@ public class SgroupController {
 
 		if (result > 0) {
 			msg = "게시글 등록 성공!";
-			loc = "/sgroup/groupBoardDetail.do?gbId="+gbId;
+			loc = "/sgroup/groupBoard.do?&gid="+gid;
 		} else {
 			msg = "게시글 삭제 실패!";
 		}
 
+		model.addAttribute("gid", gid);
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
-		System.out.println("deleteController session : " + session);
+
 		System.out.println("deleteController model : " + model);
 		return "common/msg";
 	}
 
-	@RequestMapping("/sgroup/selectGboardComment.do")
-	public String listComment(Model model) {
-
-		/*
-		 * List<GB_comment> list = sgroupService.selectCommentList();
-		 * 
-		 * model.addAttribute("list", list);
-		 */
-		return "/sgroup/groupBoard.do";
-
-	}
 
 	@RequestMapping("sgroup/gotoGroup.do")
 	public String gotoGroup(@RequestParam String gid, Model model) {
@@ -400,7 +395,7 @@ public class SgroupController {
 	}
 	
 	@RequestMapping("/sgroup/insertComment.do")
-	public String insertComment(@RequestParam("gbId") int gbId, GB_comment GB_comment, Model model) {
+	public String insertComment(@RequestParam("gbId") int gbId,@RequestParam("gid") String gid , GB_comment GB_comment, Model model) {
 
 		GB_comment.setGbId(gbId);
 		int result = sgroupService.insertComment(GB_comment);
@@ -410,7 +405,7 @@ public class SgroupController {
 		String msg = "";
 		if (result > 0) {
 			msg = "댓글 등록 성공!";
-			loc = "/sgroup/groupBoardDetail.do?gbId=" + gbId;
+			loc = "/sgroup/groupBoardDetail.do?gbId=" + gbId + "&gid="+ gid; 
 
 		} else {
 			msg = "댓글 등록 실패!";
@@ -422,22 +417,24 @@ public class SgroupController {
 
 	}
 	@RequestMapping("/sgroup/commentUpdate.do")
-	public String commentUpdate(@RequestParam("cId") int cId, GB_comment GB_comment, Model model) {
-		
+	public String commentUpdate(@RequestParam("gbId") int gbId, @RequestParam("cId") int cId, @RequestParam("gid") String gid, GB_comment GB_comment, Model model) {
+
 		GB_comment.setCId(cId);
+		
 		int result = sgroupService.commentUpdate(GB_comment);
 
 		String loc = "/sgroup/insertComment.do";
 		String msg = "";
 		if (result > 0) {
-			msg = "댓글 등록 성공!";
-			loc = "/sgroup/groupBoardDetail.do?gbId=" + GB_comment.getGbId();
+			msg = "댓글 수정 성공!";
+			loc = "/sgroup/groupBoardDetail.do?gbId=" + GB_comment.getGbId() + "&gid=" + gid;
 
 		} else {
-			msg = "댓글 등록 실패!";
+			msg = "댓글 수정 실패!";
 		}
 
 		model.addAttribute("GB_comment", sgroupService.commentUpdate(GB_comment));
+		model.addAttribute("gid", gid);
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		System.out.println("controller GB" + GB_comment);
 		return "common/msg";
@@ -447,7 +444,7 @@ public class SgroupController {
 
 
 	@RequestMapping("/sgroup/commentDelete.do")
-	public String commentDelete(@RequestParam("cId") int cId, Model model, @RequestParam("gbId") int gbId) {
+	public String commentDelete(@RequestParam("cId") int cId, Model model, @RequestParam("gbId") int gbId,@RequestParam("gid") String gid) {
 			
 		try { 
 			int result = sgroupService.commentDelete(cId);
@@ -456,13 +453,13 @@ public class SgroupController {
 			String msg = "";
 		//	int gid = gB_comment.getGbId();
 			if(result > 0) {
-				loc ="/sgroup/groupBoardDetail.do?gbId="+ gbId;
-				msg = "댓글 작성";
+				loc ="/sgroup/groupBoardDetail.do?gbId="+ gbId+"&gid="+gid;
+				msg = "댓글 삭제 성공!";
 			}
 			else msg = "댓글 삭제 실패!";
 			
 			model.addAttribute("loc", loc);
-			model.addAttribute("msg", msg);		
+			model.addAttribute("msg", msg);
 			System.out.println("gB_comment.getGbId() : " +gbId);
 		} catch(Exception e) {
 			
