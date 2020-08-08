@@ -59,4 +59,8 @@ public class ServiceController {
 	public String test() {
 		return "serviceCenter/privacy_agreement";
 	}
+	@RequestMapping("/serviceCenter/ToS.do")
+	public String ToS() {
+		return "serviceCenter/ToS";
+	}	
 }
