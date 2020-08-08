@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @SessionAttributes(value= {"member", "gid"})
@@ -26,43 +27,62 @@ public class MapContoller {
 	@RequestMapping("/sgroup/groupMap.do")
 	public String groupMap(
 					@RequestParam("gid") String gId,
-					@ModelAttribute("member") Member m, Model model ) {
+					@ModelAttribute("member") Member m, Model model) {
 		System.out.println("컨트롤러 m 출력 : "+m);
-		// 등록 주소 가져오기				
+
 		String userId = m.getUserId();
 		
+		// 등록 주소 가져오기				
+		Sgroup sg = sgroupService.getMyPlace(gId);
+				
 		// 모임장 정보				
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		Sgroup sg = sgroupService.getMyPlace(gId);
-		// System.out.println("컨트롤러장소 : " + sg);
 		
 		map.put("gid", gId);
 		map.put("userId", userId);
-		/* map.put("isCpt", isCpt); */
-
+		
 		int mapResult = sgroupService.getMasterStatus(map);
 		/////결과 : 모임장일경우 1, 아닐경우 0
+
+		System.out.println("mapResult : " + mapResult);
 		
-		boolean isCpt = (mapResult==1) ? true : false;
+		boolean result = (mapResult==1) ? true : false;
 		
 		model.addAttribute("gPlace", sg.getGPlace() );
-		model.addAttribute("isCpt", isCpt);		
+ 		model.addAttribute("isCptc",  result);
 		
-		System.out.println(isCpt);
+		System.out.println(map);
 		
 		return "sgroup/groupMap";
 	}
 	
-	@PostMapping("/mapPlaceUpdate.do")
-	public String mapPlaceUpdate(
-					@RequestParam("gid") String gId, Model model) {
+	//@PostMapping("/sgroup/mapPlaceUpdate.do")
+	@RequestMapping("/sgroup/mapPlaceUpdate.do")
+	public String mapPlaceUpdate(@RequestParam("gid") String gId1, @RequestParam("gPlace") String gPlace1, Model model) {
 		
-		Sgroup sg = sgroupService.groupMapUpdate(gId);
+		System.out.println("gid : " + gId1 + ", " + "gPlace : " + gPlace1);		
+
+		Map<String, String> map = new HashMap<String, String>();
 		
-		model.addAttribute("gPlace", sg.getGPlace() );
+		map.put("gid", gId1); // gid 세션
+		map.put("gPlace", gPlace1); // 주소
+		
+		int result = sgroupService.groupMapUpdate(map);
+
+		String msg = "";
+		
+		if(result > 0) msg = "반환";		
+		else	 msg = "반환실패";
+		System.out.println("결과 : " + msg);
+		
+		model.addAttribute("gid", gId1);
+		model.addAttribute("gPlace", gPlace1);
+		
+		System.out.println("gid : " + gId1);
+		System.out.println("gPlaceresulst : " + gPlace1);
 		
 		return "sgroup/groupMap";
 	}
 	
 }
+

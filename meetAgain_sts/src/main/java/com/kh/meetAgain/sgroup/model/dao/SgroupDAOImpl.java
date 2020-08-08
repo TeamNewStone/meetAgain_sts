@@ -165,27 +165,6 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}	
 
 	@Override
-	public Sgroup getMyPlace(String gId) {
-		return sqlSession.selectOne("mapMapper.getMyPlace", gId);
-	}
-
-	@Override
-	public int getMasterStatus(Map<String, Object> map) {
-		int result = 0;
-		
-		if(sqlSession.selectOne("mapMapper.meetingPlaceMasterStatus", map)==null) {
-			result = 1;
-		} else	result = 0;
-		System.out.println("dAORESULT : "+result);
-		return result;
-	}
-
-	@Override
-	public Joing getMaster(String gId) {
-		return sqlSession.selectOne("mapMapper.getMaster", gId);
-	}
-
-	@Override
 	public int checkCtn(String gId, String userId) {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("gId", gId);
@@ -194,11 +173,29 @@ public class SgroupDAOImpl implements SgroupDAO {
 		return sqlSession.selectOne("calendarMapper.checkCtn",map);
 	}
 
-@Override
-	public Sgroup groupMapUpdate(String gId) {
-		return sqlSession.selectOne("mapMapper.groupMapUpdate", gId);
+	@Override
+	public Sgroup getMyPlace(String gId) {
+		return sqlSession.selectOne("mapMapper.getMyPlace", gId);
 	}
 
+	@Override
+	public int getMasterStatus(Map<String, Object> map) {
+
+			int result = 0;		
+		
+			if(sqlSession.selectOne("mapMapper.getMasterStatus", map)==null) {
+				result = 0;
+			} else	result = 1;
+		
+		System.out.println("DAO ㅅlfgod " + map);
+		
+		return result;
+	}
+
+	@Override
+	public int groupMapUpdate(Map<String, String> map) {
+		return sqlSession.update("mapMapper.groupMapUpdate", map);
+	}
 	
 }
 

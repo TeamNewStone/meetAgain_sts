@@ -160,6 +160,11 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
+	public int checkCtn(String gId, String userId) {
+		return sgroupDAO.checkCtn(gId, userId);
+	}	
+
+	@Override
 	public Sgroup getMyPlace(String gId) {
 		return sgroupDAO.getMyPlace(gId);
 	}
@@ -170,20 +175,8 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
-	public Joing getMaster(String gId) {
-		return sgroupDAO.getMaster(gId);
+	public int groupMapUpdate(Map<String, String> map) {
+		return sgroupDAO.groupMapUpdate(map);
 	}
-
-	@Override
-	public int checkCtn(String gId, String userId) {
-		return sgroupDAO.checkCtn(gId, userId);
-  }
-  
-  	@Override
-	public Sgroup groupMapUpdate(String gId) {
-		return sgroupDAO.groupMapUpdate(gId);
-	}
-
-
 
 }

@@ -266,10 +266,13 @@
 				</div>				
 				<i class="fa fa-map-marker fa-3x"></i><br>
 					<c:set var="user1" value="${member}"/>
-					<input type="hidden" name = "gId" value="${gid}" />					
-					<input type="hidden" name = "userId"  value="${user1.getUserId()}" />			
+					<input type="hidden" id="gid" name = "gid" value="${gid}" />					
+					<input type="hidden" name = "userId"  value="${user1.getUserId()}" />
+					<input type="hidden" name = "isCpt"  value="${isCpt}" />
 					<h6><span>소모임 모임장소 : </span></h6><br>
-					<input type="text" class="form-control" name="address" style="width: 364px;" value="${gPlace}"><br>
+					기본 주소 : <input type="text" class="form-control" value="${gPlace }" disabled>
+					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px;" disabled><br>
+					<!-- <input type="hidden" id="jangso" name="gPlace"  /> -->
 							
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
 			</div> 
@@ -281,10 +284,14 @@
 			<br />
 			<div>
 				<button type="button" class="btn btn-info"	id="findRoad">카카오맵에서<br>길찾기</button>
-					<c:if test="${isCpt eq true}">
-						<button type="submit" class="btn btn-light" id="sample6_address" style="width: 113px; height: 60px;" onclick="addressSearchBtn3()">장소변경</button>							
-					</c:if>
-					<button type="submit" onclick="tsetttt()">dddd</button>
+							
+				<c:if test="${isCptc eq true}">
+				<button type="submit" class="btn btn-light" id="sample6_address" style="width: 113px; height: 60px;" onclick="addressSearchBtn3()">장소변경</button>													
+						<button type="button" class="btn btn-light" id="placeUpdate" style="width: 113px; height: 60px;">장소업데이트</button></c:if>						
+						<c:if test="${isCptc eq false}">
+							<input type="hidden" placeholder="${isCptc}췍"/>
+						</c:if>				
+						
 			</div>
 		</div>
 
@@ -327,44 +334,77 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
-                	
-                	$('[name=address]').val('');
-                	// $('[name=address]').val(fullAddr);
-                	
-	                // location.reload(true);
-	                /* $.ajax({
-					       url: '${pageContext.request.contextPath}/mapPlaceUpdate.do',
-					       data: {
-					    	   cdId : cdId
-					       },
-					       type: "POST",
-					       success: function () {
-					         // location.reload(true);
-					         alert('수정완료.');
-					       }
-						   
-					    }); */
-					location.href='${pageContext.request.contextPath}/mapPlaceUpdate.do';
-                } else {
-                	return false;
-                }
+
+                $('[name=gPlace]').val(fullAddr);
+                
+                console.log(fullAddr);
                 
                 
             }
+        
         }).open();
+					
     };	
 
 
-
 </script>
-<script>
 
-function tsetttt() {
-	location.href='${pageContext.request.contextPath}/sgroup/groupMap.do?gid='+${gid};
-}
+ <script type="text/javascript">
+   $('#placeUpdate').on('click', function(){
+	   // console.log('dd');
+	   
+	   var realMap = $('#jangso').val();
+	   
+	   if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
+		   
+		   console.log(realMap);
+        	
+          $.ajax({
+  	       url: '${pageContext.request.contextPath}/sgroup/mapPlaceUpdate.do',
+  	       data: {  	    	    
+  	    	    gid : ${gid},
+  	    	    gPlace : realMap
+  	       },
+  	       type: "POST",
 
+  	       success: function(data) {
+  	    	   //console.log(data)
+  	         if (data == 0) {
+  	               alert('오류가 발생하였습니다.');
+  	            } else {
+  	               alert('수정완료.');
+  	            }
+  	    	   location.reload();
+  	       }
+  	        , error : function(error){
+  	    	   console.log(error);
+  	       }
+  	    }); 
+           // console.log(fullAddr);
+           
+       } else {
+    	   
+       	return false;
+       	
+       }
+	   
+   console.log(realMap);
+   });
+   
+var booeeee = ${isCptc};
+
+console.log(booeeee);
 </script>
+
+<!-- <script type="text/javascript">
+
+$('#placeUpdate').on('click', function(){
+	
+	location.href='${pageContext.request.contextPath}/sgroup/mapPlaceUpdate.do';
+});
+
+
+</script> -->
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 

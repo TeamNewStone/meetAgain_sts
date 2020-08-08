@@ -11,27 +11,19 @@
 	</resultMap>
 
 	<select id="getMyPlace" parameterType="string" resultType="Sgroup">
-		SELECT GID, GPLACE FROM SGROUP WHERE GID = #{gId}
+		SELECT GID, GPLACE FROM SGROUP WHERE GID = #{gid}
+	</select>
+
+	<select id="getMasterStatus" parameterType="hashmap" resultType="Sgroup">
+		SELECT GID, ISCPT, USERID FROM JOING WHERE GID = #{gid} AND USERID = #{userId} AND ISCPT = 'Y'
 	</select>
 	
-	<select id="meetingPlaceMasterStatus" parameterType="map" resultMap="resM" >		
-		SELECT * FROM JOING WHERE GID = #{gId} AND USERID = #{userId} AND ISCPT = #{isCpt}
-	</select>
-	
-	<select id="getMasterStatus" parameterType="string" resultType="Joing">
-		SELECT GID, ISCPT, USERID FROM JOING WHERE GID = #{gId} AND USERID = #{userId} AND ISCPT = #{isCpt}
-	</select>
-	
-	<select id="getMaster" parameterType="string" resultType="Joing">
-		SELECT ISCPT FROM JOING WHERE ISCPT = 'Y'
-	</select>
-	
-	<update id="groupMapUpdate" parameterType="Sgroup">
+	<update id="groupMapUpdate" parameterType="hashmap">
 		UPDATE SGROUP
 			<set>
 				GPLACE = #{gPlace}	
 			</set>
-		WHERE GID = #{gId}
+		WHERE GID = #{gid}
 	</update>
 	
 </mapper>
