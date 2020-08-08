@@ -80,4 +80,6 @@ public interface SgroupService {
 
 	int cReportInsert(Report r);
 
+	int modifyCalendar(Map<String, Object> map);
+
 }

@@ -173,6 +173,7 @@
                WHERE CID = #{cId}
 	</update>
 	
+<<<<<<< HEAD
 	<select id="searchGroup" parameterType="hashmap" resultMap="sgroupMap">
 		SELECT * FROM SGROUP
 		<bind name="myPattern" value="'%' + keyword + '%'" />
@@ -200,4 +201,11 @@
 			AND ISFIN = 'N' 
 		</where>
 	</select>
+	<insert id="bReportInsert" parameterType="Report">
+		INSERT INTO REPORT VALUES(SEQ_RCID.NEXTVAL,#{userId}, #{rcInfo}, #{targetId}, 'N', 1, #{rcContent}, NULL, #{gbId}, SYSDATE)
+	</insert>
+	
+	<insert id="cReportInsert" parameterType="Report">
+		INSERT INTO REPORT VALUES(SEQ_RCID.NEXTVAL,#{userId}, #{rcInfo}, #{targetId}, 'N', 2, #{rcContent}, #{cId}, #{gbId}, SYSDATE)
+	</insert>
 </mapper>

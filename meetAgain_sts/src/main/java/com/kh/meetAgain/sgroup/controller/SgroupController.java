@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
@@ -493,7 +494,7 @@ public class SgroupController {
 
 		return "sgroup/groupDetail";
 	}
-	
+
 	@RequestMapping(value="/sgroup/searchGroup.do", method=RequestMethod.GET)
 	@ResponseBody
 	public List<Sgroup> searchGroup(@RequestParam(value="keyword", required=false) String keyword, @RequestParam(value="gType[]", required=false) List<String> gType, 
@@ -514,5 +515,32 @@ public class SgroupController {
 	}
 	
 
+	@RequestMapping("/sgroup/bReportInsert.do")
+	public String bReportInsert(Report r, Model model) {
+		int result = sgroupService.bReportInsert(r);
+		String msg="";
+		String loc="/sgroup/groupBoardDetail.do?gbId="+r.getGbId();
+		if(result > 0) {
+			msg="신고가 완료되었습니다.";
+		}else {
+			msg="신고 중 에러가 발생하였습니다. 다시 시도해주세요.";
+		}
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		return "common/msg";
+	}
 
+
+	@RequestMapping("/sgroup/cReportInsert.do")
+	public String cReportInsert(Report r, Model model) {
+		int result = sgroupService.cReportInsert(r);
+		String msg="";
+		String loc="/sgroup/groupBoardDetail.do?gbId="+r.getGbId();
+		if(result > 0) {
+			msg="신고가 완료되었습니다.";
+		}else {
+			msg="신고 중 에러가 발생하였습니다. 다시 시도해주세요.";
+		}
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		return "common/msg";
+	}	
 }

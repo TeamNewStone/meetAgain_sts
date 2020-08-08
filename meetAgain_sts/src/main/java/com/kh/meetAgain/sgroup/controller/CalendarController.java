@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
+import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @Controller
 @SessionAttributes(value= {"member", "gid"}) // 페이지 세션
@@ -67,12 +69,28 @@ public class CalendarController {
 		// 일정 조회
 		List<Calendar> list = new ArrayList<Calendar>(); 
 		Map <String,Object> isCtn = new HashMap<String,Object>();
-		
 		isCtn.put("gid", gId);
 		isCtn.put("userId",m.getUserId());
 		
 		list = sgroupService.loadList(gId);
 		int result = sgroupService.checkCtn(gId, m.getUserId());
+		Sgroup group = sgroupService.selectOneSgroup(gId);
+		System.out.println("list 조회 : "+list);
+		if(group.getGType().equals("S")) {
+			
+			if(list.size() == 0) {
+				Calendar cal = new Calendar();
+				cal.setGId(gId);
+				cal.setGDate(group.getDurate());
+				cal.setGDateEnd(group.getDurate());
+				cal.setGInfo("모임일");
+				Timestamp time = Timestamp.valueOf(group.getDurate().toString() + " 12:00:00"); 
+				cal.setGTime(time);
+				sgroupService.addCalendar(cal);
+				list = sgroupService.loadList(gId);
+				System.out.println("들어가긴함?");
+			}
+		}
 		
 		boolean ctnCheck = (result==1) ? true : false;
 		
@@ -81,10 +99,10 @@ public class CalendarController {
 
 		model.addAttribute("sclist", list);
 		model.addAttribute("isCtn",ctnCheck);
+		model.addAttribute("group",group);
+		System.out.println("group : "+group);
+
 		
-		System.out.println("calendar ------------- result : "+result);
-		System.out.println("calendar ------------- gid : "+gId);
-		System.out.println("calendar ------------- isCtn : "+ctnCheck);
 		return "sgroup/groupCalendar";	
 
 	}
@@ -100,6 +118,33 @@ public class CalendarController {
 		model.addAttribute("cdId", cdId);
 		
 		return "sgroup/groupCalendar";		
+	}
+	
+	@RequestMapping("sgroup/modifyCalendar.do")
+	@ResponseBody
+	public Map<String,Object> modifyCalendar(@RequestParam("cdate") Date date, @RequestParam("cdid") String cdid, @RequestParam("cinfo") String info, @RequestParam("ctime") String time){
+		Map<String,Object> map = new HashMap<String,Object>();
+	
+		int hour = Integer.parseInt(time.substring(0, 2));
+		int min = Integer.parseInt(time.substring(3));
+		
+		Timestamp ctime = Timestamp.valueOf(date.toString() + " " + hour + ":" + min + ":00"); // 20: + 14 + :00
+		
+		System.out.println("modifycal 확인 : "+date+cdid+info+time);
+		
+		map.put("info", info);
+		map.put("time", ctime);
+		map.put("cdid", cdid);
+		
+		int result = sgroupService.modifyCalendar(map);
+		
+		if(result>0) {
+			map.put("result",true);
+		}else {
+			map.put("result",false);
+		}
+		System.out.println("result : "+result);
+		return map;
 	}
 	 
 }

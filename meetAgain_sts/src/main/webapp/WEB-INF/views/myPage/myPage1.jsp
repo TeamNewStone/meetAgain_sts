@@ -171,7 +171,7 @@
 								style = "opacity : 0.2";
 								</c:if>
 								>
-									<c:if test="${mg.GIMG eq null}">
+									<c:if test="${mg.GIMG eq 'NULL'}">
 										<c:if test="${mg.GTYPE eq 'S'}">
 											<img class="card-img"
 												src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height: 200px;">
@@ -181,7 +181,7 @@
 												src="${ pageContext.request.contextPath }/resources/img/fav01.png" style="height: 200px;">
 										</c:if>
 									</c:if>
-									<c:if test="${mg.GIMG ne null}">
+									<c:if test="${mg.GIMG ne 'NULL'}">
 										<img class="card-img"
 											src="${ pageContext.request.contextPath }/resources/upload/groupImg/${mg.GIMG}"
 											style="height: 200px;">
