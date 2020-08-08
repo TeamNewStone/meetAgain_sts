@@ -196,6 +196,11 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int groupMapUpdate(Map<String, String> map) {
 		return sqlSession.update("mapMapper.groupMapUpdate", map);
 	}
+
+	@Override
+	public List<Sgroup> searchGroup(Map<String, Object> map) {
+		return sqlSession.selectList("sgroupMapper.searchGroup", map);
+	}
 	
 }
 

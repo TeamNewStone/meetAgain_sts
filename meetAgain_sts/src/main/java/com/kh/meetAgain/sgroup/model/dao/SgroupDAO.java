@@ -69,5 +69,7 @@ public interface SgroupDAO {
 	int getMasterStatus(Map<String, Object> map);
 
 	int groupMapUpdate(Map<String, String> map);
+
+	List<Sgroup> searchGroup(Map<String, Object> map);
 	
 }

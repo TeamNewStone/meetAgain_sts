@@ -172,4 +172,32 @@
 		UPDATE GB_COMMENT SET CDEL = 'Y' 
                WHERE CID = #{cId}
 	</update>
+	
+	<select id="searchGroup" parameterType="hashmap" resultMap="sgroupMap">
+		SELECT * FROM SGROUP
+		<bind name="myPattern" value="'%' + keyword + '%'" />
+		<where>
+			<if test="keyword != null">
+				GTITLE LIKE #{myPattern} AND
+			</if>
+			<if test="gType != null">
+				<foreach collection="gType" item="gt" separator="or">
+					GTYPE = #{gt}
+				</foreach>
+			</if>
+			<if test="cateId != null">
+				AND
+				<foreach collection="cateId" item="ca" separator="or">
+					CATE_ID = #{ca}
+				</foreach>
+			</if>
+			<if test="limitGroup != null">
+				<foreach collection="limitGroup" item="limit">
+				<bind name="myPattern2" value="'%' + limit + '%'" />
+					AND LIMITGROUP LIKE #{myPattern2}
+				</foreach>
+			</if>
+			AND ISFIN = 'N' 
+		</where>
+	</select>
 </mapper>

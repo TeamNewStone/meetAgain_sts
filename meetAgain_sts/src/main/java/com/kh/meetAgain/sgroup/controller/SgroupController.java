@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.meetAgain.common.util.Utils;
-import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
 import com.kh.meetAgain.sgroup.model.vo.Gboard;
@@ -493,5 +493,26 @@ public class SgroupController {
 
 		return "sgroup/groupDetail";
 	}
+	
+	@RequestMapping(value="/sgroup/searchGroup.do", method=RequestMethod.GET)
+	@ResponseBody
+	public List<Sgroup> searchGroup(@RequestParam(value="keyword", required=false) String keyword, @RequestParam(value="gType[]", required=false) List<String> gType, 
+			@RequestParam(value="cateId[]", required=false) List<String> cateId, @RequestParam(value="limitGroup[]", required=false) List<String> limitGroup, Model model) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("keyword", keyword);
+		map.put("gType", gType);
+		map.put("cateId", cateId);
+		map.put("limitGroup", limitGroup);
+		
+		List<Sgroup> list = sgroupService.searchGroup(map);
+		System.out.println("map : " + map);
+		System.out.println("searchGro" + list);
+		model.addAttribute("list", list);
+		return list;
+	}
+	
+
 
 }

@@ -75,4 +75,6 @@ public interface SgroupService {
 
 	int groupMapUpdate(Map<String, String> map);
 
+	List<Sgroup> searchGroup(Map<String, Object> map);
+
 }
