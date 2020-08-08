@@ -32,10 +32,10 @@
 				<div class="rows">
 					<div class="row">
 						<div class="col-4">
-							<input type="search" class="form-control" id="search" placeholder="모임을 검색하세요">
+							<input type="text" class="form-control" id="keyword" placeholder="모임명을 검색하세요">
 						</div>
 						<div class="col-2">
-							<button type="button" class="btn btn-info" style="margin-left: -20%;background:#132742; border:#132742;">검색</button>
+							<button type="button" class="btn btn-info" style="margin-left: -20%;background:#132742; border:#132742;" id="searchGroup">검색</button>
 						</div>
 						<div class="col-3">
 							<button type="button" class="btn btn-info" id="showFilter" style="margin-left: -40%;background:#132742; border:#132742 ;">상세 검색 ▼</button>
@@ -56,98 +56,82 @@
 					<div class="rows form-group" id="filter" style="display : none;">
 						<div class="row">
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="health" name="gType"> 
-								<label class="custom-control-label" for="health" style="font-weight: 400; margin-right: 10px;">단기</label>
+								<input type="checkbox" class="custom-control-input" id="short" value="S" name="gType"> 
+								<label class="custom-control-label" for="short" style="font-weight: 400; margin-right: 10px;">단기</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="Long" name="gType"> 
-								<label class="custom-control-label" for="Long" style="font-weight: 400; margin-right: 10px;">장기</label>
+								<input type="checkbox" class="custom-control-input" id="long" value="L" name="gType"> 
+								<label class="custom-control-label" for="long" style="font-weight: 400; margin-right: 10px;">장기</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="health" name="cateId"> 
-								<label class="custom-control-label" for="health" style="font-weight: 400; margin-right: 10px;">운동</label>
+								<input type="checkbox" class="custom-control-input" id="C01" value="C01" name="cateId"> 
+								<label class="custom-control-label" for="C01" style="font-weight: 400; margin-right: 10px;">운동</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="study"
-									name="hobby"> <label class="custom-control-label"
-									for="study" style="font-weight: 400; margin-right: 10px;">친목</label>
+								<input type="checkbox" class="custom-control-input" id="C02" value="C02" name="cateId"> 
+								<label class="custom-control-label" for="C02" style="font-weight: 400; margin-right: 10px;">친목</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="commu"
-									name="hobby"> <label class="custom-control-label"
-									for="commu" style="font-weight: 400; margin-right: 10px;">공부</label>
+								<input type="checkbox" class="custom-control-input" id="C03" value="C03" name="cateId"> 
+								<label class="custom-control-label" for="C03" style="font-weight: 400; margin-right: 10px;">공부</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="job"
-									name="hobby"> <label class="custom-control-label"
-									for="job" style="font-weight: 400; margin-right: 10px;">취미생활</label>
+								<input type="checkbox" class="custom-control-input" id="C04" value="C04" name="cateId"> 
+								<label class="custom-control-label" for="C04" style="font-weight: 400; margin-right: 10px;">취미생활</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="ent"
-									name="hobby"> <label class="custom-control-label"
-									for="ent" style="font-weight: 400; margin-right: 10px;">문화생활</label>
+								<input type="checkbox" class="custom-control-input" id="C05" value="C05" name="cateId"> 
+								<label class="custom-control-label" for="C05" style="font-weight: 400; margin-right: 10px;">문화생활</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="trip"
-									name="hobby"> <label class="custom-control-label"
-									for="trip" style="font-weight: 400; margin-right: 10px;">여행</label>
+								<input type="checkbox" class="custom-control-input" id="C06" value="C06" name="cateId"> 
+								<label class="custom-control-label" for="C06" style="font-weight: 400; margin-right: 10px;">여행</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="bong"
-									name="hobby"> <label class="custom-control-label"
-									for="bong" style="font-weight: 400; margin-right: 10px;">봉사</label>
+								<input type="checkbox" class="custom-control-input" id="C07" value="C07" name="cateId"> 
+								<label class="custom-control-label" for="C07" style="font-weight: 400; margin-right: 10px;">봉사</label>
 							</div>
 							<div class="col-1.5 custom-control custom-checkbox my-2">
-								<input type="checkbox" class="custom-control-input" id="etc"
-									name="hobby"> <label class="custom-control-label"
-									for="etc" style="font-weight: 400; margin-right: 10px;">기타</label>
+								<input type="checkbox" class="custom-control-input" id="C08" value="C08" name="cateId">
+								<label class="custom-control-label" for="C08" style="font-weight: 400; margin-right: 10px;">기타</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="custom-control custom-checkbox col-1.5 ">
-								<input type="checkbox" class="custom-control-input" id="teens" name="ages"> 
+								<input type="checkbox" class="custom-control-input" id="teens" value="10대" name="limitGroup"> 
 								<label class="custom-control-label" for="teens" style="font-weight: 400; margin-right: 10px;">10대</label>
 							</div>
 							<div class="custom-control custom-checkbox col-1.5">
-								<input type="checkbox" class="custom-control-input" id="2teens"
-									name="ages"> <label class="custom-control-label"
-									for="2teens" style="font-weight: 400; margin-right: 10px;">20대</label>
+								<input type="checkbox" class="custom-control-input" id="2teens" value="20대" name="limitGroup"> 
+								<label class="custom-control-label" for="2teens" style="font-weight: 400; margin-right: 10px;">20대</label>
 							</div>
 							<div class="custom-control custom-checkbox col-1.5">
-								<input type="checkbox" class="custom-control-input" id="3teens"
-									name="ages"> <label class="custom-control-label"
-									for="3teens" style="font-weight: 400; margin-right: 10px;">30대</label>
+								<input type="checkbox" class="custom-control-input" id="3teens" value="30대" name="limitGroup">
+								<label class="custom-control-label" for="3teens" style="font-weight: 400; margin-right: 10px;">30대</label>
 							</div>
 							<div class="custom-control custom-checkbox col-1.5">
-								<input type="checkbox" class="custom-control-input" id="4teens"
-									name="ages"> <label class="custom-control-label"
-									for="4teens" style="font-weight: 400; margin-right: 10px;">40대</label>
+								<input type="checkbox" class="custom-control-input" id="4teens" value="40대" name="limitGroup"> 
+								<label class="custom-control-label" for="4teens" style="font-weight: 400; margin-right: 10px;">40대</label>
 							</div>
 							<div class="custom-control custom-checkbox col-1.5">
-								<input type="checkbox" class="custom-control-input" id="5teens"
-									name="ages"> <label class="custom-control-label"
-									for="5teens" style="font-weight: 400; margin-right: 10px;">50대</label>
+								<input type="checkbox" class="custom-control-input" id="5teens" value="50대" name="limitGroup"> 
+								<label class="custom-control-label" for="5teens" style="font-weight: 400; margin-right: 10px;">50대</label>
 							</div>
 						</div>
 					<div class="row" style="margin-top: 10px;">
 						<div class="col-1.5 custom-control custom-radio my-2">
-							<input type="radio" id="whatever" name="gender"
-								class="custom-control-input"> <label
-								class="custom-control-label" for="whatever"
-								style="padding-right: 6px;">성별 무관 </label>
+							<input type="radio" id="whatever" name="limitGroup" value="A" class="custom-control-input"> 
+							<label class="custom-control-label" for="whatever" style="padding-right: 6px;">성별 무관 </label>
 						</div>
 						<div class="col-1.5 custom-control custom-radio my-2">
-							<input type="radio" id="man" name="gender"
-								class="custom-control-input"> <label
-								class="custom-control-label" for="man"
-								style="padding-right: 6px;">남자</label>
+							<input type="radio" id="male" name="limitGroup" value="M" class="custom-control-input"> 
+							<label class="custom-control-label" for="male" style="padding-right: 6px;">남자</label>
 						</div>
 						<div class="col-1.5 custom-control custom-radio my-2">
-							<input type="radio" id="woman" name="gender"
-								class="custom-control-input"> <label
-								class="custom-control-label" for="woman">여자</label>
+							<input type="radio" id="female" name="limitGroup" value="F" class="custom-control-input"> 
+							<label class="custom-control-label" for="female">여자</label>
 						</div>
 						<div class="col-6 custom-control custom-radio my-2"></div>
 					</div>
@@ -162,21 +146,10 @@
 			});
 			
 			</script>
-			
-<%-- 			<div class="col-lg-3 col-md-3">
-			<button type="button" id="groupCreBtn" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/sgroup/create.do'">모임 생성</button>
-			<c:if test="${groupCount != 0 && groupCount >= 5 and member.getMLevel()==0}">
-				<script>
-					$(function(){
-						$('#groupCreBtn').attr('disabled', true);
-					});
-				</script>
-			</c:if>
-			
-			</div> --%>
 		</div>
 		<br />
 <!-- 카테고리 추천 START -->
+
  	<br /><br />
  	<div class="row">
 		<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
@@ -203,7 +176,13 @@
 
 <!-- 소모임 전체 리스트 START -->
 <div class="container">
+	<div class="row" id="searchShowDiv">
+	</div>
+</div>
+<div id="searchHideDiv">
+<div class="container">
 	<div class="row">
+		
 		<c:forEach items="${list}" var="sg">
 				    
 				  <div class="col-md-4 cardOne" id="${ sg.getGId()}" style="max-width: 500px;">
@@ -314,8 +293,10 @@
 				<br /><br /><br />
 				  </div>
 				</c:forEach> 
+				</div>
 	</div>
 </div>
+
 <!-- 소모임 전체 LIST END -->
 <script>
 	$(function() {
@@ -335,13 +316,56 @@
 			json.joGId = ${jo.getGId()};
 			result.push(json);
 			</c:forEach>
-
 			if(JSON.stringify(result).indexOf(gId) < 0){
 				location.href = "${pageContext.request.contextPath}/sgroup/groupInfo.do?gid="+gId;
 			} else {
 				location.href = "${pageContext.request.contextPath}/sgroup/gotoGroup.do?gid="+gId;
 			}
 		});
+	});
+	
+	$('#searchGroup').on('click', function() {
+		var gTypeArr = new Array();
+		var cateIdArr = new Array();
+		var limitGroupArr = new Array();
+		
+		$('input[name=gType]:checked').each(function(){
+				gTypeArr.push(this.value);
+		});
+		
+		$('input[name=cateId]:checked').each(function(){
+				cateIdArr.push(this.value);
+		});
+		$('input[name=limitGroup]:checked').each(function(){
+				limitGroupArr.push(this.value);
+	});
+		
+		
+		
+		$.ajax({
+	          url:'${pageContext.request.contextPath}/sgroup/searchGroup.do',
+	          data : {
+	             keyword : $('#keyword').val(),
+	             gType : gTypeArr,
+	             cateId : cateIdArr,
+	             limitGroup : limitGroupArr
+	          }, type : "get",
+	          success:function(data){
+	              $('#searchHideDiv').hide();
+	             for(var i in data){
+	                 console.log(data[i].gid);
+	                 $('#'+data[i].gid).clone(true).appendTo($('#searchShowDiv'));
+	             }
+	             
+	          }, beforeSend:function(){
+	        	  $('#searchShowDiv').empty();
+	          }, error:function(){
+	             alert("검색실패");
+	          }
+	       });
+		
+		
+		
 	});
 	
 </script>

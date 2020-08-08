@@ -172,8 +172,7 @@
 		UPDATE GB_COMMENT SET CDEL = 'Y' 
                WHERE CID = #{cId}
 	</update>
-	
-<<<<<<< HEAD
+
 	<select id="searchGroup" parameterType="hashmap" resultMap="sgroupMap">
 		SELECT * FROM SGROUP
 		<bind name="myPattern" value="'%' + keyword + '%'" />
