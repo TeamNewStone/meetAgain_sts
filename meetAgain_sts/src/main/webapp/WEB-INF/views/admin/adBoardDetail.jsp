@@ -136,10 +136,10 @@ $(function(){
 	})
 });
 
-/* function goBoard(){
+ function goBoard(){
 	var gbId = $('#gbId').val();
 	location.href='${pageContext.request.contextPath}/sgroup/groupBoardDetail.do?gbId='+gbId;
-} */
+} 
 
 </script>
 
