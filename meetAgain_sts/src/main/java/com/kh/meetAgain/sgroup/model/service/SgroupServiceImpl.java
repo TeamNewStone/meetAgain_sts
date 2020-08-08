@@ -181,6 +181,11 @@ public class SgroupServiceImpl implements SgroupService {
 	}
 
 	@Override
+	public List<Sgroup> searchGroup(Map<String, Object> map) {
+		return sgroupDAO.searchGroup(map);
+	}
+	
+	@Override
 	public int bReportInsert(Report r) {
 		return sgroupDAO.bReportInsert(r);
 	}
