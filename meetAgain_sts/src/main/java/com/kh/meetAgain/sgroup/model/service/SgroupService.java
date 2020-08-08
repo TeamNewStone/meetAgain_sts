@@ -3,6 +3,7 @@ package com.kh.meetAgain.sgroup.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
@@ -74,5 +75,9 @@ public interface SgroupService {
 	int getMasterStatus(Map<String, Object> map);
 
 	int groupMapUpdate(Map<String, String> map);
+
+	int bReportInsert(Report r);
+
+	int cReportInsert(Report r);
 
 }
