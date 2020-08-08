@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
@@ -198,8 +199,13 @@ public class SgroupDAOImpl implements SgroupDAO {
 	}
 
 	@Override
-	public List<Sgroup> searchGroup(Map<String, Object> map) {
-		return sqlSession.selectList("sgroupMapper.searchGroup", map);
+	public int bReportInsert(Report r) {
+		return sqlSession.insert("sgroupMapper.bReportInsert", r);
+	}
+
+	@Override
+	public int cReportInsert(Report r) {
+		return sqlSession.insert("sgroupMapper.cReportInsert", r);
 	}
 	
 }

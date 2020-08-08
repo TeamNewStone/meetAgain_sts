@@ -2,6 +2,7 @@ package com.kh.meetAgain.sgroup.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.vo.Calendar;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
@@ -70,6 +71,8 @@ public interface SgroupDAO {
 
 	int groupMapUpdate(Map<String, String> map);
 
-	List<Sgroup> searchGroup(Map<String, Object> map);
+	int bReportInsert(Report r);
+
+	int cReportInsert(Report r);
 	
 }

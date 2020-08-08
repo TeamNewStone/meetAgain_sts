@@ -106,7 +106,7 @@
             </c:if>
             <c:if test="${!empty member}">
             <li>
-             <p style="color :#fff; width : 200px; margin-top:5px" id="login"> ${member.nickName}님, 안녕하세요!</p>
+             <p style="color :#fff; width : 250px; text-align:right; margin-top:5px" id="login"> ${member.nickName}님, 안녕하세요!</p>
             </li>
             <li class="nav-item dropdown" id="userIcon">
            				<c:if test="${member.userImg eq null }">
@@ -115,7 +115,7 @@
 								alt="usericon"
 								class="test img-fluid rounded-circle" style="width: 60px; height:60px;">
 						</c:if>
-						<c:if test="${member.userImg ne null }">
+						<c:if test="${member.userImg ne null }"> 
 							<img
 								src="${ pageContext.request.contextPath }/resources/upload/userImg/${member.userImg}"
 								alt="Raised circle image"
