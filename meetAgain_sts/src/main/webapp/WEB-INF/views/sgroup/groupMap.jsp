@@ -270,9 +270,10 @@
 					<input type="hidden" name = "userId"  value="${user1.getUserId()}" />
 					<input type="hidden" name = "isCpt"  value="${isCpt}" />
 					<h6><span>소모임 모임장소 : </span></h6><br>
-					기본 주소 : <input type="text" class="form-control" value="${gPlace }" disabled>
+					기본 주소 : <input type="text" class="form-control" value="${gPlace }" style="width: 450px;" disabled>
+					<c:if test="${isCptc eq true}">
 					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px;" disabled><br>
-					<!-- <input type="hidden" id="jangso" name="gPlace"  /> -->
+					<!-- <input type="hidden" id="jangso" name="gPlace"  /> --></c:if>
 							
 				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
 			</div> 
