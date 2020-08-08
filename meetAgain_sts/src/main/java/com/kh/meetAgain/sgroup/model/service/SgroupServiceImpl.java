@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.sgroup.model.dao.SgroupDAO;
 import com.kh.meetAgain.sgroup.model.exception.SgroupException;
@@ -177,6 +178,16 @@ public class SgroupServiceImpl implements SgroupService {
 	@Override
 	public int groupMapUpdate(Map<String, String> map) {
 		return sgroupDAO.groupMapUpdate(map);
+	}
+
+	@Override
+	public int bReportInsert(Report r) {
+		return sgroupDAO.bReportInsert(r);
+	}
+
+	@Override
+	public int cReportInsert(Report r) {
+		return sgroupDAO.cReportInsert(r);
 	}
 
 }

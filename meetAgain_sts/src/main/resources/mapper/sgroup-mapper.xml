@@ -172,4 +172,12 @@
 		UPDATE GB_COMMENT SET CDEL = 'Y' 
                WHERE CID = #{cId}
 	</update>
+	
+	<insert id="bReportInsert" parameterType="Report">
+		INSERT INTO REPORT VALUES(SEQ_RCID.NEXTVAL,#{userId}, #{rcInfo}, #{targetId}, 'N', 1, #{rcContent}, NULL, #{gbId}, SYSDATE)
+	</insert>
+	
+	<insert id="cReportInsert" parameterType="Report">
+		INSERT INTO REPORT VALUES(SEQ_RCID.NEXTVAL,#{userId}, #{rcInfo}, #{targetId}, 'N', 2, #{rcContent}, #{cId}, #{gbId}, SYSDATE)
+	</insert>
 </mapper>

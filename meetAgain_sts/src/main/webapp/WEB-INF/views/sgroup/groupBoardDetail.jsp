@@ -30,6 +30,13 @@
 				<div class="col-3">
 				<a class="btn_1" onclick="goDelete()">삭제하기</a>
 				<a class="btn_1" onclick="goUpdate()">수정하기</a>
+				<span data-toggle="modal" data-target="#boardReport">
+				<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-circle boardReport" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+				data-toggle="tooltip" data-placement="bottom" title="신고하기">
+  <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+</svg>
+				</span>
 					<%-- <a class="btn_1 checkout_btn_1" href="<%=request.getContextPath()%>/sgroup/groupBoard.do?gId=${gb.getGId()}">메뉴로 돌아가기</a> --%>
 
 				</div>
@@ -58,18 +65,18 @@
 					<div id="replySelectArea">
 						<!-- 게시글의 댓글 목록 구현부 -->
 						<c:if test="${ list.size() ne 0 }">
-							<c:forEach var="gbc" items="${ list }">
+							<c:forEach var="gbc" items="${ list }" varStatus="st">
 								<%-- 댓글 목록이 있다면 --%>
 								<table id="replySelectTable"
 									style="margin-left : (${gbc.getCLevel()} - 1) * 15}px;
 										   width : ${800 - ((bco.clevel - 1) * 15)}px;"
 									class="replyList${gbc.getCLevel()}">
-									<tr>
+									<tr id="${gbc.getCId() }">
 										<td rowspan="2"></td>
 										<td>${gbc.getCDate()}${gbc.getNickName()}</td>
 										<td align="center"><c:if
 												test="${ member.userId eq gbc.getUserId()}">
-												<input type="hidden" name="cId" value="${gbc.getCId()}" />
+												<input type="hidden" id="cId-${st.index }" name="cId" value="${gbc.getCId()}" />
 
 												<button type="button" class="updateBtn"
 													onclick="updateReply(this);">수정하기</button>
@@ -78,7 +85,25 @@
 													onclick="updateConfirm(this);" style="display: none;">수정완료</button> &nbsp;&nbsp;
 												<button type="button" class="deleteBtn"
 													onclick="deleteReply(this);">삭제하기</button>
-											</c:if> <c:if
+											</c:if> &nbsp;
+											<span data-toggle="modal" data-target="#commentReport" id="cReportSpan-${st.index }">
+				<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-circle boardReport" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+				data-toggle="tooltip" data-placement="bottom" title="신고하기">
+  <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+</svg>
+				</span>
+				<script>
+				
+	$(function(){
+		
+	$('#cReportSpan-${st.index }').click(function(){
+		var cId = $(this).siblings('input').val();
+		$('#cId').val(cId);
+	});
+	})
+				</script>
+											<c:if
 												test="${ member.userId ne gbc.getUserId() and gbc.getCLevel() lt 3}">
 												<input type="hidden" name="writer"
 													value="${member.nickName}" />
@@ -119,19 +144,123 @@
 	<br>
 
 </div>
+
+<!-- 게시글 신고 modal -->
+<div class="modal fade" id="boardReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">게시글 신고</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="${pageContext.request.contextPath }/sgroup/bReportInsert.do">
+        <input type="hidden" name="gbId" value="${Gboard.gbId}" />
+        <input type="hidden" name="targetId" value="${Gboard.userId }" />
+        <input type="hidden" name="userId" value="${member.userId }" />
+        <div>
+        <p style="color:#a3a3a3; font-size:15px">신고 사유</p>
+		
+<div class="form-group">
+  <select class="custom-select" name="rcInfo">
+    <option value="스팸 / 광고" selected>스팸 / 광고</option>
+    <option value="폭력적 또는 혐오스러운 콘텐츠">폭력적 또는 혐오스러운 콘텐츠</option>
+    <option value="증오 또는 학대하는 콘텐츠">증오 또는 학대하는 콘텐츠</option>
+    <option value="성적인 콘텐츠">성적인 콘텐츠</option>
+    <option value="기타">기타</option>
+  </select>
+</div>
+
+		
+        </div>
+        <br />
+        <div>
+        <p style="color:#a3a3a3; font-size:15px">상세 사유</p>
+<div class="form-group">
+        <textarea name="rcContent" id="rcContent" class="form-control" rows="5" style="resize:none"></textarea>
+</div>
+        </div>
+              <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+        
+
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- 댓글 신고 modal -->
+<div class="modal fade" id="commentReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">댓글 신고</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="${pageContext.request.contextPath }/sgroup/cReportInsert.do">
+        <input type="hidden" id="cId" name="cId" value="" />
+        <input type="hidden" name="gbId" value="${Gboard.gbId}" />
+        <input type="hidden" name="targetId" value="${Gboard.userId }" />
+        <input type="hidden" name="userId" value="${member.userId }" />
+        <div>
+        <p style="color:#a3a3a3; font-size:15px">신고 사유</p>
+		
+<div class="form-group">
+  <select class="custom-select" name="rcInfo">
+    <option value="스팸 / 광고" selected>스팸 / 광고</option>
+    <option value="폭력적 또는 혐오스러운 콘텐츠">폭력적 또는 혐오스러운 콘텐츠</option>
+    <option value="증오 또는 학대하는 콘텐츠">증오 또는 학대하는 콘텐츠</option>
+    <option value="성적인 콘텐츠">성적인 콘텐츠</option>
+    <option value="기타">기타</option>
+  </select>
+</div>
+
+		
+        </div>
+        <br />
+        <div>
+        <p style="color:#a3a3a3; font-size:15px">상세 사유</p>
+<div class="form-group">
+        <textarea name="rcContent" id="rcContent" class="form-control" rows="5" style="resize:none"></textarea>
+</div>
+        </div>
+              <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+        
+
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
 <script>
 
 // 	function goGboard() {
 // 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoard.do"
 // 	}
 	function goUpdate() {
-		var gbId = "${Gboard.gbId}"
-		;
+		var gbId = "${Gboard.gbId}";
 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardUpdate.do?gbId="+gbId;
 	}
 	function goDelete() {
-		var gbId = "${Gboard.gbId}"
-		;
+		var gbId = "${Gboard.gbId}";
 		location.href = "${ pageContext.request.contextPath}/sgroup/groupBoardDelete.do?gbId="+gbId;
 	}
 
