@@ -46,7 +46,7 @@ public class ServiceController {
 		model.addAttribute("list", list);
 
 		model.addAttribute("totalContents", totalContents);
-		model.addAttribute("numPerPage", numPerPage);
+		model.addAttribute("numPerPage", numPerPage); 
 		model.addAttribute("pageBar", pageBar);
 
 		return "serviceCenter/reportStatus";
@@ -59,4 +59,8 @@ public class ServiceController {
 	public String test() {
 		return "serviceCenter/privacy_agreement";
 	}
+	@RequestMapping("/serviceCenter/ToS.do")
+	public String ToS() {
+		return "serviceCenter/ToS";
+	}	
 }
