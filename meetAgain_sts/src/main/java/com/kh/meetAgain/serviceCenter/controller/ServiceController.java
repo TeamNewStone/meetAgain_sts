@@ -46,7 +46,7 @@ public class ServiceController {
 		model.addAttribute("list", list);
 
 		model.addAttribute("totalContents", totalContents);
-		model.addAttribute("numPerPage", numPerPage);
+		model.addAttribute("numPerPage", numPerPage); 
 		model.addAttribute("pageBar", pageBar);
 
 		return "serviceCenter/reportStatus";

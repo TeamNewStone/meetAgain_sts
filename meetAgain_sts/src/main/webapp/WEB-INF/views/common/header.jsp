@@ -115,7 +115,7 @@
 								alt="usericon"
 								class="test img-fluid rounded-circle" style="width: 60px; height:60px;">
 						</c:if>
-						<c:if test="${member.userImg ne null }">
+						<c:if test="${member.userImg ne null }"> 
 							<img
 								src="${ pageContext.request.contextPath }/resources/upload/userImg/${member.userImg}"
 								alt="Raised circle image"
