@@ -189,10 +189,11 @@ public class SgroupServiceImpl implements SgroupService {
 	public int cReportInsert(Report r) {
 		return sgroupDAO.cReportInsert(r);
 	}
-	
+
 	@Override
 	public int modifyCalendar(Map<String, Object> map) {
 		return sgroupDAO.modifyCalendar(map);
 	}
+
 
 }

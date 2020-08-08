@@ -173,6 +173,34 @@
                WHERE CID = #{cId}
 	</update>
 	
+<<<<<<< HEAD
+	<select id="searchGroup" parameterType="hashmap" resultMap="sgroupMap">
+		SELECT * FROM SGROUP
+		<bind name="myPattern" value="'%' + keyword + '%'" />
+		<where>
+			<if test="keyword != null">
+				GTITLE LIKE #{myPattern} AND
+			</if>
+			<if test="gType != null">
+				<foreach collection="gType" item="gt" separator="or">
+					GTYPE = #{gt}
+				</foreach>
+			</if>
+			<if test="cateId != null">
+				AND
+				<foreach collection="cateId" item="ca" separator="or">
+					CATE_ID = #{ca}
+				</foreach>
+			</if>
+			<if test="limitGroup != null">
+				<foreach collection="limitGroup" item="limit">
+				<bind name="myPattern2" value="'%' + limit + '%'" />
+					AND LIMITGROUP LIKE #{myPattern2}
+				</foreach>
+			</if>
+			AND ISFIN = 'N' 
+		</where>
+	</select>
 	<insert id="bReportInsert" parameterType="Report">
 		INSERT INTO REPORT VALUES(SEQ_RCID.NEXTVAL,#{userId}, #{rcInfo}, #{targetId}, 'N', 1, #{rcContent}, NULL, #{gbId}, SYSDATE)
 	</insert>
