@@ -27,4 +27,7 @@
 		SELECT COUNT(*) FROM JOING WHERE GID = #{gId} AND USERID = #{userId} AND ISCPT = 'Y'
 	</select>
 	
+	<update id="modify" parameterType="hashmap">
+		UPDATE CALENDAR SET GINFO=#{info}, GTIME=#{time} WHERE CDID= #{cdid}
+	</update>
 </mapper>
