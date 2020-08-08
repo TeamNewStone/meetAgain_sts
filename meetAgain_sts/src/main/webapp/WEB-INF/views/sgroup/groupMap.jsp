@@ -53,10 +53,15 @@
 				<h5>- &nbsp;&nbsp;지번 주소&nbsp;&nbsp; : <span id="add2"> </span></h5>								
 				
 				<br />
-				
-				<c:if test="${isCptc eq true}">
-					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px;" disabled><br>
+					
+					
+					<c:if test="${isCptc eq true}">
+				<div id = "modifymap" style="display: none;">
+					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px; " disabled>
+					<button type="button" class="btn btn-light" id="placeUpdate" >변경하기</button>
+					</div>
 					<!-- <input type="hidden" id="jangso" name="gPlace"  /> --></c:if>
+				
 				</div>
 		 
 		</div>
@@ -70,7 +75,7 @@
 							
 				<c:if test="${isCptc eq true}">
 				<button type="submit" class="btn btn-light" id="sample6_address" style="width: 113px; height: 60px;" onclick="addressSearchBtn3()">장소변경</button>													
-						<button type="button" class="btn btn-light" id="placeUpdate" style="width: 113px; height: 60px;">장소업데이트</button></c:if>						
+						</c:if>						
 						<c:if test="${isCptc eq false}">
 							<input type="hidden" placeholder="${isCptc}췍"/>
 						</c:if>				
@@ -128,7 +133,7 @@
 	        var add1 = result[0].road_address.address_name;
 	        var add2 = result[0].address.address_name;
 	        
-	        
+	        console.log(Ha+","+Ga);
 	        $("#add1").html(add1);
 	        $("#add2").html(add2);
 	    } 
@@ -333,6 +338,7 @@
 
 <script>
 	function addressSearchBtn3() {
+		$("#modifymap").css('display','block');
     // 참조 API : http://postcode.map.daum.net/guide
         new daum.Postcode({
             oncomplete: function(data) {
