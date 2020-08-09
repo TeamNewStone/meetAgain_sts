@@ -57,10 +57,10 @@
 					
 					<c:if test="${isCptc eq true}">
 				<div id = "modifymap" style="display: none;">
-					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px; " disabled>
+					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px; " readonly>
 					<button type="button" class="btn btn-light" id="placeUpdate" >변경하기</button>
 					</div>
-					<!-- <input type="hidden" id="jangso" name="gPlace"  /> --></c:if>
+			</c:if>
 				
 				</div>
 		 
@@ -95,6 +95,7 @@
 		level : 3, // 지도의 확대 레벨 기본값3  1~14
 		mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
 	};
+
 	// 지도를 생성한다 
 	var map = new kakao.maps.Map(mapContainer, mapOption);
 	var geocoder = new kakao.maps.services.Geocoder();
@@ -105,19 +106,24 @@
 	
 	// 주소로 좌표를 검색합니다
 	geocoder.addressSearch('${gPlace}', function(result, status) {
+
 	    // 정상적으로 검색이 완료됐으면 
 	     if (status === kakao.maps.services.Status.OK) {
+
 	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
 	        // 결과값으로 받은 위치를 마커로 표시합니다
 	        var marker = new kakao.maps.Marker({
 	            map: map,
 	            position: coords
 	        });
+
 	        // 인포윈도우로 장소에 대한 설명을 표시합니다
 	        var infowindow = new kakao.maps.InfoWindow({
 	            content: '<div class="form-control" style="width:150px;text-align:center;padding:6px 0;">모임 장소 ↓</div>'
 	        });
 	        infowindow.open(map, marker);
+
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 	        map.setCenter(coords);
 	        
@@ -135,10 +141,13 @@
 	infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 	// 지도 타입 변경 컨트롤을 생성한다
 	var mapTypeControl = new kakao.maps.MapTypeControl();
+
 	// 지도의 상단 우측에 지도 타입 변경 컨트롤을 추가한다
 	map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
 	// 지도에 확대 축소 컨트롤을 생성한다
 	var zoomControl = new kakao.maps.ZoomControl();
+
 	// 지도의 우측에 확대 축소 컨트롤을 추가한다
 	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 	
@@ -151,30 +160,39 @@
 	}); 
 	// 지도에 마커를 표시합니다
 	marker.setMap(map);
+
 	
 	$(function(){
 		$('#findRoad').on('click', function() {						
 				window.open('https://map.kakao.com/link/to/${gPlace}'+','+Ha+','+Ga);
-		});					
+		});	
+		
 	});
 	
 	// 장소검색
 	var places = new kakao.maps.services.Places();
+
 	function searchLocation() {
 		// 	// 장소 검색 객체를 생성합니다
 		var loc = $("#searchLoc").val();
 		places.keywordSearch(loc, callback1);
 		console.log('검색어 : ' + loc);
 	}
+
 	var callback1 = function (result, status) {
 		var div5 = document.getElementById('_mapMakerCheck2');					
+
 		if (status === kakao.maps.services.Status.OK) {
+
 			for (var i = 0; i < result.length; i++) {
 				div5.innerHTML += '<br>' + result[i].address_name;
+
 				console.log(result[i]);
 				// console.log(loc);
 			}
+
 		}
+
 	};
 	
 	// 거리계산 함수
@@ -186,95 +204,27 @@
 			]
 		});
 		
-		return Math.round(polyline.getLength());
+		return polyline.getLength();
 	}
-	
-	/* $('#gPlace').blur(function(){
-		// 사용자가 고른 모임장소 좌표
-		geocoder.addressSearch($('#gPlace').val(), function(result, status) {
-		    if (status === kakao.maps.services.Status.OK) {
-		        
-		        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-		        console.log(coords);
-		        
-		        X = coords.getLng();
-				Y = coords.getLat();
-		    }
-		});
-		
-		// 사용자가 선택한 주소 좌표
-		geocoder.addressSearch($('#jangso').val(), function(result, status) {
-		    if (status === kakao.maps.services.Status.OK) {
-		        
-		        userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
-		        console.log(userAdr);
-		        
-		        userX = userAdr.getLng();
-				userY = userAdr.getLat();
-		    }
-		});
-	
-		test33(X, Y, userX, userY);									
-	}); */
-	var place;
-	function findPlace(place){
-		 geocoder.addressSearch(place, function(result, status) {
-			    if (status === kakao.maps.services.Status.OK) {
-			        console.log("확인용!");
-			        userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
-			        console.log(userAdr);
-			        
-			        userX = mresult[0].x;
-					userY = mresult[0].y;
-			    }
-			});
-	}
-	
+
 	$('#placeUpdate').on('click', function(){
 		   
 		   var realMap = $('#jangso').val();
- 
-	   		/* geocoder.addressSearch($('#add1').html(), function(result, status) {
-	   			console.log("확인용~add!");
-			    if (status === kakao.maps.services.Status.OK) {
-			        
-			        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-			        console.log(coords);
-			        
-			        X = result[0].x;
-					Y = result[0].y;
-			    }
-			}); */
-			
-		/* 	 geocoder.addressSearch(realMap, function(mresult, mstatus) {
-				    if (mstatus === kakao.maps.services.Status.OK) {
-				        console.log("확인용!");
-				        userAdr = new kakao.maps.LatLng(mresult[0].y, mresult[0].x);
-				        console.log(userAdr);
-				        
-				        userX = mresult[0].x;
-						userY = mresult[0].y;
-				    }
-				});
-			 */
-			 findPlace(realMap);
-			 Y = Ha;
-				X = Ga;
-			 console.log("x,y:"+X+Y);
-			   console.log("ux,uy:"+userX+userY);
-			
-		
-		   console.log(realMap);
-		   
+ 		
+			X = Ga;
+			Y = Ha;
+			var far =test33(X, Y, userX, userY);
+			 
+					 
 		   if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
-				  
+			 
 				 console.log("x,y:"+X+Y);
 				   console.log("ux,uy:"+userX+userY);
 			   if(realMap == ''){
 				   alert('변경 실패 !');
 				   return null;
-			   } else if ($(test33(X, Y, userX, userY)) > 10000){
-				   alert('선택한 주소의 10km이내의 장소를 선택해주세요.');					
+			   } else if (far > 5000){
+				   alert('선택한 주소의 5km이내의 장소를 선택해주세요.');					
  				   return null;
 			   }else {
 		          $.ajax({
@@ -301,10 +251,11 @@
 	       	
 	       }
 		   
-	   console.log(realMap);
+	   console.log(realMap); 
 	   });
 	   
 	var booeeee = ${isCptc};
+
 	console.log(booeeee);
 	
 	
@@ -314,6 +265,7 @@
 
 <!-- 교통정보 -->
 <script>
+
 	// 지도 타입 정보를 가지고 있을 객체입니다
 	// map.addOverlayMapTypeId 함수로 추가된 지도 타입은
 	// 가장 나중에 추가된 지도 타입이 가장 앞에 표시됩니다
@@ -325,32 +277,39 @@
 		bicycle : kakao.maps.MapTypeId.BICYCLE,
 		useDistrict : kakao.maps.MapTypeId.USE_DISTRICT
 	};
+
 	// 체크 박스를 선택하면 호출되는 함수입니다
 	function setOverlayMapTypeId() {
 		var chkTerrain = document.getElementById('chkTerrain'), chkTraffic = document
 				.getElementById('chkTraffic'), chkBicycle = document
 				.getElementById('chkBicycle'), chkUseDistrict = document
 				.getElementById('chkUseDistrict');
+
 		// 지도 타입을 제거합니다
 		for ( var type in mapTypes) {
 			map.removeOverlayMapTypeId(mapTypes[type]);
 		}
+
 		// 지적편집도정보 체크박스가 체크되어있으면 지도에 지적편집도정보 지도타입을 추가합니다
 		if (chkUseDistrict.checked) {
 			map.addOverlayMapTypeId(mapTypes.useDistrict);
 		}
+
 		// 지형정보 체크박스가 체크되어있으면 지도에 지형정보 지도타입을 추가합니다
 		if (chkTerrain.checked) {
 			map.addOverlayMapTypeId(mapTypes.terrain);
 		}
+
 		// 교통정보 체크박스가 체크되어있으면 지도에 교통정보 지도타입을 추가합니다
 		if (chkTraffic.checked) {
 			map.addOverlayMapTypeId(mapTypes.traffic);
 		}
+
 		// 자전거도로정보 체크박스가 체크되어있으면 지도에 자전거도로정보 지도타입을 추가합니다
 		if (chkBicycle.checked) {
 			map.addOverlayMapTypeId(mapTypes.bicycle);
 		}
+
 	}
 </script>
 
@@ -361,16 +320,20 @@
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 var fullAddr = ''; // 최종 주소 변수
                 var extraAddr = ''; // 조합형 주소 변수
+
                 // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                     fullAddr = data.roadAddress;
+
                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
                     fullAddr = data.jibunAddress;
                 }
+
                 // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
                 if(data.userSelectedType === 'R'){
                     //법정동명이 있을 경우 추가한다.
@@ -384,64 +347,44 @@
                     // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
                     fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
                 }
+
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
+
                 $('[name=gPlace]').val(fullAddr);
           
                 
+             // 사용자가 고른 모임장소 좌표
+        		geocoder.addressSearch($('#gPlace').val(), function(result, status) {
+        		    if (status === kakao.maps.services.Status.OK) {
+        		        
+        		        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        		        console.log(coords);
+        		        
+        		        X = coords.getLng();
+        				Y = coords.getLat();
+        		    }
+        		});
+        		
+        		// 사용자가 선택한 주소 좌표
+        		geocoder.addressSearch($('#jangso').val(), function(result, status) {
+        		    if (status === kakao.maps.services.Status.OK) {
+        		        
+        		        userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
+        		        console.log(userAdr);
+        		        
+        		        userX = userAdr.getLng();
+        				userY = userAdr.getLat();
+        		    }
+        		});
+        	
             }
         
         }).open();
 					
     };	
+
+
 </script>
 
- <!-- <script type="text/javascript">
-   $('#placeUpdate').on('click', function(){
-	   
-	   var realMap = $('#jangso').val();
-	   
-	   if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
-        	
-		   if(test33(X, Y, userX, userY) > 10000){
-				alert('선택한 주소의 10km이내의 장소를 선택해주세요.');
-				
-		   if(realMap == ''){
-			   alert('변경 실패 !');
-			   return null;
-		   } else {
-	          $.ajax({
-	  	       url: "<c:url value='/2edit' />",
-	  	       data: {  	    	    
-	  	    	    gid : ${gid},
-	  	    	    gPlace : realMap
-	  	       },
-	  	       type: "POST",	
-	  	       success: function(data) {
-	  	         if (data == 0) alert('오류가 발생하였습니다.');
-					location.reload();
-	  	       }
-	  	        , error : function(error){
-	  	    	   console.log(error);
-	  	       }
-	  	    });
-		   }
-		   
-		   return false;
-			}
-          
-           // console.log(fullAddr);
-           
-       } else {
-    	   
-       	return false;
-       	
-       }
-	   
-   console.log(realMap);
-   });
-   
-var booeeee = ${isCptc};
-console.log(booeeee);
-</script>
- -->
 <c:import url="/WEB-INF/views/common/footer.jsp" />
+
