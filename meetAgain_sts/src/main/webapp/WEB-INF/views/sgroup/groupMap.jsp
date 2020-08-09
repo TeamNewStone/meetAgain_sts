@@ -6,6 +6,8 @@
 
 <!-- 우편번호 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" ></script>   
+<!-- 카카오맵 API  -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d68e73a49c2fc0deedbcbca59ca49574&libraries=services,clusterer,drawing"></script>
    
 <c:import url="/WEB-INF/views/common/header.jsp" />
 
@@ -16,9 +18,7 @@
 	
 		<div id="map" style="width: 90%; height: 500px;"></div>
 		<hr />
-		<div id="clickLatlng"></div>
-		
-			<hr>
+			
 			<p>
 				<input type="checkbox" id="chkUseDistrict" onclick="setOverlayMapTypeId()" /> 지적편집도 정보 보기
 				<input type="checkbox" id="chkTerrain" onclick="setOverlayMapTypeId()" /> 지형정보 보기 
@@ -26,257 +26,44 @@
 			<p>
 				<input type="checkbox" id="chkTraffic" onclick="setOverlayMapTypeId()" /> 교통정보 보기       
 				<input type="checkbox" id="chkBicycle" onclick="setOverlayMapTypeId()" /> 자전거도로 정보 보기
-			</p>
-
-			<!-- 카카오맵 API  -->
-			<!-- <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdb0daf359d098be072ce9f3ea29cdf8"></script> -->
-				<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdb0daf359d098be072ce9f3ea29cdf8&libraries=services,clusterer,drawing"></script> -->
-				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d68e73a49c2fc0deedbcbca59ca49574&libraries=services,clusterer,drawing"></script>
-	
-			<script>
-			    // 지도생성
-				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-				mapOption = {
-					center : new kakao.maps.LatLng(37.4992176, 127.0326873), // 지도의 중심좌표 호산빌딩
-					level : 3, // 지도의 확대 레벨 기본값3  1~14
-					mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
-				};
-	
-				// 지도를 생성한다 
-				var map = new kakao.maps.Map(mapContainer, mapOption);
-				var geocoder = new kakao.maps.services.Geocoder();
-				var Ha, Ga;
-				
-				// 주소로 좌표를 검색합니다
-				geocoder.addressSearch('${gPlace}', function(result, status) {
-
-				    // 정상적으로 검색이 완료됐으면 
-				     if (status === kakao.maps.services.Status.OK) {
-
-				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-				        // 결과값으로 받은 위치를 마커로 표시합니다
-				        var marker = new kakao.maps.Marker({
-				            map: map,
-				            position: coords
-				        });
-
-				        // 인포윈도우로 장소에 대한 설명을 표시합니다
-				        var infowindow = new kakao.maps.InfoWindow({
-				            content: '<div class="form-control" style="width:150px;text-align:center;padding:6px 0;">모임 장소 ↓</div>'
-				        });
-				        infowindow.open(map, marker);
-
-				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-				        map.setCenter(coords);
-				    } 
-				});
-				
-				infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
-				// 지도 타입 변경 컨트롤을 생성한다
-				var mapTypeControl = new kakao.maps.MapTypeControl();
-	
-				// 지도의 상단 우측에 지도 타입 변경 컨트롤을 추가한다
-				map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
-				// 지도에 확대 축소 컨트롤을 생성한다
-				var zoomControl = new kakao.maps.ZoomControl();
-	
-				// 지도의 우측에 확대 축소 컨트롤을 추가한다
-				map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-				
-				// 마커
-				
-				// 지도를 클릭한 위치에 표출할 마커입니다
-				var marker = new kakao.maps.Marker({ 
-				    // 지도 중심좌표에 마커를 생성합니다 
-				    position: map.getCenter() 
-				}); 
-				// 지도에 마커를 표시합니다
-				marker.setMap(map);
-
-				// 지도에 클릭 이벤트를 등록합니다
-				// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-				kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-				    
-				    // 클릭한 위도, 경도 정보를 가져옵니다 
-				    var latlng = mouseEvent.latLng; 
-				    
-				    // console.log(latlng);
-				    // 위도 경도 분리
-				    /* var weg = latlng.getLat();
-				    var geg = latlng.getLng(); */
-				    
-				    // 마커 위치를 클릭한 위치로 옮깁니다
-				    marker.setPosition(latlng);
-				    
-				    // 위도경도
-				    var message1 = '클릭한 정확한 위치의 위도는 ' + latlng.getLat() + ' 이고, <br>';
-				    message1 += '경도는 ' + latlng.getLng() + ' 입니다.';
-				    
-				    var resultDiv1 = document.getElementById('clickLatlng');
-				    resultDiv1.innerHTML = message1;
-				    
-				    var url = 'https://map.kakao.com/link/to/';
-
-				    // 마커 주소 전달
-				    
-				    // 미등록된 도로명주소는 무시됨
-				    
-					function searchDetailAddrFromCoords(coords, callback) {
-						// 좌표로 법정동 상세 주소 정보를 요청합니다
-						geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-					}
-
-				    searchDetailAddrFromCoords(latlng, function(result, status) {
-				        if (status === kakao.maps.services.Status.OK) {
-				            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-				            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-
-							var dAddr = !!result[0].road_address ? result[0].road_address.address_name : '';
-				            dAddr += result[0].address.address_name;
-				            
-				            var content = '<div class="form-control" style="height: 100px; width: 350px;">' +
-				                            '<span class="title">선택하신 핀포인트</span><br>' + 
-				                            detailAddr + '</div>';
-
-				            // 마커를 클릭한 위치에 표시합니다 
-				            marker.setPosition(latlng);
-				            marker.setMap(map);
-
-				            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-				            infowindow.setContent(content);
-				            infowindow.open(map, marker);
-				            
-				            // var message2 = '<br>선택하신 장소는 <br>도로명 : ' + result[0].road_address.address_name + '<br>지번 : ' + result[0].address.address_name;
-				            var message2 = '<br>선택하신 장소는' + '<br>' + detailAddr;
-						    						    
-						    var resultDiv2 = document.getElementById('_mapMakerCheck2'); 
-						    resultDiv2.innerHTML = message2;						    
-						   
-						    console.log(latlng.Ha);
-						    console.log(latlng.Ga);
-						
-				        }
-				        Ha = latlng.Ha;
-				        Ga = latlng.Ga;
-						
-				    });
-
-				});			
-				
-				$(function(){
-					$('#findRoad').on('click', function() {						
-						if(confirm("카카오맵으로 넘어가시겠습니까?")){
-							window.open('https://map.kakao.com/link/to/다시만나모임에서 선택한 장소' + ',' + Ha + ',' + Ga);
-							return null;
-						}
-					});					
-				});
-				
-				// 장소검색
-				var places = new kakao.maps.services.Places();
-
-				function searchLocation() {
-					// 	// 장소 검색 객체를 생성합니다
-					var loc = $("#searchLoc").val();
-					places.keywordSearch(loc, callback1);
-					console.log('검색어 : ' + loc);
-				}
-
-				var callback1 = function (result, status) {
-					var div5 = document.getElementById('_mapMakerCheck2');					
-
-					if (status === kakao.maps.services.Status.OK) {
-
-						for (var i = 0; i < result.length; i++) {
-							div5.innerHTML += '<br>' + result[i].address_name;
-
-							console.log(result[i]);
-							// console.log(loc);
-						}
-
-					}
-
-				};
-				
-			</script>
-	
-			<!-- 교통정보 -->
-			<script>
-			
-				// 지도 타입 정보를 가지고 있을 객체입니다
-				// map.addOverlayMapTypeId 함수로 추가된 지도 타입은
-				// 가장 나중에 추가된 지도 타입이 가장 앞에 표시됩니다
-				// 이 예제에서는 지도 타입을 추가할 때 지적편집도, 지형정보, 교통정보, 자전거도로 정보 순으로 추가하므로
-				// 자전거 도로 정보가 가장 앞에 표시됩니다
-				var mapTypes = {
-					terrain : kakao.maps.MapTypeId.TERRAIN,
-					traffic : kakao.maps.MapTypeId.TRAFFIC,
-					bicycle : kakao.maps.MapTypeId.BICYCLE,
-					useDistrict : kakao.maps.MapTypeId.USE_DISTRICT
-				};
-		
-				// 체크 박스를 선택하면 호출되는 함수입니다
-				function setOverlayMapTypeId() {
-					var chkTerrain = document.getElementById('chkTerrain'), chkTraffic = document
-							.getElementById('chkTraffic'), chkBicycle = document
-							.getElementById('chkBicycle'), chkUseDistrict = document
-							.getElementById('chkUseDistrict');
-		
-					// 지도 타입을 제거합니다
-					for ( var type in mapTypes) {
-						map.removeOverlayMapTypeId(mapTypes[type]);
-					}
-		
-					// 지적편집도정보 체크박스가 체크되어있으면 지도에 지적편집도정보 지도타입을 추가합니다
-					if (chkUseDistrict.checked) {
-						map.addOverlayMapTypeId(mapTypes.useDistrict);
-					}
-		
-					// 지형정보 체크박스가 체크되어있으면 지도에 지형정보 지도타입을 추가합니다
-					if (chkTerrain.checked) {
-						map.addOverlayMapTypeId(mapTypes.terrain);
-					}
-		
-					// 교통정보 체크박스가 체크되어있으면 지도에 교통정보 지도타입을 추가합니다
-					if (chkTraffic.checked) {
-						map.addOverlayMapTypeId(mapTypes.traffic);
-					}
-		
-					// 자전거도로정보 체크박스가 체크되어있으면 지도에 자전거도로정보 지도타입을 추가합니다
-					if (chkBicycle.checked) {
-						map.addOverlayMapTypeId(mapTypes.bicycle);
-					}
-
-				}
-			</script>
-					
-		<br /> <br />
+			</p><br /> <br />
 	</div>
 
 	<div id="infoArea" style="width: 50%; float: left;">
 		<div id="areaName" style="display: flex; align-items: center;">
-			<div style="float: left;">				
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" id="searchLoc" placeholder="법정동 주소 검색">
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" id="searchBtn" type="button" onclick="searchLocation()">검색</button>					
+								
+				<div style="float: left;">
+				<h3><svg width="1.5em" height="2em" viewBox="0 0 16 16"
+					class="bi bi-geo-alt" fill="currentColor"
+					xmlns="http://www.w3.org/2000/svg">
+		  <path fill-rule="evenodd"
+						d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+		</svg>&nbsp;
+		<span>${gPlace }</span></h3><br>
+				</div>
 					</div>
-				</div>				
-				<i class="fa fa-map-marker fa-3x"></i><br>
+					<div >
+				<div>
 					<c:set var="user1" value="${member}"/>
 					<input type="hidden" id="gid" name = "gid" value="${gid}" />					
 					<input type="hidden" name = "userId"  value="${user1.getUserId()}" />
 					<input type="hidden" name = "isCpt"  value="${isCpt}" />
-					<h6><span>소모임 모임장소 : </span></h6><br>
-					기본 주소 : <input type="text" class="form-control" value="${gPlace }" style="width: 450px;" disabled>
+				
+				<h5>- 도로명 주소 : <span id="add1"> </span></h5>
+				<h5>- &nbsp;&nbsp;지번 주소&nbsp;&nbsp; : <span id="add2"> </span></h5>								
+				
+				<br />
+					
+					
 					<c:if test="${isCptc eq true}">
-					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px;" disabled><br>
+				<div id = "modifymap" style="display: none;">
+					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px; " disabled>
+					<button type="button" class="btn btn-light" id="placeUpdate" >변경하기</button>
+					</div>
 					<!-- <input type="hidden" id="jangso" name="gPlace"  /> --></c:if>
-							
-				<h6><span id="_mapMakerCheck2">검색 결과 : </span></h6>
-			</div> 
+				
+				</div>
+		 
 		</div>
 
 		<div>
@@ -288,11 +75,11 @@
 							
 				<c:if test="${isCptc eq true}">
 				<button type="submit" class="btn btn-light" id="sample6_address" style="width: 113px; height: 60px;" onclick="addressSearchBtn3()">장소변경</button>													
-						<button type="button" class="btn btn-light" id="placeUpdate" style="width: 113px; height: 60px;">장소업데이트</button></c:if>						
+						</c:if>						
 						<c:if test="${isCptc eq false}">
 							<input type="hidden" placeholder="${isCptc}췍"/>
 						</c:if>				
-						
+
 			</div>
 		</div>
 
@@ -301,7 +88,257 @@
 </div>
 
 <script>
+    // 지도생성
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	mapOption = {
+		center : new kakao.maps.LatLng(37.4992176, 127.0326873), // 지도의 중심좌표 호산빌딩
+		level : 3, // 지도의 확대 레벨 기본값3  1~14
+		mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+	};
+
+	// 지도를 생성한다 
+	var map = new kakao.maps.Map(mapContainer, mapOption);
+	var geocoder = new kakao.maps.services.Geocoder();
+	var Ha, Ga;
+	
+	var coords, userAdr;
+	var X, Y, userX, userY;
+	
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch('${gPlace}', function(result, status) {
+
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+	        // 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+
+	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	        var infowindow = new kakao.maps.InfoWindow({
+	            content: '<div class="form-control" style="width:150px;text-align:center;padding:6px 0;">모임 장소 ↓</div>'
+	        });
+	        infowindow.open(map, marker);
+
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	        
+	        Ha = result[0].y;
+	        Ga = result[0].x;
+	        
+	        var add1 = result[0].road_address.address_name;
+	        var add2 = result[0].address.address_name;
+	        
+	        console.log(Ha+","+Ga);
+	        $("#add1").html(add1);
+	        $("#add2").html(add2);
+	    } 
+	});
+	
+	infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+	// 지도 타입 변경 컨트롤을 생성한다
+	var mapTypeControl = new kakao.maps.MapTypeControl();
+
+	// 지도의 상단 우측에 지도 타입 변경 컨트롤을 추가한다
+	map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+	// 지도에 확대 축소 컨트롤을 생성한다
+	var zoomControl = new kakao.maps.ZoomControl();
+
+	// 지도의 우측에 확대 축소 컨트롤을 추가한다
+	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+	
+	// 마커
+	
+	// 지도를 클릭한 위치에 표출할 마커입니다
+	var marker = new kakao.maps.Marker({ 
+	    // 지도 중심좌표에 마커를 생성합니다 
+	    position: map.getCenter() 
+	}); 
+	// 지도에 마커를 표시합니다
+	marker.setMap(map);
+
+	
+	$(function(){
+		$('#findRoad').on('click', function() {						
+			
+				window.open('https://map.kakao.com/link/to/${gPlace}' + ',' + Ha + ',' + Ga);
+			
+		});					
+	});
+	
+	// 장소검색
+	var places = new kakao.maps.services.Places();
+
+	function searchLocation() {
+		// 	// 장소 검색 객체를 생성합니다
+		var loc = $("#searchLoc").val();
+		places.keywordSearch(loc, callback1);
+		console.log('검색어 : ' + loc);
+	}
+
+	var callback1 = function (result, status) {
+		var div5 = document.getElementById('_mapMakerCheck2');					
+
+		if (status === kakao.maps.services.Status.OK) {
+
+			for (var i = 0; i < result.length; i++) {
+				div5.innerHTML += '<br>' + result[i].address_name;
+
+				console.log(result[i]);
+				// console.log(loc);
+			}
+
+		}
+
+	};
+	
+	// 거리계산 함수
+	function test33(X, Y, userX, userY){
+		var polyline=new kakao.maps.Polyline({
+			path : [
+			new kakao.maps.LatLng(Y,X),
+			new kakao.maps.LatLng(userY,userX)
+			]
+		});
+		
+		return Math.round(polyline.getLength());
+	}
+	
+	$('#gPlace').blur(function(){
+		// 사용자가 고른 모임장소 좌표
+		geocoder.addressSearch($('#gPlace').val(), function(result, status) {
+		    if (status === kakao.maps.services.Status.OK) {
+		        
+		        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		        console.log(coords);
+		        
+		        X = coords.getLng();
+				Y = coords.getLat();
+		    }
+		});
+		
+		// 사용자가 선택한 주소 좌표
+		geocoder.addressSearch($('#jangso').val(), function(result, status) {
+		    if (status === kakao.maps.services.Status.OK) {
+		        
+		        userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
+		        console.log(userAdr);
+		        
+		        userX = userAdr.getLng();
+				userY = userAdr.getLat();
+		    }
+		});
+	
+		test33(X, Y, userX, userY);									
+	});
+	
+	$('#placeUpdate').on('click', function(){
+		   
+		   var realMap = $('#jangso').val();
+		   
+		   if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
+					
+			   if(realMap == ''){
+				   alert('변경 실패 !');
+				   return null;
+			   } else if ($(test33(X, Y, userX, userY)) > 10000){
+				   alert('선택한 주소의 10km이내의 장소를 선택해주세요.');					
+ 				   return null;
+			   }else {
+		          $.ajax({
+		  	       url: "${ pageContext.request.contextPath }/sgroup/mapPlaceUpdate.do",
+		  	       data: {  	    	    
+		  	    	    gid : ${gid},
+		  	    	    gPlace : realMap
+		  	       },
+		  	       type: "POST",	
+		  	       success: function(data) {
+		  	         if (data == 0) alert('오류가 발생하였습니다.');
+						location.reload();
+		  	       }
+		  	        , error : function(error){
+		  	    	   console.log(error);
+		  	       }
+		  	    });
+		          
+			   }
+	           
+	       } else {
+	    	   
+	       	return false;
+	       	
+	       }
+		   
+	   console.log(realMap);
+	   });
+	   
+	var booeeee = ${isCptc};
+
+	console.log(booeeee);
+	
+	
+	
+	
+</script>
+
+<!-- 교통정보 -->
+<script>
+
+	// 지도 타입 정보를 가지고 있을 객체입니다
+	// map.addOverlayMapTypeId 함수로 추가된 지도 타입은
+	// 가장 나중에 추가된 지도 타입이 가장 앞에 표시됩니다
+	// 이 예제에서는 지도 타입을 추가할 때 지적편집도, 지형정보, 교통정보, 자전거도로 정보 순으로 추가하므로
+	// 자전거 도로 정보가 가장 앞에 표시됩니다
+	var mapTypes = {
+		terrain : kakao.maps.MapTypeId.TERRAIN,
+		traffic : kakao.maps.MapTypeId.TRAFFIC,
+		bicycle : kakao.maps.MapTypeId.BICYCLE,
+		useDistrict : kakao.maps.MapTypeId.USE_DISTRICT
+	};
+
+	// 체크 박스를 선택하면 호출되는 함수입니다
+	function setOverlayMapTypeId() {
+		var chkTerrain = document.getElementById('chkTerrain'), chkTraffic = document
+				.getElementById('chkTraffic'), chkBicycle = document
+				.getElementById('chkBicycle'), chkUseDistrict = document
+				.getElementById('chkUseDistrict');
+
+		// 지도 타입을 제거합니다
+		for ( var type in mapTypes) {
+			map.removeOverlayMapTypeId(mapTypes[type]);
+		}
+
+		// 지적편집도정보 체크박스가 체크되어있으면 지도에 지적편집도정보 지도타입을 추가합니다
+		if (chkUseDistrict.checked) {
+			map.addOverlayMapTypeId(mapTypes.useDistrict);
+		}
+
+		// 지형정보 체크박스가 체크되어있으면 지도에 지형정보 지도타입을 추가합니다
+		if (chkTerrain.checked) {
+			map.addOverlayMapTypeId(mapTypes.terrain);
+		}
+
+		// 교통정보 체크박스가 체크되어있으면 지도에 교통정보 지도타입을 추가합니다
+		if (chkTraffic.checked) {
+			map.addOverlayMapTypeId(mapTypes.traffic);
+		}
+
+		// 자전거도로정보 체크박스가 체크되어있으면 지도에 자전거도로정보 지도타입을 추가합니다
+		if (chkBicycle.checked) {
+			map.addOverlayMapTypeId(mapTypes.bicycle);
+		}
+
+	}
+</script>
+
+<script>
 	function addressSearchBtn3() {
+		$("#modifymap").css('display','block');
     // 참조 API : http://postcode.map.daum.net/guide
         new daum.Postcode({
             oncomplete: function(data) {
@@ -348,39 +385,42 @@
     };	
 
 
-</script>
+</script><!-- 
 
  <script type="text/javascript">
    $('#placeUpdate').on('click', function(){
-	   // console.log('dd');
 	   
 	   var realMap = $('#jangso').val();
 	   
 	   if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
-		   
-		   console.log(realMap);
         	
-          $.ajax({
-  	       url: '${pageContext.request.contextPath}/sgroup/mapPlaceUpdate.do',
-  	       data: {  	    	    
-  	    	    gid : ${gid},
-  	    	    gPlace : realMap
-  	       },
-  	       type: "POST",
-
-  	       success: function(data) {
-  	    	   //console.log(data)
-  	         if (data == 0) {
-  	               alert('오류가 발생하였습니다.');
-  	            } else {
-  	               alert('수정완료.');
-  	            }
-  	    	   location.reload();
-  	       }
-  	        , error : function(error){
-  	    	   console.log(error);
-  	       }
-  	    }); 
+		   if(test33(X, Y, userX, userY) > 10000){
+				alert('선택한 주소의 10km이내의 장소를 선택해주세요.');
+				
+		   if(realMap == ''){
+			   alert('변경 실패 !');
+			   return null;
+		   } else {
+	          $.ajax({
+	  	       url: "<c:url value='/2edit' />",
+	  	       data: {  	    	    
+	  	    	    gid : ${gid},
+	  	    	    gPlace : realMap
+	  	       },
+	  	       type: "POST",	
+	  	       success: function(data) {
+	  	         if (data == 0) alert('오류가 발생하였습니다.');
+					location.reload();
+	  	       }
+	  	        , error : function(error){
+	  	    	   console.log(error);
+	  	       }
+	  	    });
+		   }
+		   
+		   return false;
+			}
+          
            // console.log(fullAddr);
            
        } else {
@@ -395,16 +435,6 @@
 var booeeee = ${isCptc};
 
 console.log(booeeee);
-</script>
-
-<!-- <script type="text/javascript">
-
-$('#placeUpdate').on('click', function(){
-	
-	location.href='${pageContext.request.contextPath}/sgroup/mapPlaceUpdate.do';
-});
-
-
 </script> -->
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
