@@ -5,6 +5,7 @@ import java.util.Map;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.MemberShip;
+import com.kh.meetAgain.member.model.vo.MsHistory;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 
 public interface MemberService {
@@ -42,5 +43,11 @@ public interface MemberService {
 	int selectMHTotalContents(String userId);
 
 	int updatePremiumMem(String userId);
+
+	int insertMsHistory(String userId);
+
+	int quitMembership(String userId);
+
+	int quitMLevel(String userId);
 
 }

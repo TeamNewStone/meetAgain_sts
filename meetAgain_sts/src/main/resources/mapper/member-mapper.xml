@@ -115,4 +115,18 @@
 	<update id="updatePremiumMem" parameterType="string">
 		UPDATE MEMBER SET MLEVEL=1 WHERE USERID=#{userId}
 	</update>
+	
+	<insert id="insertMsHistory" parameterType="string">
+		INSERT ALL INTO MEMBERSHIP VALUES(#{userId}, SYSDATE, NULL)
+		INTO MSHISTORY VALUES(#{userId}, 4500, SYSDATE, 0)
+		SELECT * FROM DUAL
+	</insert>
+	
+	<update id="quitMembership" parameterType="string">
+		UPDATE MEMBERSHIP SET QUITDATE=SYSDATE WHERE USERID=#{userId}
+	</update>
+	
+	<update id="quitMLevel" parameterType="string">
+		UPDATE MEMBER SET MLEVEL=0 WHERE USERID=#{userId}
+	</update>
 </mapper>

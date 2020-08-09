@@ -273,7 +273,7 @@ function validate(){
 	var charge = $("#charge").val();
 	var tePrivate = $("#private").val();
 	var maxNum = $('#maxNum');
-	
+	var userLevel = ${member.getMLevel()};
 	if(tePrivate=='Y' && gPwd.val().trim().length<4){
 		
 		alert("모임 비밀번호는 4자리이어야 합니다.");
@@ -306,6 +306,11 @@ function validate(){
 	} else if ($('#gPlace').val().length==0){
 		alert('모임 장소를 선택해주세요.');
 		return false;
+	} else if (userLevel==1){
+		if ($('#durate').val().length==0){
+			alert('종료날짜를 선택해주세요.');
+			return false;
+		}
 	}
 	
 }
@@ -378,12 +383,17 @@ function validate(){
 			minDate: new Date()
 			
 		});
-		
+		$( "#durate" ).datepicker({ 
+			dateFormat: 'yy-mm-dd' , 
+			minDate: new Date()
+			
+		});
 		
 		$("#gType").on("change", function(){
 	        console.log($(this).val());
-	        
-	        if($(this).val()=='L'){
+	        var userLevel = ${member.getMLevel()};
+	        console.log("니등급.." +userLevel);
+	        if($(this).val()=='L' && userLevel==0){
 	        	
 	        	$("#startDate").on("change", function(){
 	    			var year = $( "#startDate" ).val().split("-")[0];
@@ -402,6 +412,8 @@ function validate(){
 	    		
 	    		});
 	    	
+	    	} else if(userLevel==1){
+	    		$('#durate').removeAttr('readonly');
 	    	}
 	    });
 	 });
