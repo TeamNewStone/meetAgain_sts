@@ -88,4 +88,6 @@ public interface SgroupService {
 
 	int joinReject(Map<String, Object> map);
 
+	Sgroup selectOneSgroup2(int gbId);
+
 }
