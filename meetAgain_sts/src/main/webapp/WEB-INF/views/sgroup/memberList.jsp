@@ -26,6 +26,22 @@
 		</div>
 		<div id="userName" style="float: left; padding: 10px;">
 				<h5>${jo.getNickName()}</h5>
+					<script>
+						$(function(){
+							
+							$('#userName').click(function() {
+									var userId = '${jo.getUserId()}';
+									location.href='${pageContext.request.contextPath}/myPage/myPage1.do?uid='+userId;
+									
+							}).mouseenter(function() {
+								$(this).css({
+									"cursor" : "pointer"
+								});
+							
+							});
+							
+						})
+					</script>
 		</div>
 			</c:if>
 		</c:forEach>
@@ -37,7 +53,7 @@
 	<tr>
 		<td>
 		<div id="gLeader" style="overflow: hidden; height: auto; display: flex; align-items: center;">
-		<c:forEach var="jo" items="${joing }">
+		<c:forEach var="jo" items="${joing }" varStatus="st">
 			<c:if test="${jo.getIsCpt()=='N' and jo.getIsReady()=='1'}">
 				<div id="userPic" style="float: left; padding: 10px;">
 				<c:if test="${jo.getUserImg() eq null }">
@@ -49,9 +65,26 @@
 					style="width: 70px; right: 5%; top: 5%;">
 				</c:if>
 		</div>
-		<div id="userName" style="float: left; padding: 10px;">
+		<div id="userName-${st.index}" style="float: left; padding: 10px;">
 			<h5>${jo.getNickName() }</h5>
 		</div>
+		
+		<script>
+						$(function(){
+							
+							$('#userName-${st.index}').click(function() {
+									var userId = '${jo.getUserId()}';
+									location.href='${pageContext.request.contextPath}/myPage/myPage1.do?uid='+userId;
+									
+							}).mouseenter(function() {
+								$(this).css({
+									"cursor" : "pointer"
+								});
+							
+							});
+
+					</script>
+	
 		</c:if>
 		</c:forEach>
 	</div>
@@ -71,20 +104,20 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr>
 		    <c:forEach var="jo2" items="${joing }">
 		      <c:if test="${jo2.getIsReady()==2}">
+		    <tr>
 		      <td>${jo2.getNickName() }</td>
 		      <input type=hidden value="${jo2.getUserId() }" name="userId" id="userId"/>
 		      <input type=hidden value="${gid}" name="gid" id="gid"/>
 		      <td>
-		      	<button type="button" class="btn btn-secondary" id="accept">승인</button>
-<!-- 		     <button type="button" class="btn btn-danger" id="reject">거절</button> -->
+		      	<button type="button" class="btn btn-secondary" id="accept">승인</button> / 
+ 		        <button type="button" class="btn btn-danger" id="reject">거절</button>
 		      </td>
+		    </tr>
 		      </c:if>
 		      </c:forEach>
 	      
-		    </tr>
 		   </tbody>
 		  </table>
 		</c:if>
@@ -97,7 +130,9 @@
 	</div>
 	<script>
 	$('#accept').on('click', function() {
-
+		var confirm = window.confirm("승인 하시겠습니까?");
+		
+		if(confirm){
 	      $.ajax({
 	         url : '${pageContext.request.contextPath}/sgroup/joinSuccess.do',
 	         data : {
@@ -113,6 +148,37 @@
 	            }
 	         }
 	      });
+		}
 	   });
+	
+	
+	$('#reject').on('click', function() {
+		var confirm = window.confirm("거절 하시겠습니까?");
+		
+		if(confirm){
+
+	      $.ajax({
+	         url : '${pageContext.request.contextPath}/sgroup/joinReject.do',
+	         data : {
+	            userId : $('#userId').val(),
+	            gid : $('#gid').val()
+	            }, success : function(data) {
+
+	            if (data == 0) {
+	               alert('오류가 발생하였습니다.');
+	            } else {
+	               alert('거절이 완료되었습니다.');
+	               location.href = '${pageContext.request.contextPath}/sgroup/memberList.do?gid='+${gid};
+	            }
+	         }
+	      });
+		}
+	   });
+	
+	
+	
+	
+	
+	
 	</script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

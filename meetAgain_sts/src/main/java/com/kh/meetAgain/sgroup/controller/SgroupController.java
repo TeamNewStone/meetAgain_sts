@@ -3,6 +3,7 @@ package com.kh.meetAgain.sgroup.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.myPage.model.vo.Review;
 import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
@@ -130,6 +132,16 @@ public class SgroupController {
 
 		return "sgroup/group";
 	}
+	
+	@RequestMapping("/sgroup/distanceGroup.do")
+	@ResponseBody
+	public List<Sgroup> distanceGroup(Model model) {
+		
+		List<Sgroup> list = sgroupService.selectSgroupList();
+		
+		return list;
+	}
+	
 
 	// 소모임 한개 출력
 
@@ -215,7 +227,6 @@ public class SgroupController {
 
 		return "common/msg";
 	}
-
 	@RequestMapping("/sgroup/groupLeave.do")
 	public String groupLeave(@ModelAttribute("member") Member m, @RequestParam String gid, Model model) {
 		Map<String, String> map = new HashMap<String, String>();
@@ -492,6 +503,44 @@ public class SgroupController {
 		return "sgroup/groupDetail";
 	}
 
+	@RequestMapping("/sgroup/aImgInsert.do")
+	   @ResponseBody
+	   public String sgroupImgInsert(
+	              @RequestParam(value="file", required = false) MultipartFile[] file
+	            , Model model, HttpSession session
+	         ) {
+	      
+	      String saveDir = session.getServletContext().getRealPath("resources/upload/groupImg/desc");
+	      
+	      File dir = new File(saveDir);
+	      if(dir.exists() == false) dir.mkdirs();
+	      
+	      String renamedName = "";
+	      
+	      for(MultipartFile f : file) {
+	         
+	         if(!f.isEmpty()) {
+	            String originName = f.getOriginalFilename();
+	            String ext = originName.substring(originName.lastIndexOf(".") + 1);
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+	            
+	            int rndNum = (int)(Math.random() * 1000);
+	            
+	            renamedName = sdf.format(new Date(rndNum)) + "_" + rndNum + "." + ext;
+	            
+	            try {
+	               f.transferTo(new File(saveDir + "/" + renamedName)); 
+	               System.out.println("바뀐이름 : " + renamedName);
+	            } catch (IllegalStateException | IOException e) {
+	               e.printStackTrace();
+	            }
+	         }
+	         
+	      }
+	      return "http://localhost:8088/meetAgain/resources/upload/groupImg/desc/" + renamedName;
+	}
+
+
 	@RequestMapping(value="/sgroup/searchGroup.do", method=RequestMethod.GET)
 	@ResponseBody
 	public List<Sgroup> searchGroup(@RequestParam(value="keyword", required=false) String keyword, @RequestParam(value="gType[]", required=false) List<String> gType, 
@@ -538,6 +587,64 @@ public class SgroupController {
 			msg="신고 중 에러가 발생하였습니다. 다시 시도해주세요.";
 		}
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		return "common/msg";
+	}	
+		
+   @RequestMapping(value="/sgroup/updateSgroup.do")
+	public String updateSgroup(Sgroup sgroup, Model model, @RequestParam(value="sgImg", required = false) MultipartFile[] sgImg, 
+			@RequestParam("gId") String gid, HttpSession session) {
+	 
+	   String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
+		File dir = new File(saveDir);
+	   
+	      if(dir.exists() == false) dir.mkdirs();
+	      
+	      for(MultipartFile f : sgImg) {
+		         if(!f.isEmpty()) {
+		        	 
+		            String originName = f.getOriginalFilename();
+		            String ext = originName.substring(originName.lastIndexOf(".")+1);
+		            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		            
+		            int rndNum = (int)(Math.random() * 1000);
+		            
+		            String renamedName = sdf.format(new java.util.Date()) + "_" + rndNum + "." + ext;
+
+		            try {
+		               f.transferTo(new File(saveDir + "/" + renamedName));
+		            } catch (IllegalStateException | IOException e) {
+		               e.printStackTrace();
+		            }
+		            
+		            sgroup.setGImg(renamedName);
+		         }
+		      }
+
+		int result = sgroupService.updateSgroup(sgroup);
+
+		String msg="";
+		String loc="/sgroup/groupDetail.do?gid="+gid;
+		
+		if(result > 0) {
+			msg="모임 수정 완료!.";
+		}else {
+			msg="모임 수정 실패";
+		}
+
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		return "common/msg";
+	}
+   	   
+	@RequestMapping("/sgroup/joinReject.do")
+	public String joinReject(@RequestParam("userId") String userId, @RequestParam("gid") String gid, Model model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("userId", userId);
+		map.put("gid", gid);
+		
+		int result = sgroupService.joinReject(map);
+		
+	
 		return "common/msg";
 	}	
 }

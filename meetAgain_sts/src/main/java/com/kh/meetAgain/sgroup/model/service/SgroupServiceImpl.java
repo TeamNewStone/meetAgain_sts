@@ -200,5 +200,15 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.modifyCalendar(map);
 	}
 
+	@Override
+	public int updateSgroup(Sgroup sgroup) {
+		return sgroupDAO.updateSgroup(sgroup);
+	}
+
+	@Override
+	public int joinReject(Map<String, Object> map) {
+		return sgroupDAO.joinReject(map);
+	}
+
 
 }

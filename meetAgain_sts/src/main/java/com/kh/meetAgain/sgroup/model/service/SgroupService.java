@@ -84,4 +84,8 @@ public interface SgroupService {
 
 	int modifyCalendar(Map<String, Object> map);
 
+	int updateSgroup(Sgroup sgroup);
+
+	int joinReject(Map<String, Object> map);
+
 }

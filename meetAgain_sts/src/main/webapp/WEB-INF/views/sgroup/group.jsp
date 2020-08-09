@@ -7,10 +7,13 @@
 <section style="border-bottom: 1px solid #e0e0e0;">
 <div class="container">
 <br />
+<div id="map"></div>
 <input type="hidden" name="uid" value="${member.userId }" />
 <input type="hidden" id="address1" value="${member.address1 }" />
-<c:if test="${ !empty member.address2 && member.address3}">
+<c:if test="${ !empty member.address2}">
 	<input type="hidden" id="address2" value="${member.address2}" />
+</c:if>
+<c:if test="${ !empty member.address3}">
 	<input type="hidden" id="address3" value="${member.address3}" />
 </c:if>
 		<div class="row">
@@ -19,11 +22,12 @@
 						<a href="" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false">${fn:substring(member.address1,3,7)}</a> 주변의 소모임 리스트 입니다.
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-						<a class="dropdown-item" href="#">${fn:substring(member.address1,3,7)}</a>
-					<c:if test="${ !empty member.address2 and !empty member.address3}">
-						<a class="dropdown-item" href="#">${fn:substring(member.address2,3,7)}</a> 
-						<a class="dropdown-item" href="#">${fn:substring(member.address3,3,7)}</a>
+						<a class="dropdown-item" href="#">${fn:substring(member.address1,0,7)}</a>
+					<c:if test="${ !empty member.address2}">
+						<a class="dropdown-item" href="#">${fn:substring(member.address2,0,7)}</a>
+					</c:if>
+					<c:if test="${!empty member.address3}"> 
+						<a class="dropdown-item" href="#">${fn:substring(member.address3,0,7)}</a>
 					</c:if>
 					</div>
 				</div>  
@@ -151,6 +155,7 @@
 <!-- 카테고리 추천 START -->
 
  	<br /><br />
+ 	<div id="cateReco">
  	<div class="row">
 		<h4 style="margin-left: 20px;">관심 카테고리 추천</h4>
 	</div> 
@@ -168,6 +173,7 @@
 		<c:if test="${empty cateInfo}">
 			<p style="margin-left:20px"> 설정한 관심 카테고리가 없습니다. 마이페이지에서 관심 카테고리를 등록해주세요! </p>
 		</c:if>
+	</div>
 	</div>
 <!-- 카테고리 추천 END -->
 </div>
@@ -298,7 +304,76 @@
 </div>
 
 <!-- 소모임 전체 LIST END -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d68e73a49c2fc0deedbcbca59ca49574&libraries=services,clusterer,drawing"></script>
 <script>
+ $(function(){
+	 function distance(X, Y, userX, userY){
+			var polyline=new kakao.maps.Polyline({
+				path : [
+				new kakao.maps.LatLng(Y,X),
+				new kakao.maps.LatLng(userY,userX)
+				]
+			});
+			
+			return Math.round(polyline.getLength());
+		};
+
+	
+ 	$.ajax({
+        url:'${pageContext.request.contextPath}/sgroup/distanceGroup.do',
+       
+        success:function(data){
+       
+        	var coords, userAdr;
+        	var X, Y, userX, userY;
+        	var container = document.getElementById('map');
+        	var options = {
+        		center: new kakao.maps.LatLng(33.450701, 126.570667),
+        		level: 3
+        	};
+        	var map = new kakao.maps.Map(container, options);
+        	var geocoder = new kakao.maps.services.Geocoder();
+        	
+           for(var i in data){
+        	   geocoder.addressSearch(data[i].gplace, function(result, status) {
+        		    if (status === kakao.maps.services.Status.OK) {
+        		        
+        		        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        		        console.log(coords);
+        		        
+        		        X = coords.getLng();
+        				Y = coords.getLat();
+        		    }
+        		}); 
+        	 geocoder.addressSearch($('#address1').val(), function(result, status) {
+            	    if (status === kakao.maps.services.Status.OK) {
+            	        
+            	    	userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
+            	        console.log(userAdr);
+				        
+				        userX = userAdr.getLng();
+						userY = userAdr.getLat();
+            	    }
+            	});
+        	   
+        			console.log(distance(X, Y, userX, userY));
+    
+           }
+           
+           
+           
+        }, beforeSend:function(data){
+        	
+        }, error:function(){
+           alert("거리계산");
+        }
+     }); 
+
+});  
+
+
+
+
 	$(function() {
 		$('.form-group label').each(function() {
 			$(this).css('font-weight', '400');
@@ -352,6 +427,7 @@
 	          }, type : "get",
 	          success:function(data){
 	              $('#searchHideDiv').hide();
+	              $('#cateReco').hide();
 	             for(var i in data){
 	                 console.log(data[i].gid);
 	                 $('#'+data[i].gid).clone(true).appendTo($('#searchShowDiv'));
@@ -364,9 +440,8 @@
 	          }
 	       });
 		
-		
-		
-	});
+	});	
+
 	
 </script>
 

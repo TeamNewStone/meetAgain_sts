@@ -6,12 +6,12 @@
 <!--===================== 소모임 페이지의 헤더 부분 =====================-->
 <div id="groupHead"
 	style="overflow: hidden; height: auto; display: flex; align-items: center;">
-	<div id="gnameMenu" style="float: left; padding: 10px;">
+<%-- 	<div id="gnameMenu" style="float: left; padding: 10px;">
 
 		<img src="${ pageContext.request.contextPath }/resources/img/usericon.png" alt="usericon"
 			data-toggle="dropdown" class="img-fluid rounded-circle"
 			style="width: 70px; right: 5%; top: 5%;">
-	</div>
+	</div> --%>
 
 	<div id="gname" style="float: left; padding: 10px;">		
 		<button class="btn bg-transparent" onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupDetail.do?gid='+${gid}"><h4>${sgroup.GTitle}</h4></button>
