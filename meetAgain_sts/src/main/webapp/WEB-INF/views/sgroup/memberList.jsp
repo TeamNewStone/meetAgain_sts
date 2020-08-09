@@ -26,6 +26,22 @@
 		</div>
 		<div id="userName" style="float: left; padding: 10px;">
 				<h5>${jo.getNickName()}</h5>
+					<script>
+						$(function(){
+							
+							$('#userName').click(function() {
+									var userId = '${jo.getUserId()}';
+									location.href='${pageContext.request.contextPath}/myPage/myPage1.do?uid='+userId;
+									
+							}).mouseenter(function() {
+								$(this).css({
+									"cursor" : "pointer"
+								});
+							
+							});
+							
+						})
+					</script>
 		</div>
 			</c:if>
 		</c:forEach>
@@ -37,7 +53,7 @@
 	<tr>
 		<td>
 		<div id="gLeader" style="overflow: hidden; height: auto; display: flex; align-items: center;">
-		<c:forEach var="jo" items="${joing }">
+		<c:forEach var="jo" items="${joing }" varStatus="st">
 			<c:if test="${jo.getIsCpt()=='N' and jo.getIsReady()=='1'}">
 				<div id="userPic" style="float: left; padding: 10px;">
 				<c:if test="${jo.getUserImg() eq null }">
@@ -49,9 +65,27 @@
 					style="width: 70px; right: 5%; top: 5%;">
 				</c:if>
 		</div>
-		<div id="userName" style="float: left; padding: 10px;">
+		<div id="userName-${st.index}" style="float: left; padding: 10px;">
 			<h5>${jo.getNickName() }</h5>
 		</div>
+		
+		<script>
+						$(function(){
+							
+							$('#userName-${st.index}').click(function() {
+									var userId = '${jo.getUserId()}';
+									location.href='${pageContext.request.contextPath}/myPage/myPage1.do?uid='+userId;
+									
+							}).mouseenter(function() {
+								$(this).css({
+									"cursor" : "pointer"
+								});
+							
+							});
+							
+						})
+					</script>
+	
 		</c:if>
 		</c:forEach>
 	</div>

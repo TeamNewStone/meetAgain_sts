@@ -306,31 +306,17 @@
 <!-- 소모임 전체 LIST END -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d68e73a49c2fc0deedbcbca59ca49574&libraries=services,clusterer,drawing"></script>
 <script>
-
-/* function distance(X, Y, userX, userY){
-	var polyline=new kakao.maps.Polyline({
-		path : [
-		new kakao.maps.LatLng(userY,userX),
-		new kakao.maps.LatLng(Y,X)
-		]
-	});
-	
-	return Math.round(polyline.getLength());
-};
- */
-/* $(function(){
-
-	var coords, userAdr;
-	var X, Y, userX, userY;
-	var container = document.getElementById('map');
-	var options = {
-		center: new kakao.maps.LatLng(33.450701, 126.570667),
-		level: 3
-	};
-	var map = new kakao.maps.Map(container, options);
-	var geocoder = new kakao.maps.services.Geocoder();
-
-
+ $(function(){
+	 function distance(X, Y, userX, userY){
+			var polyline=new kakao.maps.Polyline({
+				path : [
+				new kakao.maps.LatLng(Y,X),
+				new kakao.maps.LatLng(userY,userX)
+				]
+			});
+			
+			return Math.round(polyline.getLength());
+		};
 
 	
  	$.ajax({
@@ -338,18 +324,17 @@
        
         success:function(data){
        
+        	var coords, userAdr;
+        	var X, Y, userX, userY;
+        	var container = document.getElementById('map');
+        	var options = {
+        		center: new kakao.maps.LatLng(33.450701, 126.570667),
+        		level: 3
+        	};
+        	var map = new kakao.maps.Map(container, options);
+        	var geocoder = new kakao.maps.services.Geocoder();
         	
            for(var i in data){
-        	 geocoder.addressSearch($('#address1').val(), function(result, status) {
-            	    if (status === kakao.maps.services.Status.OK) {
-            	        
-            	        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-            	        console.log(coords);
-            	        
-            	        X = coords.getLng();
-            			Y = coords.getLat();
-            	    }
-            	});
         	   geocoder.addressSearch(data[i].gplace, function(result, status) {
         		    if (status === kakao.maps.services.Status.OK) {
         		        
@@ -360,8 +345,21 @@
         				Y = coords.getLat();
         		    }
         		}); 
-        	  var di =  distance(X, Y, userX, userY> 10000);
-        	  console.log(Number(di));
+        	 geocoder.addressSearch($('#address1').val(), function(result, status) {
+            	    if (status === kakao.maps.services.Status.OK) {
+            	        
+            	    	userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
+            	        console.log(userAdr);
+				        
+				        userX = userAdr.getLng();
+						userY = userAdr.getLat();
+            	    }
+            	});
+        	   
+        	 distance(X, Y, userX, userY);
+        			console.log(distance(X, Y, userX, userY));
+        		 
+        	  
     
            }
            
@@ -373,8 +371,8 @@
            alert("거리계산");
         }
      }); 
-	
-});  */
+
+});  
 
 
 
