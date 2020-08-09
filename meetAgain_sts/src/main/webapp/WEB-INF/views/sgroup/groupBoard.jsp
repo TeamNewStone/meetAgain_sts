@@ -7,7 +7,6 @@
 <div class="container">
 	<c:import url="/WEB-INF/views/common/groupHeader.jsp" />
 	<!--===================== 소모임 페이지의 바디 부분 =====================-->
-
 	<div id="tableArea">
 		<table class="table" align="center" id="listArea" style="width: 100%;">
 			<tr>
@@ -20,6 +19,7 @@
 			<c:if test="${list ne null }">
 			<c:forEach items="${list}" var="gb">
 				<tr id="${gb.gbId}">
+				<input type="hidden" name="gid" value="${gid }" />
 					<td>${gb.gbId}</td>
 					<td>${gb.gbTitle}</td>
 					<td>${gb.nickName}</td> <!-- 해결 -->
@@ -71,7 +71,7 @@
 				.click(
 						function() {
 							var gbId = $(this).attr("id");
-							location.href = "${pageContext.request.contextPath}/sgroup/groupBoardDetail.do?gbId="+ gbId;
+							location.href = "${pageContext.request.contextPath}/sgroup/groupBoardDetail.do?gbId="+ gbId+"&gid="+${gid};
 
 						}).mouseenter(function() {
 					$(this).parent().css({

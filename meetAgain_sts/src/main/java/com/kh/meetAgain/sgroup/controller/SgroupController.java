@@ -3,6 +3,7 @@ package com.kh.meetAgain.sgroup.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -490,5 +492,41 @@ public class SgroupController {
 
 		return "sgroup/groupDetail";
 	}
+	@RequestMapping("/sgroup/aImgInsert.do")
+	   @ResponseBody
+	   public String sgroupImgInsert(
+	              @RequestParam(value="file", required = false) MultipartFile[] file
+	            , Model model, HttpSession session
+	         ) {
+	      
+	      String saveDir = session.getServletContext().getRealPath("resources/upload/groupImg/desc");
+	      
+	      File dir = new File(saveDir);
+	      if(dir.exists() == false) dir.mkdirs();
+	      
+	      String renamedName = "";
+	      
+	      for(MultipartFile f : file) {
+	         
+	         if(!f.isEmpty()) {
+	            String originName = f.getOriginalFilename();
+	            String ext = originName.substring(originName.lastIndexOf(".") + 1);
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+	            
+	            int rndNum = (int)(Math.random() * 1000);
+	            
+	            renamedName = sdf.format(new Date(rndNum)) + "_" + rndNum + "." + ext;
+	            
+	            try {
+	               f.transferTo(new File(saveDir + "/" + renamedName)); 
+	               System.out.println("바뀐이름 : " + renamedName);
+	            } catch (IllegalStateException | IOException e) {
+	               e.printStackTrace();
+	            }
+	         }
+	         
+	      }
+	      return "http://localhost:8088/meetAgain/resources/upload/groupImg/desc/" + renamedName;
 
+	}
 }
