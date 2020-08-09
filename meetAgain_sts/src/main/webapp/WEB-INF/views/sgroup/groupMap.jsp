@@ -57,10 +57,10 @@
 					
 					<c:if test="${isCptc eq true}">
 				<div id = "modifymap" style="display: none;">
-					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px; " disabled>
+					변경할 주소 : <input type="text" class="form-control" id="jangso" name="gPlace" style="width: 450px; " readonly>
 					<button type="button" class="btn btn-light" id="placeUpdate" >변경하기</button>
 					</div>
-					<!-- <input type="hidden" id="jangso" name="gPlace"  /> --></c:if>
+			</c:if>
 				
 				</div>
 		 
@@ -165,7 +165,8 @@
 	$(function(){
 		$('#findRoad').on('click', function() {						
 				window.open('https://map.kakao.com/link/to/${gPlace}'+','+Ha+','+Ga);
-		});					
+		});	
+		
 	});
 	
 	// 장소검색
@@ -203,95 +204,27 @@
 			]
 		});
 		
-		return Math.round(polyline.getLength());
+		return polyline.getLength();
 	}
-	
-	/* $('#gPlace').blur(function(){
-		// 사용자가 고른 모임장소 좌표
-		geocoder.addressSearch($('#gPlace').val(), function(result, status) {
-		    if (status === kakao.maps.services.Status.OK) {
-		        
-		        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-		        console.log(coords);
-		        
-		        X = coords.getLng();
-				Y = coords.getLat();
-		    }
-		});
-		
-		// 사용자가 선택한 주소 좌표
-		geocoder.addressSearch($('#jangso').val(), function(result, status) {
-		    if (status === kakao.maps.services.Status.OK) {
-		        
-		        userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
-		        console.log(userAdr);
-		        
-		        userX = userAdr.getLng();
-				userY = userAdr.getLat();
-		    }
-		});
-	
-		test33(X, Y, userX, userY);									
-	}); */
-	var place;
-	function findPlace(place){
-		 geocoder.addressSearch(place, function(result, status) {
-			    if (status === kakao.maps.services.Status.OK) {
-			        console.log("확인용!");
-			        userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
-			        console.log(userAdr);
-			        
-			        userX = mresult[0].x;
-					userY = mresult[0].y;
-			    }
-			});
-	}
-	
+
 	$('#placeUpdate').on('click', function(){
 		   
 		   var realMap = $('#jangso').val();
- 
-	   		/* geocoder.addressSearch($('#add1').html(), function(result, status) {
-	   			console.log("확인용~add!");
-			    if (status === kakao.maps.services.Status.OK) {
-			        
-			        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-			        console.log(coords);
-			        
-			        X = result[0].x;
-					Y = result[0].y;
-			    }
-			}); */
-			
-		/* 	 geocoder.addressSearch(realMap, function(mresult, mstatus) {
-				    if (mstatus === kakao.maps.services.Status.OK) {
-				        console.log("확인용!");
-				        userAdr = new kakao.maps.LatLng(mresult[0].y, mresult[0].x);
-				        console.log(userAdr);
-				        
-				        userX = mresult[0].x;
-						userY = mresult[0].y;
-				    }
-				});
-			 */
-			 findPlace(realMap);
-			 Y = Ha;
-				X = Ga;
-			 console.log("x,y:"+X+Y);
-			   console.log("ux,uy:"+userX+userY);
-			
-		
-		   console.log(realMap);
-		   
+ 		
+			X = Ga;
+			Y = Ha;
+			var far =test33(X, Y, userX, userY);
+			 
+					 
 		   if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
-				  
+			 
 				 console.log("x,y:"+X+Y);
 				   console.log("ux,uy:"+userX+userY);
 			   if(realMap == ''){
 				   alert('변경 실패 !');
 				   return null;
-			   } else if ($(test33(X, Y, userX, userY)) > 10000){
-				   alert('선택한 주소의 10km이내의 장소를 선택해주세요.');					
+			   } else if (far > 5000){
+				   alert('선택한 주소의 5km이내의 장소를 선택해주세요.');					
  				   return null;
 			   }else {
 		          $.ajax({
@@ -318,7 +251,7 @@
 	       	
 	       }
 		   
-	   console.log(realMap);
+	   console.log(realMap); 
 	   });
 	   
 	var booeeee = ${isCptc};
@@ -420,6 +353,30 @@
                 $('[name=gPlace]').val(fullAddr);
           
                 
+             // 사용자가 고른 모임장소 좌표
+        		geocoder.addressSearch($('#gPlace').val(), function(result, status) {
+        		    if (status === kakao.maps.services.Status.OK) {
+        		        
+        		        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        		        console.log(coords);
+        		        
+        		        X = coords.getLng();
+        				Y = coords.getLat();
+        		    }
+        		});
+        		
+        		// 사용자가 선택한 주소 좌표
+        		geocoder.addressSearch($('#jangso').val(), function(result, status) {
+        		    if (status === kakao.maps.services.Status.OK) {
+        		        
+        		        userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
+        		        console.log(userAdr);
+        		        
+        		        userX = userAdr.getLng();
+        				userY = userAdr.getLat();
+        		    }
+        		});
+        	
             }
         
         }).open();
@@ -429,55 +386,5 @@
 
 </script>
 
- <!-- <script type="text/javascript">
-   $('#placeUpdate').on('click', function(){
-	   
-	   var realMap = $('#jangso').val();
-	   
-	   if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
-        	
-		   if(test33(X, Y, userX, userY) > 10000){
-				alert('선택한 주소의 10km이내의 장소를 선택해주세요.');
-				
-		   if(realMap == ''){
-			   alert('변경 실패 !');
-			   return null;
-		   } else {
-	          $.ajax({
-	  	       url: "<c:url value='/2edit' />",
-	  	       data: {  	    	    
-	  	    	    gid : ${gid},
-	  	    	    gPlace : realMap
-	  	       },
-	  	       type: "POST",	
-	  	       success: function(data) {
-	  	         if (data == 0) alert('오류가 발생하였습니다.');
-					location.reload();
-	  	       }
-	  	        , error : function(error){
-	  	    	   console.log(error);
-	  	       }
-	  	    });
-		   }
-		   
-		   return false;
-			}
-          
-           // console.log(fullAddr);
-           
-       } else {
-    	   
-       	return false;
-       	
-       }
-	   
-   console.log(realMap);
-   });
-   
-var booeeee = ${isCptc};
-
-console.log(booeeee);
-</script>
- -->
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 
