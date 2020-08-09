@@ -527,6 +527,5 @@ public class SgroupController {
 	         
 	      }
 	      return "http://localhost:8088/meetAgain/resources/upload/groupImg/desc/" + renamedName;
-
 	}
 }
