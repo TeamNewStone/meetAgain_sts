@@ -146,31 +146,29 @@ public class SgroupController {
 	// 소모임 한개 출력
 
 	@RequestMapping("/sgroup/groupInfo.do")
-
-	public String groupInfo(@ModelAttribute("member") Member m, @RequestParam String gid, Model model) {
+	public String groupInfo(@ModelAttribute("member") Member m, @RequestParam("gid") String gid, Model model) {
 		
 		Sgroup sr = sgroupService.selectOneSgroup(gid);
 
 		List<Joing> joing = sgroupService.selectJoing(gid);
-		int groupMem = 0;
+		int groupMem = sgroupService.countGroupMember(gid);
 		int groupCount = 0;
 		
 		try {
 			
 			groupCount = sgroupService.selectGroupCount(m.getUserId());
-			groupMem = sgroupService.countGroupMember(gid);
+			
 		}catch(NullPointerException e) {
 			groupCount = 0;
-			groupMem = 0;
 		}
 
 		model.addAttribute("sgroup", sr);
 		model.addAttribute("joing", joing);
 		model.addAttribute("groupCount", groupCount);
 		model.addAttribute("groupMem", groupMem);
-
+		model.addAttribute("gid", gid);
 		System.out.println("groupCount : " + groupCount);
-
+		System.out.println("groupMem : " + groupMem);
 		return "sgroup/groupInfo";
 	}
 

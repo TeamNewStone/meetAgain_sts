@@ -196,9 +196,9 @@
 					<script>
 				    		$(function(){
 				    			
-				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#${ sg.getGId()}');
-				    			$('#${ sg.getGId()} .component').css('opacity', '0.2');
-				    			$('#${ sg.getGId()}').removeAttr('id');
+				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('[name=${ sg.getGId()}]');
+				    			$('[name=${ sg.getGId()}] .component').css('opacity', '0.2');
+				    			$('[name=${ sg.getGId()}]').removeAttr('name');
 				    		});
 				    	</script>		
 				    </c:if>
@@ -317,7 +317,6 @@ $(function(){
     $.ajax({
         url:'${pageContext.request.contextPath}/sgroup/distanceGroup.do',
         success:function(data){
-    
            var coords, userAdr;
            var container = document.getElementById('map');
            var options = {
@@ -328,7 +327,7 @@ $(function(){
            var geocoder = new kakao.maps.services.Geocoder();
            
            data.forEach(function(item,index){
-        	   console.log(" 이건어케해..? " + data[index].gid);
+        	   console.log(" 이건어케해..? " + data[index]);
 
             geocoder.addressSearch($('#address1').val(), function(result, status) {
                    if (status === kakao.maps.services.Status.OK) {
