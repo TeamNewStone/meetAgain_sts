@@ -197,8 +197,10 @@ public class SgroupController {
 	}
 	
 	@RequestMapping("/sgroup/groupAlbum.do")
-	public String groupAlbum(@RequestParam String gid, Model model) {
-		model.addAttribute("gid", gid);
+	public String groupAlbum(@RequestParam("gid") String gId, Model model) {
+		Sgroup sr = sgroupService.selectOneSgroup(gId);
+		model.addAttribute("gid", gId);
+		model.addAttribute("sgroup",sr);
 		return "sgroup/groupAlbum";
 	}
 
@@ -206,9 +208,10 @@ public class SgroupController {
 	public String memberList(@RequestParam String gid, Model model) {
 		List<Joing> joing = sgroupService.selectJoing(gid);
 		
-		
+		Sgroup sr = sgroupService.selectOneSgroup(gid);
 		model.addAttribute("joing", joing);
 		model.addAttribute("gid", gid);
+		model.addAttribute("sgroup",sr);
 		return "sgroup/memberList";
 	}
 
@@ -396,7 +399,7 @@ public class SgroupController {
 
 		String loc = "/sgroup/groupBoard.do?gid=" + gid;
 	
-		String msg ="";
+		String msg ="모임 페이지로 이동합니다";
 		model.addAttribute("gid", gid);
 		model.addAttribute("loc", loc);
 
