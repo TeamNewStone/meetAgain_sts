@@ -148,7 +148,7 @@
 		INSERT INTO
 		GB_COMMENT
 		VALUES(SEQ_CID.NEXTVAL, #{gbId}, #{userId}, DEFAULT, #{cContent},
-		#{cRef}, #{cLevel}, #{cRec}, #{cDel})
+		NULL, #{cLevel}, #{cRec}, #{cDel})
 	</insert>
 
 	<select id="selectCommentList" parameterType="_int"
