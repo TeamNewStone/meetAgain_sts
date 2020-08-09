@@ -86,4 +86,6 @@ public interface SgroupService {
 
 	int updateSgroup(Sgroup sgroup);
 
+	int joinReject(Map<String, Object> map);
+
 }

@@ -205,5 +205,10 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.updateSgroup(sgroup);
 	}
 
+	@Override
+	public int joinReject(Map<String, Object> map) {
+		return sgroupDAO.joinReject(map);
+	}
+
 
 }

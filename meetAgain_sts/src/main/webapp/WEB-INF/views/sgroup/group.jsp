@@ -356,10 +356,7 @@
             	    }
             	});
         	   
-        	 distance(X, Y, userX, userY);
         			console.log(distance(X, Y, userX, userY));
-        		 
-        	  
     
            }
            
