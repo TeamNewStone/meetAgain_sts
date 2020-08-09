@@ -306,6 +306,8 @@ public class SgroupController {
 		model.addAttribute("gid", s.getGId());
 		System.out.println("sgroup : "+s);
 		System.out.println("Detail controller list : " + list);
+		
+		return "/sgroup/groupBoardDetail";
 	}
 
 
