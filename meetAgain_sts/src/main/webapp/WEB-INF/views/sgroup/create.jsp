@@ -154,7 +154,7 @@
 				<script>
 				
 				// 거리계산 함수
-				function test33(X, Y, userX, userY){
+				function distance(X, Y, userX, userY){
 					var polyline=new kakao.maps.Polyline({
 						path : [
 						new kakao.maps.LatLng(Y,X),
@@ -201,7 +201,7 @@
 					    }
 					});
 				
-					test33(X, Y, userX, userY);									
+					distance(X, Y, userX, userY);									
 				});
 			
 			</script>
@@ -300,7 +300,7 @@ function validate(){
 	}  else if($('#startDate').val().length==0){
 		alert("시작 날짜를 선택해주세요.");
 		return false;
-	} else if(test33(X, Y, userX, userY) > 10000){
+	} else if(distance(X, Y, userX, userY) > 10000){
 		alert('선택한 주소의 10km이내의 장소를 선택해주세요.');
 		return false;
 	} else if ($('#gPlace').val().length==0){

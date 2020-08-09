@@ -164,7 +164,7 @@
 			<c:if test="${!empty ca }">
 				<script>
 				$(function(){
-					$('#${ca.getGId()}').clone(true).appendTo($('#testtest'));
+					$('div[name=${ca.getGId()}]').clone(true).appendTo($('#testtest'));
                			
 				});
 				</script> 
@@ -191,7 +191,7 @@
 		
 		<c:forEach items="${list}" var="sg">
 				    
-				  <div class="col-md-4 cardOne" id="${ sg.getGId()}" style="max-width: 500px;">
+				  <div class="col-md-4 cardOne" name="${ sg.getGId()}" style="max-width: 500px;">
 					   <c:if test="${sg.getIsFin() == 'Y'}">
 					<script>
 				    		$(function(){
@@ -306,72 +306,85 @@
 <!-- 소모임 전체 LIST END -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d68e73a49c2fc0deedbcbca59ca49574&libraries=services,clusterer,drawing"></script>
 <script>
- $(function(){
-	 function distance(X, Y, userX, userY){
-			var polyline=new kakao.maps.Polyline({
-				path : [
-				new kakao.maps.LatLng(Y,X),
-				new kakao.maps.LatLng(userY,userX)
-				]
-			});
-			
-			return Math.round(polyline.getLength());
-		};
 
-	
- 	$.ajax({
+$(function(){
+
+	var X = 0;
+	var Y = 0;
+	var userX = 0;
+	var userY = 0;
+
+    $.ajax({
         url:'${pageContext.request.contextPath}/sgroup/distanceGroup.do',
-       
         success:function(data){
-       
-        	var coords, userAdr;
-        	var X, Y, userX, userY;
-        	var container = document.getElementById('map');
-        	var options = {
-        		center: new kakao.maps.LatLng(33.450701, 126.570667),
-        		level: 3
-        	};
-        	var map = new kakao.maps.Map(container, options);
-        	var geocoder = new kakao.maps.services.Geocoder();
-        	
-           for(var i in data){
-        	   geocoder.addressSearch(data[i].gplace, function(result, status) {
-        		    if (status === kakao.maps.services.Status.OK) {
-        		        
-        		        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        		        console.log(coords);
-        		        
-        		        X = coords.getLng();
-        				Y = coords.getLat();
-        		    }
-        		}); 
-        	 geocoder.addressSearch($('#address1').val(), function(result, status) {
-            	    if (status === kakao.maps.services.Status.OK) {
-            	        
-            	    	userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
-            	        console.log(userAdr);
-				        
-				        userX = userAdr.getLng();
-						userY = userAdr.getLat();
-            	    }
-            	});
-        	   
-        			console.log(distance(X, Y, userX, userY));
     
-           }
+           var coords, userAdr;
+           var container = document.getElementById('map');
+           var options = {
+              center: new kakao.maps.LatLng(33.450701, 126.570667),
+              level: 3
+           };
+           var map = new kakao.maps.Map(container, options);
+           var geocoder = new kakao.maps.services.Geocoder();
            
+           data.forEach(function(item,index){
+        	   console.log(" 이건어케해..? " + data[index].gid);
+
+            geocoder.addressSearch($('#address1').val(), function(result, status) {
+                   if (status === kakao.maps.services.Status.OK) {
+                       
+                      userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    
+                    userX = userAdr.getLng();
+                    userY = userAdr.getLat();
+                  console.log("userX : " + userX);
+                  console.log("userY : " + userY);
+                                 
+                
+                  
+                  
+                  }
+              }); 
+              geocoder.addressSearch(data[index].gplace, function(result, status) {
+                  if (status === kakao.maps.services.Status.OK) {
+                      
+                      coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                      X = coords.getLng();
+                      Y = coords.getLat();
+                    
+                    console.log("X : " + X);
+                    console.log("Y : " + Y);
+                    
+                    console.log("userX, userY, X, Y : " + distance(X, Y, userX, userY));
+                    
+                    if(distance(X, Y, userX, userY)>10000){
+                     	 $('div[name='+data[index].gid+']').remove(); 
+                    }
+                    
+                   }
+               });
+              
+             // 실행이 ajax 형식이라, 값을 받아오기도 전에 화면에 찍어 버리네요
+            
            
-           
-        }, beforeSend:function(data){
-        	
-        }, error:function(){
-           alert("거리계산");
+                 
+    
+           })
         }
-     }); 
+    });
+});
 
-});  
-
-
+function distance(X, Y, userX, userY){
+       var polyline=new kakao.maps.Polyline({
+          path : [
+          new kakao.maps.LatLng(Y,X),
+          new kakao.maps.LatLng(userY,userX)
+          ]
+       });
+       
+       return Math.round(polyline.getLength());
+    };
+    
 
 
 	$(function() {
@@ -381,8 +394,8 @@
 	});
 	
 	$(function(){
-		$(".cardOne[id]").on("click",function(){
-			var gId = $(this).attr("id");
+		$(".cardOne[name]").on("click",function(){
+			var gId = $(this).attr("name");
 			var result = new Array();
 			console.log("gId="+gId);
 			

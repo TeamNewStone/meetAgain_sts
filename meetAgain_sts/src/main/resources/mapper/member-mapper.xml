@@ -111,4 +111,8 @@
 	<select id="selectMHTotalContents" resultType="_int">
 		SELECT COUNT(*) FROM MSHISTORY WHERE USERID=#{userId}
 	</select>
+	
+	<update id="updatePremiumMem" parameterType="string">
+		UPDATE MEMBER SET MLEVEL=1 WHERE USERID=#{userId}
+	</update>
 </mapper>
