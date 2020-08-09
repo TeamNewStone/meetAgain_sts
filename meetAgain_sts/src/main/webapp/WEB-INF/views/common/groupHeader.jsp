@@ -41,9 +41,9 @@
 			&nbsp;
 			<button id="group-calbtn" class="btn btn-outline-secondary"
 			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupCalendar.do?gid='+${gid}">캘린더</button>
-			&nbsp;
+			<%-- &nbsp;
 			<button id="group-albumbtn" class="btn btn-outline-secondary"
-			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupAlbum.do?gid='+${gid}">사진첩</button>
+			onclick="location.href='${ pageContext.request.contextPath }/sgroup/groupAlbum.do?gid='+${gid}">사진첩</button> --%>
 	
 	</div>
 </div>
