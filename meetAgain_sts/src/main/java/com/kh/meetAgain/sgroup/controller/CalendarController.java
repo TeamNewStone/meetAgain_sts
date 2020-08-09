@@ -66,6 +66,7 @@ public class CalendarController {
 	@RequestMapping("sgroup/groupCalendar.do")
 	public String loadList(Model model, @ModelAttribute("member") Member m, @ModelAttribute("gid") String gId) {
 		
+		Sgroup sr = sgroupService.selectOneSgroup(gId);
 		// 일정 조회
 		List<Calendar> list = new ArrayList<Calendar>(); 
 		Map <String,Object> isCtn = new HashMap<String,Object>();
@@ -100,7 +101,9 @@ public class CalendarController {
 		model.addAttribute("sclist", list);
 		model.addAttribute("isCtn",ctnCheck);
 		model.addAttribute("group",group);
+		model.addAttribute("sgroup",sr);
 		System.out.println("group : "+group);
+		
 
 		
 		return "sgroup/groupCalendar";	

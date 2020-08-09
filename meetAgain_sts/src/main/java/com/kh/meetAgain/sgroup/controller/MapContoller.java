@@ -31,7 +31,7 @@ public class MapContoller {
 		System.out.println("컨트롤러 m 출력 : "+m);
 
 		String userId = m.getUserId();
-		
+		Sgroup sr = sgroupService.selectOneSgroup(gId);
 		// 등록 주소 가져오기				
 		Sgroup sg = sgroupService.getMyPlace(gId);
 				
@@ -50,6 +50,7 @@ public class MapContoller {
 		
 		model.addAttribute("gPlace", sg.getGPlace() );
  		model.addAttribute("isCptc",  result);
+ 		model.addAttribute("sgroup",sr);
 		
 		System.out.println(map);
 		
