@@ -84,4 +84,6 @@ public interface SgroupDAO {
 	int joinReject(Map<String, Object> map);
 
 	Sgroup selectOneSgroup2(int gbId);
+
+	Calendar selectOneCal(String cdid);
 }

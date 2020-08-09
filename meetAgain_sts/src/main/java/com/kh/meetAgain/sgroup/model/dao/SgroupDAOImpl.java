@@ -233,5 +233,10 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public Sgroup selectOneSgroup2(int gbId) {
 		return sqlSession.selectOne("sgroupMapper.selectOneSgroup2", gbId);
 	}
+
+	@Override
+	public Calendar selectOneCal(String cdid) {
+		return sqlSession.selectOne("calendarMapper.selectOneCal",cdid);
+	}
 }
 

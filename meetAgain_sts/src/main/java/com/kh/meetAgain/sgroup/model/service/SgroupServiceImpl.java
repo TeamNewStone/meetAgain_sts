@@ -215,5 +215,10 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.selectOneSgroup2(gbId);
 	}
 
+	@Override
+	public Calendar selectOneCal(String cdid) {
+		return sgroupDAO.selectOneCal(cdid);
+	}
+
 
 }
