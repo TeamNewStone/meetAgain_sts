@@ -133,7 +133,6 @@
 	        var add1 = result[0].road_address.address_name;
 	        var add2 = result[0].address.address_name;
 	        
-	        console.log(Ha+","+Ga);
 	        $("#add1").html(add1);
 	        $("#add2").html(add2);
 	    } 
@@ -165,9 +164,7 @@
 	
 	$(function(){
 		$('#findRoad').on('click', function() {						
-			
-				window.open('https://map.kakao.com/link/to/${gPlace}' + ',' + Ha + ',' + Ga);
-			
+				window.open('https://map.kakao.com/link/to/${gPlace}'+','+Ha+','+Ga);
 		});					
 	});
 	
@@ -209,7 +206,7 @@
 		return Math.round(polyline.getLength());
 	}
 	
-	$('#gPlace').blur(function(){
+	/* $('#gPlace').blur(function(){
 		// 사용자가 고른 모임장소 좌표
 		geocoder.addressSearch($('#gPlace').val(), function(result, status) {
 		    if (status === kakao.maps.services.Status.OK) {
@@ -235,14 +232,61 @@
 		});
 	
 		test33(X, Y, userX, userY);									
-	});
+	}); */
+	var place;
+	function findPlace(place){
+		 geocoder.addressSearch(place, function(result, status) {
+			    if (status === kakao.maps.services.Status.OK) {
+			        console.log("확인용!");
+			        userAdr = new kakao.maps.LatLng(result[0].y, result[0].x);
+			        console.log(userAdr);
+			        
+			        userX = mresult[0].x;
+					userY = mresult[0].y;
+			    }
+			});
+	}
 	
 	$('#placeUpdate').on('click', function(){
 		   
 		   var realMap = $('#jangso').val();
+ 
+	   		/* geocoder.addressSearch($('#add1').html(), function(result, status) {
+	   			console.log("확인용~add!");
+			    if (status === kakao.maps.services.Status.OK) {
+			        
+			        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			        console.log(coords);
+			        
+			        X = result[0].x;
+					Y = result[0].y;
+			    }
+			}); */
+			
+		/* 	 geocoder.addressSearch(realMap, function(mresult, mstatus) {
+				    if (mstatus === kakao.maps.services.Status.OK) {
+				        console.log("확인용!");
+				        userAdr = new kakao.maps.LatLng(mresult[0].y, mresult[0].x);
+				        console.log(userAdr);
+				        
+				        userX = mresult[0].x;
+						userY = mresult[0].y;
+				    }
+				});
+			 */
+			 findPlace(realMap);
+			 Y = Ha;
+				X = Ga;
+			 console.log("x,y:"+X+Y);
+			   console.log("ux,uy:"+userX+userY);
+			
+		
+		   console.log(realMap);
 		   
 		   if( confirm('소모임 장소를 변경하시겠습니까?' ) == true){
-					
+				  
+				 console.log("x,y:"+X+Y);
+				   console.log("ux,uy:"+userX+userY);
 			   if(realMap == ''){
 				   alert('변경 실패 !');
 				   return null;
@@ -374,9 +418,7 @@
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
 
                 $('[name=gPlace]').val(fullAddr);
-                
-                console.log(fullAddr);
-                
+          
                 
             }
         
@@ -385,9 +427,9 @@
     };	
 
 
-</script><!-- 
+</script>
 
- <script type="text/javascript">
+ <!-- <script type="text/javascript">
    $('#placeUpdate').on('click', function(){
 	   
 	   var realMap = $('#jangso').val();
@@ -435,7 +477,7 @@
 var booeeee = ${isCptc};
 
 console.log(booeeee);
-</script> -->
-
+</script>
+ -->
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 
