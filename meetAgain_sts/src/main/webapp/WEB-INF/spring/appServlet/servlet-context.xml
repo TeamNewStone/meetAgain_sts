@@ -42,6 +42,18 @@
 			 <!-- 인터셉터 등록 -->
 			 <beans:bean id="loginCheckInterceptor"
 			            class="com.kh.meetAgain.common.interceptor.LoginCheckInterceptor" />  
+			   
+		</interceptor>
+		<interceptor>
+			<mapping path="/sgroup/groupBoard.do"/>
+			<mapping path="/sgroup/groupMap.do"/>
+			<mapping path="/sgroup/groupCalendar.do"/>
+			<mapping path="/sgroup/groupDetail.do"/>
+			<mapping path="/sgroup/memberList.do"/>
+			
+			 <!-- 인터셉터 등록 -->
+			 <beans:bean id="JoinCheckInterceptor"
+			            class="com.kh.meetAgain.common.interceptor.JoinCheckInterceptor" />
 		</interceptor>
 	</interceptors>
 	
