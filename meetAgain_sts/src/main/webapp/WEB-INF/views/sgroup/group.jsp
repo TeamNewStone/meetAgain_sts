@@ -443,7 +443,7 @@ function distance(X, Y, userX, userY){
 	              $('#cateReco').hide();
 	             for(var i in data){
 	                 console.log(data[i].gid);
-	                 $('#'+data[i].gid).clone(true).appendTo($('#searchShowDiv'));
+	                 $('div[name='+data[i].gid+']').clone(true).appendTo($('#searchShowDiv'));
 	             }
 	             
 	          }, beforeSend:function(){

@@ -100,7 +100,7 @@
 				    
 				    <script>
 				    	$(function(){
-				    		var year = '${mh.payDate}'.substr(0,4);
+				    		var year = '${mh.getPayDate()}'.substr(0,4);
 				    		var mm = parseInt('${mh.payDate}'.substr(5,2))+1;
 							mm = (mm < 10) ? '0'+mm : mm;
 							mm = (mm > 12) ? '01' : mm;
@@ -147,13 +147,15 @@
 			
 		});
 		function quit(){
-			var mm = '${mh.payDate}'.getMonth()+1;
+			/* var mm = '${mh.payDate}'.getMonth()+1;
 			mm = (mm < 10) ? '0'+mm : mm;
 			mm = (mm > 12) ? '01' : mm;
 			var dd = '${mh.payDate}'.getDate()-1;
 			dd = (dd < 10) ? '0'+dd : dd;
 			var endDate = new Date('${mh.payDate}'.getYear(), mm, dd);
-			console.log("날짜 더해지나요? "+endDate);
+			console.log("날짜 더해지나요? "+endDate); */
+			
+			location.href="${pageContext.request.contextPath}/member/quitMembership.do";
 		}
 		
 	
@@ -201,6 +203,7 @@
 							//기타 필요한 데이터가 있으면 추가 전달
 							}
 						});
+						location.reload();
 						location.href="${pageContext.request.contextPath}/member/membership.do";
 						location.reload();
 					} else {

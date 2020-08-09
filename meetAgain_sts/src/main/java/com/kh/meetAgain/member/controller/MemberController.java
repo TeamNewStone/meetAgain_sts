@@ -346,8 +346,31 @@ public class MemberController {
 		String loc = "/";
 		
 		int result = memberService.updatePremiumMem(m.getUserId());
+		int result2 = memberService.insertMsHistory(m.getUserId());
+		
 		m.setMLevel(result); 
 		
-		return "common/msg";
+		return "member/membership";
+	}
+
+	@RequestMapping("/member/quitMembership.do")
+	public String quitMembership(@ModelAttribute("member") Member m, Model model) {
+		String msg = "";
+		String loc = "/";
+		
+		int result = memberService.quitMembership(m.getUserId());
+		int result2 = memberService.quitMLevel(m.getUserId());
+		
+		if(result > 0 && result2 > 0) {
+			m.setMLevel(0);
+			msg = "멤버십 해지완료";
+		}else {
+			msg = "멤버십 해지실패.";
+		}
+		
+		model.addAttribute("loc", loc);
+		model.addAttribute("msg", msg);
+		
+		return "redirect:/";
 	}
 }

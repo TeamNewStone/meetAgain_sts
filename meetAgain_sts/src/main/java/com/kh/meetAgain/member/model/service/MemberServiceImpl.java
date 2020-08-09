@@ -11,6 +11,7 @@ import com.kh.meetAgain.member.model.dao.MemberDAO;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.MemberShip;
+import com.kh.meetAgain.member.model.vo.MsHistory;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 
 @Service("memberService")
@@ -114,5 +115,20 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updatePremiumMem(String userId) {
 		return memberDAO.updatePremiumMem(userId);
+	}
+
+	@Override
+	public int insertMsHistory(String userId) {
+		return memberDAO.insertMsHistory(userId);
+	}
+
+	@Override
+	public int quitMembership(String userId) {
+		return memberDAO.quitMembership(userId);
+	}
+
+	@Override
+	public int quitMLevel(String userId) {
+		return memberDAO.quitMLevel(userId);
 	}
 }

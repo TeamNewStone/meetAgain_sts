@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.MemberShip;
+import com.kh.meetAgain.member.model.vo.MsHistory;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 
 @Repository("memberDAO")
@@ -138,6 +139,21 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public int updatePremiumMem(String userId) {
 		return sqlSession.update("memberMapper.updatePremiumMem", userId);
+	}
+
+	@Override
+	public int insertMsHistory(String userId) {
+		return sqlSession.insert("memberMapper.insertMsHistory", userId);
+	}
+
+	@Override
+	public int quitMembership(String userId) {
+		return sqlSession.update("memberMapper.quitMembership", userId);
+	}
+
+	@Override
+	public int quitMLevel(String userId) {
+		return sqlSession.update("memberMapper.quitMLevel", userId);
 	}
 
 }
