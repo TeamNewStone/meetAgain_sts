@@ -41,4 +41,6 @@ public interface MemberService {
 
 	int selectMHTotalContents(String userId);
 
+	int updatePremiumMem(String userId);
+
 }

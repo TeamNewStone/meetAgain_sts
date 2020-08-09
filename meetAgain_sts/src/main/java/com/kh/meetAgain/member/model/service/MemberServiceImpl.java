@@ -110,4 +110,9 @@ public class MemberServiceImpl implements MemberService {
 	public int selectMHTotalContents(String userId) {
 		return memberDAO.selectMHTotalContents(userId);
 	}
+
+	@Override
+	public int updatePremiumMem(String userId) {
+		return memberDAO.updatePremiumMem(userId);
+	}
 }

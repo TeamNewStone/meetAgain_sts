@@ -219,6 +219,4 @@ public class SgroupServiceImpl implements SgroupService {
 	public Calendar selectOneCal(String cdid) {
 		return sgroupDAO.selectOneCal(cdid);
 	}
-
-
 }

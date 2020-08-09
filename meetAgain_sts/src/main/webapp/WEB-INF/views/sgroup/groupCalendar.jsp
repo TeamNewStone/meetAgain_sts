@@ -202,7 +202,6 @@
 	</div>
 	
 	<script>
-
 		document.addEventListener('DOMContentLoaded', function() {
 			var calendarEl = document.getElementById('calendar');
 			var today = new Date();
@@ -246,7 +245,6 @@
 					if(result == true){
 						// alert('클릭 캘린더 위치: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY); // 좌표
 						// $(info.el.style.borderColor) = 'blueviolet'; 정기
-
 						var cdId = info.event._def.publicId;
 						var userid = ${member.getUserId()};
 						var gid = ${gid};
@@ -328,7 +326,6 @@
 				},
 				error : function(){
 					 alert("error");
-
 				}
 			});
 		});
@@ -339,10 +336,8 @@
 		function addCal() {			
 			location.href="${ pageContext.request.contextPath }/sgroup/addCalendar.do";
 		}
-
 		$('#isCtnChk').change( function() {
 			consol.elog("d왜안나와");
-
 			if ( $('#isCtnChk').is(':checked')) {
 				console.log('체크값 : ' + $(this).val());
 				$('#_Y').val('Y');

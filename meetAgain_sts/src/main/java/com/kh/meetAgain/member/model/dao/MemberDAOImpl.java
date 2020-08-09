@@ -135,4 +135,9 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne("memberMapper.selectMHTotalContents", userId);
 	}
 
+	@Override
+	public int updatePremiumMem(String userId) {
+		return sqlSession.update("memberMapper.updatePremiumMem", userId);
+	}
+
 }

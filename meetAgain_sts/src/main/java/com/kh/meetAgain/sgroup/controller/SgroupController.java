@@ -293,7 +293,7 @@ public class SgroupController {
 	
 	@RequestMapping("/sgroup/groupBoardDetail.do")
 	public String groupBoardDetail(@RequestParam int gbId, Model model) {
-		
+
 		Gboard gb = sgroupService.SelectOnegBoard(gbId);
 		Sgroup s = sgroupService.selectOneSgroup2(gbId);
 		List<GB_comment> list = sgroupService.selectCommentList(gbId);
@@ -306,7 +306,7 @@ public class SgroupController {
 		model.addAttribute("gid", s.getGId());
 		System.out.println("sgroup : "+s);
 		System.out.println("Detail controller list : " + list);
-
+		
 		return "/sgroup/groupBoardDetail";
 	}
 
