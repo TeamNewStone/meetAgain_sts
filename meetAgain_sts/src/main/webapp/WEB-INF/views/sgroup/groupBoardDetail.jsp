@@ -16,8 +16,8 @@
 					<div class="subject" name="gbTitle">${Gboard.gbTitle}</div>
 					<div id="noticeDate">${Gboard.gbDate}</div>
 				</div>
+					<%-- <input type="hidden" id="gbContent" value="${Gboard.gbContent}" /> --%>
 				<div class="read-md">
-					<input type="hidden" id="gbContent" value="${Gboard.gbContent}" />
 					<br> <br>
 					<p>${Gboard.gbContent}</p>
 
@@ -28,8 +28,10 @@
 				<div class="col-3"></div>
 				<div class="col-3">
 
+		<c:if test="${member.userId eq Gboard.userId }">
 					<a class="btn_1" onclick="goDelete()">삭제하기</a>
         <a class="btn_1" onclick="goUpdate()">수정하기</a>
+        </c:if>
         <a class="btn_1 checkout_btn_1" onclick="goBack()">뒤로 가기</a>
 
 				<c:if test="${Gboard.userId ne member.userId }">
