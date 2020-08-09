@@ -25,7 +25,7 @@
 
 	<update id="mTMIUpdate" parameterType="UserTMI">
 		UPDATE USERTMI SET
-		BLOOD=#{blood}, MBTI=#{mbti}, KEYWORD=#{keyword}, USERIMG=#{userImg}
+		BLOOD=#{blood}, MBTI=#{mbti}, KEYWORD=#{keyword}
 		WHERE USERID=#{userId}
 	</update>
 

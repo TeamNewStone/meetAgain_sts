@@ -250,6 +250,7 @@ public class MemberController {
 	         @RequestParam(value="userImg1", required = false) MultipartFile[] userImg1) {
 		String loc="/";
 		String msg="";
+		int result2 = 0;
 		if(userImg1[0].getOriginalFilename() != "") {
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/userImg");
 
@@ -279,6 +280,14 @@ public class MemberController {
 	         }
 	      }
 		
+	      member.setUserImg(userTMI.getUserImg()); 
+	      
+	      Map<String, String> map = new HashMap<String, String>();
+		    map.put("userImg", userTMI.getUserImg());
+		    map.put("userId", member.getUserId());
+		    
+		    result2 = memberService.imgUpdate(map);
+		}
 		int result = 0;
 		if(cateInfo.getCateId()!=null) {
 			result = memberService.mTMIUpdate(userTMI, cateInfo);			
@@ -286,15 +295,11 @@ public class MemberController {
 			result = memberService.mCateDelete(userTMI.getUserId());
 			result = memberService.mTMIUpdate2(userTMI);
 		}
-		member.setUserImg(userTMI.getUserImg()); 
 		
-		if(result > 0) {
+		if(result > 0 || result2 > 0) {
 			msg="정보 수정이 완료되었습니다.";
 		}else {
 			msg="정보 수정 중 오류가 발생하였습니다. 다시 시도해 주세요.";
-		}
-		}else {
-			msg="정보 수정이 완료되었습니다.";
 		}
 		model.addAttribute("loc", loc);
 		model.addAttribute("msg", msg);
