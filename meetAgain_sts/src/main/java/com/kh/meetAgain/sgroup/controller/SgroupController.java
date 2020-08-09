@@ -292,10 +292,10 @@ public class SgroupController {
 	}
 	
 	@RequestMapping("/sgroup/groupBoardDetail.do")
-	public String groupBoardDetail(@RequestParam int gbId, @RequestParam("gid") String gid, Model model) {
-		
+	public String groupBoardDetail(@RequestParam int gbId, Model model) {
+
 		Gboard gb = sgroupService.SelectOnegBoard(gbId);
-		Sgroup s = sgroupService.selectOneSgroup(gid);
+		Sgroup s = sgroupService.selectOneSgroup2(gbId);
 		List<GB_comment> list = sgroupService.selectCommentList(gbId);
 
 		int gbRate = sgroupService.updateReadCount(gbId);
@@ -303,11 +303,9 @@ public class SgroupController {
 		model.addAttribute("gbRate", gbRate);
 		model.addAttribute("list", list);
 		model.addAttribute("Gboard", gb);
-		model.addAttribute("gid", gid);
+		model.addAttribute("gid", s.getGId());
 		System.out.println("sgroup : "+s);
 		System.out.println("Detail controller list : " + list);
-
-		return "/sgroup/groupBoardDetail";
 	}
 
 
