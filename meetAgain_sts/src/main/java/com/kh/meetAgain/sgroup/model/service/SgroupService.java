@@ -87,9 +87,8 @@ public interface SgroupService {
 	int updateSgroup(Sgroup sgroup);
 
 	int joinReject(Map<String, Object> map);
-
+	
 	Sgroup selectOneSgroup2(int gbId);
 
 	Calendar selectOneCal(String cdid);
-
 }

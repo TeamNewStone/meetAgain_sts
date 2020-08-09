@@ -173,20 +173,21 @@
 				    merchant_uid : 'merchant_' + new Date().getTime(),
 					name : '프리미엄 회원',
 					amount : 4500,
-					buyer_email : 'test@example.com',
-					buyer_name : '홍길동',
-					buyer_tel : '010-1111-2222',
-					buyer_addr : '서울시 강남구 역삼동',
+					buyer_email : '${member.email}',
+					buyer_name : '${member.userName}',
+					buyer_tel : '${member.phone}',
+					buyer_addr : '${member.address1}',
 					buyer_postcode : '01234'
 				}, function(rsp) {
 					if (rsp.success) {
 						//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 						$.ajax({
-							url : "/test/orderconfirm.do", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+							url : "${pageContext.request.contextPath}/member/updatePremiumMem.do", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
 							type : 'POST',
 							dataType : 'json',
+							cache : false,
 							data : {
-								item : 'toy',
+								item : 'premium',
 								code : 'P0001',
 								imp_uid : rsp.imp_uid,
 								pay_method : rsp.pay_method,
@@ -200,9 +201,8 @@
 							//기타 필요한 데이터가 있으면 추가 전달
 							}
 						});
-						location.href="/test/views/iamport/orderConfirm.jsp?item=toy&pay_method="+rsp.pay_method
-								+"&quan=" + $('#quan').val() + "&nick="+rsp.buyer_name + "&price="+ $('#price').text()
-								+"&date="+rsp.paid_at+"&price="+rsp.paid_amount;
+						location.href="${pageContext.request.contextPath}/member/membership.do";
+						location.reload();
 					} else {
 						var msg = '결제에 실패하였습니다.';
 						msg += '\n에러내용 : ' + rsp.error_msg;

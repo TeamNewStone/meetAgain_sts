@@ -43,4 +43,6 @@ public interface MemberDAO {
 
 	int selectMHTotalContents(String userId);
 
+	int updatePremiumMem(String userId);
+
 }
