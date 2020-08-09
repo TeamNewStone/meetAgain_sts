@@ -1,5 +1,6 @@
 package com.kh.meetAgain.myPage.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.dao.MyPageDAO;
 import com.kh.meetAgain.myPage.model.vo.Review;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @Service("mpSvc")
@@ -57,7 +59,7 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 
 	@Override
-	public List<Sgroup> getMyGroup(String userId) {
+	public  List<HashMap<String,Object>> getMyGroup(String userId) {
 		return mpDAO.getMyGroup(userId);
 	}
 
@@ -90,5 +92,12 @@ public class MyPageServiceImpl implements MyPageService {
 	public Review selectReview(String userId, String gId) {
 		return mpDAO.insertReview(userId, gId);
 	}
+
+	@Override
+	public int checkIn(Map<String, Object> map) {
+		return mpDAO.checkIn(map);
+	}
+
+	
 
 }

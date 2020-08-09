@@ -75,6 +75,11 @@
 			<div
 				class="col-12 col-md-8 d-flex flex-column align-items-center align-items-lg-start">
 				<div class="d-flex flex-row align-items-start mt-3 mt-lg-0">
+				<c:if test="${owner.getMLevel() eq 1 }">
+				<div>
+				<img src="${ pageContext.request.contextPath }/resources/img/premium.jpg" style="width : 50px;"  /> &nbsp;
+				</div>
+				</c:if>
 					<div class="name">
 						<h2 class="mb-0">${owner.nickName}</h2>
 
@@ -136,7 +141,7 @@
 		</ul>
 	</div>
 
-	<!-- 나의 소모임 시작 -->
+	<!--============================================== 나의 소모임 시작 ======================================================-->
 	<!-- 카드 고정폭 500px 더보기 아래로-->
 	<div class="profile profile-tabs tab-content">
 
@@ -147,113 +152,124 @@
 				<c:forEach items="${mygroup}" var="mg">
 					<div class="col-md-4" style="max-width: 500px;">
 						<div class="component">
-						<c:if test="${mg.getIsFin() eq 'Y'}">
+						
+						<c:if test="${mg.ISFIN eq 'Y'}">
 							<script>
 				    		$(function(){				    			
-				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#m-${ mg.getGId()}');
-				    			$('#m-${ mg.getGId()} .card-header').css('opacity', '0.2');				 
+				    			$('<h4 style="position: absolute;top: 30%; left: 25%;">종료된 모임입니다.</h4>').appendTo('#m-${ mg.GID}');	
+				    			$('#m-${ mg.GID} .card-header').css('opacity', '0.2');	
 				    		});
 				    	</script>		
-							<div class="card-fin" id = "m-${mg.getGId()}">
+							<div class="card-fin" id = "m-${mg.GID}">
 							</c:if>
-							<c:if test="${mg.getIsFin() ne 'Y'}">
-							<div class="card" id = "${mg.getGId()}">
+							<c:if test="${mg.ISFIN ne 'Y'}">
+							<div class="card" id = "${mg.GID}">
+							<c:if test="${mg.ISREADY eq 2 }">
+							<h4 style="position: absolute;top: 30%; left: 25%;">승인 대기중입니다.</h4>
 							</c:if>
-								<div class="card-header">
-									<c:if test="${mg.getGImg() eq null}">
-										<c:if test="${mg.getGType() eq 'S'}">
+							</c:if>
+						
+							
+							
+								<div class="card-header"
+								<c:if test="${mg.ISREADY eq 2 }">
+								style = "opacity : 0.2";
+								</c:if>
+								>
+									<c:if test="${mg.GIMG eq 'NULL'}">
+										<c:if test="${mg.GTYPE eq 'S'}">
 											<img class="card-img"
 												src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height: 200px;">
 										</c:if>
-										<c:if test="${mg.getGType() eq 'L'}">
+										<c:if test="${mg.GTYPE eq 'L'}">
 											<img class="card-img"
 												src="${ pageContext.request.contextPath }/resources/img/fav01.png" style="height: 200px;">
 										</c:if>
 									</c:if>
-									<c:if test="${mg.getGImg() ne null}">
+									<c:if test="${mg.GIMG ne 'NULL'}">
 										<img class="card-img"
-											src="${ pageContext.request.contextPath }/resources/upload/groupImg/${mg.getGImg()}"
+											src="${ pageContext.request.contextPath }/resources/upload/groupImg/${mg.GIMG}"
 											style="height: 200px;">
 									</c:if>
 								</div>
 								<div class="card-body">
 
-									<input type="hidden" id="gPlace" value="${mg.getGPlace() }" />
-									<c:if test="${mg.getGType() eq 'S' }">
+									<input type="hidden" id="gPlace" value="${mg.GPLACE }" />
+									<c:if test="${mg.GTYPE eq 'S' }">
 										<span class="badge badge-primary mb-2">단기</span>
 									</c:if>
-									<c:if test="${mg.getGType() eq 'L' }">
+									<c:if test="${mg.GTYPE eq 'L' }">
 										<span class="badge badge-primary mb-2">장기</span>
 									</c:if>
 
-									<c:if test="${mg.getCateId() eq 'C01'}">
+									<c:if test="${mg.CATE_ID eq 'C01'}">
 										<span class="badge badge-secondary mb-2">운동</span>
 									</c:if>
-									<c:if test="${mg.getCateId() eq 'C02' }">
+									<c:if test="${mg.CATE_ID eq 'C02' }">
 										<span class="badge badge-secondary mb-2">친목</span>
 									</c:if>
-									<c:if test="${mg.getCateId() eq 'C03' }">
+									<c:if test="${mg.CATE_ID eq 'C03' }">
 										<span class="badge badge-secondary mb-2">공부</span>
 									</c:if>
-									<c:if test="${mg.getCateId() eq 'C04' }">
+									<c:if test="${mg.CATE_ID eq 'C04' }">
 										<span class="badge badge-secondary mb-2">취미생활</span>
 									</c:if>
-									<c:if test="${mg.getCateId() eq 'C05' }">
+									<c:if test="${mg.CATE_ID eq 'C05' }">
 										<span class="badge badge-secondary mb-2">문화생활</span>
 									</c:if>
-									<c:if test="${mg.getCateId() eq 'C06' }">
+									<c:if test="${mg.CATE_ID eq 'C06' }">
 										<span class="badge badge-secondary mb-2">여행</span>
 									</c:if>
-									<c:if test="${mg.getCateId() eq 'C07' }">
+									<c:if test="${mg.CATE_ID eq 'C07' }">
 										<span class="badge badge-secondary mb-2">봉사</span>
 									</c:if>
-									<c:if test="${mg.getCateId() eq 'C08' }">
+									<c:if test="${mg.CATE_ID eq 'C08' }">
 										<span class="badge badge-secondary mb-2">기타</span>
 									</c:if>
 
-									<c:if test="${mg.getLimitGroup()[0] eq 'M'}">
+									<c:if test="${fn:substring(mg.LIMITGROUP,0,1) eq 'M'}">
 										<span class="badge badge-danger">남자만</span>
 									</c:if>
-									<c:if test="${mg.getLimitGroup()[0] eq 'F'}">
+									<c:if test="${fn:substring(mg.LIMITGROUP,0,1) eq 'F'}">
 										<span class="badge badge-danger">여자만</span>
 									</c:if>
-									<c:if test="${mg.getLimitGroup()[0] eq 'A'}">
+									<c:if test="${fn:substring(mg.LIMITGROUP,0,1) eq 'A'}">
 										<span class="badge badge-success">성별무관</span>
 									</c:if>
 
-									  <c:if test="${fn:length(mg.getLimitGroup()) eq 6 or fn:length(mg.getLimitGroup()) eq 1 }">
+									  <c:if test="${fn:length(mg.LIMITGROUP) eq 6 or fn:length(mg.LIMITGROUP) eq 1 }">
                        <span class="badge badge-success">나이 무관</span>
                        
                     </c:if>
                     
-                    <c:if test="${fn:length(mg.getLimitGroup()) lt 6}">
-                       <c:if test="${ fn:length(mg.getLimitGroup()) ne 1}">
+                    <c:if test="${fn:length(mg.LIMITGROUP) lt 6}">
+                       <c:if test="${ fn:length(mg.LIMITGROUP) ne 1}">
                           <span class="badge badge-danger">나이 제한</span>
                        </c:if>
                     </c:if>
 					
-					<c:if test="${!empty mg.getGPwd() }">
+					<c:if test="${!empty mg.GPWD }">
 					<span class="badge badge-danger">비공개</span>
 					</c:if>
 					
-									<h4 class="card-title mt-2">${mg.getGTitle()}</h4>
+									<h4 class="card-title mt-2">${mg.GTITLE}</h4>
 									<p class="card-text">
 										<c:choose>
-											<c:when test="${fn:length(mg.getGIntro()) gt 11}">
-												<c:out value="${fn:substring(mg.getGIntro(),0,10)}..."></c:out>
+											<c:when test="${fn:length(mg.GINTRO) gt 11}">
+												<c:out value="${fn:substring(mg.GINTRO,0,10)}..."></c:out>
 											</c:when>
 											<c:otherwise>
-				          ${mg.getGIntro()}
+				          ${mg.GINTRO}
 				          </c:otherwise>
 										</c:choose>
 									</p>
 								</div>
-								<c:if test="${mg.getIsFin() eq 'Y'}">
+								<c:if test="${mg.ISFIN eq 'Y'}">
 								<c:if test="${owner.userId eq member.userId}">
 									<div class="card-footer">
 										<button class="btn btn-outline-dark" id="rvBtn"
-										data-title="${mg.getGTitle()}" data-cate="${mg.getCateId()}" data-id="${mg.getGId() }"
-										data-sdate="${mg.getCreateDate()}" data-edate="${mg.getDurate()}">리뷰 작성</button>
+										data-title="${mg.GTITLE}" data-cate="${mg.CATE_ID}" data-id="${mg.GID }"
+										data-sdate="${mg.CREATEDATE}" data-edate="${mg.DURATE}">리뷰 작성</button>
 										
 									</div>
 									</c:if>
@@ -548,8 +564,28 @@
 	$(".card").on("click",function(){
 		
 		var gId = $(this).attr("id");
+		$.ajax({
+			url : 'checkIn.do',
+			data : {
+				userId : ${member.getUserId()},
+				gId : gId
+			},
+			success : function(data){
+				if(data.isIn){
+					location.href = "${pageContext.request.contextPath}/sgroup/gotoGroup.do?gid="+gId;
+				}else{
+					location.href = "${pageContext.request.contextPath}/sgroup/groupInfo.do?gid="+gId;
+				}
+			},
+			error : function(){
+				alert("에러 발생!");
+			}			
+		
+		});
+		
+		/* var gId = $(this).attr("id");
 		console.log("gId="+gId);
-		location.href = "${pageContext.request.contextPath}/sgroup/gotoGroup.do?gid="+gId;
+		location.href = "${pageContext.request.contextPath}/sgroup/gotoGroup.do?gid="+gId; */
 	}).mouseenter(function(){
 		$(this).css({
 			"cursor" : "pointer"

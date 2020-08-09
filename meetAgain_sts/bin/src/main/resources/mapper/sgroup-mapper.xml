@@ -12,21 +12,13 @@
 
 	<insert id="insertSgroup" parameterType="Sgroup">
 		INSERT ALL INTO
-		SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE,
-		MAXNUM, CHARGE,
-		GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE,
-		LIMITGROUP)
-		VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro},
-		DEFAULT, #{maxNum},
-		#{charge}, #{gFee}, #{gPlace},
-		#{gType}, #{durate},
-		DEFAULT, #{gPwd}, #{joinType}, #{limitGroup,
-		typeHandler=Str2ArrayHandler})
+		SGROUP(GID, CATE_ID, GTITLE, GIMG, GINTRO, CREATEDATE, MAXNUM, CHARGE, GFEE, GPLACE, GTYPE, DURATE, ISFIN, GPWD, JOINTYPE, LIMITGROUP)
+		VALUES(SEQ_GID.NEXTVAL, #{cateId}, #{gTitle}, #{gImg}, #{gIntro}, DEFAULT, #{maxNum},
+		#{charge}, #{gFee}, #{gPlace}, #{gType}, #{durate},
+		DEFAULT, #{gPwd}, #{joinType}, #{limitGroup, typeHandler=Str2ArrayHandler})
 
-		INTO JOING(USERID, GID, ISCPT, ISREADY,
-		ISOUT, ISLEAVE)
-		VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 1, DEFAULT,
-		DEFAULT)
+		INTO JOING(USERID, GID, ISCPT, ISREADY, ISOUT, ISLEAVE)
+		VALUES(#{userId}, SEQ_GID.CURRVAL, 'Y', 1, DEFAULT, DEFAULT)
 		SELECT * FROM DUAL
 	</insert>
 
@@ -38,38 +30,48 @@
 	<select id="selectOneSgroup" parameterType="string"
 		resultMap="sgroupMap">
 		SELECT * FROM SGROUP
-		WHERE GID = #{gId}
+		WHERE GID = #{gid}
 	</select>
 
 
 	<select  id="selectCateInfo" parameterType="string" resultType="CateInfo">
 	  SELECT  C.CATE_ID, G.* FROM CATEINFO C
       JOIN SGROUP G ON(C.CATE_ID=G.CATE_ID) 
-      WHERE C.USERID = #{userId} AND G.GID IN(
-      SELECT J.GID FROM JOING J WHERE J.USERID != #{userId}) AND G.GID NOT IN(SELECT GID FROM (SELECT * FROM JOING WHERE USERID = #{userId}))
-
+      WHERE C.USERID = #{userId} AND G.GID NOT IN(SELECT GID FROM (SELECT * FROM JOING WHERE USERID = #{userId})) AND ISFIN='N'
 	</select>
 
 	<select id="selectJoing" parameterType="string"
 		resultType="Joing">
-		SELECT * FROM JOING
-		WHERE GID = #{gId}
+		SELECT J.*, M.BIRTHDAY, M.GENDER, M.NICKNAME, U.USERIMG, S.JOINTYPE FROM JOING J
+		JOIN MEMBER M ON(J.USERID=M.USERID)
+        JOIN USERTMI U ON(J.USERID=U.USERID)
+        JOIN SGROUP S ON(J.GID=S.GID)
+		WHERE J.GID = #{gid} AND ISLEAVE='N'
 	</select>
 
 	<select id="selectJoingUser" parameterType="string"
 		resultType="Joing">
 		SELECT * FROM JOING
-		WHERE USERID = #{userId}
+		WHERE USERID = #{userId} AND ISLEAVE='N' AND ISOUT='N' AND ISREADY=1
 	</select>
 
-	
+	<select id="countGroupMember" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM JOING
+		WHERE GID=#{gid} AND ISLEAVE='N' AND ISOUT='N' AND ISREADY=1
+	</select>
+
 	<select id="selectGroupCount" parameterType="string" resultType="_int">
-	  SELECT COUNT(*) 
-      FROM JOING
-      GROUP BY USERID
-      HAVING USERID=#{userId}
+	  	SELECT COUNT(*) 
+      	FROM JOING J
+        JOIN SGROUP S ON(J.GID=S.GID)
+        WHERE USERID=#{userId} AND ISLEAVE='N' AND ISOUT='N' AND ISFIN='N'
+        GROUP BY USERID
 	</select>
 	
+	<update id="joinSuccess" parameterType="hashmap">
+		 UPDATE JOING SET ISREADY=1 WHERE USERID=#{userId} AND GID = #{gid}
+	</update>
+
 	<insert id="insertGroupJoin" parameterType="Joing">
 		INSERT INTO JOING VALUES(#{userId}, #{gId}, 'N',
 		<choose>
@@ -82,6 +84,10 @@
 		</choose>
 		DEFAULT, DEFAULT)
 	</insert>
+
+	<update id="groupLeave" parameterType="hashmap">
+		UPDATE JOING SET ISLEAVE = 'Y' WHERE USERID = #{userId} AND GID = #{gid}
+	</update>
 
 	<resultMap type="Gboard" id="gboardMap">
 		<result property="gbId" column="GBID" />
@@ -114,9 +120,9 @@
 		GBID DESC
 	</select>
 
-	<select id="selectgBoardTotalContent" resultType="_int">
+	<select id="selectgBoardTotalContent" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
-		FROM GBOARD
+		FROM GBOARD WHERE GID=#{gId}
 	</select>
 
 	<select id="selectOnegBoard" parameterType="_int"
@@ -134,11 +140,9 @@
 		GBRATE = GBRATE+1 WHERE GBID=#{gbId}
 	</update>
 
-	<delete id="deletegBoard" parameterType="_int">
-		DELETE FROM GBOARD
-		WHERE
-		GBID = #{gbId}
-	</delete>
+	<update id="deletegBoard" parameterType="_int">
+		UPDATE GBOARD SET GBDEL = 'Y' WHERE GBID = #{gbId}
+	</update>
 
 	<insert id="insertComment" parameterType="GB_comment">
 		INSERT INTO
@@ -153,14 +157,19 @@
 		FROM MEMBER M WHERE
 		C.USERID=M.USERID)
 		FROM GB_comment C
-		WHERE GBID = #{gbId}
+		WHERE GBID = #{gbId} AND CDEL = 'N'
 		START WITH
 		CLEVEL = 1
 		CONNECT BY PRIOR CID = CREF
 	</select>
 
-	<update id="updateComment" parameterType="_int">
-		UPDATE BOARD_COMMENT SET CCONTENT = #{cContent}
+	<update id="updateComment" parameterType="GB_comment">
+		UPDATE GB_COMMENT SET CCONTENT = #{cContent}
 		WHERE CID = #{cId}
+	</update>
+	
+	<update id="deleteComment" parameterType="_int">
+		UPDATE GB_COMMENT SET CDEL = 'Y' 
+               WHERE CID = #{cId}
 	</update>
 </mapper>

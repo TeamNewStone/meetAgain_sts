@@ -39,7 +39,7 @@
 	</update>
 
 	<select id="boardMapper.selectReviewList" resultMap="ReviewMap">
-		SELECT R.*, G.GTITLE, G.CATE_ID, G.CREATEDATE, G.DURATE FROM REVIEW R JOIN SGROUP G ON(R.GID=G.GID)
+		SELECT R.*, G.GTITLE, G.CATE_ID, G.CREATEDATE, G.DURATE FROM REVIEW R JOIN SGROUP G ON(R.GID=G.GID) ORDER BY RVID DESC
 	</select>
 	
 	<select id="selectRvHelpList" parameterType="hashmap" resultType="_int">

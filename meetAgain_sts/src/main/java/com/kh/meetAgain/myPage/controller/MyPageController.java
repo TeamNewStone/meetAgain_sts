@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -28,6 +27,7 @@ import com.kh.meetAgain.member.model.vo.Member;
 import com.kh.meetAgain.member.model.vo.UserTMI;
 import com.kh.meetAgain.myPage.model.service.MyPageService;
 import com.kh.meetAgain.myPage.model.vo.Review;
+import com.kh.meetAgain.sgroup.model.vo.Joing;
 import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @SessionAttributes(value= {"member"})
@@ -58,14 +58,15 @@ public class MyPageController {
 		model.addAttribute("followYN", followYN);
 		
 		/*======================소모임 목록 가져오기======================*/
-		List<Sgroup> group = new ArrayList<Sgroup>(); // 가입한 소모임
+		List<HashMap<String,Object>> group = new ArrayList<HashMap<String,Object>>(); // 가입한 소모임
 		List<Sgroup> mgroup = new ArrayList<Sgroup>();
+	
 		
 		group = mpSvc.getMyGroup(userId);
 		mgroup = mpSvc.getCreateGroup(userId);	
+	
 		
-		System.out.println(group);
-		System.out.println(mgroup);
+	
 		
 		/*======================작성한 게시글 데이터 가져오기======================*/
 		// 한 페이지 당 게시글 수 
@@ -82,9 +83,9 @@ public class MyPageController {
 		
 		// 3. 패아자 HTML 생성
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "myPage1.do");
-		System.out.println("controller : "+list);
+		//System.out.println("controller : "+list);
 		//System.out.println("왜 안되나요 해당 사진 가져와라 : " + owner.getUserImg());
-		System.out.println(owner);
+	//	System.out.println(owner);
 		model.addAttribute("list", list);
 		
 		model.addAttribute("owner",owner);
@@ -155,8 +156,8 @@ public class MyPageController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userId", userId);
 		map.put("muserId", muserId);
-		System.out.println("userId : "+userId);
-		System.out.println("muserId : "+muserId);
+	//	System.out.println("userId : "+userId);
+	//	System.out.println("muserId : "+muserId);
 		int result = mpSvc.insertFollow(map);
 		
 		if(result > 0) {
@@ -177,8 +178,8 @@ public class MyPageController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userId", userId);
 		map.put("muserId", muserId);
-		System.out.println("userId : "+userId);
-		System.out.println("muserId : "+muserId);
+//		System.out.println("userId : "+userId);
+//		System.out.println("muserId : "+muserId);
 		int result = mpSvc.deleteFollow(map);
 		
 		if(result != 0) {
@@ -198,9 +199,7 @@ public class MyPageController {
 		
 		String saveDir = session.getServletContext().getRealPath("/resources/upload/reviewImg");
 		File dir = new File(saveDir);
-	      System.out.println("이미지확인~"+reviewImage);
-	      System.out.println("폴더가 있나요? " + dir.exists());
-	      
+	   
 	      if(dir.exists() == false) dir.mkdirs();
 	      
 	      for(MultipartFile f : reviewImage) {
@@ -226,7 +225,7 @@ public class MyPageController {
 		      }
 		
 		      
-		System.out.println(review);
+	//	System.out.println(review);
 		
 		int result = mpSvc.insertReview(review);
 		String msg = "";
@@ -249,14 +248,32 @@ public class MyPageController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		Review rv = mpSvc.selectReview(userid, gid);
-		System.out.println("rv확인 : "+rv);
+		//System.out.println("rv확인 : "+rv);
 		
 		boolean rvCount = true;
 		if(rv==null) rvCount = false;
 		else rvCount = true;
 		
 		map.put("result", rvCount);
-		System.out.println("result 확인 ; "+map);
+	//	System.out.println("result 확인 ; "+map);
+		
+		return map;
+	}
+	
+	@RequestMapping("myPage/checkIn.do")
+	@ResponseBody
+	public Map<String, Object> checkIn(@RequestParam("userId") String userId, @RequestParam("gId") String gId){
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("userId", userId);
+		map.put("gId",gId);
+		
+		System.out.println("map: "+map);
+		
+		boolean isIn = (mpSvc.checkIn(map)==1)? true: false;
+		
+		map.put("isIn", isIn);
 		
 		return map;
 	}

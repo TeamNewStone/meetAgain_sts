@@ -41,7 +41,7 @@
                             
                             <div class="media-body">
                                 
-                                <a href="${ pageContext.request.contextPath }/serviceCenter/otoInquiry.do" class="nav-link">1:1문의</a>
+                                <a href="mailto:dlguswjd0518@naver.com" class="nav-link">1:1문의</a>
                                 
                             </div>
                         </li>
