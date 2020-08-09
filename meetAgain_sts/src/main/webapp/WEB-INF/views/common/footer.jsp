@@ -59,7 +59,7 @@
     
     
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="${ pageContext.request.contextPath }/resources/js/graph.js"></script>
+   <%--  <script src="${ pageContext.request.contextPath }/resources/js/graph.js"></script> --%>
 
     <script src="${ pageContext.request.contextPath }/resources/vendor/summernote/summernote-lite.min.js"></script>  
     

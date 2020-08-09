@@ -44,12 +44,12 @@
   	<div class="container">
       <div class="row"> 
         <div class="col-sm-12 col-md-12 col-lg-6">
-          <h4>7월 첫째주 모임이 제일 많이 생성된 지역</h4>
+          <h4 style="text-align: center;">현재 제일 많은 모임 카테고리</h4>
           <div id="piechart" style="width:100%; height:500px;"></div>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-6">
-          <h4>7월 첫째주 모임이 제일 많이 생성된 지역</h4>
-          <div id="curve_chart" style="width: 100%; height: 500px"></div>
+          <h4 style="text-align: center;">7월 첫째주 모임이 제일 많이 생성된 지역</h4>
+          <div id="chart_div" style="width: 100%; height: 500px"></div>
       </div>
       </div>
     </div>
@@ -392,6 +392,121 @@ $('[name=upFile]').on('change',function(){
 
 
 });
+
+$(function(){
+	var result = new Array();
+	var result2 = new Array();
+	var json = new Object();
+	var json2 = new Object();
+	var c1 = 0; var c2 = 0; var c3 = 0; var c4 = 0; 
+	var c5 = 0; var c6 = 0; var c7 = 0; var c8 = 0;
+	var seoul = 0; var busan = 0; var gyeonggi = 0;
+	
+	$.ajax({
+		url : 'graph.do',
+		success:function(data){
+			for(var i in data){
+				json = data[i].cateId;
+				json2 = data[i].gplace.substr(0,2);
+				result.push(json);
+				result2.push(json2);
+			
+			if(result[i]=='C01'){
+				c1++;
+			} else if(result[i]=='C02'){
+				c2++;
+			}else if(result[i]=='C03'){
+				c3++;
+			}else if(result[i]=='C04'){
+				c4++;
+			}else if(result[i]=='C05'){
+				c5++;
+			}else if(result[i]=='C06'){
+				c6++;
+			}else if(result[i]=='C07'){
+				c7++;
+			}else if(result[i]=='C08'){
+				c8++;
+			}
+			
+			if(result2[i]=='서울'){
+				seoul++;
+			} else if(result2[i]=='부산'){
+				busan++;
+			} else if(reuslt2[i]=='경기'){
+				gyeonggi++;
+			}
+		}
+			console.log("seoul :" +seoul);
+
+	
+	  google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      // 원형 차트
+      function drawChart() {
+
+        var data1 = google.visualization.arrayToDataTable([
+          ['카테고리', '비율'],
+          ['운동',     c1],
+          ['친목',      c2],
+          ['공부',  c3],
+          ['취미생활', c4],
+          ['문화생활',  c5],
+          ['여행',    c6],
+          ['봉사',    c7],
+          ['기타',    c8]
+        ]);
+
+         var options1 = {
+          //title: '7월 첫째주 모임이 제일 많이 생성된 지역',
+          slices: {
+            0: { color: '#ffb5b6' },
+            1: { color: '#132742' },
+            2: { color: 'beige' },
+            3: { color: '#132742' },
+            4: { color: '#ffb5b6' },
+            5: { color: '#132742' },
+            6: { color: 'beige' },
+            7: { color: '#132742' }
+          },
+          legend : {position: 'none'}
+        };
+        
+
+        var chart1 = new google.visualization.PieChart(document.getElementById('piechart'));
+
+
+        chart1.draw(data1, options1);
+
+        
+        // 라인차트
+        var data2 = google.visualization.arrayToDataTable([
+          ['지역', '지역'],
+          ['서울',  seoul],
+          ['부산',  busan],
+          ['경기',  gyeonggi]
+        ]);
+
+        var options2 = {
+          //title: 'Company Performance',
+          curveType: 'function'
+          //legend: { position: 'bottom' }
+        };
+
+        var chart2 = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+        chart2.draw(data2, options2);
+      }
+      
+			
+			
+		},error : function(){
+			alert("에러 발생!!!");
+		}
+		
+});
+});     
 </script>
  <c:import url="/WEB-INF/views/common/footer.jsp" />
 
