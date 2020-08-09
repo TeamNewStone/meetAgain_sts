@@ -82,8 +82,7 @@
 								});
 							
 							});
-							
-						})
+
 					</script>
 	
 		</c:if>
@@ -112,8 +111,8 @@
 		      <input type=hidden value="${jo2.getUserId() }" name="userId" id="userId"/>
 		      <input type=hidden value="${gid}" name="gid" id="gid"/>
 		      <td>
-		      	<button type="button" class="btn btn-secondary" id="accept">승인</button>
-<!-- 		     <button type="button" class="btn btn-danger" id="reject">거절</button> -->
+		      	<button type="button" class="btn btn-secondary" id="accept">승인</button> / 
+ 		        <button type="button" class="btn btn-danger" id="reject">거절</button>
 		      </td>
 		    </tr>
 		      </c:if>
@@ -131,7 +130,9 @@
 	</div>
 	<script>
 	$('#accept').on('click', function() {
-
+		var confirm = window.confirm("승인 하시겠습니까?");
+		
+		if(confirm){
 	      $.ajax({
 	         url : '${pageContext.request.contextPath}/sgroup/joinSuccess.do',
 	         data : {
@@ -147,6 +148,37 @@
 	            }
 	         }
 	      });
+		}
 	   });
+	
+	
+	$('#reject').on('click', function() {
+		var confirm = window.confirm("거절 하시겠습니까?");
+		
+		if(confirm){
+
+	      $.ajax({
+	         url : '${pageContext.request.contextPath}/sgroup/joinReject.do',
+	         data : {
+	            userId : $('#userId').val(),
+	            gid : $('#gid').val()
+	            }, success : function(data) {
+
+	            if (data == 0) {
+	               alert('오류가 발생하였습니다.');
+	            } else {
+	               alert('거절이 완료되었습니다.');
+	               location.href = '${pageContext.request.contextPath}/sgroup/memberList.do?gid='+${gid};
+	            }
+	         }
+	      });
+		}
+	   });
+	
+	
+	
+	
+	
+	
 	</script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />

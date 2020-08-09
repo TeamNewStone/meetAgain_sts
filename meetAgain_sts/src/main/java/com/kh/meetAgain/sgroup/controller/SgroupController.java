@@ -227,7 +227,6 @@ public class SgroupController {
 
 		return "common/msg";
 	}
-
 	@RequestMapping("/sgroup/groupLeave.do")
 	public String groupLeave(@ModelAttribute("member") Member m, @RequestParam String gid, Model model) {
 		Map<String, String> map = new HashMap<String, String>();
@@ -594,8 +593,7 @@ public class SgroupController {
    @RequestMapping(value="/sgroup/updateSgroup.do")
 	public String updateSgroup(Sgroup sgroup, Model model, @RequestParam(value="sgImg", required = false) MultipartFile[] sgImg, 
 			@RequestParam("gId") String gid, HttpSession session) {
-	   
-	   System.out.println("muti파트일하니 ? : " + sgImg);
+	 
 	   String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
 		File dir = new File(saveDir);
 	   
@@ -621,10 +619,9 @@ public class SgroupController {
 		            sgroup.setGImg(renamedName);
 		         }
 		      }
-	     System.out.println("잘받옹니ㅣ ? : " + sgroup);
+
 		int result = sgroupService.updateSgroup(sgroup);
-		System.out.println("result : " + result);
-		System.out.println("gid : " + gid);
+
 		String msg="";
 		String loc="/sgroup/groupDetail.do?gid="+gid;
 		
@@ -633,9 +630,21 @@ public class SgroupController {
 		}else {
 			msg="모임 수정 실패";
 		}
-		System.out.println("잘받옹니ㅣ ?22222222222222 : " + sgroup);
+
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		return "common/msg";
 	}
-
+   	   
+	@RequestMapping("/sgroup/joinReject.do")
+	public String joinReject(@RequestParam("userId") String userId, @RequestParam("gid") String gid, Model model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("userId", userId);
+		map.put("gid", gid);
+		
+		int result = sgroupService.joinReject(map);
+		
+	
+		return "common/msg";
+	}	
 }

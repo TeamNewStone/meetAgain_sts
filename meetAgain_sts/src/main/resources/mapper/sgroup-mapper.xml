@@ -213,4 +213,8 @@
 	<update id="updateSgroup" parameterType="Sgroup">
 		UPDATE SGROUP SET GIMG = #{gImg}, GINTRO = #{gIntro} WHERE GID = #{gId}
 	</update>
+	
+	<delete id="joinReject" parameterType="hashmap">
+		DELETE FROM JOING WHERE USERID=#{userId} AND GID = #{gid}
+	</delete>
 </mapper>
