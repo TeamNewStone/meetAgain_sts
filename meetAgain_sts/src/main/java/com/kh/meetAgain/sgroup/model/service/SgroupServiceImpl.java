@@ -210,5 +210,10 @@ public class SgroupServiceImpl implements SgroupService {
 		return sgroupDAO.joinReject(map);
 	}
 
+	@Override
+	public Sgroup selectOneSgroup2(int gbId) {
+		return sgroupDAO.selectOneSgroup2(gbId);
+	}
+
 
 }
