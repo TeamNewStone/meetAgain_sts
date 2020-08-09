@@ -30,4 +30,8 @@
 	<update id="modify" parameterType="hashmap">
 		UPDATE CALENDAR SET GINFO=#{info}, GTIME=#{time} WHERE CDID= #{cdid}
 	</update>
+	
+	<select id="selectOneCal" parameterType="string" resultType="Calendar">
+		SELECT * FROM CALENDAR WHERE CDID = #{cdid}
+	</select>
 </mapper>

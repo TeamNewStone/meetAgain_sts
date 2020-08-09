@@ -84,11 +84,11 @@ public class CalendarController {
 				cal.setGDate(group.getDurate());
 				cal.setGDateEnd(group.getDurate());
 				cal.setGInfo("모임일");
+				cal.setIsCtn("Y");
 				Timestamp time = Timestamp.valueOf(group.getDurate().toString() + " 12:00:00"); 
 				cal.setGTime(time);
 				sgroupService.addCalendar(cal);
 				list = sgroupService.loadList(gId);
-				System.out.println("들어가긴함?");
 			}
 		}
 		
@@ -147,5 +147,27 @@ public class CalendarController {
 		return map;
 	}
 	 
+	@RequestMapping("sgroup/calCheckCpt.do")
+	@ResponseBody
+	public Map<String,Object> checkCpt(@RequestParam("userid") String userId, @RequestParam("gid") String gid, @RequestParam("cdId") String cdid){
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		int checkctn = sgroupService.checkCtn(gid, userId);
+		//1 : 모임장, 2: 모임장아님
+		Calendar cal = sgroupService.selectOneCal(cdid);
+		String checkcal = cal.getIsCtn();
+		
+		if(checkctn==1) {
+			map.put("result", true);
+		}else {
+			if(checkcal.equals("Y")) {
+				map.put("result", false);
+			}
+			else map.put("result", true);
+		}
+		
+		return map;
+	}
 }
 

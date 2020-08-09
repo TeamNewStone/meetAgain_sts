@@ -90,4 +90,6 @@ public interface SgroupService {
 
 	Sgroup selectOneSgroup2(int gbId);
 
+	Calendar selectOneCal(String cdid);
+
 }
