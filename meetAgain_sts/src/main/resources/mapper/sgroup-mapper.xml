@@ -178,9 +178,10 @@
 		<bind name="myPattern" value="'%' + keyword + '%'" />
 		<where>
 			<if test="keyword != null">
-				GTITLE LIKE #{myPattern} AND
+				GTITLE LIKE #{myPattern} 
 			</if>
 			<if test="gType != null">
+				AND
 				<foreach collection="gType" item="gt" separator="or">
 					GTYPE = #{gt}
 				</foreach>
@@ -192,9 +193,10 @@
 				</foreach>
 			</if>
 			<if test="limitGroup != null">
+				AND
 				<foreach collection="limitGroup" item="limit">
 				<bind name="myPattern2" value="'%' + limit + '%'" />
-					AND LIMITGROUP LIKE #{myPattern2}
+				 LIMITGROUP LIKE #{myPattern2}
 				</foreach>
 			</if>
 			AND ISFIN = 'N' 
@@ -207,4 +209,8 @@
 	<insert id="cReportInsert" parameterType="Report">
 		INSERT INTO REPORT VALUES(SEQ_RCID.NEXTVAL,#{userId}, #{rcInfo}, #{targetId}, 'N', 2, #{rcContent}, #{cId}, #{gbId}, SYSDATE)
 	</insert>
+	
+	<update id="updateSgroup" parameterType="Sgroup">
+		UPDATE SGROUP SET GIMG = #{gImg}, GINTRO = #{gIntro} WHERE GID = #{gId}
+	</update>
 </mapper>

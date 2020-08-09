@@ -71,9 +71,9 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr>
 		    <c:forEach var="jo2" items="${joing }">
 		      <c:if test="${jo2.getIsReady()==2}">
+		    <tr>
 		      <td>${jo2.getNickName() }</td>
 		      <input type=hidden value="${jo2.getUserId() }" name="userId" id="userId"/>
 		      <input type=hidden value="${gid}" name="gid" id="gid"/>
@@ -81,10 +81,10 @@
 		      	<button type="button" class="btn btn-secondary" id="accept">승인</button>
 <!-- 		     <button type="button" class="btn btn-danger" id="reject">거절</button> -->
 		      </td>
+		    </tr>
 		      </c:if>
 		      </c:forEach>
 	      
-		    </tr>
 		   </tbody>
 		  </table>
 		</c:if>

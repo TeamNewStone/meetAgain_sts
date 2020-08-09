@@ -4,6 +4,7 @@ package com.kh.meetAgain.sgroup.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import com.kh.meetAgain.admin.model.vo.Report;
 import com.kh.meetAgain.common.util.Utils;
 import com.kh.meetAgain.member.model.vo.CateInfo;
 import com.kh.meetAgain.member.model.vo.Member;
+import com.kh.meetAgain.myPage.model.vo.Review;
 import com.kh.meetAgain.sgroup.model.exception.SgroupException;
 import com.kh.meetAgain.sgroup.model.service.SgroupService;
 import com.kh.meetAgain.sgroup.model.vo.GB_comment;
@@ -130,6 +132,16 @@ public class SgroupController {
 
 		return "sgroup/group";
 	}
+	
+	@RequestMapping("/sgroup/distanceGroup.do")
+	@ResponseBody
+	public List<Sgroup> distanceGroup(Model model) {
+		
+		List<Sgroup> list = sgroupService.selectSgroupList();
+		
+		return list;
+	}
+	
 
 	// 소모임 한개 출력
 
@@ -543,4 +555,52 @@ public class SgroupController {
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		return "common/msg";
 	}	
+	
+		
+   @RequestMapping(value="/sgroup/updateSgroup.do")
+	public String updateSgroup(Sgroup sgroup, Model model, @RequestParam(value="sgImg", required = false) MultipartFile[] sgImg, 
+			@RequestParam("gId") String gid, HttpSession session) {
+	   
+	   System.out.println("muti파트일하니 ? : " + sgImg);
+	   String saveDir = session.getServletContext().getRealPath("/resources/upload/groupImg");
+		File dir = new File(saveDir);
+	   
+	      if(dir.exists() == false) dir.mkdirs();
+	      
+	      for(MultipartFile f : sgImg) {
+		         if(!f.isEmpty()) {
+		        	 
+		            String originName = f.getOriginalFilename();
+		            String ext = originName.substring(originName.lastIndexOf(".")+1);
+		            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		            
+		            int rndNum = (int)(Math.random() * 1000);
+		            
+		            String renamedName = sdf.format(new Date()) + "_" + rndNum + "." + ext;
+
+		            try {
+		               f.transferTo(new File(saveDir + "/" + renamedName));
+		            } catch (IllegalStateException | IOException e) {
+		               e.printStackTrace();
+		            }
+		            
+		            sgroup.setGImg(renamedName);
+		         }
+		      }
+	     System.out.println("잘받옹니ㅣ ? : " + sgroup);
+		int result = sgroupService.updateSgroup(sgroup);
+		System.out.println("result : " + result);
+		System.out.println("gid : " + gid);
+		String msg="";
+		String loc="/sgroup/groupDetail.do?gid="+gid;
+		
+		if(result > 0) {
+			msg="모임 수정 완료!.";
+		}else {
+			msg="모임 수정 실패";
+		}
+		System.out.println("잘받옹니ㅣ ?22222222222222 : " + sgroup);
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		return "common/msg";
+	}
 }

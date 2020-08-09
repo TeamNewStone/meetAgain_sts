@@ -108,7 +108,7 @@
             <li>
              <p style="color :#fff; width : 250px; text-align:right; margin-top:5px" id="login"> ${member.nickName}님, 안녕하세요!</p>
             </li>
-            <li class="nav-item dropdown" id="userIcon">
+            <li class="nav-item dropdown" id="userIcon" style="cursor:pointer;">
            				<c:if test="${member.userImg eq null }">
 							<img
 								src="${ pageContext.request.contextPath }/resources/img/usericon.png"
