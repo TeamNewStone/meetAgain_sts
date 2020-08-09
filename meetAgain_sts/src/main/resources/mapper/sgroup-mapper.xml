@@ -217,4 +217,8 @@
 	<delete id="joinReject" parameterType="hashmap">
 		DELETE FROM JOING WHERE USERID=#{userId} AND GID = #{gid}
 	</delete>
+	
+	<select id="selectOneSgroup2" parameterType="_int" resultType="Sgroup">
+		SELECT * FROM SGROUP JOIN GBOARD USING(GID) WHERE GBID=${gbId}
+	</select>
 </mapper>

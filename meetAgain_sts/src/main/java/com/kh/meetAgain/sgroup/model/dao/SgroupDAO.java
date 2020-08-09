@@ -82,4 +82,6 @@ public interface SgroupDAO {
 	int updateSgroup(Sgroup sgroup);
 
 	int joinReject(Map<String, Object> map);
+
+	Sgroup selectOneSgroup2(int gbId);
 }
