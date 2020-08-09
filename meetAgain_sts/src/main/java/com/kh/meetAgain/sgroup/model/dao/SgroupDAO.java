@@ -78,4 +78,6 @@ public interface SgroupDAO {
 	int cReportInsert(Report r);
 	
 	int modifyCalendar(Map<String, Object> map);
+
+	int updateSgroup(Sgroup sgroup);
 }

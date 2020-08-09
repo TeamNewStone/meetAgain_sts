@@ -218,5 +218,10 @@ public class SgroupDAOImpl implements SgroupDAO {
 	public int modifyCalendar(Map<String, Object> map) {
 		return sqlSession.update("calendarMapper.modify",map);
 	}
+
+	@Override
+	public int updateSgroup(Sgroup sgroup) {
+		return sqlSession.update("sgroupMapper.updateSgroup", sgroup);
+	}
 }
 

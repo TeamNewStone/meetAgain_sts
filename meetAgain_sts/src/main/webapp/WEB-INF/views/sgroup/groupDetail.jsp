@@ -13,7 +13,7 @@
 				<div class="component">
 					<div class="card">
 						<div class="card-header">
-
+						
 						<c:if test="${sgroup.getGImg() eq null}">
 				        <c:if test="${sgroup.getGType() eq 'S'}">
 				          <img class="card-img" src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height:200px;">
@@ -29,11 +29,11 @@
 						<div class="card-body">
 							<p class="card-text">${sgroup.getGIntro() }</p>
 						</div>
-						<div class="card-footer" style="text-align: right;">
+						<div class="card-footer" style="text-align: right;display:none;" id="sgroupUpdate">
 							<!-- 이거 수정버튼임 -->
 							<svg width="1.5em" height="1.5em" viewBox="0 0 16 16"
 								class="bi bi-pencil-square" fill="currentColor"
-								xmlns="http://www.w3.org/2000/svg">
+								xmlns="http://www.w3.org/2000/svg" style="cursor:pointer;" data-toggle="modal" data-target="#upSgroup">
  		 <path
 									d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
  		 <path fill-rule="evenodd"
@@ -51,10 +51,86 @@
 					<script>
 						$(function(){
 							$('#groupLeave').attr('disabled', true);
+							$('#sgroupUpdate').css('display', 'block');
 						});
 					</script>
 				</c:if>
 			</c:forEach>
+			
+
+<!-- the modal -->
+<div class="modal fade" id="upSgroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <div style="float:left;">
+        <h4 class="modal-title" id="exampleModalLabel">
+        </h4>
+        <h6 class = "modal-date" style="font-weight:normal;color:#9c9c9c;">모임수정</h6>
+        </div>
+        <div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button></div>
+      </div>
+      <form action="${pageContext.request.contextPath }/sgroup/updateSgroup.do" method="post" enctype="multipart/form-data">
+      <div class="modal-body">
+        <div class="card-header">
+        <div class="input-group">
+        <input type="hidden" name="gId" value="${gid}" />
+        <c:if test="${sgroup.getGImg() eq null}">
+			<c:if test="${sgroup.getGType() eq 'S'}">
+			<img class="card-img loadImg" src="${ pageContext.request.contextPath }/resources/img/fav02.png" style="height:200px;">
+			</c:if>
+			<c:if test="${sgroup.getGType() eq 'L'}">
+			<img class="card-img loadImg" src="${ pageContext.request.contextPath }/resources/img/fav01.png" style="height:200px;">
+			</c:if>
+			</c:if>
+			<c:if test="${sgroup.getGImg() ne null}">
+			<img class="card-img loadImg" src="${ pageContext.request.contextPath }/resources/upload/groupImg/${sgroup.getGImg()}" style="height:200px;">
+			</c:if>
+        
+        
+		  <div class="custom-file">
+		    <input type="file" class="custom-file-input" id="sgImg" name="sgImg" onchange="loadImg(this);">
+		    <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+		  </div>
+		</div>
+        </div>
+        <div class="card-body custom-control custom-checkbox my-2">
+		<textarea class="form-control" name="gIntro" rows="5" style="resize:none;" >${sgroup.getGIntro() }</textarea>
+        </div>
+
+        <br />
+
+        </div>
+        <div class="modal-footer">
+        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+	 <script>
+	 function loadImg(value) {
+			
+			if (value.files && value.files[0]) {
+		
+				var reader = new FileReader();
+		
+				reader.onload = function(e) {
+					$('.loadImg').attr('src', e.target.result);
+				}
+		
+				reader.readAsDataURL(value.files[0]);
+			}
+		};
+		
+	 </script>
+      </form>  
+</div>
+</div>
+</div>
+
+
+
 			<!-- ---------이부분까지 사진과 설명---------- -->
 			<div class="col-md-8 col-lg-8">
 				<table  cellpadding="5px" style="width: 100%;">
@@ -235,7 +311,7 @@ $(function(){
 		}	
 		
 		console.log("groupAge : " + groupAge);
-		$('#groupAge').html(groupAge/${fn:length(joing)});
+		$('#groupAge').html(Math.floor(groupAge/${fn:length(joing)}));
 	});
 
 $(function(){
@@ -312,5 +388,9 @@ $(function(){
 		}
 		
 	};
+	
+	function sgroupUpdate(){
+		
+	}
 </script>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
