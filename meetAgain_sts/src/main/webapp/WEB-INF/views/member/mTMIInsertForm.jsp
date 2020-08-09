@@ -81,32 +81,32 @@
 							%>
 						    <span>
 						    <input type="checkbox" class="custom-control-input" name="cateId" value="C01" id="customCheck1" <%=cateList!=null && cateList.contains("C01")?"checked":""%>>
-						    <label class="custom-control-label" for="customCheck1" style="width:150px;">운동</label></span>
+						    <label class="custom-control-label" for="customCheck1" style="width:130px;">운동</label></span>
 						    &nbsp;&nbsp;&nbsp;&nbsp;<span>
 						    <input type="checkbox" class="custom-control-input" name="cateId" value="C02" id="customCheck2" <%=cateList!=null && cateList.contains("C02")?"checked":""%>>
-						    <label class="custom-control-label" for="customCheck2" style="width:150px;">친목</label></span>
+						    <label class="custom-control-label" for="customCheck2" style="width:130px;">친목</label></span>
 						    &nbsp;&nbsp;&nbsp;&nbsp;<span>
 						    <input type="checkbox" class="custom-control-input" name="cateId" value="C03" id="customCheck3" <%=cateList!=null && cateList.contains("C03")?"checked":""%>>
-						    <label class="custom-control-label" for="customCheck3" style="width:150px;">공부</label></span>
+						    <label class="custom-control-label" for="customCheck3" style="width:130px;">공부</label></span>
 						    </div>
 						    <div class="custom-control custom-checkbox my-2">
 						    <span>
 						    <input type="checkbox" class="custom-control-input" name="cateId" value="C04" id="customCheck4" <%=cateList!=null && cateList.contains("C04")?"checked":""%>>
-						    <label class="custom-control-label" for="customCheck4" style="width:150px;">취미생활</label></span>
+						    <label class="custom-control-label" for="customCheck4" style="width:130px;">취미생활</label></span>
 						     &nbsp;&nbsp;&nbsp;&nbsp;<span>
 						    <input type="checkbox" class="custom-control-input" name="cateId" value="C05" id="customCheck5" <%=cateList!=null && cateList.contains("C05")?"checked":""%>>
-						    <label class="custom-control-label" for="customCheck5" style="width:150px;">문화생활</label></span>
+						    <label class="custom-control-label" for="customCheck5" style="width:130px;">문화생활</label></span>
 						    &nbsp;&nbsp;&nbsp;&nbsp;<span>
 						    <input type="checkbox" class="custom-control-input" name="cateId" value="C06" id="customCheck6" <%=cateList!=null && cateList.contains("C06")?"checked":""%>>
-						    <label class="custom-control-label" for="customCheck6" style="width:150px;">여행</label></span>
+						    <label class="custom-control-label" for="customCheck6" style="width:130px;">여행</label></span>
 						    </div>
 						    <div class="custom-control custom-checkbox my-2">
 						    <span>
 						    <input type="checkbox" class="custom-control-input" name="cateId" value="C07" id="customCheck7" <%=cateList!=null && cateList.contains("C07")?"checked":""%>>
-						    <label class="custom-control-label" for="customCheck7" style="width:150px;">봉사</label></span>
+						    <label class="custom-control-label" for="customCheck7" style="width:130px;">봉사</label></span>
 						     &nbsp;&nbsp;&nbsp;&nbsp;<span>
 						    <input type="checkbox" class="custom-control-input" name="cateId" value="C08" id="customCheck8" <%=cateList!=null && cateList.contains("C08")?"checked":""%>>
-						    <label class="custom-control-label" for="customCheck8" style="width:150px;">기타</label></span>
+						    <label class="custom-control-label" for="customCheck8" style="width:130px;">기타</label></span>
 						    </div>
 						    
 						  </div>
