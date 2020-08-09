@@ -44,11 +44,20 @@
     <link href="${ pageContext.request.contextPath }/resources/vendor/summernote/summernote-lite.min.css" rel="stylesheet">
 
 <style>
+
+@media(max-width :991px) {
+	#login {
+		text-align:left;
+	}
+
+}
+
 @media(min-width :992px) {
 	#login {
 		position: absolute;
 		right: 25%;
 		top: 25%;
+		text-align:left;
 	}
 	#userIcon {
 		position: absolute;
@@ -65,7 +74,7 @@
 	}
 	#userIcon {
 		position: absolute;
-		right: 27%;
+		right: 25%;
 		top: 15%;
 	}
 }
@@ -106,7 +115,7 @@
             </c:if>
             <c:if test="${!empty member}">
             <li>
-             <p style="color :#fff; width : 250px; text-align:right; margin-top:5px" id="login"> ${member.nickName}님, 안녕하세요!</p>
+             <p style="color :#fff; width : 250px;margin-right: -4%; margin-top:5px" id="login"> ${member.nickName}님, 안녕하세요!</p>
             </li>
             <li class="nav-item dropdown" id="userIcon" style="cursor:pointer;">
            				<c:if test="${member.userImg eq null }">

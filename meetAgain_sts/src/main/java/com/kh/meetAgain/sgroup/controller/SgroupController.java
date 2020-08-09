@@ -395,8 +395,8 @@ public class SgroupController {
 	public String gotoGroup(@RequestParam String gid, Model model) {
 
 		String loc = "/sgroup/groupBoard.do?gid=" + gid;
-		String msg = "";
-
+	
+		String msg ="";
 		model.addAttribute("gid", gid);
 		model.addAttribute("loc", loc);
 

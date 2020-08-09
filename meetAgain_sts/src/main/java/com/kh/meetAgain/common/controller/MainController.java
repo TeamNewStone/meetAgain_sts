@@ -9,18 +9,23 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.meetAgain.board.model.service.BoardService;
 import com.kh.meetAgain.board.model.vo.Board;
 import com.kh.meetAgain.myPage.model.vo.Review;
+import com.kh.meetAgain.sgroup.model.service.SgroupService;
+import com.kh.meetAgain.sgroup.model.vo.Sgroup;
 
 @Controller
 public class MainController {
 	
 	@Autowired
 	BoardService boardService;
+	@Autowired
+	SgroupService sgroupService;
 	
 	@RequestMapping("selectRvtop3.do")
 	@ResponseBody
@@ -65,5 +70,14 @@ public class MainController {
 		map.put("adboard", adtop3);
 		
 		return map;	
+	}
+	
+	@RequestMapping("graph.do")
+	@ResponseBody
+	public List<Sgroup> graph(Model model) {
+		
+		List<Sgroup> list = sgroupService.selectSgroupList();
+		
+		return list;	
 	}
 }
