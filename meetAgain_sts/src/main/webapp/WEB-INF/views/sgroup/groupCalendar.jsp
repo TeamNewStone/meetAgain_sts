@@ -243,25 +243,42 @@
 					
 					var result = confirm('해당 "' + info.event.title + '" 일정을 삭제하시겠습니까 ??');
 								
-					if(result == true){
-						// alert('클릭 캘린더 위치: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY); // 좌표
-						var cdId = info.event._def.publicId;	
-						// $(info.el.style.borderColor) = 'blueviolet'; 정기
+					var cdId = info.event._def.publicId;
+						var userid = ${member.getUserId()};
+						var gid = ${gid};
+						console.log(cdId+userid+gid);
 						
-						$.ajax({
-					       url: '${pageContext.request.contextPath}/sgroup/deleteCalendar.do',
-					       data: {
-					    	   cdId : cdId
-					       },
-					       type: "POST",
-					       success: function () {
-					          //$('#calendar').fullCalendar('removeEvents', event);
-					          alert('일정이 삭제되었습니다.');
-					          $(info.el).remove();
-					    	  location.reload(true); 
-					       }
-						   
-					    });
+						 $.ajax({
+							url : '${ pageContext.request.contextPath }/sgroup/calCheckCpt.do',
+							data : {
+								cdId : cdId,
+								userid : userid,
+								gid : gid
+							},
+							success : function(data){
+								if(data.result==true){
+									$.ajax({
+									       url: '${pageContext.request.contextPath}/sgroup/deleteCalendar.do',
+									       data: {
+									    	   cdId : cdId
+									       },
+									       type: "POST",
+									       success: function () {
+									          //$('#calendar').fullCalendar('removeEvents', event);
+									          alert('일정이 삭제되었습니다.');
+									          $(info.el).remove();
+									    	  location.reload(true); 
+									       }
+									    });
+								}else{
+									alert("정기모임은 모임장만 삭제할 수 있습니다.");
+								}
+							},
+							error : function(){
+								alert("에러 발생!");
+							}
+							
+						});
 						
 					} else {
 						return null;
