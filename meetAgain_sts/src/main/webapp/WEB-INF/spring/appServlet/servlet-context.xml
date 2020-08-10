@@ -38,6 +38,8 @@
 			 <!-- 게시글 전용 URL 등록하기 -->
 			 <!-- <mapping path="/board/**/*.do"/> -->
 			 <mapping path="/sgroup/**/*.do"/>
+			 <mapping path="/myPage/*.do"/>
+			 <mapping path="/serviceCenter/reportStatus.do"/>
 			 <exclude-mapping path="/sgroup/groupInfo.do" />
 			 <!-- 인터셉터 등록 -->
 			 <beans:bean id="loginCheckInterceptor"
@@ -50,6 +52,22 @@
 			<mapping path="/sgroup/groupCalendar.do"/>
 			<mapping path="/sgroup/groupDetail.do"/>
 			<mapping path="/sgroup/memberList.do"/>
+			<mapping path="/sgroup/groupBoardDetail.do"/>
+			<mapping path="/sgroup/gboardInsert.do"/>
+			<mapping path="sgroup/groupBoardUpdate.do"/>
+			<mapping path="/sgroup/gbUpdate.do"/>
+			<mapping path="/sgroup/insertComment.do"/>
+			<mapping path="/sgroup/commentUpdate.do"/>
+			<mapping path="/sgroup/aImgInsert.do"/>
+			<mapping path="/sgroup/bReportInsert.do"/>
+			<mapping path="/sgroup/cReportInsert.do"/>
+			<mapping path="/sgroup/updateSgroup.do"/>
+			<mapping path="/sgroup/commentDelete.do"/>
+			<mapping path="/sgroup/mapPlaceUpdate.do"/>
+			<mapping path="sgroup/addCalendar.do"/>
+			<mapping path="sgroup/modifyCalendar.do"/>
+			
+			
 			
 			 <!-- 인터셉터 등록 -->
 			 <beans:bean id="JoinCheckInterceptor"

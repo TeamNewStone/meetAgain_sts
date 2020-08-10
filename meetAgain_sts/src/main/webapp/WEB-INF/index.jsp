@@ -433,13 +433,13 @@ $(function(){
 				seoul++;
 			} else if(result2[i]=='부산'){
 				busan++;
-			} else if(reuslt2[i]=='경기'){
+			} else if(result2[i]=='경기'){
 				gyeonggi++;
 			}
 		}
 			console.log("seoul :" +seoul);
 
-	
+	console.log("result2 : " + result2);
 	  google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
