@@ -53,7 +53,10 @@ public class JoinCheckInterceptor extends HandlerInterceptorAdapter {
 		map.put("userId", m.getUserId());
 		map.put("gId",gid);
 		
-		int result = ms.checkIn(map);
+		int result = 0; 
+		
+		if(m.getUserId().equals("meetAgainAdmin")) result = 1;
+		else result = ms.checkIn(map);
 		
 		if(result != 1) {
 			logger.info("회원이 아닌 유저가 ["+ request.getRequestURI() + "] 경로에 접근 시도함!");
