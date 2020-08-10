@@ -93,7 +93,7 @@
 												<button type="button" class="deleteBtn"
 													onclick="deleteReply(this);">삭제하기</button>
 											</c:if> &nbsp;
-											<c:if test="${Gboard.userId ne member.userId }">
+											<c:if test="${gbc.userId ne member.userId }">
 											<span data-toggle="modal" data-target="#commentReport" id="cReportSpan-${st.index }">
 				<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-circle boardReport" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
 				data-toggle="tooltip" data-placement="bottom" title="신고하기">
@@ -107,7 +107,7 @@
 	$(function(){
 		
 	$('#cReportSpan-${st.index }').click(function(){
-		var cId = $(this).siblings('input').val();
+		var cId = $(this).siblings().eq(2).val();
 		$('#cId').val(cId);
 	});
 	})
